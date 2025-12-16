@@ -1,2 +1,2 @@
-# rms
+# Radix
 Radiology Managment System
