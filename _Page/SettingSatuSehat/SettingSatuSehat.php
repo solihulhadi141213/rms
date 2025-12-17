@@ -1,6 +1,6 @@
 <?php
     //Cek Aksesibilitas ke halaman ini
-    $IjinAksesSaya=IjinAksesSaya($Conn,$SessionIdAccess,'36grsDsU11UKOCFPKlh5Gx7K2YbR6XpRHJ5y');
+    $IjinAksesSaya=IjinAksesSaya($Conn,$SessionIdAccess,'5a7yRbkFPs6fXNHQf8a7bI79IZcbbIaijE0E');
     if($IjinAksesSaya!=="Ada"){
         include "_Page/Error/NoAccess.php";
     }else{
@@ -8,13 +8,13 @@
     <div class="pagetitle">
         <h1>
             <a href="">
-                <i class="bx bx-plug"></i> Koneksi SIMRS</a>
+                <i class="bi bi-plug"></i> Koneksi Satu Sehat</a>
             </a>
         </h1>
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
-                <li class="breadcrumb-item active">Koneksi SIMRS</li>
+                <li class="breadcrumb-item active">Koneksi Satu Sehat</li>
             </ol>
         </nav>
     </div>
@@ -23,8 +23,8 @@
             <div class="col-md-12">
                 <div class="alert alert-warning alert-dismissible fade show" role="alert">
                     <small>
-                        Berikut ini adalah halaman untuk melakukan pengaturan koneksi dengan SIMRS. 
-                        Baca dokumentasi lengkap pada URL Postman <a href="https://rsuelsyifa.postman.co/workspace/efd89395-6ec5-446e-88f2-801f31b88e97/documentation/12795177-e1b3c122-0693-41a7-8337-674be340f66b">Berikut Ini</a>
+                        Berikut ini adalah halaman untuk melakukan pengaturan koneksi dengan Satu Sehat. 
+                        Baca dokumentasi lengkap pada URL Postman <a href="https://rsuelsyifa.postman.co/workspace/SIRS-RSU-El-Syifa~d71f9396-0edb-41e8-8420-68ef7e205628/collection/12795177-2f2bc49a-0c6b-4e28-9c76-028a1da62aaf?action=share&source=copy-link&creator=12795177&active-environment=aebd0e34-e6c3-4328-93f3-e7ad8406e1a4">Berikut Ini</a>
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </small>
                 </div>
@@ -50,15 +50,16 @@
                                         <td class="text-center"><b><small>No</small></b></td>
                                         <td class="text-left"><b><small>Nama Koneksi</small></b></td>
                                         <td class="text-left"><b><small>Base URL</small></b></td>
-                                        <td class="text-left"><b><small>Client ID</small></b></td>
+                                        <td class="text-left"><b><small>Organization ID</small></b></td>
                                         <td class="text-left"><b><small>Client Key</small></b></ttdh>
+                                        <td class="text-left"><b><small>Secret Key</small></b></ttdh>
                                         <td class="text-center"><b><small>Status</small></b></td>
                                         <td class="text-center"><b><small>Opsi</small></b></td>
                                     </tr>
                                 </thead>
                                 <tbody id="tabel_koneksi">
                                     <tr>
-                                        <td class="text-center" colspan="7">
+                                        <td class="text-center" colspan="8">
                                             <small>Tidak ada data yang ditampilkan</small>
                                         </td>
                                     </tr>

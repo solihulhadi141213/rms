@@ -5,15 +5,16 @@
         $Page=$_GET['Page'];
         //Index Halaman
         $page_arry=[
-            "MyProfile"         =>  "_Page/MyProfile/MyProfile.php",
-            "AksesFitur"        =>  "_Page/AksesFitur/AksesFitur.php",
-            "AksesEntitas"      =>  "_Page/AksesEntitas/AksesEntitas.php",
-            "Akses"             =>  "_Page/Akses/Akses.php",
-            "SettingGeneral"    =>  "_Page/SettingGeneral/SettingGeneral.php",
-            "SettingEmail"      =>  "_Page/SettingEmail/SettingEmail.php",
-            "SettingSimrs"      =>  "_Page/SettingSimrs/SettingSimrs.php",
-            "Aktivitas"         =>  "_Page/Aktivitas/Aktivitas.php",
-            "Help"              =>  "_Page/Help/Help.php",
+            "MyProfile"        => "_Page/MyProfile/MyProfile.php",
+            "AksesFitur"       => "_Page/AksesFitur/AksesFitur.php",
+            "AksesEntitas"     => "_Page/AksesEntitas/AksesEntitas.php",
+            "Akses"            => "_Page/Akses/Akses.php",
+            "SettingGeneral"   => "_Page/SettingGeneral/SettingGeneral.php",
+            "SettingEmail"     => "_Page/SettingEmail/SettingEmail.php",
+            "SettingSimrs"     => "_Page/SettingSimrs/SettingSimrs.php",
+            "SettingSatuSehat" => "_Page/SettingSatuSehat/SettingSatuSehat.php",
+            "Aktivitas"        => "_Page/Aktivitas/Aktivitas.php",
+            "Help"             => "_Page/Help/Help.php",
         ];
 
         //Tangkap 'Page'

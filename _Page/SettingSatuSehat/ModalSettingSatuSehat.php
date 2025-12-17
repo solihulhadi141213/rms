@@ -9,10 +9,10 @@
                 <div class="modal-body">
                     <div class="row mb-3">
                         <div class="col-md-12">
-                            <label for="name_connection_simrs">
+                            <label for="name_connection_satu_sehat">
                                 <small>Nama Koneksi</small>
                             </label>
-                            <input type="text" class="form-control" name="name_connection_simrs" id="name_connection_simrs" required>
+                            <input type="text" class="form-control" name="name_connection_satu_sehat" id="name_connection_satu_sehat" required>
                             <small>
                                 <small class="text text-muted">
                                     Example : Development, Staging, Production  dll.
@@ -22,18 +22,18 @@
                     </div>
                     <div class="row mb-3">
                         <div class="col-md-12">
-                            <label for="url_connection_simrs">
-                                <small>URL SIMRS</small>
+                            <label for="url_connection_satu_sehat">
+                                <small>URL Satu Sehat</small>
                             </label>
-                            <input type="url" class="form-control" name="url_connection_simrs" id="url_connection_simrs" placeholder="https://" required>
+                            <input type="url" class="form-control" name="url_connection_satu_sehat" id="url_connection_satu_sehat" placeholder="https://" required>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-md-12">
-                            <label for="client_id">
-                                <small>Client ID</small>
+                            <label for="organization_id">
+                                <small>Organization ID</small>
                             </label>
-                            <input type="text" class="form-control" name="client_id" id="client_id" required>
+                            <input type="text" class="form-control" name="organization_id" id="organization_id" required>
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -46,10 +46,18 @@
                     </div>
                     <div class="row mb-3">
                         <div class="col-md-12">
-                            <label for="status_connection_simrs">
-                                <small>Status Connection</small>
+                            <label for="secret_key">
+                                <small>Secret Key</small>
                             </label>
-                            <select name="status_connection_simrs" id="status_connection_simrs" class="form-control">
+                            <input type="text" class="form-control" name="secret_key" id="secret_key" required>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <label for="status_connection_satu_sehat">
+                                <small>Status Connetion</small>
+                            </label>
+                            <select name="status_connection_satu_sehat" id="status_connection_satu_sehat" class="form-control">
                                 <option value="0">Inactive</option>
                                 <option value="1">Active</option>
                             </select>

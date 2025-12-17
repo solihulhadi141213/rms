@@ -19,24 +19,24 @@
         exit;
     }
 
-    //id_connection_simrs wajib terisi
-    if(empty($_POST['id_connection_simrs'])){
+    //id_connection_satu_sehat wajib terisi
+    if(empty($_POST['id_connection_satu_sehat'])){
         echo '
             <div class="row mb-3">
                 <div class="col-12 text-center">
-                    <div class="alert alert-danger"><small>Koneksi SIMRS Tiidak Boleh Kosong!</small></div>
+                    <div class="alert alert-danger"><small>Koneksi Satu Sehat Tiidak Boleh Kosong!</small></div>
                 </div>
             </div>
         ';
         exit;
     }
 
-    //Buat variabel 'id_connection_simrs' dan sanitasi
-    $id_connection_simrs      = validateAndSanitizeInput($_POST['id_connection_simrs']);
+    //Buat variabel 'id_connection_satu_sehat' dan sanitasi
+    $id_connection_satu_sehat      = validateAndSanitizeInput($_POST['id_connection_satu_sehat']);
 
     //Buka Detail Koneksi Dengan Prepared Statment
-    $Qry = $Conn->prepare("SELECT * FROM connection_simrs WHERE id_connection_simrs = ?");
-    $Qry->bind_param("i", $id_connection_simrs);
+    $Qry = $Conn->prepare("SELECT * FROM connection_satu_sehat WHERE id_connection_satu_sehat = ?");
+    $Qry->bind_param("i", $id_connection_satu_sehat);
     if (!$Qry->execute()) {
         $error=$Conn->error;
         echo '
@@ -50,15 +50,16 @@
         $Qry->close();
 
         //Buat Variabel
-        $id_connection_simrs     = $Data['id_connection_simrs'];
-        $name_connection_simrs   = $Data['name_connection_simrs'];
-        $url_connection_simrs    = $Data['url_connection_simrs'];
-        $client_id               = $Data['client_id'];
-        $client_key              = $Data['client_key'];
-        $status_connection_simrs = $Data['status_connection_simrs'];
+        $id_connection_satu_sehat     = $Data['id_connection_satu_sehat'];
+        $name_connection_satu_sehat   = $Data['name_connection_satu_sehat'];
+        $url_connection_satu_sehat    = $Data['url_connection_satu_sehat'];
+        $organization_id              = $Data['organization_id'];
+        $client_key                   = $Data['client_key'];
+        $secret_key                   = $Data['secret_key'];
+        $status_connection_satu_sehat = $Data['status_connection_satu_sehat'];
 
         //Routing Status
-        if(empty($status_connection_simrs)){
+        if(empty($status_connection_satu_sehat)){
             $label_status1 = 'selected';
             $label_status2 = '';
         }else{
@@ -67,7 +68,7 @@
         }
 
         // Tampilkan Form Edit
-        if(empty($Data['id_connection_simrs'])){
+        if(empty($Data['id_connection_satu_sehat'])){
             echo '
                 <div class="alert alert-danger">
                     <small>Data Tidak Ditemukan</small>
@@ -75,13 +76,13 @@
             '; 
         }else{
             echo '
-                <input type="hidden" name="id_connection_simrs" value="'.$id_connection_simrs.'">
+                <input type="hidden" name="id_connection_satu_sehat" value="'.$id_connection_satu_sehat.'">
                 <div class="row mb-3">
                     <div class="col-md-12">
-                        <label for="name_connection_simrs_edit">
+                        <label for="name_connection_satu_sehat_edit">
                             <small>Nama Koneksi</small>
                         </label>
-                        <input type="text" class="form-control" name="name_connection_simrs" id="name_connection_simrs_edit" value="'.$name_connection_simrs.'" required>
+                        <input type="text" class="form-control" name="name_connection_satu_sehat" id="name_connection_satu_sehat_edit" value="'.$name_connection_satu_sehat.'" required>
                         <small>
                             <small class="text text-muted">
                                 Example : Development, Staging, Production  dll.
@@ -91,18 +92,18 @@
                 </div>
                 <div class="row mb-3">
                     <div class="col-md-12">
-                        <label for="url_connection_simrs_edit">
-                            <small>URL SIMRS</small>
+                        <label for="url_connection_satu_sehat_edit">
+                            <small>URL Satu Sehat</small>
                         </label>
-                        <input type="url" class="form-control" name="url_connection_simrs" id="url_connection_simrs_edit" placeholder="https://" value="'.$url_connection_simrs.'" required>
+                        <input type="url" class="form-control" name="url_connection_satu_sehat" id="url_connection_satu_sehat_edit" placeholder="https://" value="'.$url_connection_satu_sehat.'" required>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-md-12">
-                        <label for="client_id_edit">
-                            <small>Client ID</small>
+                        <label for="organization_id_edit">
+                            <small>Organization ID</small>
                         </label>
-                        <input type="text" class="form-control" name="client_id" id="client_id_edit" value="'.$client_id.'" required>
+                        <input type="text" class="form-control" name="organization_id" id="organization_id_edit" value="'.$organization_id.'" required>
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -115,10 +116,18 @@
                 </div>
                 <div class="row mb-3">
                     <div class="col-md-12">
-                        <label for="status_connection_simrs_edit">
+                        <label for="secret_key_edit">
+                            <small>Secret Key</small>
+                        </label>
+                        <input type="text" class="form-control" name="secret_key" id="secret_key_edit" value="'.$secret_key.'" required>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <label for="status_connection_satu_sehat_edit">
                             <small>Status Connection</small>
                         </label>
-                        <select name="status_connection_simrs" id="status_connection_simrs_edit" class="form-control">
+                        <select name="status_connection_satu_sehat" id="status_connection_satu_sehat_edit" class="form-control">
                             <option '.$label_status1.' value="0">Inactive</option>
                             <option '.$label_status2.' value="1">Active</option>
                         </select>
