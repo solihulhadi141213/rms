@@ -6,6 +6,19 @@
     }else{
         include "_Config/SettingEmail.php";
 ?>
+     <div class="pagetitle">
+        <h1>
+            <a href="">
+                <i class="bi bi-envelope"></i> Email Gateway</a>
+            </a>
+        </h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
+                <li class="breadcrumb-item active"> Email Gateway</li>
+            </ol>
+        </nav>
+    </div>
     <section class="section dashboard">
         <div class="row mb-3">
             <div class="col-md-12">
