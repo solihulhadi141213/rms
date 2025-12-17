@@ -44,6 +44,7 @@
                 ?>
             </main>
             <?php
+                include "_Partial/Toast.php";
                 include "_Partial/Copyright.php";
                 include "_Partial/FooterJs.php";
                 include "_Partial/RoutingJs.php";

@@ -8,16 +8,7 @@
         }
         return $captcha;
     }
-    function GenerateKodeBarang($length){
-        $token = "";
-        $codeAlphabet= "0123456789";
-        $max = strlen($codeAlphabet); // edited
-        
-        for ($i=0; $i < $length; $i++) {
-            $token .= $codeAlphabet[random_int(0, $max-1)];
-        }
-        return $token;
-    }
+    
     //Membuat Token
     function GenerateToken($length) {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -135,6 +126,7 @@
         }
         return $randomString;
     }
+    
     //Send Email
     function SendEmail($NamaTujuan,$EmailTujuan,$Subjek,$Pesan,$email_gateway,$password_gateway,$url_provider,$nama_pengirim,$port_gateway,$url_service) {
         if(empty($NamaTujuan)){
@@ -209,6 +201,7 @@
         }
         return $Response;
     }
+
     //Delete Data
     function DeleteData($Conn,$NamaDb,$NamaParam,$IdParam){
         $HapusData = mysqli_query($Conn, "DELETE FROM $NamaDb WHERE $NamaParam='$IdParam'") or die(mysqli_error($Conn));
@@ -219,6 +212,7 @@
         }
         return $Response;
     }
+
     function NamaHari($no){
         if($no==1){
             $Response="Senin";
@@ -498,46 +492,7 @@
     
         return "Valid";
     }
-    //Creat Captcha
-    function CreatCaptcha($Conn) {
-        date_default_timezone_set("Asia/Jakarta");
-        $now=date('Y-m-d H:i:s');
-        //hasil kode acak disimpan di $code
-        $length=6;
-        $Captcha = "";
-        $codeAlphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ";
-        $codeAlphabet.= "abcdefghijkmnpqrstuvwxyz";
-        $codeAlphabet.= "23456789";
-        $max = strlen($codeAlphabet); // edited
-        for ($i=0; $i < $length; $i++) {
-            $Captcha .= $codeAlphabet[random_int(0, $max-1)];
-        }
-        //Ubah ke md5
-        $CodeMd5=md5($Captcha);
-        //Melakukan Pengecekan Kode Captcha Yang expired
-        $expired=date('Y-m-d H:i:s', time() - 60);
-        $query = mysqli_query($Conn, "SELECT*FROM log_captcha WHERE datetime_creat<'$expired'");
-        while ($data = mysqli_fetch_array($query)) {
-            $id_log_captcha= $data['id_log_captcha'];
-            //Hapus Captcha
-            $Hapus = mysqli_query($Conn, "DELETE FROM log_captcha WHERE id_log_captcha='$id_log_captcha'") or die(mysqli_error($Conn));
-        }
-        //Simpan Ke Database
-        $EntryCaptcha="INSERT INTO log_captcha (
-            datetime_creat,
-            captcha
-        ) VALUES (
-            '$now',
-            '$CodeMd5'
-        )";
-        $InputCaptcha=mysqli_query($Conn, $EntryCaptcha);
-        if($InputCaptcha){
-            $CaptchaFix=$Captcha;
-        }else{
-            $CaptchaFix="";
-        }
-        return $CaptchaFix;
-    }
+    
     function hitung_usia($tanggal_lahir) {
         $birthDate = new DateTime($tanggal_lahir);
         $today = new DateTime("today");
@@ -631,73 +586,6 @@
         return $nilai;
     }
 
-    // Mendapatkan Detail fee_by_student
-    function ShowFeeByStudent($id_student, $id_fee_component, $id_organization_class, $collom) {
-        global $Conn; // pakai koneksi mysqli dari luar fungsi
-
-        // siapkan query
-        $Qry = $Conn->prepare("
-            SELECT $collom 
-            FROM fee_by_student 
-            WHERE id_student = ? 
-            AND id_fee_component = ? 
-            AND id_organization_class = ?
-        ");
-
-        if (!$Qry) {
-            return "Prepare failed: " . $Conn->error;
-        }
-
-        // bind parameter
-        $Qry->bind_param("iii", $id_student, $id_fee_component, $id_organization_class);
-
-        // eksekusi
-        if (!$Qry->execute()) {
-            $response = "Execute failed: " . $Qry->error;
-        } else {
-            $Result = $Qry->get_result();
-            if ($Result && $Data = $Result->fetch_assoc()) {
-                $response = $Data[$collom] ?? null;
-            } else {
-                $response = null;
-            }
-        }
-
-        $Qry->close();
-        return $response;
-    }
-
-    // Cari id_fee_by_student berdasarkan id_organization_class, id_student, id_fee_component 
-    function CariFeeByStudent($id_organization_class,$id_student,$id_fee_component) {
-        // pakai koneksi mysqli dari luar fungsi
-        global $Conn;
-
-        // siapkan query
-        $Qry = $Conn->prepare("SELECT id_fee_by_student FROM fee_by_student WHERE id_student = ? AND id_fee_component = ? AND id_organization_class = ?");
-
-        if (!$Qry) {
-            return "Prepare failed: " . $Conn->error;
-        }
-
-        // bind parameter
-        $Qry->bind_param("iii", $id_student, $id_fee_component, $id_organization_class);
-
-        // eksekusi
-        if (!$Qry->execute()) {
-            $response = null;
-        } else {
-            $Result = $Qry->get_result();
-            if ($Result && $Data = $Result->fetch_assoc()) {
-                $response = $Data['id_fee_by_student'] ?? null;
-            } else {
-                $response = null;
-            }
-        }
-
-        $Qry->close();
-        return $response;
-    }
-
     //Get Token
     function GetXToken($base_url,$USER_KEY,$SECRET_KEY) {
 
@@ -764,192 +652,4 @@
         }
     }
 
-    //Request X-token
-    function RequestXtoken($Conn, $USER_KEY = null, $SECRET_KEY = null){
-        // ID setting payment (static)
-        $id_setting_payment = 1;
-
-        /* =============================
-        * AMBIL SETTING PAYMENT
-        * ============================= */
-        $qry = $Conn->prepare(
-            "SELECT api_payment_url, USER_KEY, SECRET_KEY 
-            FROM setting_payment 
-            WHERE id_setting_payment = ?"
-        );
-
-        if (!$qry) {
-            return [
-                'status'  => 'error',
-                'message' => $Conn->error,
-                'x-token' => null
-            ];
-        }
-
-        $qry->bind_param("i", $id_setting_payment);
-
-        if (!$qry->execute()) {
-            return [
-                'status'  => 'error',
-                'message' => $qry->error,
-                'x-token' => null
-            ];
-        }
-
-        $result = $qry->get_result();
-        $data   = $result->fetch_assoc();
-        $qry->close();
-
-        if (!$data) {
-            return [
-                'status'  => 'error',
-                'message' => 'Setting payment tidak ditemukan',
-                'x-token' => null
-            ];
-        }
-
-        $api_payment_url = rtrim($data['api_payment_url'], '/');
-        $USER_KEY        = $data['USER_KEY'];
-        $SECRET_KEY      = $data['SECRET_KEY'];
-
-        /* =============================
-        * PAYLOAD REQUEST
-        * ============================= */
-        $payload = json_encode([
-            'USER_KEY'   => $USER_KEY,
-            'SECRET_KEY' => $SECRET_KEY
-        ]);
-
-        /* =============================
-        * REQUEST CURL
-        * ============================= */
-        $curl = curl_init();
-        curl_setopt_array($curl, [
-            CURLOPT_URL            => $api_payment_url . "/_API/get_token.php",
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_TIMEOUT        => 30,
-            CURLOPT_CUSTOMREQUEST  => 'POST',
-            CURLOPT_POSTFIELDS     => $payload,
-            CURLOPT_HTTPHEADER     => [
-                'Content-Type: application/json',
-                'Content-Length: ' . strlen($payload)
-            ],
-            CURLOPT_SSL_VERIFYHOST => 0, // ⚠️ testing only
-            CURLOPT_SSL_VERIFYPEER => 0  // ⚠️ testing only
-        ]);
-
-        $response   = curl_exec($curl);
-        $curlErrNo  = curl_errno($curl);
-        $curlErr    = curl_error($curl);
-        curl_close($curl);
-
-        if ($curlErrNo) {
-            return [
-                'status'  => 'error',
-                'message' => htmlspecialchars($curlErr),
-                'x-token' => null
-            ];
-        }
-
-        /* =============================
-        * DECODE RESPONSE
-        * ============================= */
-        $response_array = json_decode($response, true);
-
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            return [
-                'status'  => 'error',
-                'message' => 'Response JSON tidak valid',
-                'x-token' => null
-            ];
-        }
-
-        /* =============================
-        * VALIDASI RESPONSE
-        * ============================= */
-        if (
-            !isset($response_array['code']) ||
-            $response_array['code'] != 200 ||
-            empty($response_array['metadata']['x-token'])
-        ) {
-            return [
-                'status'  => 'error',
-                'message' => htmlspecialchars($response_array['status'] ?? 'Request token gagal'),
-                'x-token' => null
-            ];
-        }
-
-        /* =============================
-        * SIMPAN TOKEN KE DATABASE
-        * ============================= */
-        $x_token          = $response_array['metadata']['x-token'];
-        $datetime_creat   = $response_array['metadata']['datetime_creat'];
-        $datetime_expired = $response_array['metadata']['datetime_expired'];
-
-        $stmt = $Conn->prepare(
-            "INSERT INTO auth_payment 
-            (id_setting_payment, x_token, datetime_creat, datetime_expired) 
-            VALUES (?, ?, ?, ?)"
-        );
-
-        if (!$stmt) {
-            return [
-                'status'  => 'error',
-                'message' => $Conn->error,
-                'x-token' => null
-            ];
-        }
-
-        $stmt->bind_param(
-            "isss",
-            $id_setting_payment,
-            $x_token,
-            $datetime_creat,
-            $datetime_expired
-        );
-
-        if (!$stmt->execute()) {
-            $stmt->close();
-            return [
-                'status'  => 'error',
-                'message' => 'Gagal menyimpan X-Token ke database',
-                'x-token' => null
-            ];
-        }
-
-        $stmt->close();
-
-        /* =============================
-        * RESPONSE SUCCESS
-        * ============================= */
-        return [
-            'status'  => 'success',
-            'message' => 'X-Token berhasil dibuat',
-            'x-token' => $x_token
-        ];
-    }
-
-
-    //Curl GET header
-    function list_setting($x_token,$url) {
-        $curl = curl_init();
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => ''.$url.'/_API/list_setting.php',
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'GET',
-            CURLOPT_HTTPHEADER => array(
-                'x-token: '.$x_token.''
-            ),
-            CURLOPT_SSL_VERIFYHOST => 0,  // ⚠️ Disable SSL check (testing only)
-            CURLOPT_SSL_VERIFYPEER => 0   // ⚠️ Disable SSL check (testing only)
-        ));
-        $response = curl_exec($curl);
-        curl_close($curl);
-        return $response;
-    }
 ?>

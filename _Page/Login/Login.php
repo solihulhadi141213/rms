@@ -12,7 +12,7 @@
                 </div>
                 <div class="row mb-3">
                     <div class="col-12">
-                        <img src="assets/img/online-payment.webp" alt="<?php echo $app_title;?>" width="100%">
+                        <img src="assets/img/ilustrasi1.png" alt="<?php echo $app_title;?>" width="100%">
                     </div>
                 </div>
             </div>

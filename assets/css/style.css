@@ -1477,10 +1477,34 @@ body .title_page_app {
   color: #000000;
 }
 
+/* Berikut ini adalah style untuk underscore */
 .underscore_doted {
     border-bottom: 1px dashed  #000; /* garis bawah putus-putus hitam */
     display: inline-block;          /* agar border mengikuti panjang teks */
     line-height: 1.2;               /* tinggi baris agar rapi */
     padding-bottom: 1px;            /* jarak kecil antara teks dan garis */
+}
+
+/* Untuk text pandajang dan tombol copy */
+.text-long {
+    word-break: break-all;      /* paksa patah */
+    white-space: normal;        /* izinkan wrap */
+}
+
+.copy-wrapper {
+    position: relative;
+    padding-right: 35px;
+}
+
+.copy-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+    color: #0d6efd;
+}
+
+.copy-btn:hover {
+    color: #0a58ca;
 }
 
