@@ -51,7 +51,7 @@
                                         <td class="text-left"><b><small>Nama Koneksi</small></b></td>
                                         <td class="text-left"><b><small>Base URL</small></b></td>
                                         <td class="text-left"><b><small>Client ID</small></b></td>
-                                        <td class="text-left"><b><small>Client Key</small></b></ttdh>
+                                        <td class="text-left"><b><small>Client Key</small></b></td>
                                         <td class="text-center"><b><small>Status</small></b></td>
                                         <td class="text-center"><b><small>Opsi</small></b></td>
                                     </tr>

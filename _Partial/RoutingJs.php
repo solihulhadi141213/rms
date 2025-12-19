@@ -15,6 +15,7 @@
             "SettingEmail"     => "_Page/SettingEmail/SettingEmail.js",
             "SettingSimrs"     => "_Page/SettingSimrs/SettingSimrs.js",
             "SettingSatuSehat" => "_Page/SettingSatuSehat/SettingSatuSehat.js",
+            "SettingPacs"      => "_Page/SettingPacs/SettingPacs.js",
             "Aktivitas"        => "_Page/Aktivitas/Aktivitas.js",
             "Help"             => "_Page/Help/Help.js"
         ];

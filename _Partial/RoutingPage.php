@@ -13,6 +13,7 @@
             "SettingEmail"     => "_Page/SettingEmail/SettingEmail.php",
             "SettingSimrs"     => "_Page/SettingSimrs/SettingSimrs.php",
             "SettingSatuSehat" => "_Page/SettingSatuSehat/SettingSatuSehat.php",
+            "SettingPacs"      => "_Page/SettingPacs/SettingPacs.php",
             "Aktivitas"        => "_Page/Aktivitas/Aktivitas.php",
             "Help"             => "_Page/Help/Help.php",
         ];

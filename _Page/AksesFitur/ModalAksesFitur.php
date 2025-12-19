@@ -81,7 +81,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-success btn-rounded">
+                    <button type="submit" class="btn btn-primary btn-rounded">
                         <i class="bi bi-check"></i> Tampilkan
                     </button>
                     <button type="button" class="btn btn-secondary btn-rounded" data-bs-dismiss="modal">
@@ -135,7 +135,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-success btn-rounded" id="TombolTambahFitur">
+                    <button type="submit" class="btn btn-primary btn-rounded" id="TombolTambahFitur">
                         <i class="bi bi-save"></i> Simpan
                     </button>
                     <button type="button" class="btn btn-secondary btn-rounded" data-bs-dismiss="modal">
@@ -167,7 +167,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-success btn-rounded">
+                    <button type="submit" class="btn btn-primary btn-rounded">
                         <i class="bi bi-check"></i> Ya, Hapus
                     </button>
                     <button type="button" class="btn btn-secondary btn-rounded" data-bs-dismiss="modal">
@@ -199,7 +199,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-success btn-rounded">
+                    <button type="submit" class="btn btn-primary btn-rounded">
                         <i class="bi bi-save"></i> Simpan
                     </button>
                     <button type="button" class="btn btn-secondary btn-rounded" data-bs-dismiss="modal">
