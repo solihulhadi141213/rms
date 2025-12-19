@@ -16,6 +16,7 @@
             "SettingSimrs"     => "_Page/SettingSimrs/SettingSimrs.js",
             "SettingSatuSehat" => "_Page/SettingSatuSehat/SettingSatuSehat.js",
             "SettingPacs"      => "_Page/SettingPacs/SettingPacs.js",
+            "ApiKey"           => "_Page/ApiKey/ApiKey.js",
             "Aktivitas"        => "_Page/Aktivitas/Aktivitas.js",
             "Help"             => "_Page/Help/Help.js"
         ];

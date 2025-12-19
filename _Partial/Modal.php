@@ -13,6 +13,7 @@
             "SettingSimrs"     => "_Page/SettingSimrs/ModalSettingSimrs.php",
             "SettingSatuSehat" => "_Page/SettingSatuSehat/ModalSettingSatuSehat.php",
             "SettingPacs"      => "_Page/SettingPacs/ModalSettingPacs.php",
+            "ApiKey"           => "_Page/ApiKey/ModalApiKey.php",
             "Aktivitas"        => "_Page/Aktivitas/ModalAktivitas.php",
             "Help"             => "_Page/Help/ModalHelp.php"
         ];
