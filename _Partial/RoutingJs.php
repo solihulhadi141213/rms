@@ -17,6 +17,7 @@
             "SettingSatuSehat" => "_Page/SettingSatuSehat/SettingSatuSehat.js",
             "SettingPacs"      => "_Page/SettingPacs/SettingPacs.js",
             "ApiKey"           => "_Page/ApiKey/ApiKey.js",
+            "Pemeriksaan"      => "_Page/Pemeriksaan/Pemeriksaan.js",
             "Aktivitas"        => "_Page/Aktivitas/Aktivitas.js",
             "Help"             => "_Page/Help/Help.js"
         ];

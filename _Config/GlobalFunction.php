@@ -652,4 +652,140 @@
         }
     }
 
+    /**
+     * =====================================================
+     * FUNCTION : GetSimrsToken
+     * TUJUAN   : Mengambil token SIMRS aktif
+     *            - Auto generate jika kosong / expired
+     *            - Simpan token & expired ke database
+     * PARAM    : $Conn (mysqli connection)
+     * RETURN   : string token
+     * =====================================================
+     */
+    function GetSimrsToken($Conn){
+        date_default_timezone_set("Asia/Jakarta");
+
+        // ===============================
+        // AMBIL KONEKSI SIMRS AKTIF
+        // ===============================
+        $status = 1;
+
+        $Qry = $Conn->prepare("
+            SELECT 
+                id_connection_simrs,
+                url_connection_simrs,
+                client_id,
+                client_key,
+                token,
+                datetime_expired
+            FROM connection_simrs
+            WHERE status_connection_simrs = ?
+            LIMIT 1
+        ");
+        $Qry->bind_param("i", $status);
+        $Qry->execute();
+        $Result = $Qry->get_result();
+
+        if ($Result->num_rows == 0) {
+            $Qry->close();
+            return false;
+        }
+
+        $Data = $Result->fetch_assoc();
+        $Qry->close();
+
+        // ===============================
+        // VARIABEL
+        // ===============================
+        $id_connection_simrs  = $Data['id_connection_simrs'];
+        $url_connection_simrs = rtrim($Data['url_connection_simrs'], '/');
+        $client_id            = $Data['client_id'];
+        $client_key           = $Data['client_key'];
+        $token                = $Data['token'];
+        $datetime_expired     = $Data['datetime_expired'];
+
+        $now = date('Y-m-d H:i:s');
+
+        // ===============================
+        // CEK TOKEN PERLU DIPERBARUI?
+        // ===============================
+        $needNewToken = false;
+
+        if (empty($token)) {
+            $needNewToken = true;
+        }
+
+        if (!empty($datetime_expired) && strtotime($datetime_expired) <= strtotime($now)) {
+            $needNewToken = true;
+        }
+
+        // ===============================
+        // REQUEST TOKEN BARU
+        // ===============================
+        if ($needNewToken === true) {
+
+            $payload = json_encode([
+                "client_id"  => $client_id,
+                "client_key" => $client_key
+            ]);
+
+            $curl = curl_init();
+            curl_setopt_array($curl, [
+                CURLOPT_URL => $url_connection_simrs . "/API/SIMRS/get_token.php",
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_POST => true,
+                CURLOPT_POSTFIELDS => $payload,
+                CURLOPT_HTTPHEADER => [
+                    'Content-Type: application/json'
+                ],
+                CURLOPT_TIMEOUT => 15
+            ]);
+
+            $response = curl_exec($curl);
+
+            if ($response === false) {
+                curl_close($curl);
+                return false;
+            }
+
+            curl_close($curl);
+
+            $res = json_decode($response, true);
+
+            if (
+                empty($res['response']['code']) ||
+                $res['response']['code'] != 200 ||
+                empty($res['metadata']['token'])
+            ) {
+                return false;
+            }
+
+            // ===============================
+            // SIMPAN TOKEN BARU
+            // ===============================
+            $token            = $res['metadata']['token'];
+            $datetime_expired = $res['metadata']['datetime_expired'];
+
+            $Upd = $Conn->prepare("
+                UPDATE connection_simrs 
+                SET token = ?, datetime_expired = ?
+                WHERE id_connection_simrs = ?
+            ");
+            $Upd->bind_param(
+                "ssi",
+                $token,
+                $datetime_expired,
+                $id_connection_simrs
+            );
+            $Upd->execute();
+            $Upd->close();
+        }
+
+        // ===============================
+        // TOKEN SIAP DIGUNAKAN
+        // ===============================
+        return $token;
+    }
+
+
 ?>
