@@ -15,6 +15,8 @@
             "SettingSatuSehat" => "_Page/SettingSatuSehat/SettingSatuSehat.php",
             "SettingPacs"      => "_Page/SettingPacs/SettingPacs.php",
             "ApiKey"           => "_Page/ApiKey/ApiKey.php",
+            "KodeKlinis"       => "_Page/KodeKlinis/KodeKlinis.php",
+            "KodePemeriksaan"  => "_Page/KodePemeriksaan/KodePemeriksaan.php",
             "Pemeriksaan"      => "_Page/Pemeriksaan/Pemeriksaan.php",
             "Aktivitas"        => "_Page/Aktivitas/Aktivitas.php",
             "Help"             => "_Page/Help/Help.php",

@@ -60,7 +60,7 @@
             <tr>
                 <td class="text-center"><small>'.$no.'</small></td>
                 <td>
-                    <a href="javascript:void(0);" class="modal_detail" data-id="'.$id_connection_simrs .'" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Tambah Pengaturan Koneksi SIMRS">
+                    <a href="javascript:void(0);" class="modal_detail" data-id="'.$id_connection_simrs .'" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Lihat Detail Koneksi SIMRS">
                         <small class="text text-primary underscore_doted">
                             '.$name_connection_simrs.'
                         </small>

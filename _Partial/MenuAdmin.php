@@ -75,6 +75,19 @@
             </a>
         </li>
         <li class="nav-heading border-1 border-top">
+            <div class="mt-3">Referensi</div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link <?php if($PageMenu=="KodeKlinis"){echo "";}else{echo "collapsed";} ?>" href="index.php?Page=KodeKlinis">
+                <i class="bi bi-list-columns"></i> <span>Kode Klinis</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link <?php if($PageMenu=="KodePemeriksaan"){echo "";}else{echo "collapsed";} ?>" href="index.php?Page=KodePemeriksaan">
+                <i class="bi bi-list-columns"></i> <span>Kode Pemeriksaan</span>
+            </a>
+        </li>
+        <li class="nav-heading border-1 border-top">
             <div class="mt-3">Master</div>
         </li>
         <li class="nav-item">

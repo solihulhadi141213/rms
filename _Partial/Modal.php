@@ -14,6 +14,8 @@
             "SettingSatuSehat" => "_Page/SettingSatuSehat/ModalSettingSatuSehat.php",
             "SettingPacs"      => "_Page/SettingPacs/ModalSettingPacs.php",
             "ApiKey"           => "_Page/ApiKey/ModalApiKey.php",
+            "KodeKlinis"       => "_Page/KodeKlinis/ModalKodeKlinis.php",
+            "KodePemeriksaan"  => "_Page/KodePemeriksaan/ModalKodePemeriksaan.php",
             "Pemeriksaan"      => "_Page/Pemeriksaan/ModalPemeriksaan.php",
             "Aktivitas"        => "_Page/Aktivitas/ModalAktivitas.php",
             "Help"             => "_Page/Help/ModalHelp.php"
