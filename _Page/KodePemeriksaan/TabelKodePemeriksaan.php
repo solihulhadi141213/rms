@@ -54,7 +54,7 @@
     if(!empty($_POST['OrderBy'])){
         $OrderBy=$_POST['OrderBy'];
     }else{
-        $OrderBy="id_master_klinis";
+        $OrderBy="id_master_pemeriksaan";
     }
     //Atur Page
     if(!empty($_POST['page'])){
@@ -66,15 +66,15 @@
     }
     if(empty($keyword_by)){
         if(empty($keyword)){
-            $jml_data = mysqli_num_rows(mysqli_query($Conn, "SELECT id_master_klinis FROM master_klinis "));
+            $jml_data = mysqli_num_rows(mysqli_query($Conn, "SELECT id_master_pemeriksaan FROM master_pemeriksaan "));
         }else{
-            $jml_data = mysqli_num_rows(mysqli_query($Conn, "SELECT id_master_klinis FROM master_klinis WHERE nama_klinis like '%$keyword%' OR snomed_code like '%$keyword%' OR snomed_display like '%$keyword%' OR kategori like '%$keyword%'"));
+            $jml_data = mysqli_num_rows(mysqli_query($Conn, "SELECT id_master_pemeriksaan FROM master_pemeriksaan WHERE nama_pemeriksaan like '%$keyword%' OR modalitas like '%$keyword%' OR pemeriksaan_code like '%$keyword%' OR pemeriksaan_description like '%$keyword%' OR bodysite_code like '%$keyword%' OR bodysite_description like '%$keyword%'"));
         }
     }else{
         if(empty($keyword)){
-            $jml_data = mysqli_num_rows(mysqli_query($Conn, "SELECT id_master_klinis FROM master_klinis "));
+            $jml_data = mysqli_num_rows(mysqli_query($Conn, "SELECT id_master_pemeriksaan FROM master_pemeriksaan "));
         }else{
-            $jml_data = mysqli_num_rows(mysqli_query($Conn, "SELECT id_master_klinis FROM master_klinis WHERE $keyword_by like '%$keyword%'"));
+            $jml_data = mysqli_num_rows(mysqli_query($Conn, "SELECT id_master_pemeriksaan FROM master_pemeriksaan WHERE $keyword_by like '%$keyword%'"));
         }
     }
     //Mengatur Halaman
@@ -98,44 +98,37 @@
     //KONDISI PENGATURAN MASING FILTER
     if(empty($keyword_by)){
         if(empty($keyword)){
-            $query = mysqli_query($Conn, "SELECT*FROM master_klinis ORDER BY $OrderBy $ShortBy LIMIT $posisi, $batas");
+            $query = mysqli_query($Conn, "SELECT*FROM master_pemeriksaan ORDER BY $OrderBy $ShortBy LIMIT $posisi, $batas");
         }else{
-            $query = mysqli_query($Conn, "SELECT*FROM master_klinis WHERE nama_klinis like '%$keyword%' OR snomed_code like '%$keyword%' OR snomed_display like '%$keyword%' OR kategori like '%$keyword%' ORDER BY $OrderBy $ShortBy LIMIT $posisi, $batas");
+            $query = mysqli_query($Conn, "SELECT*FROM master_pemeriksaan WHERE nama_pemeriksaan like '%$keyword%' OR modalitas like '%$keyword%' OR pemeriksaan_code like '%$keyword%' OR pemeriksaan_description like '%$keyword%' OR bodysite_code like '%$keyword%' OR bodysite_description like '%$keyword%' ORDER BY $OrderBy $ShortBy LIMIT $posisi, $batas");
         }
     }else{
         if(empty($keyword)){
-            $query = mysqli_query($Conn, "SELECT*FROM master_klinis ORDER BY $OrderBy $ShortBy LIMIT $posisi, $batas");
+            $query = mysqli_query($Conn, "SELECT*FROM master_pemeriksaan ORDER BY $OrderBy $ShortBy LIMIT $posisi, $batas");
         }else{
-            $query = mysqli_query($Conn, "SELECT*FROM master_klinis WHERE $keyword_by like '%$keyword%' ORDER BY $OrderBy $ShortBy LIMIT $posisi, $batas");
+            $query = mysqli_query($Conn, "SELECT*FROM master_pemeriksaan WHERE $keyword_by like '%$keyword%' ORDER BY $OrderBy $ShortBy LIMIT $posisi, $batas");
         }
     }
     while ($data = mysqli_fetch_array($query)) {
-        $id_master_klinis = $data['id_master_klinis'];
-        $nama_klinis      = $data['nama_klinis'];
-        $snomed_code      = $data['snomed_code'];
-        $snomed_display   = $data['snomed_display'];
-        $kategori         = $data['kategori'];
-        $aktif            = $data['aktif'];
-
-        //Routing Status
-        if($aktif=="Tidak"){
-            $status = '<span class="badge bg-danger"><i class="bi bi-x"></i> Inactive</span>';
-        }else{
-            $status = '<span class="badge bg-success"><i class="bi bi-check"></i> Active</span>';
-        }
+        $id_master_pemeriksaan   = $data['id_master_pemeriksaan'];
+        $nama_pemeriksaan        = $data['nama_pemeriksaan'];
+        $modalitas               = $data['modalitas'];
+        $pemeriksaan_code        = $data['pemeriksaan_code'];
+        $pemeriksaan_description = $data['pemeriksaan_description'];
+        $bodysite_description    = $data['bodysite_description'];
        
         echo '
             <tr>
                 <td><small>'.$no.'</small></td>
                 <td>
-                    <a href="javascript:void(0);" class="modal_detail" data-id="'.$id_master_klinis .'" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Lihat Detail Kode Klinis">
-                        <small class="underscore_doted">'.$nama_klinis.'</small>
+                    <a href="javascript:void(0);" class="modal_detail" data-id="'.$id_master_pemeriksaan .'" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Lihat Detail Kode Pemeriksaan">
+                        <small class="underscore_doted">'.$nama_pemeriksaan.'</small>
                     </a>
                 </td>
-                <td><small>'.$kategori.'</small></td>
-                <td><small><i>'.$snomed_code.'</i></small></td>
-                <td><small><i>'.$snomed_display.'</i></small></td>
-                <td><small>'.$status.'</small></td>
+                <td><small>'.$modalitas.'</small></td>
+                <td><small><i>'.$pemeriksaan_code.'</i></small></td>
+                <td><small><i>'.$pemeriksaan_description.'</i></small></td>
+                <td><small>'.$bodysite_description.'</small></td>
                 <td>
                     <button type="button" class="btn btn-sm btn-outline-dark btn-floating"  data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="bi bi-three-dots-vertical"></i>
@@ -145,17 +138,17 @@
                             <h6>Option</h6>
                         </li>
                         <li>
-                            <a class="dropdown-item modal_detail" href="javascript:void(0)" data-id="'.$id_master_klinis .'">
+                            <a class="dropdown-item modal_detail" href="javascript:void(0)" data-id="'.$id_master_pemeriksaan .'">
                                 <i class="bi bi-info-circle"></i> Detail
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item modal_edit" href="javascript:void(0)" data-id="'.$id_master_klinis .'">
+                            <a class="dropdown-item modal_edit" href="javascript:void(0)" data-id="'.$id_master_pemeriksaan .'">
                                 <i class="bi bi-pencil"></i> Edit
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item modal_delete" href="javascript:void(0)" data-id="'.$id_master_klinis .'">
+                            <a class="dropdown-item modal_delete" href="javascript:void(0)" data-id="'.$id_master_pemeriksaan .'">
                                 <i class="bi bi-x"></i> Hapus
                             </a>
                         </li>

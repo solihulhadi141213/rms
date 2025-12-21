@@ -35,11 +35,11 @@
                         <div class="col-8">
                             <select name="OrderBy" id="OrderBy" class="form-control">
                                 <option value="">Pilih</option>
-                                <option value="nama_klinis">Nama Klinis</option>
-                                <option value="kategori">Kategori</option>
-                                <option value="snomed_code">Snomed Code</option>
-                                <option value="snomed_display">Snomed Display</option>
-                                <option value="aktif">Status</option>
+                                <option value="nama_pemeriksaan">Nama Pemeriksaan</option>
+                                <option value="modalitas">Modalitas</option>
+                                <option value="pemeriksaan_code">Code</option>
+                                <option value="pemeriksaan_description">Description</option>
+                                <option value="bodysite_description">Body Site</option>
                             </select>
                         </div>
                     </div>
@@ -65,11 +65,11 @@
                         <div class="col-8">
                             <select name="keyword_by" id="KeywordBy" class="form-control">
                                 <option value="">Pilih</option>
-                                <option value="nama_klinis">Nama Klinis</option>
-                                <option value="kategori">Kategori</option>
-                                <option value="snomed_code">Snomed Code</option>
-                                <option value="snomed_display">Snomed Display</option>
-                                <option value="aktif">Status</option>
+                                <option value="nama_pemeriksaan">Nama Pemeriksaan</option>
+                                <option value="modalitas">Modalitas</option>
+                                <option value="pemeriksaan_code">Code</option>
+                                <option value="pemeriksaan_description">Description</option>
+                                <option value="bodysite_description">Body Site</option>
                             </select>
                         </div>
                     </div>
@@ -102,56 +102,84 @@
         <div class="modal-content">
             <form action="javascript:void(0);" id="ProsesTambah" autocomplete="off">
                 <div class="modal-header">
-                    <h5 class="modal-title text-dark"><i class="bi bi-plus"></i> Tambah Kode Klinis</h5>
+                    <h5 class="modal-title text-dark"><i class="bi bi-plus"></i> Tambah Kode Pemeriksaan</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row mb-3">
                         <div class="col-md-12">
-                            <label for="nama_klinis">
-                                <small>Nama Klinis</small>
+                            <label for="nama_pemeriksaan">
+                                <small>Nama Pemeriksaan</small>
                             </label>
-                            <input type="text" class="form-control" name="nama_klinis" id="nama_klinis" required>
+                            <input type="text" class="form-control" name="nama_pemeriksaan" id="nama_pemeriksaan" required>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-md-12">
-                            <label for="snomed_code">
-                                <small>Kode Klinis</small>
+                            <label for="modalitas">
+                                <small>Modalitas/Alat</small>
                             </label>
-                            <input type="text" class="form-control" name="snomed_code" id="snomed_code" required>
-                            <small class="text text-grayish">Kode Berdasarkan SNOMED-CT</small>
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-md-12">
-                            <label for="snomed_display">
-                                <small>Display Klinis</small>
-                            </label>
-                            <input type="text" class="form-control" name="snomed_display" id="snomed_display" required>
-                            <small class="text text-grayish">Deskripsi Berdasarkan SNOMED-CT</small>
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-md-12">
-                            <label for="kategori">
-                                <small>Kategori</small>
-                            </label>
-                            <input type="text" class="form-control" name="kategori" id="kategori" list="list_kategori" required>
-                            <datalist id="list_kategori" class="list_kategori">
-                                <!-- Disini Akan Di Load List Kategori -->
-                            </datalist>
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-md-12">
-                            <label for="aktif">
-                                <small>Status</small>
-                            </label>
-                            <select name="aktif" id="aktif" class="form-control">
-                                <option value="1">Active</option>
-                                <option value="0">Inactive</option>
+                            <select name="modalitas" id="modalitas" class="form-control" required>
+                                <option value="">Pilih</option>
+                                <option value="XR">X-Ray</option>
+                                <option value="CT">CT-Scan</option>
+                                <option value="US">USG</option>
+                                <option value="MR">MRI</option>
+                                <option value="NM">Nuclear Medicine (Kedokteran nuklir)</option>
+                                <option value="PT">PET Scan</option>
+                                <option value="DX">Digital Radiography</option>
+                                <option value="CR">Computed Radiography</option>
                             </select>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <label for="pemeriksaan_code">
+                                <small><i>LOINC Code</i></small>
+                            </label>
+                            <input type="text" class="form-control" name="pemeriksaan_code" id="pemeriksaan_code" required>
+                            <small class="text text-grayish">Kode Pemeriksaan Berdasarkan LOINC</small>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <label for="pemeriksaan_description">
+                                <small><i>LOINC Description</i></small>
+                            </label>
+                            <input type="text" class="form-control" name="pemeriksaan_description" id="pemeriksaan_description" required>
+                            <small class="text text-grayish">Deskripsi Pemeriksaan Berdasarkan LOINC</small>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <label for="pemeriksaan_sys">
+                                <small><i>URL Reference</i></small>
+                            </label>
+                            <input type="url" class="form-control" name="pemeriksaan_sys" id="pemeriksaan_sys" value="http://loinc.org" required>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <label for="bodysite_code">
+                                <small><i>Body Site Code</i></small>
+                            </label>
+                            <input type="text" class="form-control" name="bodysite_code" id="bodysite_code" required>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <label for="bodysite_description">
+                                <small><i>Body Site Description</i></small>
+                            </label>
+                            <input type="text" class="form-control" name="bodysite_description" id="bodysite_description" required>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <label for="bodysite_sys">
+                                <small><i>Body Site Reference</i></small>
+                            </label>
+                            <input type="url" class="form-control" name="bodysite_sys" id="bodysite_sys" value="http://snomed.info/sct" required>
                         </div>
                     </div>
                     <div class="row">
@@ -177,7 +205,7 @@
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title text-dark"><i class="bi bi-info-circle"></i> Detail Kode Klinis</h5>
+                <h5 class="modal-title text-dark"><i class="bi bi-info-circle"></i> Detail Kode Pemeriksaan</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
