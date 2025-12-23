@@ -1,0 +1,18 @@
+[
+    {
+        "id_kesan"        : "2g4d-5tr4-3ecd-4r6h-5h5y",
+        "id_master_klinis": 1,
+        "nama_klinis"     : "Sesak napas",
+        "snomed_code"     : "267036007",
+        "snomed_display"  : "Dyspnea",
+        "kategori"        : "Respirasi"
+    },
+    {
+        "id_kesan"        : "2g4d-5tr4-3ecd-4r6h-5h5y",
+        "id_master_klinis": null,
+        "nama_klinis"     : "Keringat Dingin",
+        "snomed_code"     : "",
+        "snomed_display"  : "",
+        "kategori"        : ""
+    }
+]

@@ -98,24 +98,24 @@
     //KONDISI PENGATURAN MASING FILTER
     if(empty($keyword_by)){
         if(empty($keyword)){
-            $query = mysqli_query($Conn, "SELECT*FROM radiologi ORDER BY $OrderBy $ShortBy LIMIT $posisi, $batas");
+            $query = mysqli_query($Conn, "SELECT id_radiologi, id_pasien, id_kunjungan, id_service_request, nama_pasien, priority, asal_kiriman, alat_pemeriksa, radiografer, tujuan, pembayaran, datetime_diminta, status_pemeriksaan  FROM radiologi ORDER BY $OrderBy $ShortBy LIMIT $posisi, $batas");
         }else{
-            $query = mysqli_query($Conn, "SELECT*FROM radiologi WHERE id_pasien like '%$keyword%' OR nama_pasien like '%$keyword%' OR asal_kiriman like '%$keyword%' OR alat_pemeriksa like '%$keyword%' OR radiografer like '%$keyword%' OR tujuan like '%$keyword%' OR tujuan like '%$pembayaran%' OR tujuan like '%$status_pemeriksaan%' ORDER BY $OrderBy $ShortBy LIMIT $posisi, $batas");
+            $query = mysqli_query($Conn, "SELECT id_radiologi, id_pasien, id_kunjungan, id_service_request, nama_pasien, priority, asal_kiriman, alat_pemeriksa, radiografer, tujuan, pembayaran, datetime_diminta, status_pemeriksaan FROM radiologi WHERE id_pasien like '%$keyword%' OR nama_pasien like '%$keyword%' OR asal_kiriman like '%$keyword%' OR alat_pemeriksa like '%$keyword%' OR radiografer like '%$keyword%' OR tujuan like '%$keyword%' OR tujuan like '%$pembayaran%' OR tujuan like '%$status_pemeriksaan%' ORDER BY $OrderBy $ShortBy LIMIT $posisi, $batas");
         }
     }else{
         if(empty($keyword)){
-            $query = mysqli_query($Conn, "SELECT*FROM radiologi ORDER BY $OrderBy $ShortBy LIMIT $posisi, $batas");
-        }else{
-            $query = mysqli_query($Conn, "SELECT*FROM radiologi WHERE $keyword_by like '%$keyword%' ORDER BY $OrderBy $ShortBy LIMIT $posisi, $batas");
+            $query = mysqli_query($Conn, "SELECT id_radiologi, id_pasien, id_kunjungan, id_service_request, nama_pasien, priority, asal_kiriman, alat_pemeriksa, radiografer, tujuan, pembayaran, datetime_diminta, status_pemeriksaan FROM radiologi ORDER BY $OrderBy $ShortBy LIMIT $posisi, $batas");
+        }else{ 
+            $query = mysqli_query($Conn, "SELECT id_radiologi, id_pasien, id_kunjungan, id_service_request, nama_pasien, priority, asal_kiriman, alat_pemeriksa, radiografer, tujuan, pembayaran, datetime_diminta, status_pemeriksaan FROM radiologi WHERE $keyword_by like '%$keyword%' ORDER BY $OrderBy $ShortBy LIMIT $posisi, $batas");
         }
     }
     while ($data = mysqli_fetch_array($query)) {
         $id_radiologi       = $data['id_radiologi'];
-        $id_access          = $data['id_access'];
         $id_pasien          = $data['id_pasien'];
         $id_kunjungan       = $data['id_kunjungan'];
-        $accession_number   = $data['accession_number'];
+        $id_service_request = $data['id_service_request'];
         $nama_pasien        = $data['nama_pasien'];
+        $priority           = $data['priority'];
         $asal_kiriman       = $data['asal_kiriman'];
         $alat_pemeriksa     = $data['alat_pemeriksa'];
         $radiografer        = $data['radiografer'];
@@ -123,44 +123,124 @@
         $pembayaran         = $data['pembayaran'];
         $datetime_diminta   = $data['datetime_diminta'];
         $status_pemeriksaan = $data['status_pemeriksaan'];
-        $datetime_diminta_format = date('d/m/Y H:i', strtotime($datetime_diminta));
+        $tanggal            = date('d/m/Y', strtotime($datetime_diminta));
+        $jam                = date('H:i', strtotime($datetime_diminta));
+
+        if(empty($data['radiografer'])){
+            $radiografer = "-";
+        }
+
+        // Nama Modalitas
+        $nama_modalitas = [
+            'XR' => 'X-Ray',
+            'CT' => 'CT-Scan',
+            'US' => 'USG',
+            'MR' => 'MRI',
+            'NM' => 'Nuclear Medicine (Kedokteran Nuklir)',
+            'PT' => 'PET Scan',
+            'DX' => 'Digital Radiography',
+            'CR' => 'Computed Radiography'
+        ];
+
+        // Ambil nama modalitas
+        $modalitas_nama = $nama_modalitas[$alat_pemeriksa] ?? '-';
+
+        //Routing Status
+        if($status_pemeriksaan=="Diminta"){
+            $label_status = '<span class="badge bg-warning">Diminta</span>';
+        }else{
+            if($status_pemeriksaan=="Dikerjakan"){
+                $label_status = '<span class="badge bg-info">Dikerjakan</span>';
+            }else{
+                if($status_pemeriksaan=="Hasil"){
+                    $label_status = '<span class="badge bg-primary">Hasil</span>';
+                }else{
+                    if($status_pemeriksaan=="Selesai"){
+                        $label_status = '<span class="badge bg-success">Selesai</span>';
+                    }else{
+                        if($status_pemeriksaan=="Batal"){
+                            $label_status = '<span class="badge bg-danger">Batal</span>';
+                        }else{
+                            $label_status = '<span class="badge bg-dark">None</span>';
+                        }
+                    }
+                }
+            }
+        }
+
+        // Routing Service Request
+        if(empty($id_service_request)){
+            $sr = '<span class="text-danger"><i class="bi bi-x-circle"></i></span>';
+        }else{
+            $sr = '<span class="text-success"><i class="bi bi-check-circle"></i></span>';
+        }
+
+        //Routing Periority
+        if($priority=="routine"){
+            $priority_label='bg-success';
+        }else{
+            if($priority=="urgent"){
+                $priority_label='bg-warning';
+            }else{
+                if($priority=="stat"){
+                    $priority_label='bg-danger';
+                }else{
+                    $priority_label='bg-dark';
+                }
+            }
+        }
+        //klasifikasi prioritas
+        $priority_list = [
+            'routine' => 'Biasa',
+            'urgent'  => 'Segera',
+            'stat'    => 'Gawat'
+        ];
+        $priority_name = $priority_list[$priority] ?? '-';
        
         echo '
             <tr>
                 <td><small>'.$no.'</small></td>
+                <td><small><small>'.$id_pasien.'</small></small></td>
+                <td><small><small>'.$id_kunjungan.'</small></small></td>
                 <td>
-                    <a href="javascript:void(0);" class="modal_detail" data-id="'.$id_access .'">
-                        <small class="underscore_doted">'.$id_pasien.'</small>
+                    <a href="javascript:void(0);" class="modal_detail" data-id="'.$id_radiologi .'" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Lihat Detail Pemeriksaan">
+                        <small>
+                            <small class="underscore_doted">'.$nama_pasien.'</small>
+                        </small>
                     </a>
                 </td>
-                <td><small>'.$nama_pasien.'</small></td>
-                <td><small>'.$datetime_diminta_format.'</small></td>
-                <td><small>'.$tujuan.'</small></td>
-                <td><small>'.$pembayaran.'</small></td>
-                <td><small>'.$asal_kiriman.'</small></td>
-                <td><small>'.$alat_pemeriksa.'</small></td>
-                <td><small>'.$radiografer.'</small></td>
-                <td><small>'.$status_pemeriksaan.'</small></td>
-                <td>
+                <td><small><small>'.$tanggal.'</small></small></td>
+                <td><small><small>'.$jam.'</small></small></td>
+                <td><small><small>'.$tujuan.'</small></small></td>
+                <td><small><small>'.$pembayaran.'</small></small></td>
+                <td><small><small>'.$asal_kiriman.'</small></small></td>
+                <td><small><small>'.$modalitas_nama.'</small></small></td>
+                <td><small><small>'.$radiografer.'</small></small></td>
+                <td><small>'.$label_status.'</small></td>
+                <td class="text-center"><small>'.$sr.'</small></td>
+                <td class="text-center">
                     <button type="button" class="btn btn-sm btn-outline-dark btn-floating"  data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="bi bi-three-dots-vertical"></i>
+                        <span class="position-absolute top-0 start-100 translate-middle p-2 '.$priority_label.' border border-light rounded-circle" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="'.$priority_name.'">
+                            <span class="visually-hidden">New alerts</span>
+                        </span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow" style="">
                         <li class="dropdown-header text-start">
                             <h6>Option</h6>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#ModalDetailAkses" data-id="'.$id_radiologi .'">
+                            <a class="dropdown-item modal_detail" href="javascript:void(0)" data-id="'.$id_radiologi .'">
                                 <i class="bi bi-info-circle"></i> Detail
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#ModalEditAkses" data-id="'.$id_radiologi .'">
+                            <a class="dropdown-item modal_edit" href="javascript:void(0)" data-id="'.$id_radiologi .'">
                                 <i class="bi bi-pencil"></i> Edit
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#ModalHapusAkses" data-id="'.$id_radiologi .'">
+                            <a class="dropdown-item modal_hapus" href="javascript:void(0)" data-id="'.$id_radiologi .'">
                                 <i class="bi bi-x"></i> Hapus
                             </a>
                         </li>
@@ -177,7 +257,7 @@
     var curent_page = <?php echo $page; ?>;
     
     //Put Into Pagging Element
-    $('#page_info').html(''+curent_page+' / '+page_count+'');
+    $('#page_info').html('Page : '+curent_page+' / '+page_count+'');
     
     //Set Pagging Button
     if(curent_page==1){

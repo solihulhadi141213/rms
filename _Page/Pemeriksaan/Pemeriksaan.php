@@ -51,14 +51,21 @@
                                     <tr>
                                         <td valign="middle" class="text-center"><b><small>No</small></b></td>
                                         <td valign="middle" class="text-left"><b><small>RM</small></b></td>
-                                        <td valign="middle" class="text-left"><b><small>Nama<br>Pasien</small></b></td>
-                                        <td valign="middle" class="text-left"><b><small>Tgl/Jam</small></b></td>
+                                        <td valign="middle" class="text-left"><b><small>REG</small></b></td>
+                                        <td valign="middle" class="text-left"><b><small>Nama Pasien</small></b></td>
+                                        <td valign="middle" class="text-left"><b><small>Tanggal</small></b></td>
+                                        <td valign="middle" class="text-left"><b><small>Jam</small></b></td>
                                         <td valign="middle" class="text-left"><b><small>Tujuan</small></b></td>
                                         <td valign="middle" class="text-left"><b><small>Pembayaran</small></b></td>
-                                        <td valign="middle" class="text-left"><b><small>Asal<br>Kiriman</small></b></td>
-                                        <td valign="middle" class="text-left"><b><small>Modality</small></b></td>
+                                        <td valign="middle" class="text-left"><b><small>Asal Kiriman</small></b></td>
+                                        <td valign="middle" class="text-left"><b><small>Modalitas</small></b></td>
                                         <td valign="middle" class="text-left"><b><small>Radiografer</small></b></td>
                                         <td valign="middle" class="text-left"><b><small>Status</small></b></td>
+                                        <td valign="middle" class="text-center">
+                                            <b data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Service Request">
+                                                <small>SR</small>
+                                            </b>
+                                        </td>
                                         <td valign="middle" class="text-center"><b><small>Opsi</small></b></td>
                                     </tr>
                                 </thead>

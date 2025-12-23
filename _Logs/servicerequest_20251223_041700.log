@@ -1,0 +1,61 @@
+{
+    "timestamp": "2025-12-23 04:17:00",
+    "id_radiologi": "7",
+    "url": "https:\/\/api-satusehat.kemkes.go.id\/fhir-r4\/v1\/ServiceRequest",
+    "http_code": 201,
+    "payload": {
+        "resourceType": "ServiceRequest",
+        "status": "active",
+        "intent": "order",
+        "priority": "routine",
+        "category": [
+            {
+                "coding": [
+                    {
+                        "system": "http:\/\/snomed.info\/sct",
+                        "code": "363679005",
+                        "display": "Imaging"
+                    }
+                ]
+            }
+        ],
+        "code": {
+            "coding": [
+                {
+                    "system": "http:\/\/loinc.org",
+                    "code": "30746-2",
+                    "display": "Chest X-ray AP view"
+                }
+            ],
+            "text": "Ini Hanya Percobadsad asdasd sad asdasd"
+        },
+        "subject": {
+            "reference": "Patient\/P00764921882"
+        },
+        "encounter": {
+            "reference": "Encounter\/39727917-c32b-41f9-90f1-5115d92e14fb",
+            "display": "Permintaan Radiologi"
+        },
+        "occurrenceDateTime": "2025-12-22T19:48:00+07:00",
+        "authoredOn": "2025-12-22T19:48:00+07:00",
+        "requester": {
+            "reference": "Practitioner\/10012618746",
+            "display": "drg.DALHARI"
+        },
+        "performer": [
+            {
+                "reference": "Practitioner\/10012618746",
+                "display": "drg.DALHARI"
+            }
+        ],
+        "reasonCode": [
+            {
+                "text": "Ini Hanya Percobadsad asdasd sad asdasd"
+            }
+        ]
+    },
+    "payload_json": "{\"resourceType\":\"ServiceRequest\",\"status\":\"active\",\"intent\":\"order\",\"priority\":\"routine\",\"category\":[{\"coding\":[{\"system\":\"http:\/\/snomed.info\/sct\",\"code\":\"363679005\",\"display\":\"Imaging\"}]}],\"code\":{\"coding\":[{\"system\":\"http:\/\/loinc.org\",\"code\":\"30746-2\",\"display\":\"Chest X-ray AP view\"}],\"text\":\"Ini Hanya Percobadsad asdasd sad asdasd\"},\"subject\":{\"reference\":\"Patient\/P00764921882\"},\"encounter\":{\"reference\":\"Encounter\/39727917-c32b-41f9-90f1-5115d92e14fb\",\"display\":\"Permintaan Radiologi\"},\"occurrenceDateTime\":\"2025-12-22T19:48:00+07:00\",\"authoredOn\":\"2025-12-22T19:48:00+07:00\",\"requester\":{\"reference\":\"Practitioner\/10012618746\",\"display\":\"drg.DALHARI\"},\"performer\":[{\"reference\":\"Practitioner\/10012618746\",\"display\":\"drg.DALHARI\"}],\"reasonCode\":[{\"text\":\"Ini Hanya Percobadsad asdasd sad asdasd\"}]}",
+    "response": "{\"authoredOn\":\"2025-12-22T19:48:00+07:00\",\"category\":[{\"coding\":[{\"code\":\"363679005\",\"display\":\"Imaging\",\"system\":\"http:\/\/snomed.info\/sct\"}]}],\"code\":{\"coding\":[{\"code\":\"30746-2\",\"display\":\"Chest X-ray AP view\",\"system\":\"http:\/\/loinc.org\"}],\"text\":\"Ini Hanya Percobadsad asdasd sad asdasd\"},\"encounter\":{\"display\":\"Permintaan Radiologi\",\"reference\":\"Encounter\/39727917-c32b-41f9-90f1-5115d92e14fb\"},\"id\":\"a0d1e8db-dcd4-4842-a1ac-0bb3943f0946\",\"identifier\":[],\"intent\":\"order\",\"meta\":{\"lastUpdated\":\"2025-12-22T21:16:59.295222+00:00\",\"versionId\":\"MTc2NjQzODIxOTI5NTIyMjAwMA\"},\"occurrenceDateTime\":\"2025-12-22T19:48:00+07:00\",\"performer\":[{\"display\":\"drg.DALHARI\",\"reference\":\"Practitioner\/10012618746\"}],\"priority\":\"routine\",\"reasonCode\":[{\"text\":\"Ini Hanya Percobadsad asdasd sad asdasd\"}],\"requester\":{\"display\":\"drg.DALHARI\",\"reference\":\"Practitioner\/10012618746\"},\"resourceType\":\"ServiceRequest\",\"status\":\"active\",\"subject\":{\"reference\":\"Patient\/P00764921882\"}}",
+    "curl_error": "",
+    "token_preview": "dTgdanA2GUwLczYzsOjo..."
+}

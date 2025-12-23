@@ -1,0 +1,24 @@
+[
+    {
+        "id_master_pemeriksaan":1,
+        "nama_pemeriksaan":"Foto Thorax PA",
+        "modalitas":"XR",
+        "pemeriksaan_code":"30745-4",
+        "pemeriksaan_description":"Chest X-ray PA view",
+        "pemeriksaan_sys":"http://loinc.org",
+        "bodysite_code":"51185008",
+        "bodysite_description":"Thorax",
+        "bodysite_sys":"http://snomed.info/sct"
+    },
+    {
+        "id_master_pemeriksaan":null,
+        "nama_pemeriksaan":"BNO 2 Posisi",
+        "modalitas":"XR",
+        "pemeriksaan_code":"",
+        "pemeriksaan_description":"",
+        "pemeriksaan_sys":"",
+        "bodysite_code":"",
+        "bodysite_description":"",
+        "bodysite_sys":""
+    }
+]

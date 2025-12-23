@@ -133,7 +133,9 @@
     // ===============================
     foreach ($list_kunjungan as $row) {
 
-        $alamat = $row['alamat']['desa'].' - '.$row['alamat']['kecamatan'];
+        $alamat            = $row['alamat']['desa'].' - '.$row['alamat']['kecamatan'];
+        $encounter         = $row['id_encounter'];
+        $display_encounter = empty($encounter) ? '-' : substr($encounter, 0, 8) . '..';
 
         echo '
             <tr>
@@ -143,6 +145,7 @@
                 <td><small>'.date('d/m/Y H:i T', strtotime($row['tanggal'])).'</small></td>
                 <td><small>'.$row['tujuan'].'</small></td>
                 <td><small>'.$row['poliklinik'].' / '.$row['ruangan'].'</small></td>
+                <td><small>'.$display_encounter.'</small></td>
                 <td><small>'.$row['status'].'</small></td>
                 <td>
                     <button type="button" class="btn btn-sm btn-secondary btn-floating modal_tambah_permintaan" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Buat Permintaan Radiologi" data-id="'.$row['id_kunjungan'].'">

@@ -1,0 +1,68 @@
+{
+    "timestamp": "2025-12-23 04:49:21",
+    "id_radiologi": "11",
+    "url": "https:\/\/api-satusehat.kemkes.go.id\/fhir-r4\/v1\/ServiceRequest",
+    "http_code": 201,
+    "payload": {
+        "resourceType": "ServiceRequest",
+        "status": "active",
+        "intent": "order",
+        "priority": "routine",
+        "category": [
+            {
+                "coding": [
+                    {
+                        "system": "http:\/\/snomed.info\/sct",
+                        "code": "363679005",
+                        "display": "Imaging"
+                    }
+                ]
+            }
+        ],
+        "code": {
+            "coding": [
+                {
+                    "system": "http:\/\/loinc.org",
+                    "code": "30738-9",
+                    "display": "Abdomen X-ray"
+                }
+            ],
+            "text": "Cetak 2 Gambar"
+        },
+        "subject": {
+            "reference": "Patient\/P00920297865"
+        },
+        "encounter": {
+            "reference": "Encounter\/7d8aaeba-4f54-423b-a3c1-dd78f8ecda01",
+            "display": "Permintaan Radiologi"
+        },
+        "occurrenceDateTime": "2025-12-23T04:47:00+07:00",
+        "authoredOn": "2025-12-23T04:47:00+07:00",
+        "requester": {
+            "reference": "Practitioner\/10010596324",
+            "display": "dr. Eha julaeha"
+        },
+        "performer": [
+            {
+                "reference": "Practitioner\/10010596324",
+                "display": "dr. Eha julaeha"
+            }
+        ],
+        "reasonCode": [
+            {
+                "text": "Sakit kepala",
+                "coding": [
+                    {
+                        "system": "http:\/\/snomed.info\/sct",
+                        "code": "25064002",
+                        "display": "Headache"
+                    }
+                ]
+            }
+        ]
+    },
+    "payload_json": "{\"resourceType\":\"ServiceRequest\",\"status\":\"active\",\"intent\":\"order\",\"priority\":\"routine\",\"category\":[{\"coding\":[{\"system\":\"http:\/\/snomed.info\/sct\",\"code\":\"363679005\",\"display\":\"Imaging\"}]}],\"code\":{\"coding\":[{\"system\":\"http:\/\/loinc.org\",\"code\":\"30738-9\",\"display\":\"Abdomen X-ray\"}],\"text\":\"Cetak 2 Gambar\"},\"subject\":{\"reference\":\"Patient\/P00920297865\"},\"encounter\":{\"reference\":\"Encounter\/7d8aaeba-4f54-423b-a3c1-dd78f8ecda01\",\"display\":\"Permintaan Radiologi\"},\"occurrenceDateTime\":\"2025-12-23T04:47:00+07:00\",\"authoredOn\":\"2025-12-23T04:47:00+07:00\",\"requester\":{\"reference\":\"Practitioner\/10010596324\",\"display\":\"dr. Eha julaeha\"},\"performer\":[{\"reference\":\"Practitioner\/10010596324\",\"display\":\"dr. Eha julaeha\"}],\"reasonCode\":[{\"text\":\"Sakit kepala\",\"coding\":[{\"system\":\"http:\/\/snomed.info\/sct\",\"code\":\"25064002\",\"display\":\"Headache\"}]}]}",
+    "response": "{\"authoredOn\":\"2025-12-23T04:47:00+07:00\",\"category\":[{\"coding\":[{\"code\":\"363679005\",\"display\":\"Imaging\",\"system\":\"http:\/\/snomed.info\/sct\"}]}],\"code\":{\"coding\":[{\"code\":\"30738-9\",\"display\":\"Abdomen X-ray\",\"system\":\"http:\/\/loinc.org\"}],\"text\":\"Cetak 2 Gambar\"},\"encounter\":{\"display\":\"Permintaan Radiologi\",\"reference\":\"Encounter\/7d8aaeba-4f54-423b-a3c1-dd78f8ecda01\"},\"id\":\"89b1157c-64a6-4031-a591-4f825afe2dc2\",\"identifier\":[],\"intent\":\"order\",\"meta\":{\"lastUpdated\":\"2025-12-22T21:49:20.973122+00:00\",\"versionId\":\"MTc2NjQ0MDE2MDk3MzEyMjAwMA\"},\"occurrenceDateTime\":\"2025-12-23T04:47:00+07:00\",\"performer\":[{\"display\":\"dr. Eha julaeha\",\"reference\":\"Practitioner\/10010596324\"}],\"priority\":\"routine\",\"reasonCode\":[{\"coding\":[{\"code\":\"25064002\",\"display\":\"Headache\",\"system\":\"http:\/\/snomed.info\/sct\"}],\"text\":\"Sakit kepala\"}],\"requester\":{\"display\":\"dr. Eha julaeha\",\"reference\":\"Practitioner\/10010596324\"},\"resourceType\":\"ServiceRequest\",\"status\":\"active\",\"subject\":{\"reference\":\"Patient\/P00920297865\"}}",
+    "curl_error": "",
+    "token_preview": "dTgdanA2GUwLczYzsOjo..."
+}

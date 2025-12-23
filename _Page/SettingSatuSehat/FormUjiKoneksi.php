@@ -74,9 +74,9 @@
     // VARIABEL
     // =======================
     $url_connection_satu_sehat = rtrim($Data['url_connection_satu_sehat'], '/');
-    $organization_id            = $Data['organization_id'];
-    $client_key           = $Data['client_key'];
-    $secret_key           = $Data['secret_key'];
+    $organization_id           = $Data['organization_id'];
+    $client_key                = $Data['client_key'];
+    $secret_key                = $Data['secret_key'];
 
     // =======================
     // REQUEST TOKEN (cURL)

@@ -1,0 +1,68 @@
+{
+    "timestamp": "2025-12-23 04:28:17",
+    "id_radiologi": "8",
+    "url": "https:\/\/api-satusehat.kemkes.go.id\/fhir-r4\/v1\/ServiceRequest",
+    "http_code": 201,
+    "payload": {
+        "resourceType": "ServiceRequest",
+        "status": "active",
+        "intent": "order",
+        "priority": "urgent",
+        "category": [
+            {
+                "coding": [
+                    {
+                        "system": "http:\/\/snomed.info\/sct",
+                        "code": "363679005",
+                        "display": "Imaging"
+                    }
+                ]
+            }
+        ],
+        "code": {
+            "coding": [
+                {
+                    "system": "http:\/\/loinc.org",
+                    "code": "30746-2",
+                    "display": "Chest X-ray AP view"
+                }
+            ],
+            "text": "Tolong menggunakan kontras"
+        },
+        "subject": {
+            "reference": "Patient\/P00764921882"
+        },
+        "encounter": {
+            "reference": "Encounter\/39727917-c32b-41f9-90f1-5115d92e14fb",
+            "display": "Permintaan Radiologi"
+        },
+        "occurrenceDateTime": "2025-12-22T20:14:00+07:00",
+        "authoredOn": "2025-12-22T20:14:00+07:00",
+        "requester": {
+            "reference": "Practitioner\/10012618746",
+            "display": "drg.DALHARI"
+        },
+        "performer": [
+            {
+                "reference": "Practitioner\/10012618746",
+                "display": "drg.DALHARI"
+            }
+        ],
+        "reasonCode": [
+            {
+                "text": "Sakit kepala",
+                "coding": [
+                    {
+                        "system": "http:\/\/snomed.info\/sct",
+                        "code": "25064002",
+                        "display": "Headache"
+                    }
+                ]
+            }
+        ]
+    },
+    "payload_json": "{\"resourceType\":\"ServiceRequest\",\"status\":\"active\",\"intent\":\"order\",\"priority\":\"urgent\",\"category\":[{\"coding\":[{\"system\":\"http:\/\/snomed.info\/sct\",\"code\":\"363679005\",\"display\":\"Imaging\"}]}],\"code\":{\"coding\":[{\"system\":\"http:\/\/loinc.org\",\"code\":\"30746-2\",\"display\":\"Chest X-ray AP view\"}],\"text\":\"Tolong menggunakan kontras\"},\"subject\":{\"reference\":\"Patient\/P00764921882\"},\"encounter\":{\"reference\":\"Encounter\/39727917-c32b-41f9-90f1-5115d92e14fb\",\"display\":\"Permintaan Radiologi\"},\"occurrenceDateTime\":\"2025-12-22T20:14:00+07:00\",\"authoredOn\":\"2025-12-22T20:14:00+07:00\",\"requester\":{\"reference\":\"Practitioner\/10012618746\",\"display\":\"drg.DALHARI\"},\"performer\":[{\"reference\":\"Practitioner\/10012618746\",\"display\":\"drg.DALHARI\"}],\"reasonCode\":[{\"text\":\"Sakit kepala\",\"coding\":[{\"system\":\"http:\/\/snomed.info\/sct\",\"code\":\"25064002\",\"display\":\"Headache\"}]}]}",
+    "response": "{\"authoredOn\":\"2025-12-22T20:14:00+07:00\",\"category\":[{\"coding\":[{\"code\":\"363679005\",\"display\":\"Imaging\",\"system\":\"http:\/\/snomed.info\/sct\"}]}],\"code\":{\"coding\":[{\"code\":\"30746-2\",\"display\":\"Chest X-ray AP view\",\"system\":\"http:\/\/loinc.org\"}],\"text\":\"Tolong menggunakan kontras\"},\"encounter\":{\"display\":\"Permintaan Radiologi\",\"reference\":\"Encounter\/39727917-c32b-41f9-90f1-5115d92e14fb\"},\"id\":\"110be344-44c4-4bc7-99b1-ec1d4b21b2f8\",\"identifier\":[],\"intent\":\"order\",\"meta\":{\"lastUpdated\":\"2025-12-22T21:28:16.560110+00:00\",\"versionId\":\"MTc2NjQzODg5NjU2MDExMDAwMA\"},\"occurrenceDateTime\":\"2025-12-22T20:14:00+07:00\",\"performer\":[{\"display\":\"drg.DALHARI\",\"reference\":\"Practitioner\/10012618746\"}],\"priority\":\"urgent\",\"reasonCode\":[{\"coding\":[{\"code\":\"25064002\",\"display\":\"Headache\",\"system\":\"http:\/\/snomed.info\/sct\"}],\"text\":\"Sakit kepala\"}],\"requester\":{\"display\":\"drg.DALHARI\",\"reference\":\"Practitioner\/10012618746\"},\"resourceType\":\"ServiceRequest\",\"status\":\"active\",\"subject\":{\"reference\":\"Patient\/P00764921882\"}}",
+    "curl_error": "",
+    "token_preview": "dTgdanA2GUwLczYzsOjo..."
+}

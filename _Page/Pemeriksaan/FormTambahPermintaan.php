@@ -87,6 +87,14 @@
     // Buat Variabel Penting
     $id_encounter = $metadata['id_encounter'];
     $tujuan       = $metadata['tujuan'];
+    $id_dokter    = $metadata['id_dokter'];
+
+    //Routing asal kiriman
+    if($tujuan=="Rajal"){
+        $asal_kiriman = $metadata['poliklinik'];
+    }else{
+        $asal_kiriman = $metadata['ruangan'];
+    }
 
     //Tampilkan Form
     echo '
@@ -156,7 +164,7 @@
             </div>
             <div class="col-1"><small>:</small></div>
             <div class="col-7">
-                <input type="text" name="asal_kiriman" id="asal_kiriman" class="form-control" value="">
+                <input type="text" name="asal_kiriman" id="asal_kiriman" class="form-control" value="'.$asal_kiriman.'">
             </div>
         </div>
         <div class="row mb-2">
@@ -173,20 +181,14 @@
         </div>
         <div class="row mb-2">
             <div class="col-4">
-                <label for="alat_pemeriksa"><small>Modality/Alat</small></label>
+                <label for="priority"><small>Prioritisasi</small></label>
             </div>
             <div class="col-1"><small>:</small></div>
             <div class="col-7">
-                <select name="alat_pemeriksa" id="alat_pemeriksa" class="form-control">
-                    <option value="">Pilih</option>
-                    <option value="XR">X-Ray</option>
-                    <option value="US">USG / Echo</option>
-                    <option value="CT">CT Scan</option>
-                    <option value="MR">MRI</option>
-                    <option value="NM">Nuclear Medicine (Kedokteran nuklir)</option>
-                    <option value="PT">PET Scan</option>
-                    <option value="DX">Digital Radiography</option>
-                    <option value="CR">Computed Radiography</option>
+                <select name="priority" id="priority" class="form-control">
+                    <option value="routine">Biasa</option>
+                    <option value="urgent">Segera</option>
+                    <option value="stat">Gawat</option>
                 </select>
             </div>
         </div>
@@ -251,14 +253,17 @@
     echo '      <select name="dokter_pengirim" id="dokter_pengirim" class="form-control">';
     echo '          <option value="">Pilih</option>';
     foreach ($list_dokter as $row) {
-        $id_dokter           = $row['id_dokter'];
+        $id_dokter_list      = $row['id_dokter'];
         $kode                = $row['kode'];
         $nama                = $row['nama'];
         $kategori            = $row['kategori'];
         $id_ihs_practitioner = $row['id_ihs_practitioner'];
-        echo '
-            <option value="'.$id_dokter.'">'.$nama.'</option>
-        ';
+        if($id_dokter== $id_dokter_list){
+            echo '<option selected value="'.$id_dokter_list.'">'.$nama.'</option>';
+        }else{
+            echo '<option value="'.$id_dokter_list.'">'.$nama.'</option>';
+        }
+        
     }
     echo '      </select>';
     echo '  </div>';
@@ -271,7 +276,28 @@
             </div>
             <div class="col-1"><small>:</small></div>
             <div class="col-7">
-                <input type="text" name="klinis" id="klinis" class="form-control" value="">
+                <select name="klinis[]" id="klinis" class="form-control" multiple></select>
+            </div>
+        </div>
+    ';
+    echo '
+        <div class="row mb-2">
+            <div class="col-4">
+                <label for="alat_pemeriksa"><small>Modality/Alat</small></label>
+            </div>
+            <div class="col-1"><small>:</small></div>
+            <div class="col-7">
+                <select name="alat_pemeriksa" id="alat_pemeriksa" class="form-control">
+                    <option value="">Pilih</option>
+                    <option value="XR">X-Ray</option>
+                    <option value="US">USG / Echo</option>
+                    <option value="CT">CT Scan</option>
+                    <option value="MR">MRI</option>
+                    <option value="NM">Nuclear Medicine (Kedokteran nuklir)</option>
+                    <option value="PT">PET Scan</option>
+                    <option value="DX">Digital Radiography</option>
+                    <option value="CR">Computed Radiography</option>
+                </select>
             </div>
         </div>
     ';
@@ -282,7 +308,21 @@
             </div>
             <div class="col-1"><small>:</small></div>
             <div class="col-7">
-                <input type="text" name="permintaan_pemeriksaan" id="permintaan_pemeriksaan" class="form-control" value="">
+                <select name="permintaan_pemeriksaan" id="permintaan_pemeriksaan" class="form-control"></select>
+            </div>
+        </div>
+    ';
+    echo '
+        <div class="row mb-2">
+            <div class="col-4">
+                <label for="pesan"><small>Pesan / Keterangan</small></label>
+            </div>
+            <div class="col-1"><small>:</small></div>
+            <div class="col-7">
+                <textarea class="form-control" name="pesan" id="pesan"></textarea>
+                <small class="text text-grayish">
+                    <small>Pesan atau keterangan yang perlu disertakan. Misalnya : Tolong menggunakan kontras</small>
+                </small>
             </div>
         </div>
     ';

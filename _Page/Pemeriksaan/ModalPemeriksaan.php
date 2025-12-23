@@ -38,7 +38,7 @@
                                 <option value="id_pasien">No Rm</option>
                                 <option value="id_kunjungan">ID Reg</option>
                                 <option value="nama_pasien">Nama Pasien</option>
-                                <option value="datetime_diminta">Tgl/Waktu Permintaan</option>
+                                <option value="datetime_diminta">Tanggal</option>
                                 <option value="tujuan">Kunjungan</option>
                                 <option value="pembayaran">Pembayaran</option>
                                 <option value="asal_kiriman">Asal Kiriman</option>
@@ -72,7 +72,7 @@
                                 <option value="id_pasien">No Rm</option>
                                 <option value="id_kunjungan">ID Reg</option>
                                 <option value="nama_pasien">Nama Pasien</option>
-                                <option value="datetime_diminta">Tgl/Waktu Permintaan</option>
+                                <option value="datetime_diminta">Tanggal</option>
                                 <option value="tujuan">Kunjungan</option>
                                 <option value="pembayaran">Pembayaran</option>
                                 <option value="asal_kiriman">Asal Kiriman</option>
@@ -139,13 +139,14 @@
                                         <td><small><b>Tgl/Jam</b></small></td>
                                         <td><small><b>Tujuan</b></small></td>
                                         <td><small><b>Ruangan/Poli</b></small></td>
+                                        <td><small><b>Encounter</b></small></td>
                                         <td><small><b>Status</b></small></td>
                                         <td><small><b>Opsi</b></small></td>
                                     </tr>
                                 </thead>
                                 <tbody id="TabelKunjungan">
                                     <tr>
-                                        <td colspan="8" class="text-center">
+                                        <td colspan="9" class="text-center">
                                             <small>Tidak Ada Data Yang Ditampilkan</small>
                                         </td>
                                     </tr>
@@ -179,27 +180,144 @@
 
 <div class="modal fade" id="ModalTambahPermintaan" tabindex="-1">
     <div class="modal-dialog modal-lg">
+        <div class="modal-content border border-2 border-primary-subtle rounded-4 shadow-lg">
+            <form action="javascript:void(0);" id="ProsesTambah">
+                <div class="modal-header bg-light border-bottom border-3 border-primary">
+                    <h5 class="modal-title text-dark fw-semibold">
+                        <i class="bi bi-plus-circle-fill text-primary me-2"></i>
+                        Tambah Permintaan Pemeriksaan
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div class="row">
+                        <div class="col-12" id="FormTambahPermintaan"></div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-12" id="NotifikasiTambahPermintaan"></div>
+                    </div>
+                </div>
+                <div class="modal-footer bg-light border-top border-3 border-primary py-3">
+                    <button type="submit" class="btn btn-primary btn-rounded fw-medium px-4 py-2">
+                        <i class="bi bi-save me-2"></i> Simpan
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary btn-rounded fw-medium px-4 py-2" data-bs-dismiss="modal">
+                        <i class="bi bi-x-lg me-2"></i> Tutup
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ModalDetail" tabindex="-1">
+    <div class="modal-dialog modal-fullscreen">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title text-dark"><i class="bi bi-plus"></i> Tambah Permintaan Pemeriksaan</h5>
+            <div class="modal-header nav_background">
+                <h5 class="modal-title text-light"><i class="bi bi-info-circle"></i> Detail Pemeriksaan</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-12" id="FormTambahPermintaan"></div>
-                </div>
-                <div class="row">
-                    <div class="col-12" id="NotifikasiTambahPermintaan"></div>
+                    <div class="col-12" id="FormDetail">
+                        <!-- Menampilkan Form Detail Disini -->
+                    </div>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary btn-rounded">
-                    <i class="bi bi-save"></i> Simpan
-                </button>
+            <div class="modal-footer nav_background">
                 <button type="button" class="btn btn-secondary btn-rounded" data-bs-dismiss="modal">
                     <i class="bi bi-x-circle"></i> Tutup
                 </button>
             </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ModalServiceRequest" tabindex="-1">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content border border-2 border-primary-subtle rounded-4 shadow-lg">
+            <form action="javascript:void(0);" id="ProsesServiceRequest" autocomplete="off">
+                <div class="modal-header bg-light border-bottom border-1 border-primary">
+                    <h5 class="modal-title text-dark"><i class="bi bi-send"></i> Service Request</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12" id="FormServiceRequest">
+                            <!-- Form Akan Muncul Disini -->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12" id="NotifikasiFormServiceRequest">
+                            <!-- Notifikasi Proses Akan Muncul Disini -->
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer bg-light border-top border-1 border-primary py-3">
+                    <button type="submit" class="btn btn-primary btn-rounded">
+                        <i class="bi bi-send"></i> Kirim
+                    </button>
+                    <button type="button" class="btn btn-secondary btn-rounded" data-bs-dismiss="modal">
+                        <i class="bi bi-x-circle"></i> Tutup
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ModalDetailServiceRequest" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content border border-2 border-primary-subtle rounded-4 shadow-lg">
+            <div class="modal-header bg-light border-bottom border-1 border-primary">
+                <h5 class="modal-title text-dark"><i class="bi bi-info-circle"></i> Detail Service Request</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12" id="FormDetailServiceRequest">
+                        <!-- Form Akan Muncul Disini -->
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer bg-light border-top border-1 border-primary py-3">
+                <button type="button" class="btn btn-secondary btn-rounded" data-bs-dismiss="modal">
+                    <i class="bi bi-x-circle"></i> Tutup
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ModalHapus" tabindex="-1">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <form action="javascript:void(0);" id="ProsesHapus" autocomplete="off">
+                <div class="modal-header">
+                    <h5 class="modal-title text-dark"><i class="bi bi-trash"></i> Hapus Pemeriksaan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12" id="FormHapus">
+                            <!-- Form Delete Akan Muncul Disini -->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12" id="NotifikasiHapus">
+                            <!-- Notifikasi Proses Delete Akan Muncul Disini -->
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary btn-rounded">
+                        <i class="bi bi-check"></i> Hapus
+                    </button>
+                    <button type="button" class="btn btn-secondary btn-rounded" data-bs-dismiss="modal">
+                        <i class="bi bi-x-circle"></i> Tutup
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

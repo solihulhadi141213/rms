@@ -1,0 +1,64 @@
+{
+  "authoredOn": "2025-12-23T04:47:00+07:00",
+  "category": [
+    {
+      "coding": [
+        {
+          "code": "363679005",
+          "display": "Imaging",
+          "system": "http://snomed.info/sct"
+        }
+      ]
+    }
+  ],
+  "code": {
+    "coding": [
+      {
+        "code": "30738-9",
+        "display": "Abdomen X-ray",
+        "system": "http://loinc.org"
+      }
+    ],
+    "text": "Cetak 2 Gambar"
+  },
+  "encounter": {
+    "display": "Permintaan Radiologi",
+    "reference": "Encounter/7d8aaeba-4f54-423b-a3c1-dd78f8ecda01"
+  },
+  "id": "89b1157c-64a6-4031-a591-4f825afe2dc2",
+  "identifier": [],
+  "intent": "order",
+  "meta": {
+    "lastUpdated": "2025-12-22T21:49:20.973122+00:00",
+    "versionId": "MTc2NjQ0MDE2MDk3MzEyMjAwMA"
+  },
+  "occurrenceDateTime": "2025-12-23T04:47:00+07:00",
+  "performer": [
+    {
+      "display": "dr. Eha julaeha",
+      "reference": "Practitioner/10010596324"
+    }
+  ],
+  "priority": "routine",
+  "reasonCode": [
+    {
+      "coding": [
+        {
+          "code": "25064002",
+          "display": "Headache",
+          "system": "http://snomed.info/sct"
+        }
+      ],
+      "text": "Sakit kepala"
+    }
+  ],
+  "requester": {
+    "display": "dr. Eha julaeha",
+    "reference": "Practitioner/10010596324"
+  },
+  "resourceType": "ServiceRequest",
+  "status": "active",
+  "subject": {
+    "reference": "Patient/P00920297865"
+  }
+}

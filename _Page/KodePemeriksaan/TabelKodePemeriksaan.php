@@ -116,6 +116,22 @@
         $pemeriksaan_code        = $data['pemeriksaan_code'];
         $pemeriksaan_description = $data['pemeriksaan_description'];
         $bodysite_description    = $data['bodysite_description'];
+        
+        // Nama Modalitas
+        $nama_modalitas = [
+            'XR' => 'X-Ray',
+            'CT' => 'CT-Scan',
+            'US' => 'USG',
+            'MR' => 'MRI',
+            'NM' => 'Nuclear Medicine (Kedokteran Nuklir)',
+            'PT' => 'PET Scan',
+            'DX' => 'Digital Radiography',
+            'CR' => 'Computed Radiography'
+        ];
+
+        // Ambil nama modalitas
+        $modalitas_nama = $nama_modalitas[$modalitas] ?? '-';
+
        
         echo '
             <tr>
@@ -125,7 +141,7 @@
                         <small class="underscore_doted">'.$nama_pemeriksaan.'</small>
                     </a>
                 </td>
-                <td><small>'.$modalitas.'</small></td>
+                <td><small>'.$modalitas_nama.'</small></td>
                 <td><small><i>'.$pemeriksaan_code.'</i></small></td>
                 <td><small><i>'.$pemeriksaan_description.'</i></small></td>
                 <td><small>'.$bodysite_description.'</small></td>

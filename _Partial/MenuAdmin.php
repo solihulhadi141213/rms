@@ -92,7 +92,7 @@
         </li>
         <li class="nav-item">
             <a class="nav-link <?php if($PageMenu=="Pemeriksaan"){echo "";}else{echo "collapsed";} ?>" href="index.php?Page=Pemeriksaan">
-                <i class="bi bi-clipboard"></i> <span>Pemeriksaan</span>
+                <i class="bi bi-clipboard"></i> <span>Pemeriksaan Radiologi</span>
             </a>
         </li>
         <li class="nav-item">

@@ -1,4 +1,15 @@
 <?php
+    //Generate UID dengan sparator
+    function generateUUIDv4() {
+        $data = openssl_random_pseudo_bytes(16);
+        
+        // Set versi 4
+        $data[6] = chr(ord($data[6]) & 0x0f | 0x40);
+        // Set variant RFC 4122
+        $data[8] = chr(ord($data[8]) & 0x3f | 0x80);
+        
+        return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4));
+    }
     //Special Captcha
     function GenerateCaptcha($length) {
         $characters = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // Menghindari karakter ambigu
@@ -786,6 +797,270 @@
         // ===============================
         return $token;
     }
+
+    function formatDateTimeStrict($datetime) {
+        // Cek apakah null atau string kosong
+        if (is_null($datetime) || trim($datetime) === '') {
+            return '-';
+        }
+        
+        // Cek format tanggal MySQL yang tidak valid
+        $invalid_patterns = [
+            '0000-00-00 00:00:00',
+            '0000-00-00',
+            '1970-01-01 00:00:00',
+            '1970-01-01'
+        ];
+        
+        if (in_array($datetime, $invalid_patterns)) {
+            return '-';
+        }
+        
+        // Cek apakah bisa di-parse oleh strtotime
+        $timestamp = strtotime($datetime);
+        if ($timestamp === false || $timestamp <= 0) {
+            return '-';
+        }
+        
+        // Format yang valid
+        return date('d/m/Y H:i T', $timestamp);
+    }
+
+    // Fungsi Untuk Menghitung Usia Pasien
+    function hitungUsia($tanggal_lahir, $default = '-') {
+        // Jika tanggal lahir kosong, kembalikan default
+        if (empty(trim($tanggal_lahir)) || $tanggal_lahir == '-') {
+            return $default;
+        }
+        
+        try {
+            // Buat objek DateTime untuk tanggal lahir
+            $tgl_lahir = new DateTime($tanggal_lahir);
+            $sekarang = new DateTime();
+            
+            // Hitung selisih
+            $selisih = $sekarang->diff($tgl_lahir);
+            
+            // Format usia berdasarkan kondisi
+            if ($selisih->y >= 1) {
+                // Jika 1 tahun atau lebih
+                return $selisih->y . ' tahun';
+            } elseif ($selisih->m >= 1) {
+                // Jika 1 bulan atau lebih tapi kurang dari 1 tahun
+                $bulan = $selisih->m;
+                if ($selisih->d > 0) {
+                    return $bulan . ' bulan ' . $selisih->d . ' hari';
+                }
+                return $bulan . ' bulan';
+            } else {
+                // Jika kurang dari 1 bulan
+                return $selisih->d . ' hari';
+            }
+        } catch (Exception $e) {
+            // Jika format tanggal tidak valid
+            return $default;
+        }
+    }
+
+    // Menampilkan Format tanggal lahir pasien
+    function formatTanggalLahir($tanggal_lahir) {
+        // Cek jika kosong atau null
+        if (empty($tanggal_lahir) || $tanggal_lahir == '-' || trim($tanggal_lahir) == '') {
+            return '-';
+        }
+        
+        // Hapus spasi di awal dan akhir
+        $tanggal_lahir = trim($tanggal_lahir);
+        
+        // Coba berbagai format tanggal
+        $formats = [
+            'Y-m-d',      // 2024-01-15
+            'Y/m/d',      // 2024/01/15
+            'd-m-Y',      // 15-01-2024
+            'd/m/Y',      // 15/01/2024
+            'Ymd',        // 20240115
+            'd F Y',      // 15 January 2024
+            'j F Y',      // 15 January 2024 (tanpa leading zero)
+        ];
+        
+        foreach ($formats as $format) {
+            $date = DateTime::createFromFormat($format, $tanggal_lahir);
+            if ($date !== false) {
+                return $date->format('d/m/Y');
+            }
+        }
+        
+        // Jika semua format gagal, coba dengan strtotime
+        $timestamp = strtotime($tanggal_lahir);
+        if ($timestamp !== false) {
+            return date('d/m/Y', $timestamp);
+        }
+        
+        // Jika tidak bisa di-parse sama sekali
+        return '-';
+    }
+
+    // =========================================
+    // Fungsi Untuk Generate Token Satu Sehat
+    // =========================================
+    function generateTokenSatuSehat($Conn) {
+
+        // Validasi koneksi database
+        if (!$Conn || $Conn->connect_error) {
+            return [
+                'status' => 'error',
+                'message' => 'Koneksi database tidak valid!'
+            ];
+        }
+
+        // Ambil koneksi SATUSEHAT yang aktif
+        $Qry = $Conn->prepare("
+            SELECT 
+                id_connection_satu_sehat,
+                name_connection_satu_sehat,
+                url_connection_satu_sehat,
+                client_key,
+                secret_key,
+                token,
+                datetime_expired
+            FROM connection_satu_sehat
+            WHERE status_connection_satu_sehat = 1
+            LIMIT 1
+        ");
+
+        if (!$Qry->execute()) {
+            return [
+                'status' => 'error',
+                'message' => 'Error Database: ' . $Conn->error
+            ];
+        }
+
+        $Result = $Qry->get_result();
+        $Data   = $Result->fetch_assoc();
+        $Qry->close();
+
+        if (!$Data) {
+            return [
+                'status' => 'error',
+                'message' => 'Tidak ada koneksi Satu Sehat yang aktif!'
+            ];
+        }
+
+        // Ambil data
+        $id_connection = $Data['id_connection_satu_sehat'];
+        $url_api       = rtrim($Data['url_connection_satu_sehat'], '/');
+        $client_key    = $Data['client_key'];
+        $secret_key    = $Data['secret_key'];
+        $token_db      = $Data['token'];
+        $expired_db    = $Data['datetime_expired'];
+
+        // =====================================================
+        // 1️⃣ JIKA TOKEN MASIH ADA & BELUM EXPIRED → PAKAI
+        // =====================================================
+        if (!empty($token_db) && !empty($expired_db)) {
+            if (strtotime($expired_db) > time()) {
+                return [
+                    'status'  => 'success',
+                    'message' => 'Token masih valid (cache)',
+                    'token'   => $token_db
+                ];
+            }
+        }
+
+        // =====================================================
+        // 2️⃣ TOKEN KOSONG / EXPIRED → REQUEST TOKEN BARU
+        // =====================================================
+        $ch = curl_init();
+
+        curl_setopt_array($ch, [
+            CURLOPT_URL            => $url_api . '/oauth2/v1/accesstoken?grant_type=client_credentials',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_POST           => true,
+            CURLOPT_POSTFIELDS     => 'client_id='.$client_key.'&client_secret='.$secret_key.'',
+            CURLOPT_HTTPHEADER => [
+                'Content-Type: application/x-www-form-urlencoded'
+            ],
+            CURLOPT_CONNECTTIMEOUT => 5,
+            CURLOPT_TIMEOUT        => 10,
+
+            //Prod Only
+            // CURLOPT_SSL_VERIFYPEER => true,
+            // CURLOPT_SSL_VERIFYHOST => 2
+
+            // DEV ONLY
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_SSL_VERIFYHOST => false
+        ]);
+
+        $response   = curl_exec($ch);
+        $http_code  = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $curl_error = curl_error($ch);
+        curl_close($ch);
+
+        if ($response === false) {
+            return [
+                'status' => 'error',
+                'message' => 'Gagal menghubungi API Satu Sehat: ' . $curl_error
+            ];
+        }
+
+        if ($http_code !== 200) {
+            return [
+                'status' => 'error',
+                'message' => 'HTTP Error ' . $http_code . ' | ' . substr($response, 0, 200)
+            ];
+        }
+
+        $result = json_decode($response, true);
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            return [
+                'status' => 'error',
+                'message' => 'Response API bukan JSON valid: ' . json_last_error_msg()
+            ];
+        }
+
+        if (empty($result['access_token'])) {
+            return [
+                'status' => 'error',
+                'message' => 'Token tidak ditemukan pada response SATUSEHAT'
+            ];
+        }
+
+        // =====================================================
+        // 3️⃣ SIMPAN TOKEN BARU KE DATABASE
+        // =====================================================
+        $access_token = $result['access_token'];
+        $expires_in   = isset($result['expires_in']) ? intval($result['expires_in']) : 3600;
+
+        // Buffer 5 menit
+        $buffer           = 300;
+        $datetime_expired = date('Y-m-d H:i:s', time() + $expires_in - $buffer);
+
+        $Update = $Conn->prepare("
+            UPDATE connection_satu_sehat 
+            SET token = ?, datetime_expired = ?
+            WHERE id_connection_satu_sehat = ?
+        ");
+
+        $Update->bind_param("ssi", $access_token, $datetime_expired, $id_connection);
+
+        if (!$Update->execute()) {
+            return [
+                'status' => 'error',
+                'message' => 'Gagal menyimpan token: ' . $Conn->error
+            ];
+        }
+
+        $Update->close();
+
+        return [
+            'status'  => 'success',
+            'message' => 'Token baru berhasil dibuat',
+            'token'   => $access_token
+        ];
+    }
+
 
 
 ?>

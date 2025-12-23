@@ -1,0 +1,10 @@
+RewriteEngine On
+RewriteBase /rms/_API/
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+RewriteRule ^submit_expertise/([^/]+)/?$ submit_expertise.php?accession_number=$1 [L,QSA]
+RewriteRule ^submit_expertise_usg/([^/]+)/?$ submit_expertise_usg.php?accession_number=$1 [L,QSA]
+RewriteRule ^patient/([^/]+)/?$ patient.php?patient_id=$1 [L,QSA]
+RewriteRule ^new-dicom-notifications/?$ notify_new_dicom.php [L,QSA]
