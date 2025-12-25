@@ -1,0 +1,68 @@
+{
+    "timestamp": "2025-12-24 10:17:30",
+    "id_radiologi": "12",
+    "url": "https:\/\/api-satusehat.kemkes.go.id\/fhir-r4\/v1\/ServiceRequest",
+    "http_code": 201,
+    "payload": {
+        "resourceType": "ServiceRequest",
+        "status": "active",
+        "intent": "order",
+        "priority": "routine",
+        "category": [
+            {
+                "coding": [
+                    {
+                        "system": "http:\/\/snomed.info\/sct",
+                        "code": "363679005",
+                        "display": "Imaging"
+                    }
+                ]
+            }
+        ],
+        "code": {
+            "coding": [
+                {
+                    "system": "http:\/\/loinc.org",
+                    "code": "24604-1",
+                    "display": "CT Chest"
+                }
+            ],
+            "text": "test senalogy"
+        },
+        "subject": {
+            "reference": "Patient\/P02394778824"
+        },
+        "encounter": {
+            "reference": "Encounter\/5250121f-166c-4945-a76c-5b1d7340468f",
+            "display": "Permintaan Radiologi"
+        },
+        "occurrenceDateTime": "2025-12-24T10:15:00+07:00",
+        "authoredOn": "2025-12-24T10:15:00+07:00",
+        "requester": {
+            "reference": "Practitioner\/10010596324",
+            "display": "dr. Eha julaeha"
+        },
+        "performer": [
+            {
+                "reference": "Practitioner\/10010596324",
+                "display": "dr. Eha julaeha"
+            }
+        ],
+        "reasonCode": [
+            {
+                "text": "Mual muntah",
+                "coding": [
+                    {
+                        "system": "http:\/\/snomed.info\/sct",
+                        "code": "422587007",
+                        "display": "Nausea and vomiting"
+                    }
+                ]
+            }
+        ]
+    },
+    "payload_json": "{\"resourceType\":\"ServiceRequest\",\"status\":\"active\",\"intent\":\"order\",\"priority\":\"routine\",\"category\":[{\"coding\":[{\"system\":\"http:\/\/snomed.info\/sct\",\"code\":\"363679005\",\"display\":\"Imaging\"}]}],\"code\":{\"coding\":[{\"system\":\"http:\/\/loinc.org\",\"code\":\"24604-1\",\"display\":\"CT Chest\"}],\"text\":\"test senalogy\"},\"subject\":{\"reference\":\"Patient\/P02394778824\"},\"encounter\":{\"reference\":\"Encounter\/5250121f-166c-4945-a76c-5b1d7340468f\",\"display\":\"Permintaan Radiologi\"},\"occurrenceDateTime\":\"2025-12-24T10:15:00+07:00\",\"authoredOn\":\"2025-12-24T10:15:00+07:00\",\"requester\":{\"reference\":\"Practitioner\/10010596324\",\"display\":\"dr. Eha julaeha\"},\"performer\":[{\"reference\":\"Practitioner\/10010596324\",\"display\":\"dr. Eha julaeha\"}],\"reasonCode\":[{\"text\":\"Mual muntah\",\"coding\":[{\"system\":\"http:\/\/snomed.info\/sct\",\"code\":\"422587007\",\"display\":\"Nausea and vomiting\"}]}]}",
+    "response": "{\"authoredOn\":\"2025-12-24T10:15:00+07:00\",\"category\":[{\"coding\":[{\"code\":\"363679005\",\"display\":\"Imaging\",\"system\":\"http:\/\/snomed.info\/sct\"}]}],\"code\":{\"coding\":[{\"code\":\"24604-1\",\"display\":\"CT Chest\",\"system\":\"http:\/\/loinc.org\"}],\"text\":\"test senalogy\"},\"encounter\":{\"display\":\"Permintaan Radiologi\",\"reference\":\"Encounter\/5250121f-166c-4945-a76c-5b1d7340468f\"},\"id\":\"6d17b542-9208-484c-8779-e0808b51280f\",\"identifier\":[],\"intent\":\"order\",\"meta\":{\"lastUpdated\":\"2025-12-24T03:17:29.168384+00:00\",\"versionId\":\"MTc2NjU0NjI0OTE2ODM4NDAwMA\"},\"occurrenceDateTime\":\"2025-12-24T10:15:00+07:00\",\"performer\":[{\"display\":\"dr. Eha julaeha\",\"reference\":\"Practitioner\/10010596324\"}],\"priority\":\"routine\",\"reasonCode\":[{\"coding\":[{\"code\":\"422587007\",\"display\":\"Nausea and vomiting\",\"system\":\"http:\/\/snomed.info\/sct\"}],\"text\":\"Mual muntah\"}],\"requester\":{\"display\":\"dr. Eha julaeha\",\"reference\":\"Practitioner\/10010596324\"},\"resourceType\":\"ServiceRequest\",\"status\":\"active\",\"subject\":{\"reference\":\"Patient\/P02394778824\"}}",
+    "curl_error": "",
+    "token_preview": "aQp2M98F1zTuFzUK9Tv2..."
+}

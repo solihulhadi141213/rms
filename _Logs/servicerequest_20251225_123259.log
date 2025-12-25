@@ -1,0 +1,68 @@
+{
+    "timestamp": "2025-12-25 12:32:59",
+    "id_radiologi": "16",
+    "url": "https:\/\/api-satusehat.kemkes.go.id\/fhir-r4\/v1\/ServiceRequest",
+    "http_code": 201,
+    "payload": {
+        "resourceType": "ServiceRequest",
+        "status": "active",
+        "intent": "order",
+        "priority": "routine",
+        "category": [
+            {
+                "coding": [
+                    {
+                        "system": "http:\/\/snomed.info\/sct",
+                        "code": "363679005",
+                        "display": "Imaging"
+                    }
+                ]
+            }
+        ],
+        "code": {
+            "coding": [
+                {
+                    "system": "http:\/\/loinc.org",
+                    "code": "30746-2",
+                    "display": "Chest X-ray AP view"
+                }
+            ],
+            "text": "Tidak ada catatan"
+        },
+        "subject": {
+            "reference": "Patient\/P00594940291"
+        },
+        "encounter": {
+            "reference": "Encounter\/ef255a5d-e1dc-494f-9ed5-df9ecf3c0705",
+            "display": "Permintaan Radiologi"
+        },
+        "occurrenceDateTime": "2025-12-25T12:32:00+07:00",
+        "authoredOn": "2025-12-25T12:32:00+07:00",
+        "requester": {
+            "reference": "Practitioner\/10010596324",
+            "display": "dr. Eha julaeha"
+        },
+        "performer": [
+            {
+                "reference": "Practitioner\/10010596324",
+                "display": "dr. Eha julaeha"
+            }
+        ],
+        "reasonCode": [
+            {
+                "text": "Sesak napas",
+                "coding": [
+                    {
+                        "system": "http:\/\/snomed.info\/sct",
+                        "code": "267036007",
+                        "display": "Dyspnea"
+                    }
+                ]
+            }
+        ]
+    },
+    "payload_json": "{\"resourceType\":\"ServiceRequest\",\"status\":\"active\",\"intent\":\"order\",\"priority\":\"routine\",\"category\":[{\"coding\":[{\"system\":\"http:\/\/snomed.info\/sct\",\"code\":\"363679005\",\"display\":\"Imaging\"}]}],\"code\":{\"coding\":[{\"system\":\"http:\/\/loinc.org\",\"code\":\"30746-2\",\"display\":\"Chest X-ray AP view\"}],\"text\":\"Tidak ada catatan\"},\"subject\":{\"reference\":\"Patient\/P00594940291\"},\"encounter\":{\"reference\":\"Encounter\/ef255a5d-e1dc-494f-9ed5-df9ecf3c0705\",\"display\":\"Permintaan Radiologi\"},\"occurrenceDateTime\":\"2025-12-25T12:32:00+07:00\",\"authoredOn\":\"2025-12-25T12:32:00+07:00\",\"requester\":{\"reference\":\"Practitioner\/10010596324\",\"display\":\"dr. Eha julaeha\"},\"performer\":[{\"reference\":\"Practitioner\/10010596324\",\"display\":\"dr. Eha julaeha\"}],\"reasonCode\":[{\"text\":\"Sesak napas\",\"coding\":[{\"system\":\"http:\/\/snomed.info\/sct\",\"code\":\"267036007\",\"display\":\"Dyspnea\"}]}]}",
+    "response": "{\"authoredOn\":\"2025-12-25T12:32:00+07:00\",\"category\":[{\"coding\":[{\"code\":\"363679005\",\"display\":\"Imaging\",\"system\":\"http:\/\/snomed.info\/sct\"}]}],\"code\":{\"coding\":[{\"code\":\"30746-2\",\"display\":\"Chest X-ray AP view\",\"system\":\"http:\/\/loinc.org\"}],\"text\":\"Tidak ada catatan\"},\"encounter\":{\"display\":\"Permintaan Radiologi\",\"reference\":\"Encounter\/ef255a5d-e1dc-494f-9ed5-df9ecf3c0705\"},\"id\":\"d4deed1c-2aac-44ec-a525-ed637a95129a\",\"identifier\":[],\"intent\":\"order\",\"meta\":{\"lastUpdated\":\"2025-12-25T05:33:02.260114+00:00\",\"versionId\":\"MTc2NjY0MDc4MjI2MDExNDAwMA\"},\"occurrenceDateTime\":\"2025-12-25T12:32:00+07:00\",\"performer\":[{\"display\":\"dr. Eha julaeha\",\"reference\":\"Practitioner\/10010596324\"}],\"priority\":\"routine\",\"reasonCode\":[{\"coding\":[{\"code\":\"267036007\",\"display\":\"Dyspnea\",\"system\":\"http:\/\/snomed.info\/sct\"}],\"text\":\"Sesak napas\"}],\"requester\":{\"display\":\"dr. Eha julaeha\",\"reference\":\"Practitioner\/10010596324\"},\"resourceType\":\"ServiceRequest\",\"status\":\"active\",\"subject\":{\"reference\":\"Patient\/P00594940291\"}}",
+    "curl_error": "",
+    "token_preview": "061Ge6GhJXmzfsv1Peb9..."
+}

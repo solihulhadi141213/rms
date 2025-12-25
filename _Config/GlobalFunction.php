@@ -1061,6 +1061,175 @@
         ];
     }
 
+    /**
+     * ============================================================
+     * GENERATE / REUSE TOKEN PACS
+     * ============================================================
+     * - Menggunakan token lama jika masih valid
+     * - Login ulang jika token expired
+     * - Simpan token & expired ke DB
+     * ============================================================
+     */
+    function generateTokenPacs($Conn){
+        date_default_timezone_set('Asia/Jakarta');
+
+        /* ============================================================
+        * 1. AMBIL KONFIGURASI PACS AKTIF
+        * ============================================================ */
+        $status = 1;
+        $stmt = $Conn->prepare("
+            SELECT 
+                id_connection_pacs,
+                url_connection_pacs,
+                username_connection_pacs,
+                password_connection_pacs,
+                token,
+                token_expired
+            FROM connection_pacs
+            WHERE status_connection_pacs = ?
+            LIMIT 1
+        ");
+        $stmt->bind_param("i", $status);
+        $stmt->execute();
+        $config = $stmt->get_result()->fetch_assoc();
+        $stmt->close();
+
+        if (!$config) {
+            return [
+                'status'  => 'error',
+                'message' => 'Koneksi PACS aktif tidak ditemukan'
+            ];
+        }
+
+        /* ============================================================
+        * 2. JIKA TOKEN MASIH VALID → PAKAI LANGSUNG
+        * ============================================================ */
+        if (!empty($config['token']) && !empty($config['token_expired'])) {
+            $now = new DateTime();
+            $expired = new DateTime($config['token_expired']);
+
+            if ($expired > $now) {
+                return [
+                    'status'           => 'success',
+                    'message'          => 'Menggunakan token PACS yang masih valid',
+                    'token'            => $config['token'],
+                    'token_expired_at' => $config['token_expired']
+                ];
+            }
+        }
+
+        /* ============================================================
+        * 3. LOGIN KE PACS (TOKEN EXPIRED / BELUM ADA)
+        * ============================================================ */
+        if (
+            empty($config['url_connection_pacs']) ||
+            empty($config['username_connection_pacs']) ||
+            empty($config['password_connection_pacs'])
+        ) {
+            return [
+                'status'  => 'error',
+                'message' => 'Konfigurasi PACS tidak lengkap'
+            ];
+        }
+
+        $login_url = rtrim($config['url_connection_pacs'], '/') . '/api/auth/login';
+
+        $postFields = http_build_query([
+            'username' => $config['username_connection_pacs'],
+            'password' => $config['password_connection_pacs']
+        ]);
+
+        /* ============================================================
+        * 4. CURL LOGIN
+        * ============================================================ */
+        $curl = curl_init();
+        curl_setopt_array($curl, [
+            CURLOPT_URL            => $login_url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_POST           => true,
+            CURLOPT_POSTFIELDS     => $postFields,
+            CURLOPT_HTTPHEADER     => [
+                'Content-Type: application/x-www-form-urlencoded'
+            ],
+            CURLOPT_TIMEOUT        => 30,
+            CURLOPT_SSL_VERIFYPEER => false, // aktifkan true jika SSL valid
+            CURLOPT_SSL_VERIFYHOST => false
+        ]);
+
+        $response   = curl_exec($curl);
+        $curl_error = curl_error($curl);
+        $http_code  = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        curl_close($curl);
+
+        if ($curl_error) {
+            return [
+                'status'  => 'error',
+                'message' => 'CURL Error: ' . $curl_error
+            ];
+        }
+
+        if ($http_code !== 200) {
+            return [
+                'status'    => 'error',
+                'message'   => 'Login PACS gagal',
+                'http_code' => $http_code,
+                'response'  => $response
+            ];
+        }
+
+        /* ============================================================
+        * 5. PARSE RESPONSE
+        * ============================================================ */
+        $result = json_decode($response, true);
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            return [
+                'status'  => 'error',
+                'message' => 'Response PACS bukan JSON valid'
+            ];
+        }
+
+        if (empty($result['token'])) {
+            return [
+                'status'  => 'error',
+                'message' => 'Token tidak ditemukan pada response PACS'
+            ];
+        }
+
+        /* ============================================================
+        * 6. SIMPAN TOKEN & EXPIRED KE DATABASE
+        * ============================================================ */
+        $token        = $result['token'];
+        $expired_at   = !empty($result['token_expired_at'])
+                        ? date('Y-m-d H:i:s', strtotime($result['token_expired_at']))
+                        : date('Y-m-d H:i:s', strtotime('+1 day')); // fallback
+
+        $update = $Conn->prepare("
+            UPDATE connection_pacs
+            SET token = ?, token_expired = ?
+            WHERE id_connection_pacs = ?
+        ");
+        $update->bind_param(
+            "ssi",
+            $token,
+            $expired_at,
+            $config['id_connection_pacs']
+        );
+        $update->execute();
+        $update->close();
+
+        /* ============================================================
+        * 7. RETURN SUCCESS
+        * ============================================================ */
+        return [
+            'status'           => 'success',
+            'message'          => 'Token PACS berhasil diperbarui',
+            'token'            => $token,
+            'token_expired_at' => $expired_at,
+            'user'             => $result['user'] ?? null
+        ];
+    }
+
 
 
 ?>

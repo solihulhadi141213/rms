@@ -151,6 +151,10 @@ function ShowDetail(id_radiologi) {
 
 //Menampilkan Data Pertama Kali
 $(document).ready(function() {
+    // Pertama Kali Sembunyikan 'TambahPermintaan'
+    $('#TambahPermintaan').hide();
+
+    // Tampilkan Data
     ShowTablePemeriksaan();
 
     /*  
@@ -196,10 +200,10 @@ $(document).ready(function() {
         ShowTablePemeriksaan(0);
     });
 
-    /*  
-    ---------------------------------------------------
-    TAMBAH PERMINTAAN
-    --------------------------------------------------- 
+    /*
+    |--------------------------------------------------------------------------
+    | TAMBAH PERMINTAAN PEMERIKSAAN RADIOLOGI
+    |--------------------------------------------------------------------------
     */
 
     // Klik tombol buka modal
@@ -229,53 +233,61 @@ $(document).ready(function() {
 
     // Submit Pencarian
     $('#ProsesFilterKunjungan').submit(function(){
+        // Reset Halaman
+        $('#page_kunjungan').val(1);
+
+        // Tampilkan Data
         ShowTableKunjungan(0);
     });
 
-    /*
-    --------------------------------------------------------------------------------
-    TAMBAH PERMINTAAN PEMERIKSAAN
-    --------------------------------------------------------------------------------
-    */
-    $(document).on('click', '.modal_tambah_permintaan', function(){
+    //Menampilkan Form Tambah Permintaan
+    $(document).on('click', '.tambah_permintaan', function () {
 
-        //Tangkap 'id_kunjungan'
         var id_kunjungan = $(this).data('id');
 
-        //Tampilkan Modal
-        $('#ModalTambahPermintaan').modal('show');
-
-        //Kosongkan 'NotifikasiTambahPermintaan'
+        // Reset UI
         $('#NotifikasiTambahPermintaan').html('');
-
-        //Loading Form
         $('#FormTambahPermintaan').html('Loading...');
 
-        //Buka Forrm Dengan AJAX
+        // Tutup Modal 'ModalKunjungan'
+        $('#ModalKunjungan').modal('hide');
+
+        // Sembunyikan 'DataPemeriksaan'
+        $('#DataPemeriksaan').hide();
+
+        // Tampilkan 'TambahPermintaan'
+        $('#TambahPermintaan').show();
+
+        // Load form via AJAX (TIDAK bergantung event modal)
         $.ajax({
-            type    : 'POST',
-            url     : '_Page/Pemeriksaan/FormTambahPermintaan.php',
-            data    : {id_kunjungan: id_kunjungan},
-            success: function(data) {
+            type: 'POST',
+            url: '_Page/Pemeriksaan/FormTambahPermintaan.php',
+            data: { id_kunjungan: id_kunjungan },
+            success: function (data) {
+
                 $('#FormTambahPermintaan').html(data);
-                
-                // ===== INIT SELECT2 DOKTER =====
+
+                /* ===============================
+                | SELECT2 DOKTER
+                =============================== */
                 $('#dokter_pengirim').select2({
-                    theme: 'bootstrap-5',          // opsional (jika pakai Bootstrap 5)
-                    placeholder: 'Cari dokter...',
-                    allowClear: true,
-                    width: '100%',
-                    dropdownParent: $('#ModalTambahPermintaan') // WAJIB
+                    theme         : 'bootstrap-5',
+                    placeholder   : 'Cari dokter...',
+                    allowClear    : true,
+                    width         : '100%',
+                    dropdownParent: $('#FormTambahPermintaan')
                 });
 
-                // ===== INIT SELECT2 MASTER KLINIS =====
+                /* ===============================
+                | SELECT2 KLINIS
+                =============================== */
                 $('#klinis').select2({
-                    theme: 'bootstrap-5',
-                    placeholder: 'Ketik & pilih klinis',
-                    tags: true,
-                    width: '100%',
+                    theme             : 'bootstrap-5',
+                    placeholder       : 'Ketik & pilih klinis',
+                    tags              : true,
+                    width             : '100%',
                     minimumInputLength: 2,
-                    dropdownParent: $('#ModalTambahPermintaan'), // Penting untuk modal
+                    dropdownParent    : $('#FormTambahPermintaan'),
                     ajax: {
                         url: '_Page/Pemeriksaan/AjaxKlinis.php',
                         dataType: 'json',
@@ -287,7 +299,6 @@ $(document).ready(function() {
                             };
                         },
                         processResults: function (data, params) {
-                            params.page = params.page || 1;
                             return {
                                 results: data.results,
                                 pagination: {
@@ -299,63 +310,48 @@ $(document).ready(function() {
                     }
                 });
 
-                // ===== INIT SELECT2 ALAT PEMERIKSA =====
-                $('#alat_pemeriksa').select2({
-                    theme: 'bootstrap-5',
-                    placeholder: 'Pilih Modality/Alat',
-                    width: '100%',
-                    dropdownParent: $('#ModalTambahPermintaan')
-                });
-                
-                // ===== INIT SELECT2 MASTER PEMERIKSAAN =====
-                function initPemeriksaanSelect() {
-                    var alat_pemeriksa = $('#alat_pemeriksa').val();
-                    var isEnabled = !!alat_pemeriksa;
+                /* ===============================
+                | SELECT2 PERMINTAAN PEMERIKSAAN
+                =============================== */
+                function initPemeriksaan() {
 
-                    // Reset & enable/disable
-                    $('#permintaan_pemeriksaan')
-                        .prop('disabled', !isEnabled)
-                        .empty();
+                    var alat = $('#alat_pemeriksa').val();
+                    var enabled = alat && alat !== '';
 
-                    var placeholder = isEnabled
-                        ? 'Pilih pemeriksaan'
-                        : 'Pilih alat pemeriksa terlebih dahulu';
-
-                    // Destroy Select2 lama
+                    // Destroy jika sudah ada
                     if ($('#permintaan_pemeriksaan').hasClass('select2-hidden-accessible')) {
                         $('#permintaan_pemeriksaan').select2('destroy');
                     }
 
-                    var select2Options = {
+                    $('#permintaan_pemeriksaan')
+                        .prop('disabled', !enabled)
+                        .empty();
+
+                    var opt = {
                         theme: 'bootstrap-5',
                         width: '100%',
-                        placeholder: placeholder,
-                        dropdownParent: $('#ModalTambahPermintaan'),
-
-                        // 🔒 HANYA 1 & TANPA TEXT BEBAS
-                        multiple: false,
-                        closeOnSelect: true,
+                        placeholder: enabled
+                            ? 'Pilih pemeriksaan'
+                            : 'Pilih alat pemeriksa terlebih dahulu',
                         allowClear: true,
-                        minimumResultsForSearch: 0 // tetap tampil search box
+                        dropdownParent: $('#FormTambahPermintaan'),
+                        minimumResultsForSearch: 0
                     };
 
-                    if (isEnabled) {
-                        select2Options.ajax = {
+                    if (enabled) {
+                        opt.ajax = {
                             url: '_Page/Pemeriksaan/AjaxPemeriksaan.php',
                             dataType: 'json',
-                            delay: 200,
-
+                            delay: 250,
                             data: function (params) {
                                 return {
-                                    q: params.term || '',   // kosong = load awal
-                                    alat: alat_pemeriksa,
+                                    q: params.term || '',
+                                    alat: alat,
                                     page: params.page || 1,
-                                    limit: 10               // 🔹 10 data terbaru
+                                    limit: 10
                                 };
                             },
-
-                            processResults: function (data, params) {
-                                params.page = params.page || 1;
+                            processResults: function (data) {
                                 return {
                                     results: data.results,
                                     pagination: {
@@ -363,32 +359,35 @@ $(document).ready(function() {
                                     }
                                 };
                             },
-
                             cache: true
                         };
                     }
 
-                    $('#permintaan_pemeriksaan').select2(select2Options);
-
-                    // 🔹 AUTO LOAD 10 DATA TERBARU SAAT ALAT DIPILIH
-                    if (isEnabled) {
-                        $('#permintaan_pemeriksaan').select2('open');
-                    }
+                    $('#permintaan_pemeriksaan').select2(opt);
                 }
 
-                // Init pertama
-                initPemeriksaanSelect();
+                // Init awal (disabled)
+                initPemeriksaan();
 
-                // Saat alat pemeriksa berubah
+                // Saat alat berubah
                 $('#alat_pemeriksa').on('change', function () {
                     $('#permintaan_pemeriksaan').val(null).trigger('change');
-                    initPemeriksaanSelect();
+                    initPemeriksaan();
                 });
-
-
             }
         });
+    });
 
+    // Ketika Klik 'back_to_data'
+    $(document).on('click', '.back_to_data', function () {
+        // Tampilkan 'DataPemeriksaan'
+        $('#DataPemeriksaan').show();
+
+        // Sembunyikan 'TambahPermintaan'
+        $('#TambahPermintaan').hide();
+
+        // Kembalikan posisi layar ke atas
+        $('html, body').scrollTop(0);
     });
 
     /* Ketika 'ProsesTambah' disubmit */
@@ -418,9 +417,12 @@ $(document).ready(function() {
                     //reset form
                     $('#ProsesTambah')[0].reset();
 
+                    // Kembalikan posisi layar ke atas
+                    $('html, body').scrollTop(0);
+
                     //Tutup modal
-                    $('#ModalTambahPermintaan').modal('hide');
-                    $('#ModalKunjungan').modal('hide');
+                    $('#DataPemeriksaan').show();
+                    $('#TambahPermintaan').hide();
 
                     //Menampilkan Swal
                     Swal.fire(
@@ -431,6 +433,7 @@ $(document).ready(function() {
 
                     //reload tabel
                     ShowTablePemeriksaan();
+
                 }else{
                     $('#NotifikasiTambahPermintaan').html('<div class="alert alert-danger"><small>'+message+'</small></div>');
                 }
@@ -457,28 +460,98 @@ $(document).ready(function() {
         
     });
 
-    /* MODAL EDIT */
-    $(document).on('click', '.modal_edit', function () {
+    /*
+    |=========================================================================
+    | TERIMA PERMINTAAN
+    |=========================================================================
+    */
+    $(document).on('click', '.modal_terima_permintaan', function () {
 
-        //tangkap data 'id_connection_simrs' dan buat variabel
-        var id_connection_simrs   = $(this).data('id');
+        //tangkap data 'id_radiologi' dan 'status'
+        var id_radiologi = $(this).data('id');
+        var status       = $(this).data('status');
 
         //tampilkan modal
-        $('#ModalEdit').modal('show');
+        $('#ModalTerimaPermintaan').modal('show');
 
         // Kosongkan Notifikasi
-        $('#NotifikasiEdit').html('');
+        $('#NotifikasiTerimaPermintaan').html('');
 
         //Form Loading
-        $('#FormEdit').html('Loading...');
+        $('#FormTerimaPermintaan').html('Loading...');
 
         //Tampilkan Form Dengan Ajax
         $.ajax({
             type 	    : 'POST',
-            url 	    : '_Page/SettingSimrs/FormEdit.php',
-            data        : {id_connection_simrs: id_connection_simrs},
+            url 	    : '_Page/Pemeriksaan/FormTerimaPermintaan.php',
+            data        : {id_radiologi: id_radiologi, status: status},
             success     : function(data){
-                $('#FormEdit').html(data);
+                $('#FormTerimaPermintaan').html(data);
+
+                if(status=="Terima"){
+                    $('.terima_atau_tolak').html('Terima');
+
+                    /* ===============================
+                    | SELECT2 DOKTER
+                    =============================== */
+                    $('#dokter_penerima').select2({
+                        theme         : 'bootstrap-5',
+                        placeholder   : 'Cari dokter...',
+                        allowClear    : true,
+                        width         : '100%',
+                        dropdownParent: $('#FormTerimaPermintaan')
+                    });
+                }else{
+                    $('.terima_atau_tolak').html('Pembatalan');
+                }
+            }
+        });
+    });
+
+    /* Ketika 'ProsesTerimaPermintaan' disubmit */
+    $('#ProsesTerimaPermintaan').submit(function(){
+       
+        /* Menangkap data dari form  */
+        var ProsesTerimaPermintaan=$('#ProsesTerimaPermintaan').serialize();
+
+        /* Loading Notification */
+        $('#NotifikasiTerimaPermintaan').html('loading..');
+
+        /* Kirim data dengan AJAX  */
+        $.ajax({
+            type    : 'POST',
+            url     : '_Page/Pemeriksaan/ProsesTerimaPermintaan.php',
+            dataType: 'json',
+            data    : ProsesTerimaPermintaan,
+            success: function(response) {
+                var status  = response.status;
+                var message = response.message;
+
+                // Apabila berhasil
+                if(status=='success'){
+                    //Bersihkan notifikasi
+                    $('#NotifikasiTerimaPermintaan').html('');
+
+                    //reset form
+                    $('#ProsesTerimaPermintaan')[0].reset();
+
+                    //Tutup modal
+                    $('#ModalTerimaPermintaan').modal('hide');
+
+                    //Menampilkan Swal
+                    Swal.fire(
+                        'Success!',
+                        'Update Permintaan Pemeriksaan Berhasil!',
+                        'success'
+                    )
+
+                    //reload tabel
+                    ShowTablePemeriksaan();
+
+                }else{
+                    $('#NotifikasiTerimaPermintaan').html('<div class="alert alert-danger"><small>'+message+'</small></div>');
+                }
+                
             }
         });
     });
@@ -587,6 +660,9 @@ $(document).ready(function() {
                     //reload data detail
                     ShowDetail(id_radiologi);
 
+                    // Reload Data Permintaan Pemeriksaan
+                    ShowTablePemeriksaan();
+
                     // Menampilkan Swal
                     Swal.fire(
                         'Success!',
@@ -619,6 +695,203 @@ $(document).ready(function() {
             data        : {id_service_request: id_service_request},
             success     : function(data){
                 $('#FormDetailServiceRequest').html(data);
+            }
+        });
+    });
+
+    /*
+    ===================================================================================
+    PROCEDURE
+    ===================================================================================
+    */
+    $(document).on('click', '.modal_procedure', function () {
+
+        //tangkap data 'id_radiologi' dan buat variabel
+        var id_radiologi   = $(this).data('id');
+
+        //tampilkan modal
+        $('#ModalProcedure').modal('show');
+
+        // Kosongkan Notifikasi
+        $('#NotifikasiProcedure').html('');
+
+        //Form Loading
+        $('#FormProcedure').html('Loading...');
+
+        //Tampilkan Form Dengan Ajax
+        $.ajax({
+            type 	    : 'POST',
+            url 	    : '_Page/Pemeriksaan/FormProcedure.php',
+            data        : {id_radiologi: id_radiologi},
+            success     : function(data){
+                $('#FormProcedure').html(data);
+            }
+        });
+    });
+    $('#ProsesProcedure').submit(function(){
+       
+        /* Menangkap data dari form  */
+        var ProsesProcedure=$('#ProsesProcedure').serialize();
+
+        /* Loading Notification */
+        $('#NotifikasiProcedure').html('loading..');
+
+        /* Kirim data dengan AJAX  */
+        $.ajax({
+            type    : 'POST',
+            url     : '_Page/Pemeriksaan/ProsesProcedure.php',
+            dataType: 'json',
+            data    : ProsesProcedure,
+            success: function(response) {
+                var status       = response.status;
+                var message      = response.message;
+                var id_radiologi = response.id_radiologi;
+
+                // Apabila berhasil
+                if(status=='success'){
+                    //Bersihkan notifikasi
+                    $('#NotifikasiProcedure').html('');
+
+                    //Tutup modal
+                    $('#ModalProcedure').modal('hide');
+
+                    //reload data detail
+                    ShowDetail(id_radiologi);
+
+                    // Reload Tabel Pemeriksaan
+                    ShowTablePemeriksaan();
+
+                    // Menampilkan Swal
+                    Swal.fire(
+                        'Success!',
+                        'Resource Procedure Berhasil Dikirim Ke Satu Sehat!',
+                        'success'
+                    )
+                }else{
+                    $('#NotifikasiProcedure').html('<div class="alert alert-danger"><small>'+message+'</small></div>');
+                }
+                
+            }
+        });
+    });
+
+    $(document).on('click', '.modal_detail_procedure', function () {
+
+        //tangkap data 'id_procedure' dan buat variabel
+        var id_procedure   = $(this).data('id');
+
+        //tampilkan modal
+        $('#ModalDetailProcedure').modal('show');
+
+        //Form Loading
+        $('#FormDetailProcedure').html('Loading...');
+
+        //Tampilkan Form Dengan Ajax
+        $.ajax({
+            type 	    : 'POST',
+            url 	    : '_Page/Pemeriksaan/FormDetailProcedure.php',
+            data        : {id_procedure: id_procedure},
+            success     : function(data){
+                $('#FormDetailProcedure').html(data);
+            }
+        });
+    });
+
+    /*
+    ===================================================================================
+    ORDER PACS
+    ===================================================================================
+    */
+    $(document).on('click', '.modal_order_pacs', function () {
+
+        //tangkap data 'id_radiologi' dan buat variabel
+        var id_radiologi   = $(this).data('id');
+
+        //tampilkan modal
+        $('#ModalOrderPacs').modal('show');
+
+        // Kosongkan Notifikasi
+        $('#NotifikasiOrderPacs').html('');
+
+        //Form Loading
+        $('#FormOrderPacs').html('Loading...');
+
+        //Tampilkan Form Dengan Ajax
+        $.ajax({
+            type 	    : 'POST',
+            url 	    : '_Page/Pemeriksaan/FormOrderPacs.php',
+            data        : {id_radiologi: id_radiologi},
+            success     : function(data){
+                $('#FormOrderPacs').html(data);
+            }
+        });
+    });
+
+    $('#ProsesOrderPacs').submit(function(){
+       
+        /* Menangkap data dari form  */
+        var ProsesOrderPacs=$('#ProsesOrderPacs').serialize();
+
+        /* Loading Notification */
+        $('#NotifikasiOrderPacs').html('loading..');
+
+        /* Kirim data dengan AJAX  */
+        $.ajax({
+            type    : 'POST',
+            url     : '_Page/Pemeriksaan/ProsesOrderPacs.php',
+            dataType: 'json',
+            data    : ProsesOrderPacs,
+            success: function(response) {
+                var status       = response.status;
+                var message      = response.message;
+                var id_radiologi = response.id_radiologi;
+
+                // Apabila berhasil
+                if(status=='success'){
+                    //Bersihkan notifikasi
+                    $('#NotifikasiOrderPacs').html('');
+
+                    //Tutup modal
+                    $('#ModalOrderPacs').modal('hide');
+
+                    //reload data detail
+                    ShowDetail(id_radiologi);
+
+                    // Reload Tabel Pemeriksaan
+                    ShowTablePemeriksaan();
+
+                    // Menampilkan Swal
+                    Swal.fire(
+                        'Success!',
+                        'Pengiriman Order Ke PACS Berhasil!',
+                        'success'
+                    )
+                }else{
+                    $('#NotifikasiOrderPacs').html('<div class="alert alert-danger"><small>'+message+'</small></div>');
+                }
+                
+            }
+        });
+    });
+
+    $(document).on('click', '.modal_detail_pacd', function () {
+
+        //tangkap data 'accession_number' dan buat variabel
+        var accession_number   = $(this).data('id');
+
+        //tampilkan modal
+        $('#ModalDetailPacs').modal('show');
+
+        //Form Loading
+        $('#FormDetailPacs').html('Loading...');
+
+        //Tampilkan Form Dengan Ajax
+        $.ajax({
+            type 	    : 'POST',
+            url 	    : '_Page/Pemeriksaan/FormDetailPacs.php',
+            data        : {accession_number: accession_number},
+            success     : function(data){
+                $('#FormDetailPacs').html(data);
             }
         });
     });

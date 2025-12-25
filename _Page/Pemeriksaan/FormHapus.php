@@ -34,7 +34,7 @@
     //Buat variabel 'id_radiologi' dan sanitasi
     $id_radiologi = validateAndSanitizeInput($_POST['id_radiologi']);
 
-    //Buka Detail Koneksi Dengan Prepared Statment
+    //Buka Detail Radiologi Dengan Prepared Statment
     $Qry = $Conn->prepare("SELECT * FROM radiologi WHERE id_radiologi = ?");
     $Qry->bind_param("i", $id_radiologi);
     if (!$Qry->execute()) {

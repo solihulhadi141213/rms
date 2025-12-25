@@ -1,0 +1,68 @@
+{
+    "timestamp": "2025-12-25 12:30:46",
+    "id_radiologi": "14",
+    "url": "https:\/\/api-satusehat.kemkes.go.id\/fhir-r4\/v1\/ServiceRequest",
+    "http_code": 201,
+    "payload": {
+        "resourceType": "ServiceRequest",
+        "status": "active",
+        "intent": "order",
+        "priority": "routine",
+        "category": [
+            {
+                "coding": [
+                    {
+                        "system": "http:\/\/snomed.info\/sct",
+                        "code": "363679005",
+                        "display": "Imaging"
+                    }
+                ]
+            }
+        ],
+        "code": {
+            "coding": [
+                {
+                    "system": "http:\/\/loinc.org",
+                    "code": "30746-2",
+                    "display": "Chest X-ray AP view"
+                }
+            ],
+            "text": "Tidak ada catatan"
+        },
+        "subject": {
+            "reference": "Patient\/P01869745663"
+        },
+        "encounter": {
+            "reference": "Encounter\/dd16a6a9-54c9-4a21-ad3a-d75c2ab61c7a",
+            "display": "Permintaan Radiologi"
+        },
+        "occurrenceDateTime": "2025-12-25T12:30:00+07:00",
+        "authoredOn": "2025-12-25T12:30:00+07:00",
+        "requester": {
+            "reference": "Practitioner\/10007021807",
+            "display": "dr. H. NURSYAMSI ROCHIM, Sp. OG"
+        },
+        "performer": [
+            {
+                "reference": "Practitioner\/10007021807",
+                "display": "dr. H. NURSYAMSI ROCHIM, Sp. OG"
+            }
+        ],
+        "reasonCode": [
+            {
+                "text": "Sakit kepala",
+                "coding": [
+                    {
+                        "system": "http:\/\/snomed.info\/sct",
+                        "code": "25064002",
+                        "display": "Headache"
+                    }
+                ]
+            }
+        ]
+    },
+    "payload_json": "{\"resourceType\":\"ServiceRequest\",\"status\":\"active\",\"intent\":\"order\",\"priority\":\"routine\",\"category\":[{\"coding\":[{\"system\":\"http:\/\/snomed.info\/sct\",\"code\":\"363679005\",\"display\":\"Imaging\"}]}],\"code\":{\"coding\":[{\"system\":\"http:\/\/loinc.org\",\"code\":\"30746-2\",\"display\":\"Chest X-ray AP view\"}],\"text\":\"Tidak ada catatan\"},\"subject\":{\"reference\":\"Patient\/P01869745663\"},\"encounter\":{\"reference\":\"Encounter\/dd16a6a9-54c9-4a21-ad3a-d75c2ab61c7a\",\"display\":\"Permintaan Radiologi\"},\"occurrenceDateTime\":\"2025-12-25T12:30:00+07:00\",\"authoredOn\":\"2025-12-25T12:30:00+07:00\",\"requester\":{\"reference\":\"Practitioner\/10007021807\",\"display\":\"dr. H. NURSYAMSI ROCHIM, Sp. OG\"},\"performer\":[{\"reference\":\"Practitioner\/10007021807\",\"display\":\"dr. H. NURSYAMSI ROCHIM, Sp. OG\"}],\"reasonCode\":[{\"text\":\"Sakit kepala\",\"coding\":[{\"system\":\"http:\/\/snomed.info\/sct\",\"code\":\"25064002\",\"display\":\"Headache\"}]}]}",
+    "response": "{\"authoredOn\":\"2025-12-25T12:30:00+07:00\",\"category\":[{\"coding\":[{\"code\":\"363679005\",\"display\":\"Imaging\",\"system\":\"http:\/\/snomed.info\/sct\"}]}],\"code\":{\"coding\":[{\"code\":\"30746-2\",\"display\":\"Chest X-ray AP view\",\"system\":\"http:\/\/loinc.org\"}],\"text\":\"Tidak ada catatan\"},\"encounter\":{\"display\":\"Permintaan Radiologi\",\"reference\":\"Encounter\/dd16a6a9-54c9-4a21-ad3a-d75c2ab61c7a\"},\"id\":\"f027e424-3726-4b79-b9ec-079a31d54273\",\"identifier\":[],\"intent\":\"order\",\"meta\":{\"lastUpdated\":\"2025-12-25T05:30:48.647326+00:00\",\"versionId\":\"MTc2NjY0MDY0ODY0NzMyNjAwMA\"},\"occurrenceDateTime\":\"2025-12-25T12:30:00+07:00\",\"performer\":[{\"display\":\"dr. H. NURSYAMSI ROCHIM, Sp. OG\",\"reference\":\"Practitioner\/10007021807\"}],\"priority\":\"routine\",\"reasonCode\":[{\"coding\":[{\"code\":\"25064002\",\"display\":\"Headache\",\"system\":\"http:\/\/snomed.info\/sct\"}],\"text\":\"Sakit kepala\"}],\"requester\":{\"display\":\"dr. H. NURSYAMSI ROCHIM, Sp. OG\",\"reference\":\"Practitioner\/10007021807\"},\"resourceType\":\"ServiceRequest\",\"status\":\"active\",\"subject\":{\"reference\":\"Patient\/P01869745663\"}}",
+    "curl_error": "",
+    "token_preview": "061Ge6GhJXmzfsv1Peb9..."
+}

@@ -86,7 +86,9 @@
         CURLOPT_POSTFIELDS     => 'username='. $username_connection_pacs.'&password='. $password_connection_pacs.'',
         CURLOPT_CONNECTTIMEOUT => 5,                                                      // waktu koneksi (detik)
         CURLOPT_TIMEOUT        => 10,                                                     // total timeout (detik)
-        CURLOPT_FAILONERROR    => false
+        CURLOPT_FAILONERROR    => false,
+        CURLOPT_SSL_VERIFYPEER => false, // aktifkan true jika SSL valid
+        CURLOPT_SSL_VERIFYHOST => false
     ]);
 
     $response     = curl_exec($curl);

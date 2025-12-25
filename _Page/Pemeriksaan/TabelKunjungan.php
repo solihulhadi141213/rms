@@ -148,7 +148,7 @@
                 <td><small>'.$display_encounter.'</small></td>
                 <td><small>'.$row['status'].'</small></td>
                 <td>
-                    <button type="button" class="btn btn-sm btn-secondary btn-floating modal_tambah_permintaan" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Buat Permintaan Radiologi" data-id="'.$row['id_kunjungan'].'">
+                    <button type="button" class="btn btn-sm btn-secondary btn-floating tambah_permintaan" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Buat Permintaan Radiologi" data-id="'.$row['id_kunjungan'].'">
                         <i class="bi bi-chevron-right"></i>
                     </button>
                 </td>

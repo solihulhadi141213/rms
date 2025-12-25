@@ -158,40 +158,6 @@
                 <b><small>C. Informasi Permintaan</small></b>
             </div>
         </div>
-        <div class="row mb-2">
-            <div class="col-4">
-                <label for="asal_kiriman"><small>Asal Kiriman</small></label>
-            </div>
-            <div class="col-1"><small>:</small></div>
-            <div class="col-7">
-                <input type="text" name="asal_kiriman" id="asal_kiriman" class="form-control" value="'.$asal_kiriman.'">
-            </div>
-        </div>
-        <div class="row mb-2">
-            <div class="col-4">
-                <label for="tanggal_diminta"><small>Tanggal/Jam</small></label>
-            </div>
-            <div class="col-1"><small>:</small></div>
-            <div class="col-4">
-                <input type="date" name="tanggal_diminta" id="tanggal_diminta" class="form-control" value="'.date('Y-m-d').'">
-            </div>
-            <div class="col-3">
-                <input type="time" name="jam_diminta" id="jam_diminta" class="form-control" value="'.date('H:i').'">
-            </div>
-        </div>
-        <div class="row mb-2">
-            <div class="col-4">
-                <label for="priority"><small>Prioritisasi</small></label>
-            </div>
-            <div class="col-1"><small>:</small></div>
-            <div class="col-7">
-                <select name="priority" id="priority" class="form-control">
-                    <option value="routine">Biasa</option>
-                    <option value="urgent">Segera</option>
-                    <option value="stat">Gawat</option>
-                </select>
-            </div>
-        </div>
     ';
 
     // ===============================
@@ -222,7 +188,7 @@
     if (empty($data_doketer['response']['code']) ||$data_doketer['response']['code'] != 200) {
         echo '
             <div class="alert alert-danger">
-                <small>Gagal memuat data kunjungan<br> Pesan : '.$data['response']['message'].'</small>
+                <small>Gagal memuat data dokter<br> Pesan : '.$data['response']['message'].'</small>
             </div>
         ';
         exit;
@@ -268,6 +234,50 @@
     echo '      </select>';
     echo '  </div>';
     echo '</div>';
+    
+    echo '
+        <div class="row mb-2">
+            <div class="col-4">
+                <label for="asal_kiriman"><small>Asal Kiriman</small></label>
+            </div>
+            <div class="col-1"><small>:</small></div>
+            <div class="col-7">
+                <input type="text" name="asal_kiriman" id="asal_kiriman" class="form-control" value="'.$asal_kiriman.'">
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-4">
+                <label for="tanggal_diminta"><small>Tanggal/Jam</small></label>
+            </div>
+            <div class="col-1"><small>:</small></div>
+            <div class="col-4">
+                <input type="date" name="tanggal_diminta" id="tanggal_diminta" class="form-control" value="'.date('Y-m-d').'">
+            </div>
+            <div class="col-3">
+                <input type="time" name="jam_diminta" id="jam_diminta" class="form-control" value="'.date('H:i').'">
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-4">
+                <label for="priority"><small>Prioritisasi</small></label>
+            </div>
+            <div class="col-1"><small>:</small></div>
+            <div class="col-7">
+                <select name="priority" id="priority" class="form-control">
+                    <option value="routine">Biasa</option>
+                    <option value="urgent">Segera</option>
+                    <option value="stat">Gawat</option>
+                </select>
+                <small>
+                    <small class="text text-grayish">
+                        Skala prioritas dalam pemeriksaan radiologi adalah tingkat urgensi pemeriksaan radiologi yang 
+                        ditetapkan berdasarkan kondisi klinis pasien, untuk menentukan urutan dan kecepatan pelayanan 
+                        pemeriksaan serta pelaporan hasil.
+                    </small>
+                </small>
+            </div>
+        </div>
+    ';
 
     echo '
         <div class="row mb-2">
@@ -277,6 +287,13 @@
             <div class="col-1"><small>:</small></div>
             <div class="col-7">
                 <select name="klinis[]" id="klinis" class="form-control" multiple></select>
+                <small>
+                    <small class="text text-grayish">
+                        Informasi klinis pasien pada pemeriksaan radiologi adalah ringkasan kondisi medis pasien yang relevan dan alasan klinis 
+                        mengapa suatu pemeriksaan radiologi diminta. Informasi ini diberikan oleh dokter pengirim untuk membantu dokter radiologi 
+                        memahami konteks klinis, memilih teknik pemeriksaan yang tepat, dan menafsirkan hasil secara akurat. 
+                    </small>
+                </small>
             </div>
         </div>
     ';

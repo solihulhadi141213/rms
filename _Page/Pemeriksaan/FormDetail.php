@@ -710,6 +710,20 @@
     // ===========================================
     // PROCEDURE
     // ===========================================
+
+    if(!empty($Data['id_procedure'])){
+        $id_procedure       = $Data['id_procedure'];
+        $label_id_procedure = '
+            <a href="javascript:void(0);" class="modal_detail_procedure" data-id="'.$id_procedure.'">
+                <small class="text text-primary underscore_doted">
+                    <small>'.$id_procedure.'</small>
+                </small>
+            </a>
+        ';
+    }else{
+        $id_procedure       = "";
+        $label_id_procedure = '<small class="text text-danger"><small>Belum Ada</small></small>';
+    }
     echo '
         <div class="row mb-2 border-1 border-bottom">
             <div class="col-9 mb-2">
@@ -718,9 +732,21 @@
                 </small>
             </div>
             <div class="col-3 text-end mb-2">
-                <button type="button" class="btn btn-sm btn-floating btn-primary">
+                <button type="button" class="btn btn-sm btn-floating btn-primary modal_procedure" data-id="'.$id_radiologi.'">
                     <i class="bi bi-plus"></i>
                 </button>
+            </div>
+        </div>
+    ';
+    echo '
+        <div class="row mb-3 border-1 border-bottom">
+            <div class="col-md-4">
+                <div class="row mb-2">
+                    <div class="col-5"><small>ID Procedure</small></div>
+                    <div class="col-1"><small>:</small></div>
+                    <div class="col-6">'.$label_id_procedure.'</div>
+                </div>
+                </div>
             </div>
         </div>
     ';

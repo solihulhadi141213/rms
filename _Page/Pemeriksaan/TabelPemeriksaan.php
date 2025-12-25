@@ -14,7 +14,7 @@
     if(empty($SessionIdAccess)){
         echo '
             <tr>
-                <td colspan="11" class="text-center">
+                <td colspan="12" class="text-center">
                     <small class="text-danger">Sesi Akses Sudah Berakhir! Silahkan Login Ulang!</small>
                 </td>
             </tr>
@@ -68,7 +68,7 @@
         if(empty($keyword)){
             $jml_data = mysqli_num_rows(mysqli_query($Conn, "SELECT id_radiologi FROM radiologi "));
         }else{
-            $jml_data = mysqli_num_rows(mysqli_query($Conn, "SELECT id_radiologi FROM radiologi WHERE id_pasien like '%$keyword%' OR nama_pasien like '%$keyword%' OR asal_kiriman like '%$keyword%' OR alat_pemeriksa like '%$keyword%' OR radiografer like '%$keyword%' OR tujuan like '%$keyword%' OR tujuan like '%$pembayaran%' OR tujuan like '%$status_pemeriksaan%'"));
+            $jml_data = mysqli_num_rows(mysqli_query($Conn, "SELECT id_radiologi FROM radiologi WHERE id_pasien like '%$keyword%' OR id_kunjungan like '%$keyword%' OR nama_pasien like '%$keyword%' OR asal_kiriman like '%$keyword%' OR accession_number like '%$keyword%'"));
         }
     }else{
         if(empty($keyword)){
@@ -82,7 +82,7 @@
     if(empty($jml_data)){
         echo '
             <tr>
-                <td colspan="11" class="text-center">
+                <td colspan="12" class="text-center">
                     <small class="text-danger">Tidak Ada Data Yang Ditemukan!</small>
                 </td>
             </tr>
@@ -98,15 +98,15 @@
     //KONDISI PENGATURAN MASING FILTER
     if(empty($keyword_by)){
         if(empty($keyword)){
-            $query = mysqli_query($Conn, "SELECT id_radiologi, id_pasien, id_kunjungan, id_service_request, nama_pasien, priority, asal_kiriman, alat_pemeriksa, radiografer, tujuan, pembayaran, datetime_diminta, status_pemeriksaan  FROM radiologi ORDER BY $OrderBy $ShortBy LIMIT $posisi, $batas");
+            $query = mysqli_query($Conn, "SELECT id_radiologi, id_pasien, id_kunjungan, id_service_request, id_procedure, pacs, accession_number, nama_pasien, priority, asal_kiriman, alat_pemeriksa, radiografer, tujuan, pembayaran, datetime_diminta, status_pemeriksaan  FROM radiologi ORDER BY $OrderBy $ShortBy LIMIT $posisi, $batas");
         }else{
-            $query = mysqli_query($Conn, "SELECT id_radiologi, id_pasien, id_kunjungan, id_service_request, nama_pasien, priority, asal_kiriman, alat_pemeriksa, radiografer, tujuan, pembayaran, datetime_diminta, status_pemeriksaan FROM radiologi WHERE id_pasien like '%$keyword%' OR nama_pasien like '%$keyword%' OR asal_kiriman like '%$keyword%' OR alat_pemeriksa like '%$keyword%' OR radiografer like '%$keyword%' OR tujuan like '%$keyword%' OR tujuan like '%$pembayaran%' OR tujuan like '%$status_pemeriksaan%' ORDER BY $OrderBy $ShortBy LIMIT $posisi, $batas");
+            $query = mysqli_query($Conn, "SELECT id_radiologi, id_pasien, id_kunjungan, id_service_request, id_procedure, pacs, accession_number, nama_pasien, priority, asal_kiriman, alat_pemeriksa, radiografer, tujuan, pembayaran, datetime_diminta, status_pemeriksaan FROM radiologi WHERE id_pasien like '%$keyword%' OR id_kunjungan like '%$keyword%' OR nama_pasien like '%$keyword%' OR asal_kiriman like '%$keyword%' OR accession_number like '%$keyword%' ORDER BY $OrderBy $ShortBy LIMIT $posisi, $batas");
         }
     }else{
         if(empty($keyword)){
-            $query = mysqli_query($Conn, "SELECT id_radiologi, id_pasien, id_kunjungan, id_service_request, nama_pasien, priority, asal_kiriman, alat_pemeriksa, radiografer, tujuan, pembayaran, datetime_diminta, status_pemeriksaan FROM radiologi ORDER BY $OrderBy $ShortBy LIMIT $posisi, $batas");
+            $query = mysqli_query($Conn, "SELECT id_radiologi, id_pasien, id_kunjungan, id_service_request, id_procedure, pacs, accession_number, nama_pasien, priority, asal_kiriman, alat_pemeriksa, radiografer, tujuan, pembayaran, datetime_diminta, status_pemeriksaan FROM radiologi ORDER BY $OrderBy $ShortBy LIMIT $posisi, $batas");
         }else{ 
-            $query = mysqli_query($Conn, "SELECT id_radiologi, id_pasien, id_kunjungan, id_service_request, nama_pasien, priority, asal_kiriman, alat_pemeriksa, radiografer, tujuan, pembayaran, datetime_diminta, status_pemeriksaan FROM radiologi WHERE $keyword_by like '%$keyword%' ORDER BY $OrderBy $ShortBy LIMIT $posisi, $batas");
+            $query = mysqli_query($Conn, "SELECT id_radiologi, id_pasien, id_kunjungan, id_service_request, id_procedure, pacs, accession_number, nama_pasien, priority, asal_kiriman, alat_pemeriksa, radiografer, tujuan, pembayaran, datetime_diminta, status_pemeriksaan FROM radiologi WHERE $keyword_by like '%$keyword%' ORDER BY $OrderBy $ShortBy LIMIT $posisi, $batas");
         }
     }
     while ($data = mysqli_fetch_array($query)) {
@@ -114,6 +114,8 @@
         $id_pasien          = $data['id_pasien'];
         $id_kunjungan       = $data['id_kunjungan'];
         $id_service_request = $data['id_service_request'];
+        $id_procedure       = $data['id_procedure'];
+        $accession_number   = $data['accession_number'];
         $nama_pasien        = $data['nama_pasien'];
         $priority           = $data['priority'];
         $asal_kiriman       = $data['asal_kiriman'];
@@ -123,8 +125,9 @@
         $pembayaran         = $data['pembayaran'];
         $datetime_diminta   = $data['datetime_diminta'];
         $status_pemeriksaan = $data['status_pemeriksaan'];
+        $pacs               = $data['pacs'] ?? null;
         $tanggal            = date('d/m/Y', strtotime($datetime_diminta));
-        $jam                = date('H:i', strtotime($datetime_diminta));
+        $jam                = date('H:i T', strtotime($datetime_diminta));
 
         if(empty($data['radiografer'])){
             $radiografer = "-";
@@ -146,17 +149,51 @@
         $modalitas_nama = $nama_modalitas[$alat_pemeriksa] ?? '-';
 
         //Routing Status
+        $tombol_lanjutan = '';
         if($status_pemeriksaan=="Diminta"){
             $label_status = '<span class="badge bg-warning">Diminta</span>';
+            $tombol_lanjutan = '
+                <li>
+                    <a class="dropdown-item text-success modal_terima_permintaan" href="javascript:void(0)" data-id="'.$id_radiologi .'" data-status="Terima">
+                        <i class="bi bi-check-circle"></i> Terima
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item text-danger modal_terima_permintaan" href="javascript:void(0)" data-id="'.$id_radiologi .'" data-status="Pembatalan">
+                        <i class="bi bi-x-circle"></i> Batalkan
+                    </a>
+                </li>
+            ';
         }else{
             if($status_pemeriksaan=="Dikerjakan"){
                 $label_status = '<span class="badge bg-info">Dikerjakan</span>';
+                $tombol_lanjutan = '
+                    <li>
+                        <a class="dropdown-item modal_pengisian_expertise" href="javascript:void(0)" data-id="'.$id_radiologi .'">
+                            <i class="bi bi-clipboard-check"></i> Pengisian Expertise
+                        </a>
+                    </li>
+                ';
             }else{
                 if($status_pemeriksaan=="Hasil"){
                     $label_status = '<span class="badge bg-primary">Hasil</span>';
+                    $tombol_lanjutan = '
+                        <li>
+                            <a class="dropdown-item modal_cetak_laporan" href="javascript:void(0)" data-id="'.$id_radiologi .'">
+                                <i class="bi bi-printer"></i> Cetak Laporan
+                            </a>
+                        </li>
+                    ';
                 }else{
                     if($status_pemeriksaan=="Selesai"){
                         $label_status = '<span class="badge bg-success">Selesai</span>';
+                        $tombol_lanjutan = '
+                            <li>
+                                <a class="dropdown-item modal_cetak_laporan" href="javascript:void(0)" data-id="'.$id_radiologi .'">
+                                    <i class="bi bi-printer"></i> Cetak Laporan
+                                </a>
+                            </li>
+                        ';
                     }else{
                         if($status_pemeriksaan=="Batal"){
                             $label_status = '<span class="badge bg-danger">Batal</span>';
@@ -170,9 +207,59 @@
 
         // Routing Service Request
         if(empty($id_service_request)){
-            $sr = '<span class="text-danger"><i class="bi bi-x-circle"></i></span>';
+            $sr = '
+                <a href="javascript:void(0);" class="modal_service_request" data-id="'.$id_radiologi.'">
+                    <span class="badge border border-danger text-danger" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Kirim Data Service Request">
+                        <i class="bi bi-send"></i>
+                    </span>
+                </a>
+            ';
         }else{
-            $sr = '<span class="text-success"><i class="bi bi-check-circle"></i></span>';
+            $sr = '
+                <a href="javascript:void(0);" class="modal_detail_service_request" data-id="'.$id_service_request.'">
+                    <span class="badge bg-success" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Lihat Detail Procedure">
+                        <i class="bi bi-check"></i>
+                    </span>
+                </a>
+            ';
+        }
+
+        // Routing Procedure
+        if(empty($id_procedure)){
+            $pc = '
+                <a href="javascript:void(0);" class="modal_procedure" data-id="'.$id_radiologi.'">
+                    <span class="badge border border-danger text-danger" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Kirim Data Procedure">
+                        <i class="bi bi-send"></i>
+                    </span>
+                </a>
+            ';
+        }else{
+            $pc = '
+                <a href="javascript:void(0);" class="modal_detail_procedure" data-id="'.$id_procedure.'">
+                    <span class="badge bg-success" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Lihat Detail Procedure">
+                        <i class="bi bi-check"></i>
+                    </span>
+                </a>
+            ';
+        }
+
+        // Routing label pacs
+        if(empty($pacs)){
+            $pacs_label = '
+                <a href="javascript:void(0);" class="modal_order_pacs" data-id="'.$id_radiologi.'">
+                    <span class="badge border border-danger text-danger" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Kirim Order Ke PACS">
+                        <i class="bi bi-send"></i>
+                    </span>
+                </a>
+            ';
+        }else{
+            $pacs_label = '
+                <a href="javascript:void(0);" class="modal_detail_pacd" data-id="'.$accession_number.'">
+                    <span class="badge border border-success text-success" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Lihat Detail Order">
+                        <i class="bi bi-check"></i>
+                    </span>
+                </a>
+            ';
         }
 
         //Routing Periority
@@ -196,28 +283,39 @@
             'stat'    => 'Gawat'
         ];
         $priority_name = $priority_list[$priority] ?? '-';
+        
+        // Labeling tujuan
+        if($tujuan=="Rajal"){
+            $labal_tujuan = 'text-success';
+        }else{
+            $labal_tujuan = 'text-warning';
+        }
        
         echo '
             <tr>
                 <td><small>'.$no.'</small></td>
-                <td><small><small>'.$id_pasien.'</small></small></td>
-                <td><small><small>'.$id_kunjungan.'</small></small></td>
                 <td>
-                    <a href="javascript:void(0);" class="modal_detail" data-id="'.$id_radiologi .'" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Lihat Detail Pemeriksaan">
-                        <small>
-                            <small class="underscore_doted">'.$nama_pasien.'</small>
-                        </small>
-                    </a>
+                    <a href="javascript:void(0);" class="modal_detail" data-id="'.$id_radiologi .'" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="ACN: '.$accession_number.'">
+                       <small class="underscore_doted">'.$nama_pasien.'</small>
+                    </a><br>
+                    <small><small>RM: '.$id_pasien.'</small></small>
                 </td>
-                <td><small><small>'.$tanggal.'</small></small></td>
-                <td><small><small>'.$jam.'</small></small></td>
-                <td><small><small>'.$tujuan.'</small></small></td>
-                <td><small><small>'.$pembayaran.'</small></small></td>
-                <td><small><small>'.$asal_kiriman.'</small></small></td>
-                <td><small><small>'.$modalitas_nama.'</small></small></td>
-                <td><small><small>'.$radiografer.'</small></small></td>
+                <td>
+                    <small class="underscore_doted">'.$tanggal.'</small><br>
+                    <small><small>'.$jam.'</small></small>
+                </td>
+                <td><small>'.$pembayaran.'</small></td>
+                <td>
+                    <small class="'.$labal_tujuan.'" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="'.$tujuan.'">
+                        '.$asal_kiriman.'
+                    </small>
+                </td>
+                <td><small>'.$modalitas_nama.'</small></td>
+                <td><small>'.$radiografer.'</small></td>
                 <td><small>'.$label_status.'</small></td>
                 <td class="text-center"><small>'.$sr.'</small></td>
+                <td class="text-center">'.$pc.'</td>
+                <td class="text-center">'.$pacs_label.'</td>
                 <td class="text-center">
                     <button type="button" class="btn btn-sm btn-outline-dark btn-floating"  data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="bi bi-three-dots-vertical"></i>
@@ -234,6 +332,7 @@
                                 <i class="bi bi-info-circle"></i> Detail
                             </a>
                         </li>
+                        '.$tombol_lanjutan.'
                         <li>
                             <a class="dropdown-item modal_edit" href="javascript:void(0)" data-id="'.$id_radiologi .'">
                                 <i class="bi bi-pencil"></i> Edit

@@ -39,7 +39,7 @@
                                 <option value="id_kunjungan">ID Reg</option>
                                 <option value="nama_pasien">Nama Pasien</option>
                                 <option value="datetime_diminta">Tanggal</option>
-                                <option value="tujuan">Kunjungan</option>
+                                <option value="tujuan">Tujuan</option>
                                 <option value="pembayaran">Pembayaran</option>
                                 <option value="asal_kiriman">Asal Kiriman</option>
                                 <option value="alat_pemeriksa">Modality</option>
@@ -178,26 +178,25 @@
     </div>
 </div>
 
-<div class="modal fade" id="ModalTambahPermintaan" tabindex="-1">
+<div class="modal fade" id="ModalTerimaPermintaan" tabindex="-1">
     <div class="modal-dialog modal-lg">
-        <div class="modal-content border border-2 border-primary-subtle rounded-4 shadow-lg">
-            <form action="javascript:void(0);" id="ProsesTambah">
-                <div class="modal-header bg-light border-bottom border-3 border-primary">
+        <div class="modal-content rounded-4 shadow-lg">
+            <form action="javascript:void(0);" id="ProsesTerimaPermintaan">
+                <div class="modal-header">
                     <h5 class="modal-title text-dark fw-semibold">
-                        <i class="bi bi-plus-circle-fill text-primary me-2"></i>
-                        Tambah Permintaan Pemeriksaan
+                        <i class="bi bi-arrow-clockwise text-primary me-2"></i> <span class="terima_atau_tolak">Terima / Tolak</span> Permintaan
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body p-4">
                     <div class="row">
-                        <div class="col-12" id="FormTambahPermintaan"></div>
+                        <div class="col-12" id="FormTerimaPermintaan"></div>
                     </div>
                     <div class="row mt-3">
-                        <div class="col-12" id="NotifikasiTambahPermintaan"></div>
+                        <div class="col-12" id="NotifikasiTerimaPermintaan"></div>
                     </div>
                 </div>
-                <div class="modal-footer bg-light border-top border-3 border-primary py-3">
+                <div class="modal-footer py-3">
                     <button type="submit" class="btn btn-primary btn-rounded fw-medium px-4 py-2">
                         <i class="bi bi-save me-2"></i> Simpan
                     </button>
@@ -289,6 +288,116 @@
     </div>
 </div>
 
+<div class="modal fade" id="ModalProcedure" tabindex="-1">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content border border-2 border-primary-subtle rounded-4 shadow-lg">
+            <form action="javascript:void(0);" id="ProsesProcedure" autocomplete="off">
+                <div class="modal-header bg-light border-bottom border-1 border-primary">
+                    <h5 class="modal-title text-dark"><i class="bi bi-send"></i> Procedure</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12" id="FormProcedure">
+                            <!-- Form Akan Muncul Disini -->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12" id="NotifikasiProcedure">
+                            <!-- Notifikasi Proses Akan Muncul Disini -->
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer bg-light border-top border-1 border-primary py-3">
+                    <button type="submit" class="btn btn-primary btn-rounded">
+                        <i class="bi bi-send"></i> Kirim
+                    </button>
+                    <button type="button" class="btn btn-secondary btn-rounded" data-bs-dismiss="modal">
+                        <i class="bi bi-x-circle"></i> Tutup
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ModalDetailProcedure" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content border border-2 border-primary-subtle rounded-4 shadow-lg">
+            <div class="modal-header bg-light border-bottom border-1 border-primary">
+                <h5 class="modal-title text-dark"><i class="bi bi-info-circle"></i> Detail Procedure</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12" id="FormDetailProcedure">
+                        <!-- Form Akan Muncul Disini -->
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer bg-light border-top border-1 border-primary py-3">
+                <button type="button" class="btn btn-secondary btn-rounded" data-bs-dismiss="modal">
+                    <i class="bi bi-x-circle"></i> Tutup
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="ModalOrderPacs" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content border border-2 border-primary-subtle rounded-4 shadow-lg">
+            <form action="javascript:void(0);" id="ProsesOrderPacs" autocomplete="off">
+                <div class="modal-header bg-light border-bottom border-1 border-primary">
+                    <h5 class="modal-title text-dark"><i class="bi bi-send"></i> Order PACS</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12" id="FormOrderPacs">
+                            <!-- Form Akan Muncul Disini -->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12" id="NotifikasiOrderPacs">
+                            <!-- Notifikasi Proses Akan Muncul Disini -->
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer bg-light border-top border-1 border-primary py-3">
+                    <button type="submit" class="btn btn-primary btn-rounded">
+                        <i class="bi bi-send"></i> Kirim
+                    </button>
+                    <button type="button" class="btn btn-secondary btn-rounded" data-bs-dismiss="modal">
+                        <i class="bi bi-x-circle"></i> Tutup
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ModalDetailPacs" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-dark"><i class="bi bi-info-circle"></i> Detail Order PACS</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12" id="FormDetailPacs">
+                        <!-- Form Akan Muncul Disini -->
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-rounded" data-bs-dismiss="modal">
+                    <i class="bi bi-x-circle"></i> Tutup
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="modal fade" id="ModalHapus" tabindex="-1">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
