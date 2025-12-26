@@ -934,6 +934,36 @@ $(document).ready(function() {
         });
     });
 
+     /*
+    ===================================================================================
+    DIAGNOSTIC REPORT
+    ===================================================================================
+    */
+    $(document).on('click', '.modal_diagnostic_report', function () {
+
+        //tangkap data 'id_radiologi' dan buat variabel
+        var id_radiologi   = $(this).data('id');
+
+        //tampilkan modal
+        $('#ModalDiagnosticReport').modal('show');
+
+        // Kosongkan Notifikasi
+        $('#NotifikasiDiagnosticReport').html('');
+
+        //Form Loading
+        $('#FormDiagnosticReport').html('Loading...');
+
+        //Tampilkan Form Dengan Ajax
+        $.ajax({
+            type 	    : 'POST',
+            url 	    : '_Page/Pemeriksaan/FormDiagnosticReport.php',
+            data        : {id_radiologi: id_radiologi},
+            success     : function(data){
+                $('#FormDiagnosticReport').html(data);
+            }
+        });
+    });
+
     /*
     ===================================================================================
     ORDER PACS

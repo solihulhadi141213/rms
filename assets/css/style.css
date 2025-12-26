@@ -883,7 +883,7 @@ h6 {
 
 .dashboard .sales-card .card-icon {
   color: #4154f1;
-  background: #f6f6fe;
+  background: #c8c8ec;
 }
 
 .dashboard .revenue-card .card-icon {
@@ -1382,19 +1382,32 @@ body .title_page_app {
 #card_jam_menarik {
   padding: 18px;
   border-radius: 16px;
-
-  /* Gradient elegan */
-  background: linear-gradient(
-    135deg,
-    #0f766e,
-    #22c55e,
-    #4ade80
-  );
-
   position: relative;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
-  border: none;
   overflow: hidden;
+  border: none;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+/* Layer gambar background */
+#card_jam_menarik::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 1;
+  transition: opacity 1.5s ease-in-out;
+  z-index: 0;
+}
+
+/* Overlay gelap agar teks selalu terbaca */
+#card_jam_menarik::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55); /* tingkat gelap */
+  z-index: 1;
 }
 
 /* Efek cahaya lembut */
@@ -1407,6 +1420,10 @@ body .title_page_app {
   height: 180%;
   background: linear-gradient(135deg, #0f172a, #1e293b, #334155);
   z-index: 1;
+}
+#card_jam_menarik * {
+  position: relative;
+  z-index: 2;
 }
 
 /* Judul / Nama Instansi */

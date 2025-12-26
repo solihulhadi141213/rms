@@ -38,6 +38,9 @@ $pemeriksaan_sys         = !empty($_POST['pemeriksaan_sys'])         ? trim($_PO
 $bodysite_code           = !empty($_POST['bodysite_code'])           ? trim($_POST['bodysite_code'])           : NULL;
 $bodysiteite_description = !empty($_POST['bodysite_description'])    ? trim($_POST['bodysite_description'])    : NULL;
 $bodysite_sys            = !empty($_POST['bodysite_sys'])            ? trim($_POST['bodysite_sys'])            : NULL;
+$report_code             = !empty($_POST['report_code'])            ? trim($_POST['report_code'])            : NULL;
+$report_description      = !empty($_POST['report_description'])            ? trim($_POST['report_description'])            : NULL;
+$report_sys              = !empty($_POST['report_sys'])            ? trim($_POST['report_sys'])            : NULL;
 
 // ======================================================
 // VALIDASI FIELD WAJIB
@@ -96,12 +99,15 @@ $query = $Conn->prepare("
         pemeriksaan_sys,
         bodysite_code,
         bodysite_description,
-        bodysite_sys
-    ) VALUES (?,?,?,?,?,?,?,?)
+        bodysite_sys,
+        report_code,
+        report_description,
+        report_sys
+    ) VALUES (?,?,?,?,?,?,?,?,?,?,?)
 ");
 
 $query->bind_param(
-    "ssssssss",
+    "sssssssssss",
     $nama_pemeriksaan,
     $modalitas,
     $pemeriksaan_code,
@@ -109,7 +115,10 @@ $query->bind_param(
     $pemeriksaan_sys,
     $bodysite_code,
     $bodysiteite_description,
-    $bodysite_sys
+    $bodysite_sys,
+    $report_code,
+    $report_description,
+    $report_sys
 );
 
 // ======================================================

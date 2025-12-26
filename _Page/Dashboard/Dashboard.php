@@ -38,14 +38,26 @@
     <div class="row">
         <div class="col-md-3 col-12">
             <div class="card info-card blue-card">
+                <div class="filter">
+                    <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                        <li class="dropdown-header text-start"><h6>Filter</h6></li>
+                        <li><a href="#" class="dropdown-item">Hari Ini</a></li>
+                        <li><a href="#" class="dropdown-item">Bulan Ini</a></li>
+                        <li><a href="#" class="dropdown-item">Tahun Ini</a></li>
+                    </ul>
+                </div>
                 <div class="card-body">
                     <div class="d-flex align-items-center">
                         <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                             <i class="bi bi-send"></i>
                         </div>
                         <div class="ps-3">
-                            <b id="permintaan_pemeriksaan">20.000</b><br>
-                            <small>Permintaan Pemeriksaan</small>
+                            <b id="permintaan_pemeriksaan">00.000</b><br>
+                            <small>Permintaan Pemeriksaan</small><br>
+                            <small>
+                                <small class="text text-grayish"><?php echo date('F Y'); ?></small>
+                            </small>
                         </div>
                     </div>
                 </div>
@@ -59,8 +71,11 @@
                             <i class="bi bi-lightbulb"></i>
                         </div>
                         <div class="ps-3">
-                            <b id="sedang_dikerjakan">20.000</b><br>
-                            <small>Sedang Dikerjakan</small>
+                            <b id="sedang_dikerjakan">00.000</b><br>
+                            <small>Sedang Dikerjakan</small><br>
+                            <small>
+                                <small class="text text-grayish"><?php echo date('F Y'); ?></small>
+                            </small>
                         </div>
                     </div>
                 </div>
@@ -74,23 +89,104 @@
                             <i class="bi bi-lightning-charge"></i>
                         </div>
                         <div class="ps-3">
-                            <b id="menunggu_hasil">5</b><br>
-                            <small>Menunggu Hasil</small>
+                            <b id="menunggu_hasil">00.000</b><br>
+                            <small>Menunggu Hasil</small><br>
+                            <small>
+                                <small class="text text-grayish"><?php echo date('F Y'); ?></small>
+                            </small>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-md-3 col-12">
-            <div class="card info-card customers-card">
+            <div class="card info-card revenue-card">
                 <div class="card-body">
                     <div class="d-flex align-items-center">
                         <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                            <i class="bi bi-coin"></i>
+                            <i class="bi bi-check"></i>
                         </div>
                         <div class="ps-3">
-                            <b id="selesai">Rp 15.000.000</b><br>
-                            <small>Selesai</small>
+                            <b id="selesai">00.00</b><br>
+                            <small>Selesai</small><br>
+                            <small>
+                                <small class="text text-grayish"><?php echo date('F Y'); ?></small>
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3 col-12">
+            <div class="card info-card purple-card">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                            <i class="bi bi-send"></i>
+                        </div>
+                        <div class="ps-3">
+                            <b id="service_request">00.000</b><br>
+                            <small>Service Request</small><br>
+                            <small>
+                                <small class="text text-grayish"><?php echo date('F Y'); ?></small>
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-12">
+            <div class="card info-card purple-card">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                            <i class="bi bi-send"></i>
+                        </div>
+                        <div class="ps-3">
+                            <b id="procedure">00.000</b><br>
+                            <small>Procedure</small><br>
+                            <small>
+                                <small class="text text-grayish"><?php echo date('F Y'); ?></small>
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-12">
+            <div class="card info-card purple-card">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                            <i class="bi bi-send"></i>
+                        </div>
+                        <div class="ps-3">
+                            <b id="imaging_study">00.000</b><br>
+                            <small>Imaging Study</small><br>
+                            <small>
+                                <small class="text text-grayish"><?php echo date('F Y'); ?></small>
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-12">
+            <div class="card info-card purple-card">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                            <i class="bi bi-send"></i>
+                        </div>
+                        <div class="ps-3">
+                            <b id="diagnostic_report">00.000</b><br>
+                            <small>Diagnostic Report</small><br>
+                            <small>
+                                <small class="text text-grayish"><?php echo date('F Y'); ?></small>
+                            </small>
                         </div>
                     </div>
                 </div>

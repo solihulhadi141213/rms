@@ -114,6 +114,50 @@ function ShowRiwayatPembayaran() {
 }
 
 $(document).ready(function () {
+
+    const backgrounds = [
+        'assets/img/bg/0b91f2f4370cf26f23e44efe7136195c.jpg',
+        'assets/img/bg/calendar.jpg',
+        'assets/img/bg/bg3.jpg',
+        'assets/img/bg/bg4.jpg'
+    ];
+
+    let index = 0;
+    const card = $('#card_jam_menarik');
+
+    // Set background awal
+    card[0].style.setProperty(
+        '--bg-image',
+        `url(${backgrounds[index]})`
+    );
+
+    // Set via pseudo-element
+    $('#card_jam_menarik::before');
+
+    function gantiBackground() {
+        index = (index + 1) % backgrounds.length;
+
+        // Fade out
+        card.css('--bg-opacity', 0);
+
+        setTimeout(() => {
+            card[0].style.setProperty(
+                '--bg-image',
+                `url(${backgrounds[index]})`
+            );
+            card.css('--bg-opacity', 1);
+        }, 800);
+    }
+
+    // Inisialisasi
+    card[0].style.setProperty(
+        'background-image',
+        `url(${backgrounds[index]})`
+    );
+
+    setInterval(gantiBackground, 7000); // 7 detik
+
+
     //Menampilkan Data Pertama Kali
     ShowGrafik();
     ShowDashboard();

@@ -59,6 +59,9 @@
         $bodysite_code           = $Data['bodysite_code'];
         $bodysite_description    = $Data['bodysite_description'];
         $bodysite_sys            = $Data['bodysite_sys'];
+        $report_code             = $Data['report_code'];
+        $report_description      = $Data['report_description'];
+        $report_sys              = $Data['report_sys'];
 
         // Nama Modalitas
         $nama_modalitas = [
@@ -77,62 +80,127 @@
 
         //Tampilkan Data
         echo '
-            <div class="row mb-2">
-                <div class="col-4"><small>Nama Pemeriksaan</small></div>
-                <div class="col-1"><small>:</small></div>
-                <div class="col-7">
-                    <small class="text text-grayish text-long">'.$nama_pemeriksaan.'</small>
+            <div class="row mb-3">
+                <div class="col-12 mb-2">
+                    <small><b>A. Informasi Pemeriksaan</b></small>
+                </div>
+                <div class="col-12 mb-2">
+                    <div class="row mb-2">
+                        <div class="col-4"><small>Nama Pemeriksaan</small></div>
+                        <div class="col-1"><small>:</small></div>
+                        <div class="col-7">
+                            <small class="text text-grayish text-long">'.$nama_pemeriksaan.'</small>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-4"><small><i>Modality Code</i></small></div>
+                        <div class="col-1"><small>:</small></div>
+                        <div class="col-7">
+                            <small class="text text-grayish text-long">'.$modalitas.'</small>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-4"><small><i>Modality Description</i></small></div>
+                        <div class="col-1"><small>:</small></div>
+                        <div class="col-7">
+                            <small class="text text-grayish text-long">'.$modalitas_nama.'</small>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="row mb-2">
-                <div class="col-4"><small>Modalitas</small></div>
-                <div class="col-1"><small>:</small></div>
-                <div class="col-7">
-                    <small class="text text-grayish text-long">'.$modalitas_nama.'</small>
+
+        ';
+        echo '
+            <div class="row mb-3">
+                <div class="col-12 mb-2">
+                    <small><b><i>B. Code System</i></b></small>
                 </div>
-            </div>
-            <div class="row mb-2">
-                <div class="col-4"><small><i>Loinc Code</i></small></div>
-                <div class="col-1"><small>:</small></div>
-                <div class="col-7">
-                    <small class="text text-grayish text-long">'.$pemeriksaan_code.'</small>
+                <div class="col-12 mb-2">
+                    <div class="row mb-2">
+                        <div class="col-4"><small><i>Loinc Code</i></small></div>
+                        <div class="col-1"><small>:</small></div>
+                        <div class="col-7">
+                            <small class="text text-grayish text-long">'.$pemeriksaan_code.'</small>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-4"><small><i>Loinc Description</i></small></div>
+                        <div class="col-1"><small>:</small></div>
+                        <div class="col-7">
+                            <small class="text text-grayish text-long">'.$pemeriksaan_description.'</small>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-4"><small><i>Loinc Sys</i></small></div>
+                        <div class="col-1"><small>:</small></div>
+                        <div class="col-7">
+                            <small class="text text-grayish text-long">'.$pemeriksaan_sys.'</small>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="row mb-2">
-                <div class="col-4"><small><i>Description Code</i></small></div>
-                <div class="col-1"><small>:</small></div>
-                <div class="col-7">
-                    <small class="text text-grayish text-long">'.$pemeriksaan_description.'</small>
+            </div> 
+        ';
+
+        echo '
+            <div class="row mb-3">
+                <div class="col-12 mb-2">
+                    <small><b><i>C. Body Site</i></b></small>
                 </div>
-            </div>
-            <div class="row mb-2">
-                <div class="col-4"><small><i>Loinc Reference</i></small></div>
-                <div class="col-1"><small>:</small></div>
-                <div class="col-7">
-                    <small class="text text-grayish text-long">'.$pemeriksaan_sys.'</small>
+                <div class="col-12 mb-2">
+                    <div class="row mb-2">
+                        <div class="col-4"><small><i>Body Site Code</i></small></div>
+                        <div class="col-1"><small>:</small></div>
+                        <div class="col-7">
+                            <small class="text text-grayish text-long">'.$bodysite_code.'</small>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-4"><small><i>Body Site Description</i></small></div>
+                        <div class="col-1"><small>:</small></div>
+                        <div class="col-7">
+                            <small class="text text-grayish text-long">'.$bodysite_description.'</small>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-4"><small><i>Body Site Sys</i></small></div>
+                        <div class="col-1"><small>:</small></div>
+                        <div class="col-7">
+                            <small class="text text-grayish text-long">'.$bodysite_sys.'</small>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="row mb-2">
-                <div class="col-4"><small><i>Body Site Code</i></small></div>
-                <div class="col-1"><small>:</small></div>
-                <div class="col-7">
-                    <small class="text text-grayish text-long">'.$bodysite_code.'</small>
+            </div> 
+        ';
+
+        echo '
+            <div class="row mb-3">
+                <div class="col-12 mb-2">
+                    <small><b><i>C. Diagsnotic Report</i></b></small>
                 </div>
-            </div>
-            <div class="row mb-2">
-                <div class="col-4"><small><i>Body Site Description</i></small></div>
-                <div class="col-1"><small>:</small></div>
-                <div class="col-7">
-                    <small class="text text-grayish text-long">'.$bodysite_description.'</small>
+                <div class="col-12 mb-2">
+                    <div class="row mb-2">
+                        <div class="col-4"><small><i>Report Code</i></small></div>
+                        <div class="col-1"><small>:</small></div>
+                        <div class="col-7">
+                            <small class="text text-grayish text-long">'.$report_code.'</small>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-4"><small><i>Report Description</i></small></div>
+                        <div class="col-1"><small>:</small></div>
+                        <div class="col-7">
+                            <small class="text text-grayish text-long">'.$report_description.'</small>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-4"><small><i>Report Sys</i></small></div>
+                        <div class="col-1"><small>:</small></div>
+                        <div class="col-7">
+                            <small class="text text-grayish text-long">'.$report_sys.'</small>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="row mb-2">
-                <div class="col-4"><small><i>Body Site Reference</i></small></div>
-                <div class="col-1"><small>:</small></div>
-                <div class="col-7">
-                    <small class="text text-grayish text-long">'.$bodysite_sys.'</small>
-                </div>
-            </div>
+            </div> 
         ';
     }
 ?>

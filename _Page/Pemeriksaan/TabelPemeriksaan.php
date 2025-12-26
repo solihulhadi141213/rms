@@ -98,38 +98,40 @@
     //KONDISI PENGATURAN MASING FILTER
     if(empty($keyword_by)){
         if(empty($keyword)){
-            $query = mysqli_query($Conn, "SELECT id_radiologi, id_pasien, id_kunjungan, id_service_request, id_procedure, id_imaging_study, pacs, accession_number, nama_pasien, priority, asal_kiriman, alat_pemeriksa, radiografer, tujuan, pembayaran, datetime_diminta, status_pemeriksaan  FROM radiologi ORDER BY $OrderBy $ShortBy LIMIT $posisi, $batas");
+            $query = mysqli_query($Conn, "SELECT id_radiologi, id_pasien, id_kunjungan, id_service_request, id_procedure, id_imaging_study, id_diagnostic_report, pacs, accession_number, nama_pasien, priority, asal_kiriman, alat_pemeriksa, radiografer, tujuan, pembayaran, datetime_diminta, status_pemeriksaan  FROM radiologi ORDER BY $OrderBy $ShortBy LIMIT $posisi, $batas");
         }else{
-            $query = mysqli_query($Conn, "SELECT id_radiologi, id_pasien, id_kunjungan, id_service_request, id_procedure, id_imaging_study, pacs, accession_number, nama_pasien, priority, asal_kiriman, alat_pemeriksa, radiografer, tujuan, pembayaran, datetime_diminta, status_pemeriksaan FROM radiologi WHERE id_pasien like '%$keyword%' OR id_kunjungan like '%$keyword%' OR nama_pasien like '%$keyword%' OR asal_kiriman like '%$keyword%' OR accession_number like '%$keyword%' ORDER BY $OrderBy $ShortBy LIMIT $posisi, $batas");
+            $query = mysqli_query($Conn, "SELECT id_radiologi, id_pasien, id_kunjungan, id_service_request, id_procedure, id_imaging_study, id_diagnostic_report, pacs, accession_number, nama_pasien, priority, asal_kiriman, alat_pemeriksa, radiografer, tujuan, pembayaran, datetime_diminta, status_pemeriksaan FROM radiologi WHERE id_pasien like '%$keyword%' OR id_kunjungan like '%$keyword%' OR nama_pasien like '%$keyword%' OR asal_kiriman like '%$keyword%' OR accession_number like '%$keyword%' ORDER BY $OrderBy $ShortBy LIMIT $posisi, $batas");
         }
     }else{
         if(empty($keyword)){
-            $query = mysqli_query($Conn, "SELECT id_radiologi, id_pasien, id_kunjungan, id_service_request, id_procedure, id_imaging_study, pacs, accession_number, nama_pasien, priority, asal_kiriman, alat_pemeriksa, radiografer, tujuan, pembayaran, datetime_diminta, status_pemeriksaan FROM radiologi ORDER BY $OrderBy $ShortBy LIMIT $posisi, $batas");
+            $query = mysqli_query($Conn, "SELECT id_radiologi, id_pasien, id_kunjungan, id_service_request, id_procedure, id_imaging_study, id_diagnostic_report, pacs, accession_number, nama_pasien, priority, asal_kiriman, alat_pemeriksa, radiografer, tujuan, pembayaran, datetime_diminta, status_pemeriksaan FROM radiologi ORDER BY $OrderBy $ShortBy LIMIT $posisi, $batas");
         }else{ 
-            $query = mysqli_query($Conn, "SELECT id_radiologi, id_pasien, id_kunjungan, id_service_request, id_procedure, id_imaging_study, pacs, accession_number, nama_pasien, priority, asal_kiriman, alat_pemeriksa, radiografer, tujuan, pembayaran, datetime_diminta, status_pemeriksaan FROM radiologi WHERE $keyword_by like '%$keyword%' ORDER BY $OrderBy $ShortBy LIMIT $posisi, $batas");
+            $query = mysqli_query($Conn, "SELECT id_radiologi, id_pasien, id_kunjungan, id_service_request, id_procedure, id_imaging_study, id_diagnostic_report, pacs, accession_number, nama_pasien, priority, asal_kiriman, alat_pemeriksa, radiografer, tujuan, pembayaran, datetime_diminta, status_pemeriksaan FROM radiologi WHERE $keyword_by like '%$keyword%' ORDER BY $OrderBy $ShortBy LIMIT $posisi, $batas");
         }
     }
     while ($data = mysqli_fetch_array($query)) {
-        $id_radiologi       = $data['id_radiologi'];
-        $id_pasien          = $data['id_pasien'];
-        $id_kunjungan       = $data['id_kunjungan'];
-        $id_service_request = $data['id_service_request'];
-        $id_procedure       = $data['id_procedure'];
-        $id_imaging_study   = $data['id_imaging_study'];
-        $accession_number   = $data['accession_number'];
-        $nama_pasien        = $data['nama_pasien'];
-        $priority           = $data['priority'];
-        $asal_kiriman       = $data['asal_kiriman'];
-        $alat_pemeriksa     = $data['alat_pemeriksa'];
-        $radiografer        = $data['radiografer'];
-        $tujuan             = $data['tujuan'];
-        $pembayaran         = $data['pembayaran'];
-        $datetime_diminta   = $data['datetime_diminta'];
-        $status_pemeriksaan = $data['status_pemeriksaan'];
-        $pacs               = $data['pacs'] ?? null;
-        $tanggal            = date('d/m/y', strtotime($datetime_diminta));
-        $jam                = date('H:i', strtotime($datetime_diminta));
+        $id_radiologi         = $data['id_radiologi'];
+        $id_pasien            = $data['id_pasien'];
+        $id_kunjungan         = $data['id_kunjungan'];
+        $id_service_request   = $data['id_service_request'];
+        $id_procedure         = $data['id_procedure'];
+        $id_imaging_study     = $data['id_imaging_study'];
+        $id_diagnostic_report = $data['id_diagnostic_report'];
+        $accession_number     = $data['accession_number'];
+        $nama_pasien          = $data['nama_pasien'];
+        $priority             = $data['priority'];
+        $asal_kiriman         = $data['asal_kiriman'];
+        $alat_pemeriksa       = $data['alat_pemeriksa'];
+        $radiografer          = $data['radiografer'];
+        $tujuan               = $data['tujuan'];
+        $pembayaran           = $data['pembayaran'];
+        $datetime_diminta     = $data['datetime_diminta'];
+        $status_pemeriksaan   = $data['status_pemeriksaan'];
+        $pacs                 = $data['pacs'] ?? null;
+        $tanggal              = date('d/m/y', strtotime($datetime_diminta));
+        $jam                  = date('H:i', strtotime($datetime_diminta));
 
+        //Mendapatkan Inisial Nama Radiografer
         $radiografer = getInisialNama($data['radiografer'] ?? null);
 
         //Routing pembayaran
@@ -289,6 +291,26 @@
             $jumlah_resource = $jumlah_resource + 1;
         }
 
+        // Routing Diagnostic Report
+        if(empty($id_diagnostic_report)){
+            $dr = '
+                <li>
+                    <a href="javascript:void(0)" class="dropdown-item text-danger modal_diagnostic_report" data-id="'.$id_radiologi .'">
+                        4. Diagnostic Report
+                    </a>
+                </li>
+            ';
+        }else{
+            $dr = '
+                <li>
+                    <a href="javascript:void(0)" class="dropdown-item text-info modal_detail_diagnostic_report" data-id="'.$id_diagnostic_report .'">
+                        4. Diagnostic Report
+                    </a>
+                </li>
+            ';
+            $jumlah_resource = $jumlah_resource + 1;
+        }
+
         if(empty($jumlah_resource)){
             $border_satu_sehat = "border-secondary";
             $text_satu_sehat   = "text-secondary";
@@ -385,6 +407,7 @@
                         '.$sr.'
                         '.$pc.'
                         '.$is.'
+                        '.$dr.'
                     </ul>
                 </td>
                 <td class="text-center">'.$pacs_label.'</td>

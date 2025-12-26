@@ -40,6 +40,7 @@
                                 <option value="pemeriksaan_code">Code</option>
                                 <option value="pemeriksaan_description">Description</option>
                                 <option value="bodysite_description">Body Site</option>
+                                <option value="report_description">Diagsnotic Report</option>
                             </select>
                         </div>
                     </div>
@@ -70,6 +71,7 @@
                                 <option value="pemeriksaan_code">Code</option>
                                 <option value="pemeriksaan_description">Description</option>
                                 <option value="bodysite_description">Body Site</option>
+                                <option value="report_description">Diagsnotic Report</option>
                             </select>
                         </div>
                     </div>
@@ -182,6 +184,30 @@
                             <input type="url" class="form-control" name="bodysite_sys" id="bodysite_sys" value="http://snomed.info/sct" required>
                         </div>
                     </div>
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <label for="report_code">
+                                <small><i>Report Code</i></small>
+                            </label>
+                            <input type="text" class="form-control" name="report_code" id="report_code" required>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <label for="report_description">
+                                <small><i>Report Description</i></small>
+                            </label>
+                            <input type="text" class="form-control" name="report_description" id="report_description" required>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <label for="report_sys">
+                                <small><i>Report Reference</i></small>
+                            </label>
+                            <input type="url" class="form-control" name="report_sys" id="report_sys" value="http://loinc.org" required>
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-md-12" id="NotifikasiTambah">
                             <!-- Notifikasi Proses Akan Muncul Disini -->
@@ -202,7 +228,7 @@
 </div>
 
 <div class="modal fade" id="ModalDetail" tabindex="-1">
-    <div class="modal-dialog modal-md">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title text-dark"><i class="bi bi-info-circle"></i> Detail Kode Pemeriksaan</h5>

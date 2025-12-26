@@ -59,6 +59,9 @@
         $bodysite_code           = $Data['bodysite_code'];
         $bodysite_description    = $Data['bodysite_description'];
         $bodysite_sys            = $Data['bodysite_sys'];
+        $report_code             = $Data['report_code'];
+        $report_description      = $Data['report_description'];
+        $report_sys              = $Data['report_sys'];
 
         // Nama Modalitas
         $modalitas_list = [
@@ -87,7 +90,7 @@
                     <label for="nama_pemeriksaan_edit">
                         <small>Nama Pemeriksaan</small>
                     </label>
-                    <input type="text" class="form-control" name="nama_pemeriksaan" id="nama_pemeriksaan_edit" value="'.$nama_pemeriksaan.'" required>
+                    <input type="text" class="form-control" name="nama_pemeriksaan" id="nama_pemeriksaan_edit" value="'.$nama_pemeriksaan.'">
                 </div>
             </div>
             <div class="row mb-3">
@@ -95,7 +98,7 @@
                     <label for="modalitas">
                         <small>Modalitas/Alat</small>
                     </label>
-                    <select name="modalitas" id="modalitas" class="form-control" required>
+                    <select name="modalitas" id="modalitas" class="form-control">
                         '.$option_modalitas.'
                     </select>
                 </div>
@@ -105,7 +108,7 @@
                     <label for="pemeriksaan_code_edit">
                         <small><i>LOINC Code</i></small>
                     </label>
-                    <input type="text" class="form-control" name="pemeriksaan_code" id="pemeriksaan_code_edit" value="'.$pemeriksaan_code.'" required>
+                    <input type="text" class="form-control" name="pemeriksaan_code" id="pemeriksaan_code_edit" value="'.$pemeriksaan_code.'">
                     <small class="text text-grayish">Kode Pemeriksaan Berdasarkan LOINC</small>
                 </div>
             </div>
@@ -114,7 +117,7 @@
                     <label for="pemeriksaan_description_edit">
                         <small><i>LOINC Description</i></small>
                     </label>
-                    <input type="text" class="form-control" name="pemeriksaan_description" id="pemeriksaan_description_edit" value="'.$pemeriksaan_description.'" required>
+                    <input type="text" class="form-control" name="pemeriksaan_description" id="pemeriksaan_description_edit" value="'.$pemeriksaan_description.'">
                     <small class="text text-grayish">Deskripsi Pemeriksaan Berdasarkan LOINC</small>
                 </div>
             </div>
@@ -123,7 +126,7 @@
                     <label for="pemeriksaan_sys_edit">
                         <small><i>URL Reference</i></small>
                     </label>
-                    <input type="url" class="form-control" name="pemeriksaan_sys" id="pemeriksaan_sys_edit" value="'.$pemeriksaan_sys.'" required>
+                    <input type="url" class="form-control" name="pemeriksaan_sys" id="pemeriksaan_sys_edit" value="'.$pemeriksaan_sys.'">
                 </div>
             </div>
             <div class="row mb-3">
@@ -131,7 +134,7 @@
                     <label for="bodysite_code_edit">
                         <small><i>Body Site Code</i></small>
                     </label>
-                    <input type="text" class="form-control" name="bodysite_code" id="bodysite_code_edit" value="'.$bodysite_code.'" required>
+                    <input type="text" class="form-control" name="bodysite_code" id="bodysite_code_edit" value="'.$bodysite_code.'">
                 </div>
             </div>
             <div class="row mb-3">
@@ -139,7 +142,7 @@
                     <label for="bodysite_description_edit">
                         <small><i>Body Site Description</i></small>
                     </label>
-                    <input type="text" class="form-control" name="bodysite_description" id="bodysite_description_edit" value="'.$bodysite_description.'" required>
+                    <input type="text" class="form-control" name="bodysite_description" id="bodysite_description_edit" value="'.$bodysite_description.'">
                 </div>
             </div>
             <div class="row mb-3">
@@ -147,7 +150,31 @@
                     <label for="bodysite_sys_edit">
                         <small><i>Body Site Reference</i></small>
                     </label>
-                    <input type="url" class="form-control" name="bodysite_sys" id="bodysite_sys_edit" value="'.$bodysite_sys.'" required>
+                    <input type="url" class="form-control" name="bodysite_sys" id="bodysite_sys_edit" value="'.$bodysite_sys.'">
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-12">
+                    <label for="report_code_edit">
+                        <small><i>Report Code</i></small>
+                    </label>
+                    <input type="text" class="form-control" name="report_code" id="report_code_edit" value="'.$report_code.'">
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-12">
+                    <label for="report_description">
+                        <small><i>Report Description</i></small>
+                    </label>
+                    <input type="text" class="form-control" name="report_description" id="report_description_edit" value="'.$report_description.'">
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-12">
+                    <label for="report_sys">
+                        <small><i>Report Reference</i></small>
+                    </label>
+                    <input type="url" class="form-control" name="report_sys" id="report_sys_edit" value="'.$report_sys.'">
                 </div>
             </div>
         ';

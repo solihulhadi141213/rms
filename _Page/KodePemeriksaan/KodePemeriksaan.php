@@ -37,7 +37,7 @@
                         <div class="row">
                             <div class="col-12 text-end">
                                 <button type="button" class="btn btn-md btn-secondary btn-floating modal_filter" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Filter Data Kode Pemeriksaan">
-                                    <i class="bi bi-filter"></i>
+                                    <i class="bi bi-search"></i>
                                 </button>
                                 <button type="button" class="btn btn-md btn-primary btn-floating modal_tambah" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Tambah Referensi Kode Pemeriksaan">
                                     <i class="bi bi-plus"></i>
@@ -51,11 +51,11 @@
                                 <thead>
                                     <tr>
                                         <th><b>No</b></th>
+                                        <th><b><i>Modality</i></b></th>
                                         <th><b>Nama Pemeriksaan</b></th>
-                                        <th><b>Modalitas</b></th>
-                                        <th><b><i>Code</i></b></th>
-                                        <th><b><i>Description</i></b></th>
+                                        <th><b><i>Code Sys</i></b></th>
                                         <th><b><i>Body Site</i></b></th>
+                                        <th><b><i>Report Code</i></b></th>
                                         <th><b>Opsi</b></th>
                                     </tr>
                                 </thead>

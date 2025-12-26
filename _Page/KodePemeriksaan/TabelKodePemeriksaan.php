@@ -115,7 +115,13 @@
         $modalitas               = $data['modalitas'];
         $pemeriksaan_code        = $data['pemeriksaan_code'];
         $pemeriksaan_description = $data['pemeriksaan_description'];
+        $pemeriksaan_sys         = $data['pemeriksaan_sys'];
+        $bodysite_code           = $data['bodysite_code'];
         $bodysite_description    = $data['bodysite_description'];
+        $bodysite_sys            = $data['bodysite_sys'];
+        $report_code             = $data['report_code'];
+        $report_description      = $data['report_description'];
+        $report_sys              = $data['report_sys'];
         
         // Nama Modalitas
         $nama_modalitas = [
@@ -137,14 +143,30 @@
             <tr>
                 <td><small>'.$no.'</small></td>
                 <td>
+                    <small class="text text-grayish" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="'.$modalitas_nama.'">
+                        '.$modalitas.'
+                    </small>
+                </td>
+                <td>
                     <a href="javascript:void(0);" class="modal_detail" data-id="'.$id_master_pemeriksaan .'" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Lihat Detail Kode Pemeriksaan">
                         <small class="underscore_doted">'.$nama_pemeriksaan.'</small>
                     </a>
                 </td>
-                <td><small>'.$modalitas_nama.'</small></td>
-                <td><small><i>'.$pemeriksaan_code.'</i></small></td>
-                <td><small><i>'.$pemeriksaan_description.'</i></small></td>
-                <td><small>'.$bodysite_description.'</small></td>
+                <td>
+                    <small data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="'.$pemeriksaan_sys.'">
+                        '.$pemeriksaan_code.' - <span class="text-grayish">'.$pemeriksaan_description.'</span>
+                    </small>
+                </td>
+                <td>
+                    <small data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="'.$bodysite_sys.'">
+                        <i>'.$bodysite_code.' - <span class="text-grayish">'.$bodysite_description.'</span></i>
+                    </small>
+                </td>
+                <td>
+                    <small data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="'.$report_sys.'">
+                        <i>'.$report_code.' - <span class="text-grayish">'.$report_description.'</span></i>
+                    </small>
+                </td>
                 <td>
                     <button type="button" class="btn btn-sm btn-outline-dark btn-floating"  data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="bi bi-three-dots-vertical"></i>
