@@ -1230,6 +1230,34 @@
         ];
     }
 
+    /**
+     * Membuat inisial dari nama
+     * @param string|null $nama
+     * @return string
+     */
+    function getInisialNama($nama)
+    {
+        if (empty($nama)) {
+            return '-';
+        }
+
+        // Bersihkan spasi berlebih
+        $nama = trim(preg_replace('/\s+/', ' ', $nama));
+
+        // Pisahkan nama
+        $parts = explode(' ', $nama);
+
+        if (count($parts) >= 2) {
+            // Ambil inisial nama depan & belakang
+            $inisial = mb_substr($parts[0], 0, 1) . mb_substr(end($parts), 0, 1);
+        } else {
+            // Hanya satu kata → ambil 2 huruf depan
+            $inisial = mb_substr($parts[0], 0, 2);
+        }
+
+        return mb_strtoupper($inisial);
+    }
+
 
 
 ?>

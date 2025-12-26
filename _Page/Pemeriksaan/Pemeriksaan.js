@@ -1,18 +1,43 @@
-//Fungsi Menampilkan Data Pemeriksaan
+// ======================================================
+// Fungsi Menampilkan Data Pemeriksaan (Smooth Transition)
+// ======================================================
 function ShowTablePemeriksaan() {
     var ProsesFilter = $('#ProsesFilter').serialize();
+    var $container  = $('#TabelPemeriksaan');
+
+    // Simpan tinggi awal untuk mencegah loncat
+    var currentHeight = $container.outerHeight();
+    $container.css('min-height', currentHeight + 'px');
+
     $.ajax({
-        type    : 'POST',
-        url     : '_Page/Pemeriksaan/TabelPemeriksaan.php',
-        data    : ProsesFilter,
-        success: function(data) {
-            $('#TabelPemeriksaan').html(data);
-            
-            // 🔁 Re-inisialisasi tooltip setelah data dimuat
+        type: 'POST',
+        url: '_Page/Pemeriksaan/TabelPemeriksaan.php',
+        data: ProsesFilter,
+        beforeSend: function () {
+            // Fade out halus
+            $container.stop(true, true).animate({
+                opacity: 0.3
+            }, 150);
+        },
+        success: function (data) {
+            // Ganti konten
+            $container.html(data);
+
+            // Re-init tooltip
             $('[data-bs-toggle="tooltip"]').tooltip();
+        },
+        complete: function () {
+            // Fade in kembali
+            $container.stop(true, true).animate({
+                opacity: 1
+            }, 200, function () {
+                // Lepaskan tinggi setelah animasi selesai
+                $container.css('min-height', '');
+            });
         }
     });
 }
+
 
 //Fungsi Menampilkan Data Kunjungan
 function ShowTableKunjungan() {
@@ -198,6 +223,19 @@ $(document).ready(function() {
         var next_page = page_now - 1;
         $('#page').val(next_page);
         ShowTablePemeriksaan(0);
+    });
+
+    /*
+    |--------------------------------------------------------------------------
+    | RESET FILTER
+    |--------------------------------------------------------------------------
+    */
+    $(document).on('click', '.reload_data_pemeriksaan', function() {
+        // Reset Filter
+        $('#ProsesFilter')[0].reset();
+
+        // Tampilkan Ulang Data
+        ShowTablePemeriksaan();
     });
 
     /*
@@ -793,6 +831,105 @@ $(document).ready(function() {
             data        : {id_procedure: id_procedure},
             success     : function(data){
                 $('#FormDetailProcedure').html(data);
+            }
+        });
+    });
+
+    /*
+    ===================================================================================
+    IMAGING STUDY
+    ===================================================================================
+    */
+    $(document).on('click', '.modal_imaging_study', function () {
+
+        //tangkap data 'id_radiologi' dan buat variabel
+        var id_radiologi   = $(this).data('id');
+
+        //tampilkan modal
+        $('#ModalImagingStudy').modal('show');
+
+        // Kosongkan Notifikasi
+        $('#NotifikasiImagingStudy').html('');
+
+        //Form Loading
+        $('#FormImagingStudy').html('Loading...');
+
+        //Tampilkan Form Dengan Ajax
+        $.ajax({
+            type 	    : 'POST',
+            url 	    : '_Page/Pemeriksaan/FormImagingStudy.php',
+            data        : {id_radiologi: id_radiologi},
+            success     : function(data){
+                $('#FormImagingStudy').html(data);
+            }
+        });
+    });
+
+    $('#ProsesImagingStudy').submit(function(){
+       
+        /* Menangkap data dari form  */
+        var ProsesImagingStudy=$('#ProsesImagingStudy').serialize();
+
+        /* Loading Notification */
+        $('#NotifikasiImagingStudy').html('loading..');
+
+        /* Kirim data dengan AJAX  */
+        $.ajax({
+            type    : 'POST',
+            url     : '_Page/Pemeriksaan/ProsesImagingStudy.php',
+            dataType: 'json',
+            data    : ProsesImagingStudy,
+            success: function(response) {
+                var status       = response.status;
+                var message      = response.message;
+                var id_radiologi = response.id_radiologi;
+
+                // Apabila berhasil
+                if(status=='success'){
+                    //Bersihkan notifikasi
+                    $('#NotifikasiImagingStudy').html('');
+
+                    //Tutup modal
+                    $('#ModalImagingStudy').modal('hide');
+
+                    //reload data detail
+                    ShowDetail(id_radiologi);
+
+                    // Reload Tabel Pemeriksaan
+                    ShowTablePemeriksaan();
+
+                    // Menampilkan Swal
+                    Swal.fire(
+                        'Success!',
+                        'Resource Imaging Study Berhasil Dikirim Ke Satu Sehat!',
+                        'success'
+                    )
+                }else{
+                    $('#NotifikasiImagingStudy').html('<div class="alert alert-danger"><small>'+message+'</small></div>');
+                }
+                
+            }
+        });
+    });
+
+    $(document).on('click', '.modal_detail_imaging_study', function () {
+
+        //tangkap data 'id_imaging_study' dan buat variabel
+        var id_imaging_study   = $(this).data('id');
+
+        //tampilkan modal
+        $('#ModalDetailImagingStudy').modal('show');
+
+        //Form Loading
+        $('#FormDetailImagingStudy').html('Loading...');
+
+        //Tampilkan Form Dengan Ajax
+        $.ajax({
+            type 	    : 'POST',
+            url 	    : '_Page/Pemeriksaan/FormDetailImagingStudy.php',
+            data        : {id_imaging_study: id_imaging_study},
+            success     : function(data){
+                $('#FormDetailImagingStudy').html(data);
             }
         });
     });

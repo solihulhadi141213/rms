@@ -35,10 +35,13 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col-12 text-end">
-                                <button type="button" class="btn btn-md btn-secondary btn-floating modal_filter" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Filter Data Pemeriksaan">
-                                    <i class="bi bi-filter"></i>
+                                <button type="button" class="btn btn-md btn-outline-secondary btn-floating reload_data_pemeriksaan" title="Reset Filter Data">
+                                    <i class="bi bi-repeat"></i>
                                 </button>
-                                 <button type="button" class="btn btn-md btn-primary btn-floating modal_pilih_kunjungan" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Tambah Permintaan Pemeriksaan Radiologi">
+                                <button type="button" class="btn btn-md btn-secondary btn-floating modal_filter" title="Filter Data Pemeriksaan">
+                                    <i class="bi bi-search"></i>
+                                </button>
+                                 <button type="button" class="btn btn-md btn-primary btn-floating modal_pilih_kunjungan" title="Tambah Permintaan Pemeriksaan Radiologi">
                                     <i class="bi bi-plus"></i>
                                 </button>
                             </div>
@@ -49,30 +52,51 @@
                             <table class="table table-hover">
                                 <thead>
                                     <tr>
-                                        <td valign="middle" class="text-center"><b><small>No</small></b></td>
-                                        <td valign="middle" class="text-left"><b><small>Pasien</small></b></td>
-                                        <td valign="middle" class="text-left"><b><small>Tgl/Jam</small></b></td>
-                                        <td valign="middle" class="text-left"><b><small>Pembayaran</small></b></td>
-                                        <td valign="middle" class="text-left"><b><small>Asal Kiriman</small></b></td>
-                                        <td valign="middle" class="text-left"><b><small>Modalitas</small></b></td>
-                                        <td valign="middle" class="text-left"><b><small>Radiografer</small></b></td>
-                                        <td valign="middle" class="text-left"><b><small>Status</small></b></td>
+                                        <td valign="middle" class="text-center"><b><small>NO</small></b></td>
+                                        <td valign="middle" class="text-left"><b><small>NAMA PASIEN</small></b></td>
+                                        <td valign="middle" class="text-left"><b><small>RM</small></b></td>
+                                        <td valign="middle" class="text-left"><b><small>TGL</small></b></td>
+                                        <td valign="middle" class="text-left"><b><small>JAM</small></b></td>
                                         <td valign="middle" class="text-center">
-                                            <b data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Service Request">
-                                                <small class="text-primary">SR</small>
+                                            <b data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Metode Pembayaran">
+                                                <small class="text-primary">PAY</small>
+                                            </b>
+                                        </td>
+                                         <td valign="middle" class="text-center">
+                                            <b data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Asal Kiriman">
+                                                <small class="text-primary">FROM</small>
                                             </b>
                                         </td>
                                         <td valign="middle" class="text-center">
-                                            <b data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Procedure">
-                                                <small class="text-primary">PC</small>
+                                            <b data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Modalitas (Alat/Pesawat)">
+                                                <small class="text-primary">MOD</small>
+                                            </b>
+                                        </td>
+                                        <td valign="middle" class="text-center">
+                                            <b data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Radiografer / Petugas">
+                                                <small class="text-primary">OFC</small>
+                                            </b>
+                                        </td>
+                                        <td valign="middle" class="text-center">
+                                            <b data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Resource Satu Sehat">
+                                                <small class="text-primary">RSS</small>
                                             </b>
                                         </td>
                                         <td valign="middle" class="text-center">
                                             <b data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Order Ke PACS">
-                                                <small class="text-primary">PACS</small>
+                                                <small class="text-primary">PA</small>
                                             </b>
                                         </td>
-                                        <td valign="middle" class="text-center"><b><small>Opsi</small></b></td>
+                                        <td valign="middle" class="text-center">
+                                            <b data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Status Pemeriksaan">
+                                                <small class="text-primary">STTS</small>
+                                            </b>
+                                        </td>
+                                        <td valign="middle" class="text-center">
+                                            <b data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Option">
+                                                <small class="text-primary">OPS</small>
+                                            </b>
+                                        </td>
                                     </tr>
                                 </thead>
                                 <tbody id="TabelPemeriksaan">

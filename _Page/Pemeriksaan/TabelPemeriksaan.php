@@ -98,15 +98,15 @@
     //KONDISI PENGATURAN MASING FILTER
     if(empty($keyword_by)){
         if(empty($keyword)){
-            $query = mysqli_query($Conn, "SELECT id_radiologi, id_pasien, id_kunjungan, id_service_request, id_procedure, pacs, accession_number, nama_pasien, priority, asal_kiriman, alat_pemeriksa, radiografer, tujuan, pembayaran, datetime_diminta, status_pemeriksaan  FROM radiologi ORDER BY $OrderBy $ShortBy LIMIT $posisi, $batas");
+            $query = mysqli_query($Conn, "SELECT id_radiologi, id_pasien, id_kunjungan, id_service_request, id_procedure, id_imaging_study, pacs, accession_number, nama_pasien, priority, asal_kiriman, alat_pemeriksa, radiografer, tujuan, pembayaran, datetime_diminta, status_pemeriksaan  FROM radiologi ORDER BY $OrderBy $ShortBy LIMIT $posisi, $batas");
         }else{
-            $query = mysqli_query($Conn, "SELECT id_radiologi, id_pasien, id_kunjungan, id_service_request, id_procedure, pacs, accession_number, nama_pasien, priority, asal_kiriman, alat_pemeriksa, radiografer, tujuan, pembayaran, datetime_diminta, status_pemeriksaan FROM radiologi WHERE id_pasien like '%$keyword%' OR id_kunjungan like '%$keyword%' OR nama_pasien like '%$keyword%' OR asal_kiriman like '%$keyword%' OR accession_number like '%$keyword%' ORDER BY $OrderBy $ShortBy LIMIT $posisi, $batas");
+            $query = mysqli_query($Conn, "SELECT id_radiologi, id_pasien, id_kunjungan, id_service_request, id_procedure, id_imaging_study, pacs, accession_number, nama_pasien, priority, asal_kiriman, alat_pemeriksa, radiografer, tujuan, pembayaran, datetime_diminta, status_pemeriksaan FROM radiologi WHERE id_pasien like '%$keyword%' OR id_kunjungan like '%$keyword%' OR nama_pasien like '%$keyword%' OR asal_kiriman like '%$keyword%' OR accession_number like '%$keyword%' ORDER BY $OrderBy $ShortBy LIMIT $posisi, $batas");
         }
     }else{
         if(empty($keyword)){
-            $query = mysqli_query($Conn, "SELECT id_radiologi, id_pasien, id_kunjungan, id_service_request, id_procedure, pacs, accession_number, nama_pasien, priority, asal_kiriman, alat_pemeriksa, radiografer, tujuan, pembayaran, datetime_diminta, status_pemeriksaan FROM radiologi ORDER BY $OrderBy $ShortBy LIMIT $posisi, $batas");
+            $query = mysqli_query($Conn, "SELECT id_radiologi, id_pasien, id_kunjungan, id_service_request, id_procedure, id_imaging_study, pacs, accession_number, nama_pasien, priority, asal_kiriman, alat_pemeriksa, radiografer, tujuan, pembayaran, datetime_diminta, status_pemeriksaan FROM radiologi ORDER BY $OrderBy $ShortBy LIMIT $posisi, $batas");
         }else{ 
-            $query = mysqli_query($Conn, "SELECT id_radiologi, id_pasien, id_kunjungan, id_service_request, id_procedure, pacs, accession_number, nama_pasien, priority, asal_kiriman, alat_pemeriksa, radiografer, tujuan, pembayaran, datetime_diminta, status_pemeriksaan FROM radiologi WHERE $keyword_by like '%$keyword%' ORDER BY $OrderBy $ShortBy LIMIT $posisi, $batas");
+            $query = mysqli_query($Conn, "SELECT id_radiologi, id_pasien, id_kunjungan, id_service_request, id_procedure, id_imaging_study, pacs, accession_number, nama_pasien, priority, asal_kiriman, alat_pemeriksa, radiografer, tujuan, pembayaran, datetime_diminta, status_pemeriksaan FROM radiologi WHERE $keyword_by like '%$keyword%' ORDER BY $OrderBy $ShortBy LIMIT $posisi, $batas");
         }
     }
     while ($data = mysqli_fetch_array($query)) {
@@ -115,6 +115,7 @@
         $id_kunjungan       = $data['id_kunjungan'];
         $id_service_request = $data['id_service_request'];
         $id_procedure       = $data['id_procedure'];
+        $id_imaging_study   = $data['id_imaging_study'];
         $accession_number   = $data['accession_number'];
         $nama_pasien        = $data['nama_pasien'];
         $priority           = $data['priority'];
@@ -126,11 +127,18 @@
         $datetime_diminta   = $data['datetime_diminta'];
         $status_pemeriksaan = $data['status_pemeriksaan'];
         $pacs               = $data['pacs'] ?? null;
-        $tanggal            = date('d/m/Y', strtotime($datetime_diminta));
-        $jam                = date('H:i T', strtotime($datetime_diminta));
+        $tanggal            = date('d/m/y', strtotime($datetime_diminta));
+        $jam                = date('H:i', strtotime($datetime_diminta));
 
-        if(empty($data['radiografer'])){
-            $radiografer = "-";
+        $radiografer = getInisialNama($data['radiografer'] ?? null);
+
+        //Routing pembayaran
+        if($pembayaran=="UMUM"){
+            $pembayaran_code = "UMM";
+            $labal_pembyaran = "text-dark";
+        }else{
+            $pembayaran_code = "ASR";
+            $labal_pembyaran = "text-grayish";
         }
 
         // Nama Modalitas
@@ -151,7 +159,6 @@
         //Routing Status
         $tombol_lanjutan = '';
         if($status_pemeriksaan=="Diminta"){
-            $label_status = '<span class="badge bg-warning">Diminta</span>';
             $tombol_lanjutan = '
                 <li>
                     <a class="dropdown-item text-success modal_terima_permintaan" href="javascript:void(0)" data-id="'.$id_radiologi .'" data-status="Terima">
@@ -166,7 +173,6 @@
             ';
         }else{
             if($status_pemeriksaan=="Dikerjakan"){
-                $label_status = '<span class="badge bg-info">Dikerjakan</span>';
                 $tombol_lanjutan = '
                     <li>
                         <a class="dropdown-item modal_pengisian_expertise" href="javascript:void(0)" data-id="'.$id_radiologi .'">
@@ -176,7 +182,6 @@
                 ';
             }else{
                 if($status_pemeriksaan=="Hasil"){
-                    $label_status = '<span class="badge bg-primary">Hasil</span>';
                     $tombol_lanjutan = '
                         <li>
                             <a class="dropdown-item modal_cetak_laporan" href="javascript:void(0)" data-id="'.$id_radiologi .'">
@@ -186,7 +191,6 @@
                     ';
                 }else{
                     if($status_pemeriksaan=="Selesai"){
-                        $label_status = '<span class="badge bg-success">Selesai</span>';
                         $tombol_lanjutan = '
                             <li>
                                 <a class="dropdown-item modal_cetak_laporan" href="javascript:void(0)" data-id="'.$id_radiologi .'">
@@ -195,53 +199,104 @@
                             </li>
                         ';
                     }else{
-                        if($status_pemeriksaan=="Batal"){
-                            $label_status = '<span class="badge bg-danger">Batal</span>';
-                        }else{
-                            $label_status = '<span class="badge bg-dark">None</span>';
-                        }
+                         $tombol_lanjutan = "";
                     }
                 }
             }
         }
 
+        // Routing Label Status
+        $map_status = [
+            'diminta'     => 'REQ',
+            'dikerjakan'  => 'PRC',
+            'hasil'       => 'RES',
+            'selesai'     => 'DON',
+            'batal'       => 'CAN'
+        ];
+        $badge_status = [
+            'REQ'  => 'secondary',
+            'PRC' => 'warning',
+            'RES'  => 'info',
+            'DON' => 'success',
+            'CAN' => 'danger',
+            'UNK'  => 'dark'
+        ];
+
+        $key_status   = strtolower(trim($status_pemeriksaan));
+        $label_status = $map_status[$key_status] ?? 'UNK';
+        $badge_class  = $badge_status[$label_status] ?? 'dark';
+
+        // Inisialisasi Jumlah Resource
+        $jumlah_resource = 0;
+
         // Routing Service Request
         if(empty($id_service_request)){
             $sr = '
-                <a href="javascript:void(0);" class="modal_service_request" data-id="'.$id_radiologi.'">
-                    <span class="badge border border-danger text-danger" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Kirim Data Service Request">
-                        <i class="bi bi-send"></i>
-                    </span>
-                </a>
+                <li>
+                    <a href="javascript:void(0)" class="dropdown-item text-danger modal_service_request" data-id="'.$id_radiologi .'">
+                        1. Service Request
+                    </a>
+                </li>
             ';
         }else{
             $sr = '
-                <a href="javascript:void(0);" class="modal_detail_service_request" data-id="'.$id_service_request.'">
-                    <span class="badge bg-success" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Lihat Detail Procedure">
-                        <i class="bi bi-check"></i>
-                    </span>
-                </a>
+                <li>
+                    <a href="javascript:void(0)" class="dropdown-item text-info modal_detail_service_request" data-id="'.$id_service_request .'">
+                        1. Service Request
+                    </a>
+                </li>
             ';
+            $jumlah_resource = $jumlah_resource + 1;
         }
 
         // Routing Procedure
         if(empty($id_procedure)){
             $pc = '
-                <a href="javascript:void(0);" class="modal_procedure" data-id="'.$id_radiologi.'">
-                    <span class="badge border border-danger text-danger" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Kirim Data Procedure">
-                        <i class="bi bi-send"></i>
-                    </span>
-                </a>
+                <li>
+                    <a href="javascript:void(0)" class="dropdown-item text-danger modal_procedure" data-id="'.$id_radiologi .'">
+                        2. Procedure
+                    </a>
+                </li>
             ';
         }else{
             $pc = '
-                <a href="javascript:void(0);" class="modal_detail_procedure" data-id="'.$id_procedure.'">
-                    <span class="badge bg-success" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Lihat Detail Procedure">
-                        <i class="bi bi-check"></i>
-                    </span>
-                </a>
+                <li>
+                    <a href="javascript:void(0)" class="dropdown-item text-info modal_detail_procedure" data-id="'.$id_procedure .'">
+                        2. Procedure
+                    </a>
+                </li>
             ';
+            $jumlah_resource = $jumlah_resource + 1;
         }
+
+        // Routing Imaging Study
+        if(empty($id_imaging_study)){
+            $is = '
+                <li>
+                    <a href="javascript:void(0)" class="dropdown-item text-danger modal_imaging_study" data-id="'.$id_radiologi .'">
+                        3. Imaging Study
+                    </a>
+                </li>
+            ';
+        }else{
+            $is = '
+                <li>
+                    <a href="javascript:void(0)" class="dropdown-item text-info modal_detail_imaging_study" data-id="'.$id_imaging_study .'">
+                        3. Imaging Study
+                    </a>
+                </li>
+            ';
+            $jumlah_resource = $jumlah_resource + 1;
+        }
+
+        if(empty($jumlah_resource)){
+            $border_satu_sehat = "border-secondary";
+            $text_satu_sehat   = "text-secondary";
+        }else{
+            $border_satu_sehat = "border-success";
+            $text_satu_sehat   = "text-success";
+        }
+
 
         // Routing label pacs
         if(empty($pacs)){
@@ -297,25 +352,47 @@
                 <td>
                     <a href="javascript:void(0);" class="modal_detail" data-id="'.$id_radiologi .'" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="ACN: '.$accession_number.'">
                        <small class="underscore_doted">'.$nama_pasien.'</small>
-                    </a><br>
-                    <small><small>RM: '.$id_pasien.'</small></small>
+                    </a>
                 </td>
-                <td>
-                    <small class="underscore_doted">'.$tanggal.'</small><br>
-                    <small><small>'.$jam.'</small></small>
-                </td>
-                <td><small>'.$pembayaran.'</small></td>
-                <td>
-                    <small class="'.$labal_tujuan.'" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="'.$tujuan.'">
-                        '.$asal_kiriman.'
+                <td><small>'.$id_pasien.'</small></td>
+                <td><small>'.$tanggal.'</small></td>
+                <td><small>'.$jam.'</small></td>
+                <td class="text-center">
+                    <small class="text '.$labal_pembyaran.'" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="'.$pembayaran.'">
+                        '.$pembayaran_code.'
                     </small>
                 </td>
-                <td><small>'.$modalitas_nama.'</small></td>
-                <td><small>'.$radiografer.'</small></td>
-                <td><small>'.$label_status.'</small></td>
-                <td class="text-center"><small>'.$sr.'</small></td>
-                <td class="text-center">'.$pc.'</td>
+                <td class="text-center">
+                    <small class="'.$labal_tujuan.'" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="'.$asal_kiriman.'">
+                        '.$tujuan.'
+                    </small>
+                </td>
+                <td class="text-center">
+                    <small data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="'.$modalitas_nama.'">
+                        '.$alat_pemeriksa.'
+                    </small>
+                </td>
+                <td>
+                    <small data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="'.$data['radiografer'].'">
+                        '.$radiografer.'
+                    </small>
+                </td>
+                <td class="text-center">
+                    <a href="javascript:void(0);" class="badge border '.$border_satu_sehat.' '.$text_satu_sehat.'" data-bs-toggle="dropdown" aria-expanded="false">
+                        '.$jumlah_resource.'/4
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow" style="">
+                        '.$sr.'
+                        '.$pc.'
+                        '.$is.'
+                    </ul>
+                </td>
                 <td class="text-center">'.$pacs_label.'</td>
+                <td class="text-center">
+                    <span class="badge bg-'.$badge_class.'" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="'.$status_pemeriksaan.'">
+                        '.$label_status.'
+                    </span>
+                </td>
                 <td class="text-center">
                     <button type="button" class="btn btn-sm btn-outline-dark btn-floating"  data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="bi bi-three-dots-vertical"></i>
