@@ -1524,3 +1524,8 @@ body .title_page_app {
 .copy-btn:hover {
     color: #0a58ca;
 }
+
+/* Menetapkan tampilan rich text editor quil */
+.ql-toolbar.ql-snow {
+    background: white;
+}

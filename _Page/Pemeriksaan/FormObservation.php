@@ -57,9 +57,8 @@
     $accession_number       = $Data['accession_number'];
     $id_service_request     = $Data['id_service_request'];
     $id_procedure           = $Data['id_procedure'];
+    $id_observation           = $Data['id_observation'];
     $id_imaging_study       = $Data['id_imaging_study'];
-    $id_observation         = $Data['id_observation'];
-    $id_diagnostic_report   = $Data['id_diagnostic_report'];
     $nama_pasien            = $Data['nama_pasien'];
     $priority               = $Data['priority'];
     $asal_kiriman           = $Data['asal_kiriman'];
@@ -90,6 +89,7 @@
     if(empty($Data['radiografer'])){
         $radiografer = "";
     }
+    
     //Format Tanggal
     if (!empty($datetime_dikerjakan)) {
         $dt = new DateTime($datetime_dikerjakan, new DateTimeZone('Asia/Jakarta'));
@@ -222,7 +222,7 @@
 
     $organization_id   = $config['organization_id'];
     $url_api           = rtrim($config['url_connection_satu_sehat'], '/');
-    $url_imaging_study = $url_api . '/fhir-r4/v1/ImagingStudy';
+    $url_observation = $url_api . '/fhir-r4/v1/Observation';
 
     // ===========================================
     // PERMINTAAN PEMERIKSAAN
@@ -262,25 +262,23 @@
     }
 
     // ==============================================================
-    // INFORMASI UMUM
+    // id_observation, resourceType, status
     // ==============================================================
     echo '
         <input type="hidden" name="id_radiologi" value="'.$id_radiologi.'">
         <div class="row mb-2 mt-3">
             <div class="col-12">
-                <h6 class="pb-2">
-                    <b>A. Informasi Umum <i>Diagnostic Report</i></b>
-                </h6>
+                <h6 class="pb-2"><b>A. Informasi Umum <i>Observation</i></b></h6>
             </div>
         </div>
         <div class="row mb-2">
             <div class="col-4">
-                <label for="id_diagnostic_report"><small>ID Imaging Study</small></label>
+                <label for="id_observation"><small>ID Observation</small></label>
             </div>
             <div class="col-1"><small>:</small></div>
             <div class="col-7">
-                <input type="text" name="id_diagnostic_report" id="id_diagnostic_report" class="form-control" value="'.$id_diagnostic_report.'">
-                <small class="text text-grayish">Jika terisi maka sistem akan melakukan uptdae berdasarkan ID Diagnostic Report tersebut</small>
+                <input type="text" name="id_observation" id="id_observation" class="form-control" value="'.$id_observation.'">
+                <small class="text text-grayish">Jika terisi maka sistem akan melakukan uptdae berdasarkan ID Observation tersebut</small>
             </div>
         </div>
         <div class="row mb-2">
@@ -289,7 +287,7 @@
             </div>
             <div class="col-1"><small>:</small></div>
             <div class="col-7">
-                <input type="text" name="resourceType" id="resourceType" class="form-control" value="DiagnosticReport" readonly>
+                <input type="text" name="resourceType" id="resourceType" class="form-control" value="Observation" readonly>
             </div>
         </div>
         <div class="row mb-2">
@@ -299,10 +297,14 @@
             <div class="col-1"><small>:</small></div>
             <div class="col-7">
                 <select name="status" id="status" class="form-control" required>
-                    <option selected value="registered">Sudah didaftarkan</option>
-                    <option value="preliminary">Hasil pemeriksaan sementara (belum final)</option>
-                    <option value="final">Hasil pemeriksaan sudah lengkap, disetujui, dan resmi</option>
-                    <option value="amended">Laporan final yang telah direvisi</option>
+                    <option value="registered">Terdaftar</option>
+                    <option value="preliminary">Sementara</option>
+                    <option selected value="final">Final / Resmi</option>
+                    <option value="amended">Refisi</option>
+                    <option value="corrected">Dikoreksi</option>
+                    <option value="cancelled">Dibatalkan</option>
+                    <option value="entered-in-error">Salah Input</option>
+                    <option value="unknown">Tidak Diketahui</option>
                 </select>
             </div>
         </div>
@@ -323,7 +325,7 @@
             </div>
             <div class="col-1"><small>:</small></div>
             <div class="col-7">
-                <input type="text" name="category_coding_system" id="category_coding_system" class="form-control" value="http://terminology.hl7.org/CodeSystem/v2-0074">
+                <input type="text" name="category_coding_system" id="category_coding_system" class="form-control" value="http://terminology.hl7.org/CodeSystem/observation-category">
             </div>
         </div>
         <div class="row mb-2">
@@ -332,7 +334,7 @@
             </div>
             <div class="col-1"><small>:</small></div>
             <div class="col-7">
-                <input type="text" name="category_coding_code" id="category_coding_code" class="form-control" value="RAD">
+                <input type="text" name="category_coding_code" id="category_coding_code" class="form-control" value="imaging">
             </div>
         </div>
         <div class="row mb-2">
@@ -341,11 +343,11 @@
             </div>
             <div class="col-1"><small>:</small></div>
             <div class="col-7">
-                <input type="text" name="category_coding_display" id="category_coding_display" class="form-control" value="Radiology">
+                <input type="text" name="category_coding_display" id="category_coding_display" class="form-control" value="imaging">
             </div>
         </div>
     ';
-
+    
     // ==============================================================
     // REPORT (code - coding)
     // ==============================================================
@@ -447,53 +449,9 @@
             </div>
         </div>
     ';
-    // ==============================================================
-    // SERVICE REQUEST
-    // ==============================================================
-    echo '
-        <div class="row mb-2">
-            <div class="col-4">
-                <label for="basedOn_reference"><small>ID Service Request</small></label>
-            </div>
-            <div class="col-1"><small>:</small></div>
-            <div class="col-7">
-                <input type="text" class="form-control" name="basedOn_reference" id="basedOn_reference" value="'.$id_service_request.'" required>
-            </div>
-        </div>
-    ';
 
     // ==============================================================
-    // IMAGING STUDY
-    // ==============================================================
-    echo '
-        <div class="row mb-2">
-            <div class="col-4">
-                <label for="imagingStudy_reference"><small><i>ID Imaging Study</i></small></label>
-            </div>
-            <div class="col-1"><small>:</small></div>
-            <div class="col-7">
-                <input type="text" class="form-control" name="imagingStudy_reference" id="imagingStudy_reference" value="'.$id_imaging_study.'" required>
-            </div>
-        </div>
-    ';
-
-    // ==============================================================
-    // OBSERVATION
-    // ==============================================================
-    echo '
-        <div class="row mb-2">
-            <div class="col-4">
-                <label for="result_reference"><small>ID Observation</small></label>
-            </div>
-            <div class="col-1"><small>:</small></div>
-            <div class="col-7">
-                <input type="text" class="form-control" name="result_reference" id="result_reference" value="'.$id_observation.'" required>
-            </div>
-        </div>
-    ';
-
-    // ==============================================================
-    // DOKTER
+    // DOKTER PENERIMA
     // ==============================================================
     echo '
         <div class="row mb-2 mt-3">
@@ -531,42 +489,36 @@
     ';
 
     // ==============================================================
-    // CONCLUSION
+    // TEMUAN (valueString)
     // ==============================================================
+    // Temukan 'finding' pada tabel  'radiologi_expertise'
+    $finding = GetDetailData($Conn, 'radiologi_expertise', 'id_radiologi', $id_radiologi, 'finding'); 
+
+    // Jika Tidak Ada Maka Cari Di tabel 'radiologi_expertise_usg' 
+    if(empty($finding)){
+        $finding = GetDetailData($Conn, 'radiologi_expertise_usg', 'id_radiologi', $id_radiologi, 'finding'); 
+
+        // Jika Tidak Ditemukan Maka Generate Sendiri
+        if(empty($finding)){
+            $finding = "";
+        }
+    }
     echo '
         <div class="row mb-2 mt-3">
             <div class="col-12">
                 <h6 class="pb-2">
-                    <b>F. <i>Conclusion</i></b>
+                    <b>E. Temuan (<i>Finding</i>)</b>
                 </h6>
             </div>
         </div>
         <div class="row mb-2">
             <div class="col-4">
-                <label for="conclusionCode_coding_system"><small><i>Conclusion System</i></small></label>
+                <label for="valueString"><small>Temuan Dari hasil Pencitraan</small></label>
             </div>
             <div class="col-1"><small>:</small></div>
             <div class="col-7">
-                <input type="text" class="form-control" name="conclusionCode_coding_system" id="conclusionCode_coding_system" value="http://hl7.org/fhir/sid/icd-10" required>
-            </div>
-        </div>
-        <div class="row mb-2">
-            <div class="col-4">
-                <label for="conclusionCode_coding_code"><small><i>Conclusion Code</i></small></label>
-            </div>
-            <div class="col-1"><small>:</small></div>
-            <div class="col-7">
-                <select class="form-control" name="conclusionCode_coding_code" id="conclusionCode_coding_code"></select>
-            </div>
-        </div>
-        <div class="row mb-2">
-            <div class="col-4">
-                <label for="conclusion"><small>Kesimpulan <i>(Conclusion)</i></small></label>
-            </div>
-            <div class="col-1"><small>:</small></div>
-            <div class="col-md-7">
-                <div id="editor-conclusion" style="height: 150px;">'.$kesan.'</div>
-                <input type="hidden" name="conclusion" id="conclusion">
+               <div id="editor-valueString" style="height: 150px;">'.$finding.'</div>
+                <input type="hidden" name="valueString" id="valueString">
             </div>
         </div>
     ';

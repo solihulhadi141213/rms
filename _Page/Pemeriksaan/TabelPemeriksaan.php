@@ -98,15 +98,15 @@
     //KONDISI PENGATURAN MASING FILTER
     if(empty($keyword_by)){
         if(empty($keyword)){
-            $query = mysqli_query($Conn, "SELECT id_radiologi, id_pasien, id_kunjungan, id_service_request, id_procedure, id_imaging_study, id_diagnostic_report, pacs, accession_number, nama_pasien, priority, asal_kiriman, alat_pemeriksa, radiografer, tujuan, pembayaran, datetime_diminta, status_pemeriksaan  FROM radiologi ORDER BY $OrderBy $ShortBy LIMIT $posisi, $batas");
+            $query = mysqli_query($Conn, "SELECT id_radiologi, id_pasien, id_kunjungan, id_service_request, id_procedure, id_imaging_study, id_observation, id_diagnostic_report, pacs, accession_number, nama_pasien, priority, asal_kiriman, alat_pemeriksa, radiografer, tujuan, pembayaran, datetime_diminta, status_pemeriksaan  FROM radiologi ORDER BY $OrderBy $ShortBy LIMIT $posisi, $batas");
         }else{
-            $query = mysqli_query($Conn, "SELECT id_radiologi, id_pasien, id_kunjungan, id_service_request, id_procedure, id_imaging_study, id_diagnostic_report, pacs, accession_number, nama_pasien, priority, asal_kiriman, alat_pemeriksa, radiografer, tujuan, pembayaran, datetime_diminta, status_pemeriksaan FROM radiologi WHERE id_pasien like '%$keyword%' OR id_kunjungan like '%$keyword%' OR nama_pasien like '%$keyword%' OR asal_kiriman like '%$keyword%' OR accession_number like '%$keyword%' ORDER BY $OrderBy $ShortBy LIMIT $posisi, $batas");
+            $query = mysqli_query($Conn, "SELECT id_radiologi, id_pasien, id_kunjungan, id_service_request, id_procedure, id_imaging_study, id_observation, id_diagnostic_report, pacs, accession_number, nama_pasien, priority, asal_kiriman, alat_pemeriksa, radiografer, tujuan, pembayaran, datetime_diminta, status_pemeriksaan FROM radiologi WHERE id_pasien like '%$keyword%' OR id_kunjungan like '%$keyword%' OR nama_pasien like '%$keyword%' OR asal_kiriman like '%$keyword%' OR accession_number like '%$keyword%' ORDER BY $OrderBy $ShortBy LIMIT $posisi, $batas");
         }
     }else{
         if(empty($keyword)){
-            $query = mysqli_query($Conn, "SELECT id_radiologi, id_pasien, id_kunjungan, id_service_request, id_procedure, id_imaging_study, id_diagnostic_report, pacs, accession_number, nama_pasien, priority, asal_kiriman, alat_pemeriksa, radiografer, tujuan, pembayaran, datetime_diminta, status_pemeriksaan FROM radiologi ORDER BY $OrderBy $ShortBy LIMIT $posisi, $batas");
+            $query = mysqli_query($Conn, "SELECT id_radiologi, id_pasien, id_kunjungan, id_service_request, id_procedure, id_imaging_study, id_observation, id_diagnostic_report, pacs, accession_number, nama_pasien, priority, asal_kiriman, alat_pemeriksa, radiografer, tujuan, pembayaran, datetime_diminta, status_pemeriksaan FROM radiologi ORDER BY $OrderBy $ShortBy LIMIT $posisi, $batas");
         }else{ 
-            $query = mysqli_query($Conn, "SELECT id_radiologi, id_pasien, id_kunjungan, id_service_request, id_procedure, id_imaging_study, id_diagnostic_report, pacs, accession_number, nama_pasien, priority, asal_kiriman, alat_pemeriksa, radiografer, tujuan, pembayaran, datetime_diminta, status_pemeriksaan FROM radiologi WHERE $keyword_by like '%$keyword%' ORDER BY $OrderBy $ShortBy LIMIT $posisi, $batas");
+            $query = mysqli_query($Conn, "SELECT id_radiologi, id_pasien, id_kunjungan, id_service_request, id_procedure, id_imaging_study, id_observation, id_diagnostic_report, pacs, accession_number, nama_pasien, priority, asal_kiriman, alat_pemeriksa, radiografer, tujuan, pembayaran, datetime_diminta, status_pemeriksaan FROM radiologi WHERE $keyword_by like '%$keyword%' ORDER BY $OrderBy $ShortBy LIMIT $posisi, $batas");
         }
     }
     while ($data = mysqli_fetch_array($query)) {
@@ -116,6 +116,7 @@
         $id_service_request   = $data['id_service_request'];
         $id_procedure         = $data['id_procedure'];
         $id_imaging_study     = $data['id_imaging_study'];
+        $id_observation       = $data['id_observation'];
         $id_diagnostic_report = $data['id_diagnostic_report'];
         $accession_number     = $data['accession_number'];
         $nama_pasien          = $data['nama_pasien'];
@@ -291,12 +292,32 @@
             $jumlah_resource = $jumlah_resource + 1;
         }
 
+        // Routing Observation
+        if(empty($id_observation)){
+            $ob = '
+                <li>
+                    <a href="javascript:void(0)" class="dropdown-item text-danger modal_observation" data-id="'.$id_radiologi .'">
+                        4. Observation
+                    </a>
+                </li>
+            ';
+        }else{
+            $ob = '
+                <li>
+                    <a href="javascript:void(0)" class="dropdown-item text-info modal_detail_observation" data-id="'.$id_observation .'">
+                        4. Observation
+                    </a>
+                </li>
+            ';
+            $jumlah_resource = $jumlah_resource + 1;
+        }
+
         // Routing Diagnostic Report
         if(empty($id_diagnostic_report)){
             $dr = '
                 <li>
                     <a href="javascript:void(0)" class="dropdown-item text-danger modal_diagnostic_report" data-id="'.$id_radiologi .'">
-                        4. Diagnostic Report
+                        5. Diagnostic Report
                     </a>
                 </li>
             ';
@@ -304,7 +325,7 @@
             $dr = '
                 <li>
                     <a href="javascript:void(0)" class="dropdown-item text-info modal_detail_diagnostic_report" data-id="'.$id_diagnostic_report .'">
-                        4. Diagnostic Report
+                        5. Diagnostic Report
                     </a>
                 </li>
             ';
@@ -312,11 +333,16 @@
         }
 
         if(empty($jumlah_resource)){
-            $border_satu_sehat = "border-secondary";
+            $border_satu_sehat = "border border-secondary";
             $text_satu_sehat   = "text-secondary";
         }else{
-            $border_satu_sehat = "border-success";
-            $text_satu_sehat   = "text-success";
+            if($jumlah_resource==5){
+                $border_satu_sehat = "bg-success";
+                $text_satu_sehat   = "text-white";
+            }else{
+                $border_satu_sehat = "border border-success";
+                $text_satu_sehat   = "text-success";
+            }
         }
 
 
@@ -400,13 +426,14 @@
                     </small>
                 </td>
                 <td class="text-center">
-                    <a href="javascript:void(0);" class="badge border '.$border_satu_sehat.' '.$text_satu_sehat.'" data-bs-toggle="dropdown" aria-expanded="false">
-                        '.$jumlah_resource.'/4
+                    <a href="javascript:void(0);" class="badge '.$border_satu_sehat.' '.$text_satu_sehat.'" data-bs-toggle="dropdown" aria-expanded="false">
+                        '.$jumlah_resource.'/5
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow" style="">
                         '.$sr.'
                         '.$pc.'
                         '.$is.'
+                        '.$ob.'
                         '.$dr.'
                     </ul>
                 </td>
