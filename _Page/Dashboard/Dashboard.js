@@ -115,47 +115,108 @@ function ShowRiwayatPembayaran() {
 
 $(document).ready(function () {
 
+   // ===============================================
+   // Background images array
     const backgrounds = [
-        'assets/img/bg/0b91f2f4370cf26f23e44efe7136195c.jpg',
-        'assets/img/bg/calendar.jpg',
-        'assets/img/bg/bg3.jpg',
-        'assets/img/bg/bg4.jpg'
+        '../../assets/img/calendar/0b91f2f4370cf26f23e44efe7136195c.jpg',
+        '../../assets/img/calendar/calendar.jpg',
+        '../../assets/img/calendar/0b91f2f4370cf26f23e44efe7136195c.jpg',
+        '../../assets/img/calendar/0b91f2f4370cf26f23e44efe7136195c.jpg'
     ];
 
-    let index = 0;
+    // Cache DOM elements
     const card = $('#card_jam_menarik');
+    const timeElement = $('#jam_menarik');
+    const dateElement = $('#tanggal_menarik');
 
-    // Set background awal
-    card[0].style.setProperty(
-        '--bg-image',
-        `url(${backgrounds[index]})`
-    );
+    let currentBgIndex = 0;
+    let isTransitioning = false;
 
-    // Set via pseudo-element
-    $('#card_jam_menarik::before');
+    // Initialize first background
+    card[0].style.setProperty('--bg-image', `url(${backgrounds[currentBgIndex]})`);
+    card[0].style.setProperty('--bg-opacity', 1);
 
-    function gantiBackground() {
-        index = (index + 1) % backgrounds.length;
-
-        // Fade out
-        card.css('--bg-opacity', 0);
-
+    // Function to change background with smooth transition
+    function changeBackground() {
+        if (isTransitioning) return;
+        
+        isTransitioning = true;
+        
+        // Calculate next index
+        currentBgIndex = (currentBgIndex + 1) % backgrounds.length;
+        
+        // Fade out current background
+        card[0].style.setProperty('--bg-opacity', 0);
+        
+        // Wait for fade out, then change image and fade in
         setTimeout(() => {
-            card[0].style.setProperty(
-                '--bg-image',
-                `url(${backgrounds[index]})`
-            );
-            card.css('--bg-opacity', 1);
+            card[0].style.setProperty('--bg-image', `url(${backgrounds[currentBgIndex]})`);
+            
+            // Force reflow for smooth transition
+            card[0].offsetHeight;
+            
+            card[0].style.setProperty('--bg-opacity', 1);
+            
+            // Reset transition flag after animation completes
+            setTimeout(() => {
+                isTransitioning = false;
+            }, 1500);
         }, 800);
     }
 
-    // Inisialisasi
-    card[0].style.setProperty(
-        'background-image',
-        `url(${backgrounds[index]})`
-    );
+    // Function to update time and date
+    function updateDateTime() {
+        const now = new Date();
+        
+        // Format time (HH:MM:SS)
+        const timeString = now.toLocaleTimeString('id-ID', {
+            hour12: false,
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit'
+        });
+        
+        // Format date (Hari, DD MMMM YYYY)
+        const dateOptions = {
+            weekday: 'long',
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+        };
+        
+        const dateString = now.toLocaleDateString('id-ID', dateOptions);
+        
+        // Update elements
+        timeElement.text(timeString);
+        dateElement.text(dateString);
+    }
 
-    setInterval(gantiBackground, 7000); // 7 detik
+    // Initialize and update time every second
+    updateDateTime();
+    setInterval(updateDateTime, 1000);
+
+    // Change background every 7 seconds
+    setInterval(changeBackground, 7000);
+
+    // Preload images for smoother transitions
+    function preloadImages(urls) {
+        urls.forEach(url => {
+            const img = new Image();
+            img.src = url;
+        });
+    }
+
+    // Preload background images
+    preloadImages(backgrounds);
+
+    // Optional: Add click to manually change background
+    card.on('click', function(e) {
+        if (!$(e.target).closest('#image_menarik').length) {
+            changeBackground();
+        }
+    });
+
+    // =======================================================================
 
 
     //Menampilkan Data Pertama Kali
