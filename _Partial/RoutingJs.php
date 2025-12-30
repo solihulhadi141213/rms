@@ -25,6 +25,7 @@
             "ApiKey"           => "_Page/ApiKey/ApiKey.js",
             "KodeKlinis"       => "_Page/KodeKlinis/KodeKlinis.js",
             "KodePemeriksaan"  => "_Page/KodePemeriksaan/KodePemeriksaan.js",
+            "Question"         => "_Page/Question/Question.js",
             "Pemeriksaan"      => "_Page/Pemeriksaan/Pemeriksaan.js",
             "Aktivitas"        => "_Page/Aktivitas/Aktivitas.js",
             "Help"             => "_Page/Help/Help.js"

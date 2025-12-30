@@ -87,6 +87,16 @@
                 <i class="bi bi-list-columns"></i> <span>Kode Pemeriksaan</span>
             </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link <?php if($PageMenu=="Tarif"){echo "";}else{echo "collapsed";} ?>" href="index.php?Page=Tarif">
+                <i class="bi bi-list-columns"></i> <span>Tarif Layanan</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link <?php if($PageMenu=="Question"){echo "";}else{echo "collapsed";} ?>" href="index.php?Page=Question">
+                <i class="bi bi-list-columns"></i> <span>Daftar Pertanyaan</span>
+            </a>
+        </li>
         <li class="nav-heading border-1 border-top">
             <div class="mt-3">Master</div>
         </li>
