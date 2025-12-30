@@ -398,7 +398,7 @@
             <tr>
                 <td><small>'.$no.'</small></td>
                 <td>
-                    <a href="javascript:void(0);" class="modal_detail" data-id="'.$id_radiologi .'" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="ACN: '.$accession_number.'">
+                    <a href="javascript:void(0);" class="modal_preview" data-id="'.$id_radiologi .'" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="ACN: '.$accession_number.'">
                        <small class="underscore_doted">'.$nama_pasien.'</small>
                     </a>
                 </td>

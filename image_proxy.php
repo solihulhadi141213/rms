@@ -1,6 +1,8 @@
 <?php
-    $baseDir = __DIR__ . '/assets/img/';
-    $allowedDirs = ['User', 'Siswa', 'Dokumen'];
+    include "_Config/Connection.php";
+    include "_Config/SettingGeneral.php";
+    $baseDir           = 'assets/img/';
+    $allowedDirs       = ['User', 'Siswa', 'Dokumen','Radiologi'];
     $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
 
     $dir = $_GET['dir'] ?? '';

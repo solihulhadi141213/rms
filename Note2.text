@@ -1,0 +1,34 @@
+A. LAKUKAN PNGUJIAN APLIKASI DENGAN KETENTUAN BERIKUT :
+1. Lakukan dengan menggunakan 3 perangkat berbeda dan uji setiap fungsi, halaman dan tampilan.
+    a. Perangkat Dekstop (Diharapkan tampilan responsif dan tidak terpotong)
+    b. perangkat Laptop (Diharapkan tampilan responsif dan tidak terpotong)
+    c. Perangkat Tablet (Diharapkan tampilan responsif dan tidak terpotong)
+
+2. Periksa penggunaan kata agar sesuai dengan halaman dan fungsi fitur.
+    a. Diharapkan tidak ada model keterangan, label dan informasi yang typo
+    b. Jika ada keterangan yang perlu ditambahkan buatkan catatannya
+    c. Periksa Notifikasi Berhasil Dari Sweet alert (Apakah sudah sesuai dengan response proses)
+
+3. Lakukan Beberapa Pengujian Logika Berdasarkan Modul Berikut Ini :
+    a. Halaman Login
+    b. Halaman Profil
+    c. Halaman Beranda
+    d. Halaman Pengaturan
+    e. Halaman Aksesibilitas
+
+4. Lakukan Pengujian Terhadap API Service Berikut
+    a. API Service SIMRS V1
+    b. API Service SIMRS V2
+    c. API Service Satu Sehat (Jika Terhubung)
+    d. API Service PACS (Jika Terhubung)
+    e. API Key Radix
+
+B. BUAT LAPORAN DALAM BENTUK DOKUMEN HASIL UAT
+    a. Buat dalam format Excel, Word Dll (Atau kombinasi lainnya)
+    b. Dokumen laporan harus saling terhubung dan mudah untuk diakses (Jika terpisah mudah di buka dan dipahami)
+    c. Dokumen dapat diperbaharui secara dinamis ketika sudah ada refisian aplikasi. 
+    d. Semua laporan dituangkan (baik yang benar atau salah)
+    e. Sekenario pengujian dijelaskan (Bagaimana anda melakukan pengujian)
+    f. Memuat informasi waktu pengujian (Untuk mengetahui apakah anda melakukan pengujian di waktu yang berbeda-beda secara kontinu)
+
+C. 

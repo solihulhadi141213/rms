@@ -8,7 +8,7 @@
     <div class="pagetitle">
         <h1>
             <a href="">
-                <i class="bi bi-plug"></i> Pemeriksaan Radiologi</a>
+                <i class="bi bi-clipboard"></i> Pemeriksaan Radiologi</a>
             </a>
         </h1>
         <nav>
@@ -41,7 +41,7 @@
                                 <button type="button" class="btn btn-md btn-secondary btn-floating modal_filter" title="Filter Data Pemeriksaan">
                                     <i class="bi bi-search"></i>
                                 </button>
-                                 <button type="button" class="btn btn-md btn-primary btn-floating modal_pilih_kunjungan" title="Tambah Permintaan Pemeriksaan Radiologi">
+                                    <button type="button" class="btn btn-md btn-primary btn-floating modal_pilih_kunjungan" title="Tambah Permintaan Pemeriksaan Radiologi">
                                     <i class="bi bi-plus"></i>
                                 </button>
                             </div>
@@ -62,7 +62,7 @@
                                                 <small class="text-primary">PAY</small>
                                             </b>
                                         </td>
-                                         <td valign="middle" class="text-center">
+                                            <td valign="middle" class="text-center">
                                             <b data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Asal Kiriman">
                                                 <small class="text-primary">FROM</small>
                                             </b>
@@ -166,5 +166,17 @@
                 </form>
             </div>
         </div>
+        <div class="row">
+            <!-- <div id="loader_detail" style="display:none;text-align:center;padding:40px">
+                <div class="spinner-border text-primary"></div>
+                <div class="mt-2">Memuat data...</div>
+            </div> -->
+            <div class="col-lg-12" id="RowDetailPermintaan">
+                <!-- Detail Permintaan Akan Tampil Disini -->
+                
+            </div>
+        </div>
     </section>
+
+    
 <?php } ?>

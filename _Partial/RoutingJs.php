@@ -1,5 +1,11 @@
 <?php 
+    // Inisiasi Version
     $date_version=date('YmdHis');
+
+    // Global Jquery
+    echo '<script type="text/javascript" src="_Partial/Global.js?V='.$date_version.'"></script>';
+
+    // Routing By Page
     if(empty($_GET['Page'])){
         //Dafault Javascript Diarahkan Ke Dashboard
         echo '<script type="text/javascript" src="_Page/Dashboard/Dashboard.js?V='.$date_version.'"></script>';

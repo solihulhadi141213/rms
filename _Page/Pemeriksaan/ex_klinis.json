@@ -1,18 +1,10 @@
 [
     {
-        "id_kesan"        : "2g4d-5tr4-3ecd-4r6h-5h5y",
-        "id_master_klinis": 1,
-        "nama_klinis"     : "Sesak napas",
-        "snomed_code"     : "267036007",
-        "snomed_display"  : "Dyspnea",
-        "kategori"        : "Respirasi"
-    },
-    {
-        "id_kesan"        : "2g4d-5tr4-3ecd-4r6h-5h5y",
-        "id_master_klinis": null,
-        "nama_klinis"     : "Keringat Dingin",
-        "snomed_code"     : "",
-        "snomed_display"  : "",
-        "kategori"        : ""
+        "kategori": "Obstetri",
+        "id_klinis": "f60c0548-ba08-4283-913f-bb0e9f1e602f",
+        "nama_klinis": "Kontrol kehamilan",
+        "snomed_code": "161714006",
+        "snomed_display": "Antenatal care",
+        "id_master_klinis": 39
     }
 ]

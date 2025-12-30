@@ -1,0 +1,29 @@
+{
+  "id_questionnaire": "",
+  "resourceType": "Questionnaire",
+  "status": "active",
+  "subjectType": ["Patient"],
+  "title": "Assessment Radiologi Pra-Pemeriksaan",
+  "item": [
+    {
+      "linkId": "pregnancy",
+      "text": "Apakah pasien sedang hamil?",
+      "type": "boolean"
+    },
+    {
+      "linkId": "contrast_allergy",
+      "text": "Apakah memiliki alergi media kontras?",
+      "type": "boolean"
+    },
+    {
+      "linkId": "kidney_disease",
+      "text": "Apakah memiliki riwayat penyakit ginjal?",
+      "type": "boolean"
+    },
+    {
+      "linkId": "implant",
+      "text": "Apakah memiliki implant/logam di tubuh?",
+      "type": "boolean"
+    }
+  ]
+}
