@@ -731,7 +731,9 @@
         </div>
     </div>
 </div>
-
+<!-- ============================== -->
+<!-- QuestionnaireResponse -->
+ <!-- ============================== -->
 <div class="modal fade" id="ModalQuestionnaireResponse" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -765,7 +767,104 @@
     </div>
 </div>
 
+<!-- ============================== -->
+<!-- FILE MANUAL -->
+ <!-- ============================== -->
 
+<!-- Modal Upload File -->
+<div class="modal fade" id="ModalUploadFile" tabindex="-1">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <form action="javascript:void(0);" id="ProsesUploadFile" enctype="multipart/form-data">
+                <div class="modal-header">
+                    <h5 class="modal-title text-dark"><i class="bi bi-upload"></i> Upload File</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12" id="FormUploadFile">
+                            <!-- Form Akan Muncul Disini -->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12" id="NotifikasiUploadFile">
+                            <!-- Notifikasi Proses Akan Muncul Disini -->
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary btn-rounded">
+                        <i class="bi bi-upload"></i> Upload
+                    </button>
+                    <button type="button" class="btn btn-secondary btn-rounded" data-bs-dismiss="modal">
+                        <i class="bi bi-x-circle"></i> Tutup
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Detail File -->
+<div class="modal fade" id="ModalDetailFile" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-dark"><i class="bi bi-info-circle"></i> Detail File</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12" id="FormDetailFile">
+                        <!-- Form Akan Muncul Disini -->
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-rounded" data-bs-dismiss="modal">
+                    <i class="bi bi-x-circle"></i> Tutup
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Hapus File -->
+<div class="modal fade" id="ModalHapusFile" tabindex="-1">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <form action="javascript:void(0);" id="ProsesHapusFile" autocomplete="off">
+                <div class="modal-header">
+                    <h5 class="modal-title text-dark"><i class="bi bi-trash"></i> Hapus File</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12" id="FormHapusFile">
+                            <!-- Form Delete Akan Muncul Disini -->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12" id="NotifikasiHapusFile">
+                            <!-- Notifikasi Proses Delete Akan Muncul Disini -->
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary btn-rounded">
+                        <i class="bi bi-check"></i> Ya, Yakin
+                    </button>
+                    <button type="button" class="btn btn-secondary btn-rounded" data-bs-dismiss="modal">
+                        <i class="bi bi-x-circle"></i> Tidak
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- HAPUS PERMINTAAN PMERIKSAAN -->
 <div class="modal fade" id="ModalHapus" tabindex="-1">
     <div class="modal-dialog modal-md">
         <div class="modal-content">

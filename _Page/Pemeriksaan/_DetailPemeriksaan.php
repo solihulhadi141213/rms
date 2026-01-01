@@ -3,6 +3,7 @@
     include "../../_Config/Connection.php";
     include "../../_Config/GlobalFunction.php";
     include "../../_Config/Session.php";
+    include "../../_Config/SettingGeneral.php";
     
     //Zona Waktu
     date_default_timezone_set("Asia/Jakarta");
@@ -702,7 +703,7 @@
                                 if(empty($jumlah_nota)){
                                     echo '
                                         <tr>
-                                            <td colspan="4" class="text-center">
+                                            <td colspan="6" class="text-center">
                                                 <span class="text-center">Belum Ada Nota Tagihan</span>
                                             </td>
                                         </tr>
@@ -987,7 +988,7 @@
             </div>
         </div>
 
-        <!-- G. DOKTER (PERFORMER) -->
+        <!-- G. KLINIS -->
         <div class="card">
             <div class="card-header">
                 <div class="row">
@@ -1208,10 +1209,91 @@
                 </div>
             </div>
         </div>
+        <!-- Manajamen Fime manual -->
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-10">
+                        <b class="card-title">J. File Manual</b>
+                    </div>
+                    <div class="col-2 text-end">
+                        <button type="button" class="btn btn-sm btn-floating btn-primary modal_upload_file" data-id="<?php echo $id_radiologi; ?>">
+                            <i class="bi bi-upload"></i>
+                        </button>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="card-body">
+                <div class="table table-responsive">
+                    <table class="table table-bordered table-sm">
+                        <thead>
+                            <tr>
+                                <td class="text-center"><b>No</b></td>
+                                <td><b>File Name</b></td>
+                                <td><b>Type</b></td>
+                                <td><b>Size</b></td>
+                                <td class="text-center"><b>Opsi</b></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                                $jml_file = mysqli_num_rows(mysqli_query($Conn, "SELECT id_radiologi_file FROM radiologi_file WHERE id_radiologi='$id_radiologi'"));
+                                if(empty($jml_file)){
+                                    echo '
+                                        <tr>
+                                            <td colspan="5" class="text-center">Tidak Ada File Tersimpan</td>
+                                        </tr>
+                                    ';
+                                }else{
+                                    $no_file = 1;
+                                    $query_file = mysqli_query($Conn, "SELECT * FROM radiologi_file WHERE id_radiologi='$id_radiologi'");
+                                    while ($data_file = mysqli_fetch_array($query_file)) {
+                                        $id_radiologi_file = $data_file['id_radiologi_file'];
+                                        $file_name         = $data_file['file_name'];
+                                        $file_type         = $data_file['file_type'];
+                                        $file_size         = $data_file['file_size'];
+                                        $folder_name       = $data_file['folder_name'];
+
+                                        // Mengubah Satuan file_size
+                                        $file_size_mb = round($file_size / 1024 / 1024, 2);
+                                        $file_size    = "$file_size_mb Mb";
+
+                                        // Menampilkan data
+                                        $dir_file = ''.$app_base_url.'/_Storage/'.$folder_name.'/'.$file_name.'';
+                                        echo '
+                                            <tr>
+                                                <td class="text-center"><small>'.$no_file.'</small></td>
+                                                <td class="text-left">
+                                                    <a href="javascript:void(0);" class="modal_detail_file" data-id="'.$id_radiologi_file.'">
+                                                        <small>'.$file_name.'</small>
+                                                    </a>
+                                                </td>
+                                                <td class="text-left"><small>'.$file_type.'</small></td>
+                                                <td class="text-left"><small>'.$file_size.'</small></td>
+                                                <td class="text-center">
+                                                    <button type="button" class="btn btn-sm btn-floating btn-outline-danger modal_hapus_file" data-id="'.$id_radiologi_file.'">
+                                                        <i class="bi bi-x"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        ';
+                                        $no_file++;
+                                    }
+                                }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
 
     </div>
 </div>
 
 <script>
     $('[data-bs-toggle="tooltip"]').tooltip();
+
+    // Menampilkan floating button
+    showFloatingOption();
 </script>

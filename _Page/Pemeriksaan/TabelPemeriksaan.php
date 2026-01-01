@@ -496,4 +496,6 @@
     }else{
         $('#next_button').prop('disabled', false);
     }
+
+    hideFloatingOption();
 </script>

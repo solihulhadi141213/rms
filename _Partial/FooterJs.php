@@ -1,5 +1,4 @@
 <!-- ======= Footer ======= -->
-<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 <!-- Vendor JS Files -->
 <script src="node_modules/signature_pad/dist/signature_pad.umd.min.js"></script>
 <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
@@ -21,16 +20,32 @@
 <!-- Template Main JS File -->
 <script src="assets/js/main.js"></script>
 <script type="text/javascript">
-    $(document).ready(function(){
-        // Format mata uang.
-        $( '#kembalian' ).mask('000.000.000.000', {reverse: true});
-        $( '#pembayaran' ).mask('000.000.000.000', {reverse: true});
-        $( '#jumlah_transaksi' ).mask('000.000.000.000', {reverse: true});
-        $( '#jumlah_transaksi_edit' ).mask('000.000.000.000', {reverse: true});
-        $( '#pembayaran_edit' ).mask('000.000.000.000', {reverse: true});
-        $( '#kembalian_edit' ).mask('000.000.000.000', {reverse: true});
-        $( '.format_uang' ).mask('000.000.000.000', {reverse: true});
-    })
+
+    // Karakter Floating Button
+    document.addEventListener("DOMContentLoaded", function () {
+        const toggleBtn = document.querySelector(".option-toggle");
+        const floatingOptions = document.querySelector(".floating-options");
+
+        toggleBtn.addEventListener("click", function (e) {
+            e.preventDefault();
+            floatingOptions.classList.toggle("active");
+        });
+    });
+
+    // Menampilkan dan Menyembunyikan
+    function showFloatingOption() {
+        const el = document.getElementById("floating_content");
+        if (el) {
+            el.style.display = "block";
+        }
+    }
+
+    function hideFloatingOption() {
+        const el = document.getElementById("floating_content");
+        if (el) {
+            el.style.display = "none";
+        }
+    }
 </script>
 
 <!-- Scan QR -->

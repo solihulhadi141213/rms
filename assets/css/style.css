@@ -79,7 +79,7 @@ h6 {
   right: 15px;
   bottom: 15px;
   z-index: 99999;
-  background: #4154f1;
+  background: #ffae00;
   width: 40px;
   height: 40px;
   border-radius: 4px;
@@ -93,13 +93,73 @@ h6 {
 }
 
 .back-to-top:hover {
-  background: #6776f4;
+  background: #ffbc03;
   color: #fff;
 }
 
 .back-to-top.active {
   visibility: visible;
   opacity: 1;
+}
+
+/*--------------------------------------------------------------
+# Floating Option Button
+--------------------------------------------------------------*/
+/* Hide default floating option */
+#floating_content {
+  display: none;
+}
+.floating-options {
+  position: fixed;
+  right: 65px; /* posisi di samping back-to-top */
+  bottom: 15px;
+  z-index: 99998;
+}
+
+/* Tombol utama */
+.option-toggle {
+  width: 40px;
+  height: 40px;
+  background: #343a40;
+  color: #fff;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.option-toggle:hover {
+  background: #212529;
+}
+
+/* Container tombol option */
+.option-items {
+  position: absolute;
+  right: 50px;
+  bottom: 0;
+  display: flex;
+  gap: 8px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(10px);
+  transition: all 0.3s ease;
+}
+
+/* Saat aktif */
+.floating-options.active .option-items {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
+}
+
+/* Samakan ukuran tombol */
+.option-items .btn {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /*--------------------------------------------------------------

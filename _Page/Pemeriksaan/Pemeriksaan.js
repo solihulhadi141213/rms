@@ -548,6 +548,8 @@ $(document).ready(function() {
 
         // Kembalikan posisi layar ke atas
         $('html, body').scrollTop(0);
+
+        hideFloatingOption();
     });
 
     /* Ketika 'ProsesTambah' disubmit */
@@ -2035,6 +2037,196 @@ $(document).ready(function() {
                 console.log(xhr.responseText);
 
                 $('#NotifikasiQuestionnaireResponse').html(
+                    '<div class="alert alert-danger"><small>Terjadi kesalahan sistem</small></div>'
+                );
+            }
+        });
+    });
+
+    /*
+    ===================================================================================
+    FILE MANUAL
+    ===================================================================================
+    */
+    // Modal Upload Radiologi 'modal_tambah_tagihan'
+    $(document).on('click', '.modal_upload_file', function () {
+
+        //tangkap data 'id_radiologi'
+        var id_radiologi = $(this).data('id');
+        
+        //tampilkan modal
+        $('#ModalUploadFile').modal('show');
+
+        // Kosongkan Notifikasi
+        $('#NotifikasiUploadFile').html('');
+
+        //Form Loading
+        $('#FormUploadFile').html('Loading...');
+
+        //Tampilkan Form Dengan Ajax
+        $.ajax({
+            type 	    : 'POST',
+            url 	    : '_Page/Pemeriksaan/FormUploadFile.php',
+            data        : {id_radiologi: id_radiologi},
+            success     : function(data){
+                $('#FormUploadFile').html(data);
+            }
+        });
+    });
+
+    // Proses Upload File
+    $('#ProsesUploadFile').submit(function(e){
+        e.preventDefault();
+
+        // Gunakan FormData
+        var formData = new FormData(this);
+
+        // Loading Notifikasi
+        $('#NotifikasiUploadFile').html('<small class="text-muted">Menyimpan data...</small>');
+
+        $.ajax({
+            type        : 'POST',
+            url         : '_Page/Pemeriksaan/ProsesUploadFile.php',
+            data        : formData,
+            dataType    : 'json',
+            processData : false, // WAJIB
+            contentType : false, // WAJIB
+            cache       : false,
+
+            success: function(response){
+
+                var status  = response.status;
+                var message = response.message || 'Proses berhasil';
+
+                if(status === 'success'){
+
+                    $('#NotifikasiUploadFile').html('');
+                    $('#ModalUploadFile').modal('hide');
+
+                    // Reload detail pemeriksaan
+                    ShowDetailPemeriksaan();
+
+                    // Toast
+                    $('#put_message').html('<i class="bi bi-check-circle me-2"></i> ' + message);
+                    var toastEl = document.getElementById('toast_proses');
+                    var toast   = new bootstrap.Toast(toastEl, {delay: 3000});
+                    toast.show();
+
+                } else {
+                    $('#NotifikasiUploadFile').html(
+                        '<div class="alert alert-danger"><small>'+message+'</small></div>'
+                    );
+                }
+            },
+
+            error: function(xhr){
+                console.log(xhr.responseText);
+                $('#NotifikasiUploadFile').html(
+                    '<div class="alert alert-danger"><small>Terjadi kesalahan sistem</small></div>'
+                );
+            }
+        });
+    });
+
+    // Modal Detail File 'modal_detail_file'
+    $(document).on('click', '.modal_detail_file', function () {
+
+        //tangkap data 'id_radiologi_file'
+        var id_radiologi_file = $(this).data('id');
+        
+        //tampilkan modal
+        $('#ModalDetailFile').modal('show');
+
+        //Form Loading
+        $('#FormDetailFile').html('Loading...');
+
+        //Tampilkan Form Dengan Ajax
+        $.ajax({
+            type 	    : 'POST',
+            url 	    : '_Page/Pemeriksaan/FormDetailFile.php',
+            data        : {id_radiologi_file: id_radiologi_file},
+            success     : function(data){
+                $('#FormDetailFile').html(data);
+            }
+        });
+    });
+
+    // Modal Hapus File 'ModalHapusFile'
+    $(document).on('click', '.modal_hapus_file', function () {
+
+        //tangkap data 'id_radiologi_file'
+        var id_radiologi_file = $(this).data('id');
+        
+        //tampilkan modal
+        $('#ModalHapusFile').modal('show');
+
+        //Form Loading
+        $('#FormHapusFile').html('Loading...');
+
+        //Tampilkan Form Dengan Ajax
+        $.ajax({
+            type 	    : 'POST',
+            url 	    : '_Page/Pemeriksaan/FormHapusFile.php',
+            data        : {id_radiologi_file: id_radiologi_file},
+            success     : function(data){
+                $('#FormHapusFile').html(data);
+            }
+        });
+    });
+
+    // Proses Hapus File
+    $('#ProsesHapusFile').submit(function(e){
+        e.preventDefault();
+        
+        // Ambil Data Dari form
+        var ProsesHapusFile = $(this).serialize();
+
+        //Loading Notifikasi
+        $('#NotifikasiHapusFile').html('<small class="text-muted">Menyimpan data...</small>');
+
+        // Ajax Request
+        $.ajax({
+            type     : 'POST',
+            url      : '_Page/Pemeriksaan/ProsesHapusFile.php',
+            dataType : 'json',
+            data     : ProsesHapusFile,
+
+            success: function(response){
+
+                var status  = response.status;
+                var message = response.message || 'Proses berhasil';
+
+                if(status === 'success'){
+
+                    // Bersihkan notifikasi
+                    $('#NotifikasiHapusFile').html('');
+
+                    // Tutup modal jika ada
+                    $('#ModalHapusFile').modal('hide');
+
+                    // Reload detail pemeriksaan
+                    ShowDetailPemeriksaan();
+
+                    // Toast Proses Berhasil
+                    $('#put_message').html('<i class="bi bi-check-circle me-2"></i> ' + message);
+
+                    // Tampilkan Toast
+                    var toastEl = document.getElementById('toast_proses');
+                    var toast   = new bootstrap.Toast(toastEl, {delay: 3000});
+                    toast.show();
+
+                } else {
+                    // Tampilkan Pesan Kesalahan
+                    $('#NotifikasiHapusFile').html(
+                        '<div class="alert alert-danger"><small>'+message+'</small></div>'
+                    );
+                }
+            },
+
+            error: function(xhr){
+                console.log(xhr.responseText);
+
+                $('#NotifikasiHapusFile').html(
                     '<div class="alert alert-danger"><small>Terjadi kesalahan sistem</small></div>'
                 );
             }
