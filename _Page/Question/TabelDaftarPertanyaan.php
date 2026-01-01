@@ -133,12 +133,12 @@
         echo '
             <tr>
                 <td class="text-center"><small>'.$no.'</small></td>
-                <td><small>'.$question_group.'</small></td>
                 <td>
                     <a href="javascript:void(0);" class="modal_detail" data-id="'.$id_question .'" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Lihat Detail Pertanyaan">
                         <small class="underscore_doted">'.$question_text.'</small>
                     </a>
                 </td>
+                <td><small>'.$question_group.'</small></td>
                 <td><small>'.$question_type.'</small></td>
                 <td class="text-center">'.$status.'</td>
                 <td class="text-center">

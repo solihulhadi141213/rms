@@ -773,6 +773,96 @@
             </div>
         </div>
 
+        <!-- F. ASSESMENT PRA RADIOLOGI -->
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-12"><b class="card-title">F. Assesment Pra Radiologi</b></div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table table-responsive">
+                    <table class="table table-bordered table-sm">
+                        <thead>
+                            <tr>
+                                <td class="text-center"><b>No</b></td>
+                                <td><b>Pertanyaan</b></td>
+                                <td><b>Tipe</b></td>
+                                <td><b>Jawaban</b></td>
+                                <td class="text-center"><b>Opsi</b></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                           <?php
+                                $jumlah_pertanyaan = mysqli_num_rows(mysqli_query($Conn, "SELECT id_question FROM question"));
+                                if(empty($jumlah_pertanyaan)){
+                                    echo '
+                                        <tr>
+                                            <td colspan="5" class="text-center">
+                                                <span class="text-center">Belum Ada Pertanyaan Assesment</span>
+                                            </td>
+                                        </tr>
+                                    ';
+                                }else{
+                                    $no_pertanyaan = 1;
+                                    $qry_pertanyaan = mysqli_query($Conn, "SELECT * FROM question ORDER BY question_text ASC");
+                                    while ($data_pertanyaan = mysqli_fetch_array($qry_pertanyaan)) {
+                                        $id_question      = $data_pertanyaan['id_question'];
+                                        $question_group   = $data_pertanyaan['question_group'];
+                                        $question_text    = $data_pertanyaan['question_text'];
+                                        $question_type    = $data_pertanyaan['question_type'];
+
+                                        // Membuka Jawaban
+                                        $Qry_jawaban = $Conn->prepare("SELECT * FROM question_response WHERE id_question = ? AND id_radiologi = ?");
+                                        $Qry_jawaban->bind_param("ii", $id_question, $id_radiologi);
+                                        if (!$Qry_jawaban->execute()) {
+                                            $jawaban =$Conn->error;
+                                        }else{
+                                            $ResultJawaban = $Qry_jawaban->get_result();
+                                            $DataJawaban = $ResultJawaban->fetch_assoc();
+                                            $Qry_jawaban->close();
+                                            //Buat Variabel
+                                            if(!empty($DataJawaban['id_question_response'])){
+                                                $id_question_response      = $DataJawaban['id_question_response'] ?? "";
+                                                $id_questionnaire_response = $DataJawaban['id_questionnaire_response'];
+                                                if($DataJawaban['answer']=="1"){
+                                                    $jawaban ="Ya";
+                                                }else{
+                                                     $jawaban ="Tidak";
+                                                }
+                                            }else{
+                                                $id_question_response      = "";
+                                                $id_questionnaire_response = "";
+                                                $jawaban                   = "-";
+                                            }
+                                           
+                                        }
+                                        
+                                        // menampilkan data
+                                        echo '
+                                            <tr>
+                                                <td class="text-center"><small>'.$no_pertanyaan.'</small></td>
+                                                <td><small>'.$question_text.'</small></td>
+                                                <td><small>'.$question_type.'</small></td>
+                                                <td class="text-center"><small>'.$jawaban.'</small></td>
+                                            
+                                                <td class="text-center">
+                                                    <button type="button" class="btn btn-sm btn-secondary btn-floating ModalQuestionnaireResponse" data-id_question="'.$id_question .'" data-id_radiologi="'.$id_radiologi .'">
+                                                        <i class="bi bi-send"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        ';
+                                        $no_pertanyaan++;
+                                    }
+                                }
+                           ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <!-- 

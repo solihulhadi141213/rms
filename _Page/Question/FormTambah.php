@@ -32,13 +32,13 @@
             <small>Tipe Pertanyaan</small>
         </label>
         <select name="question_type" id="question_type" class="form-control" required>
-            <option value="">Pilih</option>
+            <!-- <option value="">Pilih</option> -->
             <option value="boolean">boolean</option>
-            <option value="decimal">decimal</option>
+            <!-- <option value="decimal">decimal</option>
             <option value="integer">integer</option>
             <option value="date">date</option>
             <option value="string">string</option>
-            <option value="text">text</option>
+            <option value="text">text</option> -->
         </select>
     </div>
 </div>

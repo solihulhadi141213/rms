@@ -51,6 +51,7 @@
     // VALIDASI INPUT WAJIB
     // ======================================================
     $id_radiologi = getPost('id_radiologi');
+    $id_question = getPost('id_question');
 
     if (empty($id_radiologi)) {
         echo json_encode([
@@ -60,22 +61,23 @@
         exit;
     }
 
+    if (empty($id_question)) {
+        echo json_encode([
+            'status'  => 'error',
+            'message' => 'ID Question (Pertanyaan) tidak boleh kosong.'
+        ]);
+        exit;
+    }
+
     // Field wajib FHIR Procedure
     $requiredFields = [
-        'resourceType',
-        'status',
-        'category_coding_system',
-        'category_coding_code',
-        'category_coding_display',
-        'code_coding_system',
-        'code_coding_code',
-        'code_coding_display',
-        'performer_reference',
-        'performer_reference_name',
+        'questionnaire',
         'subject_reference',
-        'encounter_reference',
         'subject_display',
-        'valueString'
+        'encounter_reference',
+        'authored',
+        'author_reference',
+        'item_linkId'
     ];
     // Untuk conclusionCode_coding_code yang ditangkap dari form memiliki format code|display
 
@@ -93,6 +95,16 @@
         ]);
         exit;
     }
+
+    // Memeriksa apakah sebelumnya sudah mempunyai data atau belum
+    $QrySebelumnya = mysqli_query($Conn,"SELECT * FROM question_response WHERE id_radiologi='$id_radiologi' AND id_question='$id_question'")or die(mysqli_error($Conn));
+    $DataSebelumnya = mysqli_fetch_array($QrySebelumnya);
+    if(empty($DataSebelumnya['id_question_response'])){
+        $id_question_response= "";
+    }else{
+        $id_question_response= $DataSebelumnya['id_question_response'];
+    }
+    
 
     // ======================================================
     // GENERATE TOKEN SATUSEHAT
@@ -129,86 +141,75 @@
         exit;
     }
 
-    $organization_id = $config['organization_id'];
-    $url_api         = rtrim($config['url_connection_satu_sehat'], '/');
-    $url_observation = $url_api . '/fhir-r4/v1/Observation';
+    $organization_id            = $config['organization_id'];
+    $url_api                    = rtrim($config['url_connection_satu_sehat'], '/');
+    $url_questionnaire_response = $url_api . '/fhir-r4/v1/QuestionnaireResponse';
 
-    // Validasi Status
-    $allowedStatus = ['registered','preliminary','final','amended','corrected','cancelled','entered-in-error','unknown'];
-    if (!in_array(getPost('status'), $allowedStatus)) {
+    // ======================================================
+    // SUSUN PAYLOAD QuestionnaireResponse (FHIR R4)
+    // ======================================================
+
+    // menyatakan ture or false
+    $itemAnswer = getPost('item_answer');
+
+    if ($itemAnswer === 'true' || $itemAnswer === '1') {
+        $answer = true;
+    } elseif ($itemAnswer === 'false' || $itemAnswer === '0') {
+        $answer = false;
+    } else {
         echo json_encode([
             'status' => 'error',
-            'message' => 'Status Observation tidak valid'
+            'message' => 'Jawaban tidak valid (boolean)'
         ]);
         exit;
     }
 
-    // ======================================================
-    // SUSUN PAYLOAD Observation (FHIR R4)
-    // ======================================================
+    // Validasi Authored
+    $authored = getPost('authored');
 
-
-    // Pastikan subject format FHIR
-    $subjectRef = getPost('subject_reference');
-    if (!preg_match('/^[A-Za-z]+\/.+$/', $subjectRef)) {
-        $subjectRef = 'Patient/' . $subjectRef;
+    if (!strtotime($authored)) {
+        echo json_encode([
+            'status' => 'error',
+            'message' => 'Format authored tidak valid (ISO 8601)'
+        ]);
+        exit;
     }
-
-    // Pastikan performer_reference format FHIR
-    $performer_reference = getPost('performer_reference');
-    if (!preg_match('/^[A-Za-z]+\/.+$/', $performer_reference)) {
-        $performer_reference = 'Practitioner/' . $performer_reference;
-    }
-
-    // Pastikan Encounter format FHIR
-    $EncounterRef = getPost('encounter_reference');
-    if (!preg_match('/^[A-Za-z]+\/.+$/', $EncounterRef)) {
-        $EncounterRef = 'Encounter/' . $EncounterRef;
-    }
-    $valueString = strip_tags(getPost('valueString'));
 
     $payload = [
-        'resourceType' => 'Observation',
-        'status'       => getPost('status'),
+        'resourceType' => 'QuestionnaireResponse',
+        'status'       => 'completed',
+        'questionnaire'=> 'Questionnaire/' . getPost('questionnaire'),
 
-        'category' => [[
-            'coding' => [[
-                'system'  => getPost('category_coding_system'),
-                'code'    => getPost('category_coding_code'),
-                'display' => getPost('category_coding_display')
-            ]]
-        ]],
-
-        'code' => [
-            'coding' => [[
-                'system'  => getPost('code_coding_system'),
-                'code'    => getPost('code_coding_code'),
-                'display' => getPost('code_coding_display')
-            ]]
-        ],
-        'effectiveDateTime' => date('c'),
         'subject' => [
-            'reference' => $subjectRef,
+            'reference' => 'Patient/' . getPost('subject_reference'),
             'display'   => getPost('subject_display')
         ],
+
         'encounter' => [
-            'reference' => $EncounterRef
+            'reference' => 'Encounter/' . getPost('encounter_reference')
         ],
-        'performer' => [
+
+        'authored' => $authored,
+
+        'author' => [
+            'reference' => 'Practitioner/' . getPost('author_reference')
+        ],
+
+        'source' => [
+            'reference' => 'Patient/' . getPost('subject_reference')
+        ],
+
+        'item' => [
             [
-                'reference' => $performer_reference,
-                'display'   => getPost('performer_reference_name'),
-            ],
-            [
-                'reference' => 'Organization/' . $organization_id,
-                'display'   => $company_name,
+                'linkId' => getPost('item_linkId'),
+                'answer' => [
+                    [
+                        'valueBoolean' => $answer
+                    ]
+                ]
             ]
-        ],
-
-        'valueString' => $valueString
+        ]
     ];
-
-
     // ======================================================
     // ENCODE JSON
     // ======================================================
@@ -228,7 +229,7 @@
     $curl = curl_init();
 
     curl_setopt_array($curl, [
-        CURLOPT_URL => $url_observation,
+        CURLOPT_URL => $url_questionnaire_response,
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_CUSTOMREQUEST => 'POST',
         CURLOPT_POSTFIELDS => $payload_json,
@@ -276,7 +277,7 @@
     // VALIDASI RESPONSE SATUSEHAT
     // ======================================================
     if ($http_code !== 201) {
-        $msg = 'Gagal mengirim Observation ke SATUSEHAT';
+        $msg = 'Gagal mengirim QuestionnaireResponse ke SATUSEHAT';
 
         if (($result['resourceType'] ?? '') === 'OperationOutcome') {
             $msg = $result['issue'][0]['details']['text']
@@ -293,31 +294,78 @@
     }
 
     // ======================================================
-    // SIMPAN ID Observation KE DATABASE
+    // SIMPAN ID QuestionnaireResponse KE DATABASE
     // ======================================================
-    $id_observation = $result['id'] ?? null;
+    $id_questionnaire_response = $result['id'] ?? null;
 
-    if ($id_observation) {
-        $upd = $Conn->prepare("
-            UPDATE radiologi 
-            SET id_observation = ? 
-            WHERE id_radiologi = ?
-        ");
-        $upd->bind_param("si", $id_observation, $id_radiologi);
-        $upd->execute();
-        $upd->close();
+    if ($id_questionnaire_response) {
+        if(empty($id_question_response)){
+
+            //Jika ada id_question_response maka INSERT
+            $query = "INSERT INTO question_response (
+                id_question,
+                id_radiologi,
+                id_questionnaire_response,
+                answer
+            ) VALUES (?, ?, ?, ?)";
+
+            $stmt = $Conn->prepare($query);
+
+            $stmt->bind_param(
+                "iiss",
+                $id_question,
+                $id_radiologi,
+                $id_questionnaire_response,
+                $answer
+            );
+
+            if ($stmt->execute()) {
+                $status_proses ="success";
+
+            } else {
+                $status_proses = 'Gagal menyimpan data: ' . $stmt->error;
+            }
+
+            $stmt->close();
+        }else{
+
+            //Jika tidak ada id_question_response maka UPDATE
+            $query = "UPDATE question_response SET answer = ? WHERE id_question_response = ?";
+            $stmt = $Conn->prepare($query);
+            $stmt->bind_param(
+                "si",
+                $answer,
+                $id_question_response
+            );
+
+            if ($stmt->execute()) {
+                $status_proses = "success";
+            } else {
+                $status_proses = "Gagal memperbarui data: " . $stmt->error;
+            }
+
+            $stmt->close();
+        }
+       
     }
 
     // ======================================================
-    // RESPONSE SUKSES
+    // RESPONSE
     // ======================================================
-    echo json_encode([
-        'status'         => 'success',
-        'message'        => 'Observation berhasil dikirim ke SATUSEHAT',
-        'id_observation' => $id_observation,
-        'id_radiologi'   => $id_radiologi,
-        'resource_url'   => $url_api . '/fhir-r4/v1/Observation/' . $id_observation
-    ]);
-    exit;
-
+    if($status_proses!=="success"){
+       echo json_encode([
+            'status'  => 'error',
+            'message' => $status_proses
+        ]);
+        exit;
+    }else{
+        echo json_encode([
+            'status'         => 'success',
+            'message'        => 'QuestionnaireResponse berhasil dikirim ke SATUSEHAT',
+            'id_questionnaire_response' => $id_questionnaire_response,
+            'id_radiologi'   => $id_radiologi,
+            'resource_url'   => $url_api . '/fhir-r4/v1/QuestionnaireResponse/' . $id_questionnaire_response
+        ]);
+        exit;
+    }
 ?>

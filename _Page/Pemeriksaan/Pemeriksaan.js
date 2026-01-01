@@ -1949,6 +1949,98 @@ $(document).ready(function() {
         });
     });
 
+    /*
+    ===================================================================================
+    ASSESMENT (QuestionnaireResponse)
+    ===================================================================================
+    */
+
+    // Modal Tambah Tagihan 'modal_tambah_tagihan'
+    $(document).on('click', '.ModalQuestionnaireResponse', function () {
+
+        //tangkap data 'id_radiologi' dan 'id_question'
+        var id_radiologi = $(this).data('id_radiologi');
+        var id_question  = $(this).data('id_question');
+
+        //tampilkan modal
+        $('#ModalQuestionnaireResponse').modal('show');
+
+        // Kosongkan Notifikasi
+        $('#NotifikasiQuestionnaireResponse').html('');
+
+        //Form Loading
+        $('#FormQuestionnaireResponse').html('Loading...');
+
+        //Tampilkan Form Dengan Ajax
+        $.ajax({
+            type 	    : 'POST',
+            url 	    : '_Page/Pemeriksaan/FormQuestionnaireResponse.php',
+            data        : {id_radiologi: id_radiologi, id_question: id_question},
+            success     : function(data){
+                $('#FormQuestionnaireResponse').html(data);
+            }
+        });
+    });
+
+    // Proses Kirim Jawaban
+    $('#ProsesQuestionnaireResponse').submit(function(e){
+        e.preventDefault();
+        
+        // Ambil Data Dari form
+        var ProsesQuestionnaireResponse = $(this).serialize();
+
+        //Loading Notifikasi
+        $('#NotifikasiQuestionnaireResponse').html('<small class="text-muted">Menyimpan data...</small>');
+
+        // Ajax Request
+        $.ajax({
+            type     : 'POST',
+            url      : '_Page/Pemeriksaan/ProsesQuestionnaireResponse.php',
+            dataType : 'json',
+            data     : ProsesQuestionnaireResponse,
+
+            success: function(response){
+
+                var status  = response.status;
+                var message = response.message || 'Proses berhasil';
+
+                if(status === 'success'){
+
+                    // Bersihkan notifikasi
+                    $('#NotifikasiQuestionnaireResponse').html('');
+
+                    // Tutup modal jika ada
+                    $('#ModalQuestionnaireResponse').modal('hide');
+
+                    // Reload detail pemeriksaan
+                    ShowDetailPemeriksaan();
+
+                    // Toast Proses Berhasil
+                    $('#put_message').html('<i class="bi bi-check-circle me-2"></i> ' + message);
+
+                    // Tampilkan Toast
+                    var toastEl = document.getElementById('toast_proses');
+                    var toast   = new bootstrap.Toast(toastEl, {delay: 3000});
+                    toast.show();
+
+                } else {
+                    // Tampilkan Pesan Kesalahan
+                    $('#NotifikasiQuestionnaireResponse').html(
+                        '<div class="alert alert-danger"><small>'+message+'</small></div>'
+                    );
+                }
+            },
+
+            error: function(xhr){
+                console.log(xhr.responseText);
+
+                $('#NotifikasiQuestionnaireResponse').html(
+                    '<div class="alert alert-danger"><small>Terjadi kesalahan sistem</small></div>'
+                );
+            }
+        });
+    });
+
 
 
 

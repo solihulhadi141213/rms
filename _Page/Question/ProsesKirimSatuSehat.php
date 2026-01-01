@@ -216,12 +216,22 @@
         exit;
     }
 
-    // Simpan ID Ke Database
+    // Menangkap Nilai 'id_questionnaire'
     $id_questionnaire = $result['id'] ?? null;
+
+    // Menangkap nilai linkId
+    $linkId ="";
+    if (!empty($result['item'])){
+        foreach ($result['item'] as $item) {
+            $linkId = htmlspecialchars($item['linkId']);
+        }
+    }
+    
+    // Simpan ID Ke Database
     $satu_sehat = 1;
     if ($id_questionnaire) {
-        $upd = $Conn->prepare("UPDATE question SET id_questionnaire = ?, satu_sehat = ? WHERE id_question = ?");
-        $upd->bind_param("sii", $id_questionnaire, $satu_sehat, $id_question);
+        $upd = $Conn->prepare("UPDATE question SET id_questionnaire = ?, link_id = ?, satu_sehat = ? WHERE id_question = ?");
+        $upd->bind_param("ssii", $id_questionnaire, $linkId, $satu_sehat, $id_question);
         $upd->execute();
         $upd->close();
     }

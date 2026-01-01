@@ -50,8 +50,8 @@
                                 <thead>
                                     <tr>
                                         <td class="text-center"><b>No</b></td>
-                                        <td><b>Group</b></td>
                                         <td><b>Pertanyaan</b></td>
+                                        <td><b>Group</b></td>
                                         <td><b><i>Type</i></b></td>
                                         <td class="text-center"><b><i>Satu Sehat</i></b></td>
                                         <td class="text-center"><b>Opsi</b></td>
