@@ -1006,7 +1006,7 @@
                         <b class="card-title">F. Dokter <i>(Performer)</i></b>
                     </div>
                     <div class="col-2 text-end">
-                        <button type="button" class="btn btn-sm btn-floating btn-secondary">
+                        <button type="button" class="btn btn-sm btn-floating btn-secondary modal_edit_dokter" data-id="<?php echo $id_radiologi; ?>">
                             <i class="bi bi-pencil"></i>
                         </button>
                     </div>

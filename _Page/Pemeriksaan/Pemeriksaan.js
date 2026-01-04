@@ -2721,6 +2721,90 @@ $(document).ready(function() {
         });
     });
 
+    /*
+    ===================================================================================
+    DOKTER PENGIRIM DAN PENERIMA
+    ===================================================================================
+    */
+
+    // Modal Ubah Waktu Pelayanan
+    $(document).on('click', '.modal_edit_dokter', function () {
+
+        var id_radiologi = $(this).data('id');
+
+        // Kosongkan Notifikasi
+        $('#NotifikasiEditDokter').html('');
+
+        // Tampilkan Modal
+        $('#ModalEditDokter').modal('show');
+
+        // Tampilkan Loading
+        $('#FormEditDokter').html('Loading...');
+
+        $.ajax({
+            type  : 'POST',
+            url   : '_Page/Pemeriksaan/FormEditDokter.php',
+            data  : {id_radiologi: id_radiologi},
+            success: function(data){
+                $('#FormEditDokter').html(data);
+            }
+        });
+    });
+
+    // Proses Update Dokter
+    $('#ProsesEditDokter').submit(function(e){
+        e.preventDefault();
+        var formData = $(this).serialize();
+        $('#NotifikasiEditDokter').html('<small class="text-muted">Menyimpan data...</small>');
+
+        $.ajax({
+            type     : 'POST',
+            url      : '_Page/Pemeriksaan/ProsesEditDokter.php',
+            dataType : 'json',
+            data     : formData,
+            success  : function(response){
+                var status  = response.status;
+                var message = response.message || 'Proses berhasil';
+
+                if(status === 'success'){
+
+                    // Bersihkan notifikasi
+                    $('#NotifikasiEditDokter').html('');
+
+                    // Tutup modal jika ada
+                    $('#ModalEditDokter').modal('hide');
+
+                    // Reload detail pemeriksaan
+                    ShowDetailPemeriksaan();
+
+                    // Tampilkan Ulang Tabel
+                    ShowTablePemeriksaan();
+
+                    // Toast Proses Berhasil
+                    $('#put_message').html('<i class="bi bi-check-circle me-2"></i> ' + message);
+
+                    // Tampilkan Toast
+                    var toastEl = document.getElementById('toast_proses');
+                    var toast   = new bootstrap.Toast(toastEl, {delay: 3000});
+                    toast.show();
+
+                } else {
+                    // Tampilkan Pesan Kesalahan
+                    $('#NotifikasiEditDokter').html(
+                        '<div class="alert alert-danger"><small>'+message+'</small></div>'
+                    );
+                }
+            },
+            error: function(xhr){
+                console.log(xhr.responseText);
+
+                $('#NotifikasiEditDokter').html(
+                    '<div class="alert alert-danger"><small>Terjadi kesalahan sistem</small></div>'
+                );
+            }
+        });
+    });
+
 
 
 
