@@ -379,7 +379,7 @@
             </div>
             <div class="col-1"><small>:</small></div>
             <div class="col-7">
-                <input type="text" name="code_coding_code" id="code_coding_code" class="form-control" value="'.$report_sys.'">
+                <input type="text" name="code_coding_code" id="code_coding_code" class="form-control" value="'.$report_code.'">
             </div>
         </div>
         <div class="row mb-2">
