@@ -256,9 +256,10 @@
         $bodysite_code           = $pemeriksaan_list['bodysite_code'] ?? "";
         $bodysite_description    = $pemeriksaan_list['bodysite_description'] ?? "";
         $bodysite_sys            = $pemeriksaan_list['bodysite_sys'] ?? "";
-        $report_code             = $pemeriksaan_list['report_code'] ?? "";
-        $report_description      = $pemeriksaan_list['report_description'] ?? "";
-        $report_sys              = $pemeriksaan_list['report_sys'] ?? "";
+        // Buka dari Database
+        $report_code             = GetDetailData($Conn, 'master_pemeriksaan', 'id_master_pemeriksaan', $id_master_pemeriksaan, 'report_code');
+        $report_description             = GetDetailData($Conn, 'master_pemeriksaan', 'id_master_pemeriksaan', $id_master_pemeriksaan, 'report_description');
+        $report_sys             = GetDetailData($Conn, 'master_pemeriksaan', 'id_master_pemeriksaan', $id_master_pemeriksaan, 'report_sys');
     }
 
     // ==============================================================

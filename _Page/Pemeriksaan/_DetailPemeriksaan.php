@@ -411,7 +411,13 @@
                 </div>
             </div>
         </div>
+        
         <!-- C. INFORMASI WAKTU PELAYANAN -->
+         <?php
+            $durasi_1 = hitungDurasi($datetime_diminta, $datetime_dikerjakan);
+            $durasi_2 = hitungDurasi($datetime_dikerjakan, $datetime_hasil);
+            $durasi_3 = hitungDurasi($datetime_hasil, $datetime_selesai);
+         ?>
         <div class="card">
             <div class="card-header">
                 <div class="row">
@@ -428,22 +434,38 @@
             <div class="card-body">
                 <div class="table table-responsive">
                     <table class="table table-bordered table-sm">
+                        <thead>
+                            <tr>
+                                <td class="text-center"><b>No</b></td>
+                                <td><b>Keterangan</b></td>
+                                <td><b>Jam</b></td>
+                                <td class="text-center"><b>Durasi</b></td>
+                            </tr>
+                        </thead>
                         <tbody>
                             <tr>
+                                <td class="text-center">1</td>
                                 <td>Permintaan Radiologi</td>
-                                <td class="text text-grayish"><?php echo $datetime_diminta; ?></td>
+                                <td class="text-grayish"><?php echo $datetime_diminta; ?></td>
+                                <td class="text-center text-grayish">0</td>
                             </tr>
                             <tr>
+                                <td class="text-center">2</td>
                                 <td>Permintaan Dikerjakan</td>
-                                <td class="text text-grayish"><?php echo $datetime_dikerjakan; ?></td>
+                                <td class="text-grayish"><?php echo $datetime_dikerjakan; ?></td>
+                                <td class="text-center text-grayish"><?php echo $durasi_1; ?></td>
                             </tr>
                             <tr>
+                                <td class="text-center">3</td>
                                 <td>Pembuatan Hasil</td>
-                                <td class="text text-grayish"><?php echo $datetime_hasil; ?></td>
+                                <td class="text-grayish"><?php echo $datetime_hasil; ?></td>
+                                <td class="text-center text-grayish"><?php echo $durasi_2; ?></td>
                             </tr>
                             <tr>
+                                <td class="text-center">4</td>
                                 <td>Penyerahan Hasil</td>
-                                <td class="text text-grayish"><?php echo $datetime_selesai; ?></td>
+                                <td class="text-grayish"><?php echo $datetime_selesai; ?></td>
+                                <td class="text-center text-grayish"><?php echo $durasi_3; ?></td>
                             </tr>
                         </tbody>
                     </table>
@@ -1209,7 +1231,8 @@
                 </div>
             </div>
         </div>
-        <!-- Manajamen Fime manual -->
+        
+        <!-- Manajamen File manual -->
         <div class="card">
             <div class="card-header">
                 <div class="row">
@@ -1282,6 +1305,207 @@
                                     }
                                 }
                             ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Expertise Local -->
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-12">
+                        <b class="card-title">J. Expertise</b>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <div class="table table-responsive">
+                    <table class="table table-bordered table-sm">
+                        <thead>
+                            <tr>
+                                <td class="text-center"><b>No</b></td>
+                                <td><b><i>Title</i></b></td>
+                                <td><b><i>Text</i></b></td>
+                                <td class="text-center"><b>Opsi</b></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                                $id_radiologi_local_exp = "None";
+                                $temuan                 = "None";
+                                $kesan                  = "None";
+                                $saran                  = "None";
+                                $catatan                = "None";
+
+                                // Buka Kode Lokal
+                                $QryLokal = $Conn->prepare("SELECT * FROM radiologi_local_exp WHERE id_radiologi = ?");
+                                $QryLokal->bind_param("i", $id_radiologi);
+                                if (!$QryLokal->execute()) {
+                                    $error=$Conn->error;
+                                    $id_radiologi_local_exp = $error;
+                                    $temuan                 = $error;
+                                    $kesan                  = $error;
+                                    $saran                  = $error;
+                                    $catatan                = $error;
+                                }else{
+                                    $ResultLokal = $QryLokal->get_result();
+                                    $DataLokal = $ResultLokal->fetch_assoc();
+                                    $QryLokal->close();
+
+                                    if(empty($DataLokal['id_radiologi'])){
+                                        $id_radiologi_local_exp = "-";
+                                        $temuan                 = "-";
+                                        $kesan                  = "-";
+                                        $saran                  = "-";
+                                        $catatan                = "-";
+
+                                    }else{
+                                        $temuan  = $DataLokal['temuan'];
+                                        $kesan   = $DataLokal['kesan'];
+                                        $saran   = $DataLokal['saran'];
+                                        $catatan = $DataLokal['catatan'];
+
+                                    }
+                                   
+                                }
+
+                                echo '
+                                    <tr>
+                                        <td class="text-center"><small>1</small></td>
+                                        <td class="text-left">Temua Klinis</td>
+                                        <td class="text-left"><small>'.$temuan.'</small></td>
+                                        <td class="text-center">
+                                            <button type="button" class="btn btn-sm btn-floating btn-secondary modal_expertise" data-id_radiologi="'.$id_radiologi.'" data-title="temuan">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center"><small>2</small></td>
+                                        <td class="text-left">Kesan</td>
+                                        <td class="text-left"><small>'.$kesan.'</small></td>
+                                        <td class="text-center">
+                                            <button type="button" class="btn btn-sm btn-floating btn-secondary modal_expertise" data-id_radiologi="'.$id_radiologi.'" data-title="kesan">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center"><small>3</small></td>
+                                        <td class="text-left">Saran</td>
+                                        <td class="text-left"><small>'.$saran.'</small></td>
+                                        <td class="text-center">
+                                            <button type="button" class="btn btn-sm btn-floating btn-secondary modal_expertise" data-id_radiologi="'.$id_radiologi.'" data-title="saran">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center"><small>4</small></td>
+                                        <td class="text-left">Catatan/Keterangan</td>
+                                        <td class="text-left"><small>'.$catatan.'</small></td>
+                                        <td class="text-center">
+                                            <button type="button" class="btn btn-sm btn-floating btn-secondary modal_expertise" data-id_radiologi="'.$id_radiologi.'" data-title="catatan">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ';
+                            ?>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Expertise PACS -->
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-12">
+                        <b class="card-title">K. Expertise (PACS)</b>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <div class="table table-responsive">
+                    <table class="table table-bordered table-sm">
+                        <thead>
+                            <tr>
+                                <td class="text-center"><b>No</b></td>
+                                <td><b><i>Datetime</i></b></td>
+                                <td><b><i>Study Number</i></b></td>
+                                <td><b><i>Descritption</i></b></td>
+                                <td class="text-center"><b>Opsi</b></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                                // Menghitung Jumlah Data Expertise Berdasarkan Modality
+                                if($alat_pemeriksa=="US"){
+                                    $jml_expertise_pacs = mysqli_num_rows(mysqli_query($Conn, "SELECT id_radiologi_expertise_usg FROM radiologi_expertise_usg WHERE id_radiologi='$id_radiologi'"));
+                                }else{
+                                    $jml_expertise_pacs = mysqli_num_rows(mysqli_query($Conn, "SELECT id_radiologi_expertise FROM radiologi_expertise WHERE id_radiologi='$id_radiologi'"));
+                                }
+                                
+                                // Jika Data Tidak Ditemukan
+                                if(empty($jml_expertise_pacs)){
+                                    echo '
+                                        <tr>
+                                            <td colspan="5" class="text-center">Belum Ada Expertise Untuk Permintaan Ini</td>
+                                        </tr>
+                                    ';
+                                }else{
+                                    $nomor_exp_pacs = 1;
+                                    if($alat_pemeriksa=="US"){
+                                        $query_exp_pacs = mysqli_query($Conn, "SELECT * FROM radiologi_expertise_usg WHERE id_radiologi='$id_radiologi' ORDER By id_radiologi_expertise_usg DESC");
+                                    }else{
+                                        $query_exp_pacs = mysqli_query($Conn, "SELECT * FROM radiologi_expertise WHERE id_radiologi='$id_radiologi' ORDER By id_radiologi_expertise DESC");
+                                    }
+                                    while ($data_exp_pacs = mysqli_fetch_array($query_exp_pacs)) {
+                                        $timestamp             = $data_exp_pacs['timestamp'];
+                                        $viewer_link           = $data_exp_pacs['viewer_link'];
+                                        $study_number          = $data_exp_pacs['study_number'];
+                                        $description_expertise = $data_exp_pacs['description'];
+                                       
+                                        // Routing Primary Key
+                                        if($alat_pemeriksa=="US"){
+                                            $id_radiologi_expertise = $data_exp_pacs['id_radiologi_expertise_usg'];
+                                        }else{
+                                            $id_radiologi_expertise = $data_exp_pacs['id_radiologi_expertise'];
+                                        }
+
+                                        // Format Waktu
+                                        $datetime_expertise_pacs = date('d/m/Y H:i', strtotime($timestamp));
+                                        echo '
+                                            <tr>
+                                                <td class="text-center"><small>'.$nomor_exp_pacs.'</small></td>
+                                                <td><small>'.$datetime_expertise_pacs.'</small></td>
+                                                <td>
+                                                    <small>
+                                                        <a href="javascript:void(0);" class="modal_detail_exp_pacs" data-id="'.$id_radiologi_expertise.'" data-modality="'.$alat_pemeriksa.'">
+                                                            <small>'.$alat_pemeriksa.'-'.$study_number.'</small>
+                                                        </a>
+                                                    </small>
+                                                </td>
+                                                <td><small>'.$description_expertise.'</small></td>
+                                                <td class="text-center">
+                                                    <button type="button" class="btn btn-sm btn-floating btn-outline-danger modal_hapus_exp_pacs" data-id="'.$id_radiologi_expertise.'" data-modality="'.$alat_pemeriksa.'">
+                                                        <i class="bi bi-x"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        ';
+                                        $nomor_exp_pacs++;
+                                    }
+                                }
+                            ?>
+
                         </tbody>
                     </table>
                 </div>

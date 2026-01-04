@@ -1258,6 +1258,33 @@
         return mb_strtoupper($inisial);
     }
 
+    function hitungDurasi($waktuAwal, $waktuAkhir){
+        if (empty($waktuAwal) || empty($waktuAkhir)) {
+            return '-';
+        }
+
+        // Hilangkan teks WIB
+        $waktuAwal  = str_replace(' WIB', '', $waktuAwal);
+        $waktuAkhir = str_replace(' WIB', '', $waktuAkhir);
+
+        // Konversi ke DateTime
+        $start = DateTime::createFromFormat('d/m/Y H:i', $waktuAwal);
+        $end   = DateTime::createFromFormat('d/m/Y H:i', $waktuAkhir);
+
+        if (!$start || !$end) {
+            return '-';
+        }
+
+        $diff = $start->diff($end);
+
+        // Format durasi
+        if ($diff->h > 0) {
+            return $diff->h . ' jam ' . $diff->i . ' menit';
+        }
+
+        return $diff->i . ' menit';
+    }
+
 
 
 ?>

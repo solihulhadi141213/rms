@@ -2233,6 +2233,214 @@ $(document).ready(function() {
         });
     });
 
+    /*
+    ===================================================================================
+    EXPERTISE LOCAL
+    ===================================================================================
+    */
+
+    // Modal Expertise
+    $(document).on('click', '.modal_expertise', function () {
+
+        var id_radiologi = $(this).data('id_radiologi');
+        var title        = $(this).data('title');
+
+        $('#ModalExpertise').modal('show');
+        $('#FormExpertise').html('Loading...');
+
+        $.ajax({
+            type  : 'POST',
+            url   : '_Page/Pemeriksaan/FormExpertise.php',
+            data  : {id_radiologi: id_radiologi, title: title},
+            success: function(data){
+                $('#FormExpertise').html(data);
+
+                // =============================
+                // INIT QUILL
+                // =============================
+                window.quillExpertise = new Quill('#editor_expertise', {
+                    theme: 'snow',
+                    placeholder: 'Tulis '+title+' di sini...',
+                    modules: {
+                        toolbar: [
+                            [{ header: [1, 2, 3, false] }],
+                            ['bold', 'italic', 'underline'],
+                            [{ list: 'ordered' }, { list: 'bullet' }],
+                            [{ align: [] }],
+                            ['clean']
+                        ]
+                    }
+                });
+            }
+        });
+    });
+
+    $('#ProsesExpertise').submit(function(e){
+        e.preventDefault();
+
+        // Ambil isi quill → masukkan ke hidden input
+        if (window.quillExpertise) {
+            $('#isi_expertise').val(window.quillExpertise.root.innerHTML);
+        }
+
+        var formData = $(this).serialize();
+
+        $('#NotifikasiExpertise').html('<small class="text-muted">Menyimpan data...</small>');
+
+        $.ajax({
+            type     : 'POST',
+            url      : '_Page/Pemeriksaan/ProsesExpertise.php',
+            dataType : 'json',
+            data     : formData,
+            success  : function(response){
+                var status  = response.status;
+                var message = response.message || 'Proses berhasil';
+
+                if(status === 'success'){
+
+                    // Bersihkan notifikasi
+                    $('#NotifikasiExpertise').html('');
+
+                    // Tutup modal jika ada
+                    $('#ModalExpertise').modal('hide');
+
+                    // Reload detail pemeriksaan
+                    ShowDetailPemeriksaan();
+
+                    // Toast Proses Berhasil
+                    $('#put_message').html('<i class="bi bi-check-circle me-2"></i> ' + message);
+
+                    // Tampilkan Toast
+                    var toastEl = document.getElementById('toast_proses');
+                    var toast   = new bootstrap.Toast(toastEl, {delay: 3000});
+                    toast.show();
+
+                } else {
+                    // Tampilkan Pesan Kesalahan
+                    $('#NotifikasiExpertise').html(
+                        '<div class="alert alert-danger"><small>'+message+'</small></div>'
+                    );
+                }
+            },
+            error: function(xhr){
+                console.log(xhr.responseText);
+
+                $('#NotifikasiExpertise').html(
+                    '<div class="alert alert-danger"><small>Terjadi kesalahan sistem</small></div>'
+                );
+            }
+        });
+    });
+
+    /*
+    ===================================================================================
+    EXPERTISE PACS
+    ===================================================================================
+    */
+    // Modal Expertise APCS
+    $(document).on('click', '.modal_detail_exp_pacs', function () {
+
+        var id_radiologi_expertise = $(this).data('id');
+        var modality               = $(this).data('modality');
+
+        $('#ModalExpertisePacs').modal('show');
+        $('#FormDetailExpertisePacs').html('Loading...');
+
+        $.ajax({
+            type  : 'POST',
+            url   : '_Page/Pemeriksaan/FormDetailExpertisePacs.php',
+            data  : {id_radiologi_expertise: id_radiologi_expertise, modality: modality},
+            success: function(data){
+                $('#FormDetailExpertisePacs').html(data);
+            }
+        });
+    });
+
+    // Modal Hapus Expertise PACS
+    $(document).on('click', '.modal_hapus_exp_pacs', function () {
+
+        var id_radiologi_expertise = $(this).data('id');
+        var modality               = $(this).data('modality');
+
+        // Kosongkan Notifikasi
+        $('#NotifikasiHapusExpertisePacs').html('');
+
+        // Tampilkan Modal
+        $('#ModalHapusExpertisePacs').modal('show');
+
+        // Tampilkan Loading
+        $('#FormHapusExpertisePacs').html('Loading...');
+
+        $.ajax({
+            type  : 'POST',
+            url   : '_Page/Pemeriksaan/FormHapusExpertisePacs.php',
+            data  : {id_radiologi_expertise: id_radiologi_expertise, modality: modality},
+            success: function(data){
+                $('#FormHapusExpertisePacs').html(data);
+            }
+        });
+    });
+
+    // Proses Hapus Data Expertise Dari PACS
+    $('#ProsesHapusExpertisePacs').submit(function(e){
+        e.preventDefault();
+        
+        // Ambil Data Dari form
+        var ProsesHapusExpertisePacs = $(this).serialize();
+
+        //Loading Notifikasi
+        $('#NotifikasiHapusExpertisePacs').html('<small class="text-muted">Menyimpan data...</small>');
+
+        // Ajax Request
+        $.ajax({
+            type     : 'POST',
+            url      : '_Page/Pemeriksaan/ProsesHapusExpertisePacs.php',
+            dataType : 'json',
+            data     : ProsesHapusExpertisePacs,
+
+            success: function(response){
+
+                var status  = response.status;
+                var message = response.message || 'Proses berhasil';
+
+                if(status === 'success'){
+
+                    // Bersihkan notifikasi
+                    $('#NotifikasiHapusExpertisePacs').html('');
+
+                    // Tutup modal jika ada
+                    $('#ModalHapusExpertisePacs').modal('hide');
+
+                    // Reload detail pemeriksaan
+                    ShowDetailPemeriksaan();
+
+                    // Toast Proses Berhasil
+                    $('#put_message').html('<i class="bi bi-check-circle me-2"></i> ' + message);
+
+                    // Tampilkan Toast
+                    var toastEl = document.getElementById('toast_proses');
+                    var toast   = new bootstrap.Toast(toastEl, {delay: 3000});
+                    toast.show();
+
+                } else {
+                    // Tampilkan Pesan Kesalahan
+                    $('#NotifikasiHapusExpertisePacs').html(
+                        '<div class="alert alert-danger"><small>'+message+'</small></div>'
+                    );
+                }
+            },
+
+            error: function(xhr){
+                console.log(xhr.responseText);
+
+                $('#NotifikasiHapusExpertisePacs').html(
+                    '<div class="alert alert-danger"><small>Terjadi kesalahan sistem</small></div>'
+                );
+            }
+        });
+    });
+
+
 
 
 
