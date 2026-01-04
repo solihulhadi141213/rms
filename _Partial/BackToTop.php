@@ -21,7 +21,7 @@
             <i class="bi bi-repeat"></i>
         </button>
 
-        <button type="button" class="btn btn-md btn-floating btn-primary print_data">
+        <button type="button" class="btn btn-md btn-floating btn-primary print_data modal_cetak_laporan2">
             <i class="bi bi-printer"></i>
         </button>
     </div>

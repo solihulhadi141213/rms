@@ -907,6 +907,38 @@ NOTA TAGIHAN
 EXPERTISE LOCAL
 ============================== 
 -->
+<div class="modal fade" id="ModalExpertiseMultiple" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form action="javascript:void(0);" id="ProsesExpertiseMultiple">
+                <div class="modal-header">
+                    <h5 class="modal-title text-dark"><i class="bi bi-pencil"></i> Pengisian Expertise</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12" id="FormExpertiseMultiple">
+                            <!-- Form Akan Muncul Disini -->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12" id="NotifikasiExpertiseMultiple">
+                            <!-- Notifikasi Muncul Disini -->
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary btn-rounded">
+                        <i class="bi bi-save"></i> Simpan 
+                    </button>
+                    <button type="button" class="btn btn-secondary btn-rounded" data-bs-dismiss="modal">
+                        <i class="bi bi-x-circle"></i> Tutup
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 <div class="modal fade" id="ModalExpertise" tabindex="-1">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
@@ -1005,7 +1037,7 @@ EXPERTISE PACS
 </div>
 
 <!-- HAPUS EXPERTISE PACS -->
- <div class="modal fade" id="ModalHapusExpertisePacs" tabindex="-1">
+<div class="modal fade" id="ModalHapusExpertisePacs" tabindex="-1">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <form action="javascript:void(0);" id="ProsesHapusExpertisePacs" autocomplete="off">
@@ -1028,6 +1060,39 @@ EXPERTISE PACS
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary btn-rounded">
                         <i class="bi bi-check"></i> Hapus
+                    </button>
+                    <button type="button" class="btn btn-secondary btn-rounded" data-bs-dismiss="modal">
+                        <i class="bi bi-x-circle"></i> Tutup
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- 
+============================== 
+CETAK RADIOLOGI
+============================== 
+-->
+<div class="modal fade" id="ModalCetakHasil" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form action="_Page/Exporter/Exporter.php" method="GET" target="_blank">
+                <div class="modal-header">
+                    <h5 class="modal-title text-dark"><i class="bi bi-printer"></i> Cetak Hasil</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12" id="FormCetakHasil">
+                            <!-- Form Delete Akan Muncul Disini -->
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary btn-rounded" id="button_cetak_hasil">
+                        <i class="bi bi-printer"></i> Cetak
                     </button>
                     <button type="button" class="btn btn-secondary btn-rounded" data-bs-dismiss="modal">
                         <i class="bi bi-x-circle"></i> Tutup

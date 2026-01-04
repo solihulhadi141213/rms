@@ -1,0 +1,10 @@
+[
+    {
+        "kategori": "Respirasi",
+        "id_klinis": "0c5d50fb-310f-4c71-a6d7-3a1e78020021",
+        "nama_klinis": "Sesak napas",
+        "snomed_code": "267036007",
+        "snomed_display": "Dyspnea",
+        "id_master_klinis": 1
+    }
+]

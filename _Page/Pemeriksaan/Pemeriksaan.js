@@ -2238,8 +2238,156 @@ $(document).ready(function() {
     EXPERTISE LOCAL
     ===================================================================================
     */
-
     // Modal Expertise
+    $(document).on('click', '.modal_expertise_multiple', function () {
+
+        //Tangkap ID
+        var id_radiologi = $(this).data('id');
+
+        //Kosongkan Notifikasi
+        $('#NotifikasiExpertiseMultiple').html('');
+
+        // Tampilkan Modal
+        $('#ModalExpertiseMultiple').modal('show');
+
+        // Tampilkan Form
+        $('#FormExpertiseMultiple').html('Loading...');
+        $.ajax({
+            type  : 'POST',
+            url   : '_Page/Pemeriksaan/FormExpertiseMultiple.php',
+            data  : {id_radiologi: id_radiologi},
+            success: function(data){
+                $('#FormExpertiseMultiple').html(data);
+
+                // =============================
+                // INIT QUILL
+                // =============================
+                window.quillExpertiseTemuan = new Quill('#editor_expertise_temuan', {
+                    theme: 'snow',
+                    placeholder: 'Tulis temusn di sini...',
+                    modules: {
+                        toolbar: [
+                            [{ header: [1, 2, 3, false] }],
+                            ['bold', 'italic', 'underline'],
+                            [{ list: 'ordered' }, { list: 'bullet' }],
+                            [{ align: [] }],
+                            ['clean']
+                        ]
+                    }
+                });
+
+                window.quillExpertiseKesan = new Quill('#editor_expertise_kesan', {
+                    theme: 'snow',
+                    placeholder: 'Tulis kesan di sini...',
+                    modules: {
+                        toolbar: [
+                            [{ header: [1, 2, 3, false] }],
+                            ['bold', 'italic', 'underline'],
+                            [{ list: 'ordered' }, { list: 'bullet' }],
+                            [{ align: [] }],
+                            ['clean']
+                        ]
+                    }
+                });
+
+                window.quillExpertiseSaran = new Quill('#editor_expertise_saran', {
+                    theme: 'snow',
+                    placeholder: 'Tulis Saran di sini...',
+                    modules: {
+                        toolbar: [
+                            [{ header: [1, 2, 3, false] }],
+                            ['bold', 'italic', 'underline'],
+                            [{ list: 'ordered' }, { list: 'bullet' }],
+                            [{ align: [] }],
+                            ['clean']
+                        ]
+                    }
+                });
+
+                window.quillExpertiseCatatan = new Quill('#editor_expertise_catatan', {
+                    theme: 'snow',
+                    placeholder: 'Tulis Catatan/Keterangan lain di sini...',
+                    modules: {
+                        toolbar: [
+                            [{ header: [1, 2, 3, false] }],
+                            ['bold', 'italic', 'underline'],
+                            [{ list: 'ordered' }, { list: 'bullet' }],
+                            [{ align: [] }],
+                            ['clean']
+                        ]
+                    }
+                });
+            }
+        });
+    });
+
+    $('#ProsesExpertiseMultiple').submit(function(e){
+        e.preventDefault();
+
+        // Ambil isi quill → masukkan ke hidden input
+        if (window.quillExpertiseTemuan) {
+            $('#expertise_temuan').val(window.quillExpertiseTemuan.root.innerHTML);
+        }
+        if (window.quillExpertiseKesan) {
+            $('#expertise_kesan').val(window.quillExpertiseKesan.root.innerHTML);
+        }
+        if (window.quillExpertiseSaran) {
+            $('#expertise_saran').val(window.quillExpertiseSaran.root.innerHTML);
+        }
+        if (window.quillExpertiseCatatan) {
+            $('#expertise_catatan').val(window.quillExpertiseCatatan.root.innerHTML);
+        }
+
+        var formData = $(this).serialize();
+
+        $('#NotifikasiExpertiseMultiple').html('<small class="text-muted">Menyimpan data...</small>');
+
+        $.ajax({
+            type     : 'POST',
+            url      : '_Page/Pemeriksaan/ProsesExpertiseMultiple.php',
+            dataType : 'json',
+            data     : formData,
+            success  : function(response){
+                var status  = response.status;
+                var message = response.message || 'Proses berhasil';
+
+                if(status === 'success'){
+
+                    // Bersihkan notifikasi
+                    $('#NotifikasiExpertiseMultiple').html('');
+
+                    // Tutup modal jika ada
+                    $('#ModalExpertiseMultiple').modal('hide');
+
+                    // Tampilkan Ulang Tabel
+                    ShowTablePemeriksaan();
+
+                    // Toast Proses Berhasil
+                    $('#put_message').html('<i class="bi bi-check-circle me-2"></i> ' + message);
+
+                    // Tampilkan Toast
+                    var toastEl = document.getElementById('toast_proses');
+                    var toast   = new bootstrap.Toast(toastEl, {delay: 3000});
+                    toast.show();
+
+                } else {
+                    // Tampilkan Pesan Kesalahan
+                    $('#NotifikasiExpertiseMultiple').html(
+                        '<div class="alert alert-danger"><small>'+message+'</small></div>'
+                    );
+                }
+            },
+            error: function(xhr){
+                console.log(xhr.responseText);
+
+                $('#NotifikasiExpertiseMultiple').html(
+                    '<div class="alert alert-danger"><small>Terjadi kesalahan sistem</small></div>'
+                );
+            }
+        });
+    });
+
+    // Modal Pengisian Expertise
     $(document).on('click', '.modal_expertise', function () {
 
         var id_radiologi = $(this).data('id_radiologi');
@@ -2450,7 +2598,7 @@ $(document).ready(function() {
     */
 
     // Modal Ubah Waktu Pelayanan
-     $(document).on('click', '.modal_ubah_waktu_pelayanan', function () {
+    $(document).on('click', '.modal_ubah_waktu_pelayanan', function () {
 
         var kolom        = $(this).data('kolom');
         var id_radiologi = $(this).data('id');
@@ -2524,6 +2672,51 @@ $(document).ready(function() {
                 $('#NotifikasiWaktuPelayanan').html(
                     '<div class="alert alert-danger"><small>Terjadi kesalahan sistem</small></div>'
                 );
+            }
+        });
+    });
+
+    /*
+    ===================================================================================
+    CETAK HASIL
+    ===================================================================================
+    */
+    $(document).on('click', '.modal_cetak_laporan', function () {
+
+        var id_radiologi = $(this).data('id');
+
+        // Tampilkan Modal
+        $('#ModalCetakHasil').modal('show');
+
+        // Tampilkan Loading
+        $('#FormCetakHasil').html('Loading...');
+
+        $.ajax({
+            type  : 'POST',
+            url   : '_Page/Pemeriksaan/FormCetakHasil.php',
+            data  : {id_radiologi: id_radiologi},
+            success: function(data){
+                $('#FormCetakHasil').html(data);
+            }
+        });
+    });
+
+    $(document).on('click', '.modal_cetak_laporan2', function () {
+
+        var ProsesDetail = $('#ProsesDetail').serialize();
+
+        // Tampilkan Modal
+        $('#ModalCetakHasil').modal('show');
+
+        // Tampilkan Loading
+        $('#FormCetakHasil').html('Loading...');
+
+        $.ajax({
+            type  : 'POST',
+            url   : '_Page/Pemeriksaan/FormCetakHasil.php',
+            data  : ProsesDetail,
+            success: function(data){
+                $('#FormCetakHasil').html(data);
             }
         });
     });

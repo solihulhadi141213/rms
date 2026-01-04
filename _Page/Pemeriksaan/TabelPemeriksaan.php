@@ -178,8 +178,8 @@
             if($status_pemeriksaan=="Dikerjakan"){
                 $tombol_lanjutan = '
                     <li>
-                        <a class="dropdown-item modal_pengisian_expertise" href="javascript:void(0)" data-id="'.$id_radiologi .'">
-                            <i class="bi bi-clipboard-check"></i> Pengisian Expertise
+                        <a class="dropdown-item text-success modal_expertise_multiple" href="javascript:void(0)" data-id="'.$id_radiologi .'">
+                            <i class="bi bi-clipboard-check"></i> Expertise
                         </a>
                     </li>
                 ';
@@ -187,8 +187,13 @@
                 if($status_pemeriksaan=="Hasil"){
                     $tombol_lanjutan = '
                         <li>
-                            <a class="dropdown-item modal_cetak_laporan" href="javascript:void(0)" data-id="'.$id_radiologi .'">
-                                <i class="bi bi-printer"></i> Cetak Laporan
+                            <a class="dropdown-item modal_expertise_multiple" href="javascript:void(0)" data-id="'.$id_radiologi .'">
+                                <i class="bi bi-clipboard-check"></i> Expertise
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item text-success modal_cetak_laporan" href="javascript:void(0)" data-id="'.$id_radiologi .'">
+                                <i class="bi bi-printer"></i> Cetak
                             </a>
                         </li>
                     ';
@@ -197,7 +202,7 @@
                         $tombol_lanjutan = '
                             <li>
                                 <a class="dropdown-item modal_cetak_laporan" href="javascript:void(0)" data-id="'.$id_radiologi .'">
-                                    <i class="bi bi-printer"></i> Cetak Laporan
+                                    <i class="bi bi-printer"></i> Cetak
                                 </a>
                             </li>
                         ';
@@ -439,9 +444,14 @@
                 </td>
                 <td class="text-center">'.$pacs_label.'</td>
                 <td class="text-center">
-                    <span class="badge bg-'.$badge_class.'" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="'.$status_pemeriksaan.'">
-                        '.$label_status.'
-                    </span>
+                    <a href="javascript:void(0);" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="badge bg-'.$badge_class.'" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="'.$status_pemeriksaan.'">
+                            '.$label_status.'
+                        </span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow" style="">
+                        '.$tombol_lanjutan.'
+                    </ul>
                 </td>
                 <td class="text-center">
                     <button type="button" class="btn btn-sm btn-outline-dark btn-floating"  data-bs-toggle="dropdown" aria-expanded="false">

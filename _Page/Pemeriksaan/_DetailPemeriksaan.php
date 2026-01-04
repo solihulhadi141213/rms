@@ -248,7 +248,7 @@
         <button type="button" class="btn btn-md btn-floating btn-outline-dark reload_detail">
             <i class="bi bi-repeat"></i>
         </button>
-        <button type="button" class="btn btn-md btn-floating btn-primary">
+        <button type="button" class="btn btn-md btn-floating btn-primary modal_cetak_laporan2">
             <i class="bi bi-printer"></i>
         </button>
     </div>
