@@ -1263,7 +1263,7 @@
             return '-';
         }
 
-        // Hilangkan teks WIB
+        // Hilangkan teks WIB jika ada
         $waktuAwal  = str_replace(' WIB', '', $waktuAwal);
         $waktuAkhir = str_replace(' WIB', '', $waktuAkhir);
 
@@ -1275,14 +1275,29 @@
             return '-';
         }
 
-        $diff = $start->diff($end);
-
-        // Format durasi
-        if ($diff->h > 0) {
-            return $diff->h . ' jam ' . $diff->i . ' menit';
+        // Jika waktu akhir lebih kecil dari awal
+        if ($end < $start) {
+            return '-';
         }
 
-        return $diff->i . ' menit';
+        $diff = $start->diff($end);
+
+        $hari  = $diff->d;
+        $jam   = $diff->h;
+        $menit = $diff->i;
+
+        // ≥ 1 hari
+        if ($hari > 0) {
+            return $hari . ' d, ' . $jam . ' h, ' . $menit . ' m';
+        }
+
+        // < 1 hari & ≥ 1 jam
+        if ($jam > 0) {
+            return $jam . ' h, ' . $menit . ' m';
+        }
+
+        // < 1 jam
+        return $menit . ' m';
     }
 
 

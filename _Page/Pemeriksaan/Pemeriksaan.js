@@ -2307,6 +2307,9 @@ $(document).ready(function() {
                     // Reload detail pemeriksaan
                     ShowDetailPemeriksaan();
 
+                    // Tampilkan Ulang Tabel
+                    ShowTablePemeriksaan();
+
                     // Toast Proses Berhasil
                     $('#put_message').html('<i class="bi bi-check-circle me-2"></i> ' + message);
 
@@ -2434,6 +2437,91 @@ $(document).ready(function() {
                 console.log(xhr.responseText);
 
                 $('#NotifikasiHapusExpertisePacs').html(
+                    '<div class="alert alert-danger"><small>Terjadi kesalahan sistem</small></div>'
+                );
+            }
+        });
+    });
+
+    /*
+    ===================================================================================
+    WAKTU PELAYANAN
+    ===================================================================================
+    */
+
+    // Modal Ubah Waktu Pelayanan
+     $(document).on('click', '.modal_ubah_waktu_pelayanan', function () {
+
+        var kolom        = $(this).data('kolom');
+        var id_radiologi = $(this).data('id');
+
+        // Kosongkan Notifikasi
+        $('#NotifikasiWaktuPelayanan').html('');
+
+        // Tampilkan Modal
+        $('#ModalWaktuPelayanan').modal('show');
+
+        // Tampilkan Loading
+        $('#FormWaktuPelayanan').html('Loading...');
+
+        $.ajax({
+            type  : 'POST',
+            url   : '_Page/Pemeriksaan/FormWaktuPelayanan.php',
+            data  : {kolom: kolom, id_radiologi: id_radiologi},
+            success: function(data){
+                $('#FormWaktuPelayanan').html(data);
+            }
+        });
+    });
+
+    // Proses Update Waktu Pelayanan
+    $('#ProsesWaktuPelayanan').submit(function(e){
+        e.preventDefault();
+        var formData = $(this).serialize();
+        $('#NotifikasiWaktuPelayanan').html('<small class="text-muted">Menyimpan data...</small>');
+
+        $.ajax({
+            type     : 'POST',
+            url      : '_Page/Pemeriksaan/ProsesWaktuPelayanan.php',
+            dataType : 'json',
+            data     : formData,
+            success  : function(response){
+                var status  = response.status;
+                var message = response.message || 'Proses berhasil';
+
+                if(status === 'success'){
+
+                    // Bersihkan notifikasi
+                    $('#NotifikasiWaktuPelayanan').html('');
+
+                    // Tutup modal jika ada
+                    $('#ModalWaktuPelayanan').modal('hide');
+
+                    // Reload detail pemeriksaan
+                    ShowDetailPemeriksaan();
+
+                    // Tampilkan Ulang Tabel
+                    ShowTablePemeriksaan();
+
+                    // Toast Proses Berhasil
+                    $('#put_message').html('<i class="bi bi-check-circle me-2"></i> ' + message);
+
+                    // Tampilkan Toast
+                    var toastEl = document.getElementById('toast_proses');
+                    var toast   = new bootstrap.Toast(toastEl, {delay: 3000});
+                    toast.show();
+
+                } else {
+                    // Tampilkan Pesan Kesalahan
+                    $('#NotifikasiWaktuPelayanan').html(
+                        '<div class="alert alert-danger"><small>'+message+'</small></div>'
+                    );
+                }
+            },
+            error: function(xhr){
+                console.log(xhr.responseText);
+
+                $('#NotifikasiWaktuPelayanan').html(
                     '<div class="alert alert-danger"><small>Terjadi kesalahan sistem</small></div>'
                 );
             }

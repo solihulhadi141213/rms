@@ -64,10 +64,42 @@
         );
         
         if($stmt->execute()){
-            echo json_encode([
-                'status' => 'success',
-                'message' => 'Expertise berhasil ditambahkan!'
-            ]);
+
+            // Jika Berhasil Cek Status Radiologi
+            $status_pemeriksaan = GetDetailData($Conn, 'radiologi', 'id_radiologi', $id_radiologi, 'status_pemeriksaan');
+
+            // Apabila Statusnya 'Dikerjakan' maka lakukan UPDATE
+            if($status_pemeriksaan=="Dikerjakan"){
+                
+                // Update Status Pemeriksaan
+                $datetime_hasil     = date('Y-m-d H:i:s');
+                $status_pemeriksaan = "Hasil";
+                $update_radiologi   = $Conn->prepare("UPDATE radiologi SET datetime_hasil = ?, status_pemeriksaan = ? WHERE id_radiologi = ?");
+                $update_radiologi->bind_param("ssi", $datetime_hasil, $status_pemeriksaan, $id_radiologi);
+                $update_radiologi_executed = $update_radiologi->execute();
+                if (!$update_radiologi_executed) {
+                    // Jika Terjadi kesalahan pada saat Update
+                    echo json_encode([
+                        'status' => 'error',
+                        'message' => 'Database update failed: '.$Conn->error.''
+                    ]);
+                }
+
+                $update_radiologi->close();
+
+                // Jika Tidak Maka Tampilkan Notif Berhasil
+                echo json_encode([
+                    'status' => 'success',
+                    'message' => 'Expertise berhasil ditambahkan dan status permintaan berhasil diperbaharui!'
+                ]);
+
+            }else{
+                // Jika Tidak Maka Tampilkan Notif Berhasil
+                echo json_encode([
+                    'status' => 'success',
+                    'message' => 'Expertise berhasil ditambahkan!'
+                ]);
+            }
         } else {
 
             // Jika Gagal Insert
@@ -94,13 +126,42 @@
                 'message' => 'Database update failed: '.$Conn->error.''
             ]);
         }
-
         $update->close();
 
-        echo json_encode([
-            'status' => 'success',
-            'message' => 'Expertise berhasil ditambahkan!'
-        ]);
+        // Jika Berhasil Cek Status Radiologi
+        $status_pemeriksaan = GetDetailData($Conn, 'radiologi', 'id_radiologi', $id_radiologi, 'status_pemeriksaan');
+
+        // Apabila Statusnya 'Dikerjakan' maka lakukan UPDATE
+        if($status_pemeriksaan=="Dikerjakan"){
+            
+            // Update Status Pemeriksaan
+            $datetime_hasil     = date('Y-m-d H:i:s');
+            $status_pemeriksaan = "Hasil";
+            $update_radiologi   = $Conn->prepare("UPDATE radiologi SET datetime_hasil = ?, status_pemeriksaan = ? WHERE id_radiologi = ?");
+            $update_radiologi->bind_param("ssi", $datetime_hasil, $status_pemeriksaan, $id_radiologi);
+            $update_radiologi_executed = $update_radiologi->execute();
+            if (!$update_radiologi_executed) {
+                // Jika Terjadi kesalahan pada saat Update
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'Database update failed: '.$Conn->error.''
+                ]);
+            }
+            $update->close();
+
+            // Jika Tidak Maka Tampilkan Notif Berhasil
+            echo json_encode([
+                'status' => 'success',
+                'message' => 'Expertise berhasil ditambahkan dan status permintaan berhasil diperbaharui!'
+            ]);
+
+        }else{
+            // Jika Tidak Maka Tampilkan Notif Berhasil
+            echo json_encode([
+                'status' => 'success',
+                'message' => 'Expertise berhasil ditambahkan!'
+            ]);
+        }
     }
 
 ?>

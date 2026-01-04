@@ -415,19 +415,33 @@
         <!-- C. INFORMASI WAKTU PELAYANAN -->
          <?php
             $durasi_1 = hitungDurasi($datetime_diminta, $datetime_dikerjakan);
-            $durasi_2 = hitungDurasi($datetime_dikerjakan, $datetime_hasil);
-            $durasi_3 = hitungDurasi($datetime_hasil, $datetime_selesai);
+            $durasi_2 = hitungDurasi($datetime_diminta, $datetime_hasil);
+            $durasi_3 = hitungDurasi($datetime_diminta, $datetime_selesai);
+
+            // Menghitung Durasi Total
+            if($datetime_diminta=="-"){
+                $durasi_total = "-";
+            }else{
+                 if($datetime_dikerjakan=="-"){
+                    $durasi_total = "0 m";
+                }else{
+                    if($datetime_hasil=="-"){
+                        $durasi_total = hitungDurasi($datetime_diminta, $datetime_dikerjakan);
+                    }else{
+                        if($datetime_selesai=="-"){
+                            $durasi_total = hitungDurasi($datetime_diminta, $datetime_hasil);
+                        }else{
+                            $durasi_total = hitungDurasi($datetime_diminta, $datetime_selesai);
+                        }
+                    }
+                }
+            }
          ?>
         <div class="card">
             <div class="card-header">
                 <div class="row">
-                    <div class="col-10">
+                    <div class="col-12">
                         <b class="card-title">C. Waktu Pelayanan</b>
-                    </div>
-                    <div class="col-2 text-end">
-                        <button type="button" class="btn btn-sm btn-floating btn-secondary">
-                            <i class="bi bi-pencil"></i>
-                        </button>
                     </div>
                 </div>
             </div>
@@ -438,34 +452,63 @@
                             <tr>
                                 <td class="text-center"><b>No</b></td>
                                 <td><b>Keterangan</b></td>
-                                <td><b>Jam</b></td>
+                                <td><b>Tanggl/Jam</b></td>
                                 <td class="text-center"><b>Durasi</b></td>
+                                <td class="text-center"><b>Opsi</b></td>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td class="text-center">1</td>
-                                <td>Permintaan Radiologi</td>
-                                <td class="text-grayish"><?php echo $datetime_diminta; ?></td>
-                                <td class="text-center text-grayish">0</td>
+                                <td><small>Permintaan Radiologi</small></td>
+                                <td class="text-grayish"><small><?php echo $datetime_diminta; ?></small></td>
+                                <td class="text-center text-grayish"><small>0 m</small></td>
+                                <td class="text-center">
+                                    <a href="javascript:void(0);" class="btn btn-sm btn-secondary btn-floating modal_ubah_waktu_pelayanan" data-kolom="datetime_diminta" data-id="<?php echo $id_radiologi; ?>">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                </td>
                             </tr>
                             <tr>
                                 <td class="text-center">2</td>
-                                <td>Permintaan Dikerjakan</td>
-                                <td class="text-grayish"><?php echo $datetime_dikerjakan; ?></td>
-                                <td class="text-center text-grayish"><?php echo $durasi_1; ?></td>
+                                <td><small>Permintaan Dikerjakan</small></td>
+                                <td class="text-grayish"><small><?php echo $datetime_dikerjakan; ?></small></td>
+                                <td class="text-center text-grayish"><small><?php echo $durasi_1; ?></small></td>
+                                <td class="text-center">
+                                    <a href="javascript:void(0);" class="btn btn-sm btn-secondary btn-floating modal_ubah_waktu_pelayanan" data-kolom="datetime_dikerjakan" data-id="<?php echo $id_radiologi; ?>">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                </td>
                             </tr>
                             <tr>
                                 <td class="text-center">3</td>
-                                <td>Pembuatan Hasil</td>
-                                <td class="text-grayish"><?php echo $datetime_hasil; ?></td>
-                                <td class="text-center text-grayish"><?php echo $durasi_2; ?></td>
+                                <td><small>Pembuatan Hasil</small></td>
+                                <td class="text-grayish"><small><?php echo $datetime_hasil; ?></small></td>
+                                <td class="text-center text-grayish"><small><?php echo $durasi_2; ?></small></td>
+                                <td class="text-center">
+                                    <a href="javascript:void(0);" class="btn btn-sm btn-secondary btn-floating modal_ubah_waktu_pelayanan" data-kolom="datetime_hasil" data-id="<?php echo $id_radiologi; ?>">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                </td>
                             </tr>
                             <tr>
-                                <td class="text-center">4</td>
-                                <td>Penyerahan Hasil</td>
-                                <td class="text-grayish"><?php echo $datetime_selesai; ?></td>
-                                <td class="text-center text-grayish"><?php echo $durasi_3; ?></td>
+                                <td class="text-center">3</td>
+                                <td><small>Penyerahan Hasil</small></td>
+                                <td class="text-grayish"><small><?php echo $datetime_selesai; ?></small></td>
+                                <td class="text-center text-grayish"><small><?php echo $durasi_3; ?></small></td>
+                                <td class="text-center">
+                                    <a href="javascript:void(0);" class="btn btn-sm btn-secondary btn-floating modal_ubah_waktu_pelayanan" data-kolom="datetime_selesai" data-id="<?php echo $id_radiologi; ?>">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center"></td>
+                                <td colspan="2">
+                                    <b><small>Total Durasi Pelayanan</small></b>
+                                </td>
+                                <td class="text-center text-grayish"><small><?php echo $durasi_total; ?></small></td>
+                                <td class="text-center"></td>
                             </tr>
                         </tbody>
                     </table>
