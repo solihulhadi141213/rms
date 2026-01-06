@@ -19,6 +19,7 @@
             "KodePemeriksaan"  => "_Page/KodePemeriksaan/KodePemeriksaan.php",
             "Question"         => "_Page/Question/Question.php",
             "Pemeriksaan"      => "_Page/Pemeriksaan/Pemeriksaan.php",
+            "DicomRouter"      => "_Page/DicomRouter/DicomRouter.php",
             "Aktivitas"        => "_Page/Aktivitas/Aktivitas.php",
             "Help"             => "_Page/Help/Help.php",
         ];

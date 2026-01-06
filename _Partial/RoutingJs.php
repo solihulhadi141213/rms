@@ -27,6 +27,7 @@
             "KodePemeriksaan"  => "_Page/KodePemeriksaan/KodePemeriksaan.js",
             "Question"         => "_Page/Question/Question.js",
             "Pemeriksaan"      => "_Page/Pemeriksaan/Pemeriksaan.js",
+            "DicomRouter"      => "_Page/DicomRouter/DicomRouter.js",
             "Aktivitas"        => "_Page/Aktivitas/Aktivitas.js",
             "Help"             => "_Page/Help/Help.js"
         ];

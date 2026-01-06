@@ -18,6 +18,7 @@
             "KodePemeriksaan"  => "_Page/KodePemeriksaan/ModalKodePemeriksaan.php",
             "Question"         => "_Page/Question/ModalQuestion.php",
             "Pemeriksaan"      => "_Page/Pemeriksaan/ModalPemeriksaan.php",
+            "DicomRouter"      => "_Page/DicomRouter/ModalDicomRouter.php",
             "Aktivitas"        => "_Page/Aktivitas/ModalAktivitas.php",
             "Help"             => "_Page/Help/ModalHelp.php"
         ];

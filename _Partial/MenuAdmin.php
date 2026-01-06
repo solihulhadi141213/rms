@@ -113,6 +113,12 @@
         <li class="nav-heading border-1 border-top">
             <div class="mt-3">Fitur Lainnya</div>
         </li>
+         <li class="nav-item">
+            <a class="nav-link <?php if($PageMenu!=="DicomRouter"){echo "collapsed";} ?>" href="index.php?Page=DicomRouter">
+                <i class="bi bi-download"></i>
+                <span>DICOM Router</span>
+            </a>
+        </li>
         <li class="nav-item">
             <a class="nav-link <?php if($PageMenu!=="Aktivitas"){echo "collapsed";} ?>" href="index.php?Page=Aktivitas">
                 <i class="bi bi-circle"></i>
