@@ -8,7 +8,7 @@
     <div class="pagetitle">
         <h1>
             <a href="">
-                <i class="bi bi-list-columns"></i> Kode Klinis</a>
+                <i class="bi bi-clipboard-plus"></i> Kode Klinis</a>
             </a>
         </h1>
         <nav>

@@ -79,22 +79,22 @@
         </li>
         <li class="nav-item">
             <a class="nav-link <?php if($PageMenu=="KodeKlinis"){echo "";}else{echo "collapsed";} ?>" href="index.php?Page=KodeKlinis">
-                <i class="bi bi-list-columns"></i> <span>Kode Klinis</span>
+                <i class="bi bi-clipboard-plus"></i> <span>Kode Klinis</span>
             </a>
         </li>
         <li class="nav-item">
             <a class="nav-link <?php if($PageMenu=="KodePemeriksaan"){echo "";}else{echo "collapsed";} ?>" href="index.php?Page=KodePemeriksaan">
-                <i class="bi bi-list-columns"></i> <span>Kode Pemeriksaan</span>
+                <i class="bi bi-code-square"></i> <span>Kode Pemeriksaan</span>
             </a>
         </li>
         <li class="nav-item">
             <a class="nav-link <?php if($PageMenu=="Tarif"){echo "";}else{echo "collapsed";} ?>" href="index.php?Page=Tarif">
-                <i class="bi bi-list-columns"></i> <span>Tarif Layanan</span>
+                <i class="bi bi-tags"></i> <span>Tarif Layanan</span>
             </a>
         </li>
         <li class="nav-item">
             <a class="nav-link <?php if($PageMenu=="Question"){echo "";}else{echo "collapsed";} ?>" href="index.php?Page=Question">
-                <i class="bi bi-list-columns"></i> <span>Daftar Pertanyaan</span>
+                <i class="bi bi-question-octagon"></i> <span>Daftar Pertanyaan</span>
             </a>
         </li>
         <li class="nav-heading border-1 border-top">

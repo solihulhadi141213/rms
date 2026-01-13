@@ -8,7 +8,7 @@
     <div class="pagetitle">
         <h1>
             <a href="">
-                <i class="bi bi-tags"></i> Tarif Layanan</a>
+                <i class="bi bi-tags"></i> Tarif Layanan
             </a>
         </h1>
         <nav>

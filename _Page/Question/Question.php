@@ -8,7 +8,7 @@
     <div class="pagetitle">
         <h1>
             <a href="">
-                <i class="bi bi-list-columns"></i> Daftar Pertanyaan</a>
+                <i class="bi bi-question-octagon"></i> Daftar Pertanyaan
             </a>
         </h1>
         <nav>

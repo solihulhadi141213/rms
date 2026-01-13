@@ -8,7 +8,7 @@
     <div class="pagetitle">
         <h1>
             <a href="">
-                <i class="bi bi-list-columns"></i> Kode Pemeriksaan</a>
+                <i class="bi bi-code-square"></i> Kode Pemeriksaan</a>
             </a>
         </h1>
         <nav>
