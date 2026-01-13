@@ -199,6 +199,8 @@ $versionId   = $data['meta']['versionId'] ?? '-';
             <?php endforeach; ?>
         </tbody>
     </table>
+
+    <textarea name="" id="" class="form-control"><?php echo $response; ?></textarea>
 <?php else: ?>
     <div class="alert alert-warning">
         Tidak ada data series.

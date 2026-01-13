@@ -25,6 +25,7 @@
             "ApiKey"           => "_Page/ApiKey/ApiKey.js",
             "KodeKlinis"       => "_Page/KodeKlinis/KodeKlinis.js",
             "KodePemeriksaan"  => "_Page/KodePemeriksaan/KodePemeriksaan.js",
+            "Tarif"            => "_Page/Tarif/Tarif.js",
             "Question"         => "_Page/Question/Question.js",
             "Pemeriksaan"      => "_Page/Pemeriksaan/Pemeriksaan.js",
             "DicomRouter"      => "_Page/DicomRouter/DicomRouter.js",

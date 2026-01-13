@@ -32,7 +32,7 @@
 
     // Ambil data dari form
     $id_kunjungan = validateAndSanitizeInput($_POST['id_kunjungan']);
-    $id_access = $SessionIdAccess;
+    $id_access    = $SessionIdAccess;
 
     // 1. Dapatkan Data Kunjungan dari API SIMRS
     $status_connection_simrs = 1;
@@ -76,16 +76,18 @@
         exit;
     }
 
-    $metadata = $data_kunjungan['metadata'];
-    $id_pasien = $metadata['pasien']['id_pasien'] ?? '';
-    $tujuan = $metadata['tujuan'] ?? '';
+    $metadata   = $data_kunjungan['metadata'];
+    $id_pasien  = $metadata['pasien']['id_pasien'] ?? '';
+    $tujuan     = $metadata['tujuan'] ?? '';
     $pembayaran = $metadata['pembayaran'] ?? '';
 
+    // Tangkap Informasi Modalitas
+    // Ambil data alat pemeriksa
+    $alat_pemeriksa = validateAndSanitizeInput($_POST['alat_pemeriksa'] ?? '');
     // 2. Generate Accession Number
-    $date = date('Ymd');
-    $time = date('His');
-    $random = str_pad(rand(0, 9999), 4, '0', STR_PAD_LEFT);
-    $accession_number = "RAD-{$date}-{$time}-{$random}";
+    $micro = microtime(true);
+    $number = substr(str_replace('.', '', $micro), -6);
+    $accession_number = "{$alat_pemeriksa}-{$number}";
 
     // 3. Ambil Data Dokter Pengirim
     if(!empty($_POST['dokter_pengirim'])){
@@ -180,8 +182,7 @@
     if(!empty($_POST['permintaan_pemeriksaan'])){
         $pemeriksaan_input = is_array($_POST['permintaan_pemeriksaan']) ? $_POST['permintaan_pemeriksaan'] : explode(',', $_POST['permintaan_pemeriksaan']);
         
-        // Ambil data alat pemeriksa
-        $alat_pemeriksa = validateAndSanitizeInput($_POST['alat_pemeriksa'] ?? '');
+        
         
         foreach($pemeriksaan_input as $nama_pemeriksaan){
             $nama_pemeriksaan = validateAndSanitizeInput($nama_pemeriksaan);

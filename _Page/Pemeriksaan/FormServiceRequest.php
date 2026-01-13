@@ -266,6 +266,15 @@
                 <small class="text text-grayish">Jika terisi maka sistem akan melakukan uptdae berdasarkan ID service request tersebut</small>
             </div>
         </div>
+        <div class="row mb-2">
+            <div class="col-4">
+                <label for="accession_number"><small>Accession Number</small></label>
+            </div>
+            <div class="col-1"><small>:</small></div>
+            <div class="col-7">
+                <input type="text" name="accession_number" id="accession_number" class="form-control" value="'.$accession_number.'">
+            </div>
+        </div>
     ';
     echo '
         <div class="row mb-2">

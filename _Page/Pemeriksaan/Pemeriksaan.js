@@ -1776,6 +1776,29 @@ $(document).ready(function() {
         });
     });
 
+    // Modal Cetak Nota Tagihan 'modal_cetak_tagihan'
+    $(document).on('click', '.modal_cetak_tagihan', function () {
+
+        //tangkap data 'id_radiologi' dan buat variabel
+        var id_radiologi   = $(this).data('id');
+
+        //tampilkan modal
+        $('#ModalCetakNota').modal('show');
+
+        //Form Loading
+        $('#FormCetakNota').html('Loading...');
+
+        //Tampilkan Form Dengan Ajax
+        $.ajax({
+            type 	    : 'POST',
+            url 	    : '_Page/Pemeriksaan/FormCetakNota.php',
+            data        : {id_radiologi: id_radiologi},
+            success     : function(data){
+                $('#FormCetakNota').html(data);
+            }
+        });
+    });
+
     // Ketika Modal Edit Tagihan Muncul
     $(document).on('click', '.modal_edit_nota', function () {
 

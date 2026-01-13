@@ -16,6 +16,7 @@
             "ApiKey"           => "_Page/ApiKey/ModalApiKey.php",
             "KodeKlinis"       => "_Page/KodeKlinis/ModalKodeKlinis.php",
             "KodePemeriksaan"  => "_Page/KodePemeriksaan/ModalKodePemeriksaan.php",
+            "Tarif"            => "_Page/Tarif/ModalTarif.php",
             "Question"         => "_Page/Question/ModalQuestion.php",
             "Pemeriksaan"      => "_Page/Pemeriksaan/ModalPemeriksaan.php",
             "DicomRouter"      => "_Page/DicomRouter/ModalDicomRouter.php",

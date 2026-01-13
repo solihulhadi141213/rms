@@ -209,4 +209,8 @@
         row('Pelaksana', '-');
     }
 
+    echo '
+        <textarea class="form-control">'.$response.'</textarea>
+    ';
+
 ?>

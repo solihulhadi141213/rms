@@ -758,7 +758,7 @@
                                 <td><b>Uraian</b></td>
                                 <td class="text-end"><b>Tarif</b></td>
                                 <td class="text-center"><b>Qty</b></td>
-                                <td class="text-end"><b>Tarif</b></td>
+                                <td class="text-end"><b>Jumlah</b></td>
                                 <td class="text-center"><b>Opsi</b></td>
                             </tr>
                         </thead>

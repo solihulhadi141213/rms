@@ -55,7 +55,7 @@
         ]);
         exit;
     }
-
+    $organization_id = $Data['organization_id'];
     $url_api             = rtrim($Data['url_connection_satu_sehat'], '/');
     $url_service_request = $url_api . "/fhir-r4/v1/ServiceRequest";
 
@@ -101,6 +101,7 @@
     // ======================================================
     $requiredFields = [
         'status',
+        'accession_number',
         'intent',
         'priority',
         'category_system',
@@ -195,6 +196,10 @@
             "reference" => "Practitioner/" . getPost('requester_reference'),
             "display"   => getPost('requester_display')
         ]],
+        "identifier" => [[
+            "system" => "http://sys-ids.kemkes.go.id/acsn/$organization_id",
+            "value"  => getPost('accession_number')
+        ]]
         
     ];
     if(!empty($_POST['reasonCode_text'])){
