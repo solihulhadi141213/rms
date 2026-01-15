@@ -1176,6 +1176,72 @@ MODAL DETAIL ACCESSION NUMBER
         </div>
     </div>
 </div>
+<div class="modal fade" id="ModalImagingStudyByAccessionNumber" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-dark"><i class="bi bi-info-circle"></i> Imaging Study By ACN</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12" id="FormImagingStudyByAccessionNumber">
+                        <!-- Form Akan Muncul Disini -->
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-rounded" data-bs-dismiss="modal">
+                    <i class="bi bi-x-circle"></i> Tutup
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="ModalDicomMetadataByAcn" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-dark"><i class="bi bi-info-circle"></i> Dicom Metadata By ACN</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12" id="FormDicomMetadataByAcn">
+                        <!-- Form Akan Muncul Disini -->
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-rounded" data-bs-dismiss="modal">
+                    <i class="bi bi-x-circle"></i> Tutup
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="ModalExpertiseByAcn" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-dark"><i class="bi bi-info-circle"></i> Expertise By ACN</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12" id="FormExpertiseByAcn">
+                        <!-- Form Akan Muncul Disini -->
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-rounded" data-bs-dismiss="modal">
+                    <i class="bi bi-x-circle"></i> Tutup
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- 
 ============================== 

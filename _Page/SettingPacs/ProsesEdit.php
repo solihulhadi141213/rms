@@ -20,6 +20,7 @@ if (empty($SessionIdAccess)) {
 $id_connection_pacs       = validateAndSanitizeInput($_POST['id_connection_pacs'] ?? '');
 $name_connection_pacs     = validateAndSanitizeInput($_POST['name_connection_pacs'] ?? '');
 $url_connection_pacs      = validateAndSanitizeInput($_POST['url_connection_pacs'] ?? '');
+$url_pacs                 = validateAndSanitizeInput($_POST['url_pacs'] ?? '');
 $username_connection_pacs = validateAndSanitizeInput($_POST['username_connection_pacs'] ?? '');
 $password_connection_pacs = validateAndSanitizeInput($_POST['password_connection_pacs'] ?? '');
 $status_connection_pacs   = validateAndSanitizeInput($_POST['status_connection_pacs'] ?? '');
@@ -75,11 +76,12 @@ try {
     // UPDATE utama (❗ HAPUS datetime_update JIKA TIDAK ADA)
     $QryUpdate = $Conn->prepare("
         UPDATE connection_pacs SET
-            name_connection_pacs   = ?,
-            url_connection_pacs    = ?,
+            name_connection_pacs     = ?,
+            url_connection_pacs      = ?,
+            url_pacs                 = ?,
             username_connection_pacs = ?,
             password_connection_pacs = ?,
-            status_connection_pacs = ?
+            status_connection_pacs   = ?
         WHERE id_connection_pacs = ?
     ");
 
@@ -88,9 +90,10 @@ try {
     }
 
     $QryUpdate->bind_param(
-        "ssssii",
+        "sssssii",
         $name_connection_pacs,
         $url_connection_pacs,
+        $url_pacs,
         $username_connection_pacs,
         $password_connection_pacs,
         $status_connection_pacs,

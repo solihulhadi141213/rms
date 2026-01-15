@@ -23,9 +23,17 @@
                     <div class="row mb-3">
                         <div class="col-md-12">
                             <label for="url_connection_pacs">
-                                <small>URL PACS</small>
+                                <small>URL API</small>
                             </label>
                             <input type="url" class="form-control" name="url_connection_pacs" id="url_connection_pacs" placeholder="https://" required>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <label for="url_pacs">
+                                <small>URL PACS</small>
+                            </label>
+                            <input type="url" class="form-control" name="url_pacs" id="url_pacs" placeholder="https://" required>
                         </div>
                     </div>
                     <div class="row mb-3">

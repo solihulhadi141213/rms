@@ -963,9 +963,29 @@
                             <tr>
                                 <td><i>Accession Number</i></td>
                                 <td>
-                                    <a href="javascript:void(0);" class="underscore_doted modal_detail_acn" data-id="<?php echo $accession_number; ?>">
+                                    <a href="javascript:void(0);" class="underscore_doted" data-bs-toggle="dropdown" aria-expanded="false">
                                         <?php echo $accession_number; ?>
                                     </a>
+                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                         <li class="dropdown-header text-start">
+                                            <h6>Option</h6>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);" class="dropdown-item modal_imaging_study_by_acn" data-id="<?php echo $accession_number; ?>">
+                                                1. Imaging Study By ACN
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);" class="dropdown-item modal_dicom_metadata_by_acn" data-id="<?php echo $accession_number; ?>">
+                                                2. DICOM Metadata By ACN
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);" class="dropdown-item modal_expertise_by_acn" data-id="<?php echo $accession_number; ?>">
+                                                3. Expertise By ACN
+                                            </a>
+                                        </li>
+                                    </ul>
                                 </td>
                             </tr>
                             <tr>
@@ -986,7 +1006,7 @@
                             </tr>
                             <tr>
                                 <td>Pesan</td>
-                                <td class="text text-danger"><span>"<?php echo $pesan; ?>"</span></td>
+                                <td class="text text-danger"><span><?php echo $pesan; ?></span></td>
                             </tr>
                             <tr>
                                 <td>Status</td>
@@ -1404,7 +1424,7 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col-12">
-                        <b class="card-title">J. Expertise</b>
+                        <b class="card-title">J. Expertise (SIMRS)</b>
                     </div>
                 </div>
             </div>

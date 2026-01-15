@@ -53,6 +53,7 @@
         $id_connection_pacs       = $Data['id_connection_pacs'];
         $name_connection_pacs     = $Data['name_connection_pacs'];
         $url_connection_pacs      = $Data['url_connection_pacs'];
+        $url_pacs                 = $Data['url_pacs'];
         $username_connection_pacs = $Data['username_connection_pacs'];
         $password_connection_pacs = $Data['password_connection_pacs'];
         $status_connection_pacs   = $Data['status_connection_pacs'];
@@ -74,12 +75,27 @@
         }else{
             echo '
                 <div class="row mb-2">
-                    <div class="col-4"><small>URL PACS</small></div>
+                    <div class="col-4"><small>URL API</small></div>
                     <div class="col-1"><small>:</small></div>
                     <div class="col-7">
                         <div class="copy-wrapper">
                             <small class="text text-grayish text-long" id="url_simrs">
                                 '.$url_connection_pacs.'
+                            </small>
+                            <i class="bi bi-clipboard copy-btn"
+                            onclick="copyText(\'url_simrs\')"
+                            title="Copy"></i>
+                        </div>
+                    </div>
+                </div>
+
+                 <div class="row mb-2">
+                    <div class="col-4"><small>URL PACS</small></div>
+                    <div class="col-1"><small>:</small></div>
+                    <div class="col-7">
+                        <div class="copy-wrapper">
+                            <small class="text text-grayish text-long" id="url_simrs">
+                                '.$url_pacs.'
                             </small>
                             <i class="bi bi-clipboard copy-btn"
                             onclick="copyText(\'url_simrs\')"

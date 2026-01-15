@@ -28,6 +28,10 @@
         ? trim(htmlspecialchars($_POST['url_connection_pacs'])) 
         : '';
 
+    $url_pacs = isset($_POST['url_pacs']) 
+    ? trim(htmlspecialchars($_POST['url_pacs'])) 
+    : '';
+
     $username_connection_pacs = isset($_POST['username_connection_pacs']) 
         ? trim(htmlspecialchars($_POST['username_connection_pacs'])) 
         : '';
@@ -63,6 +67,14 @@
 
     // 2. URL PACS
     if ($url_connection_pacs == '') {
+        echo json_encode([
+            'status' => 'error',
+            'message' => 'URL API tidak boleh kosong!'
+        ]);
+        exit;
+    }
+
+    if ($url_pacs == '') {
         echo json_encode([
             'status' => 'error',
             'message' => 'URL PACS tidak boleh kosong!'
@@ -117,11 +129,12 @@
             (
                 name_connection_pacs ,
                 url_connection_pacs ,
+                url_pacs ,
                 username_connection_pacs,
                 password_connection_pacs,
                 status_connection_pacs 
             ) 
-            VALUES (?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?)
         ";
         
         $stmt_insert = $Conn->prepare($sql_insert);
@@ -131,9 +144,10 @@
         }
         
         $stmt_insert->bind_param(
-            "ssssi",
+            "sssssi",
             $name_connection_pacs ,
             $url_connection_pacs ,
+            $url_pacs ,
             $username_connection_pacs,
             $password_connection_pacs,
             $status_connection_pacs 

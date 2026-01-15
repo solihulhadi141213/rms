@@ -2854,6 +2854,76 @@ $(document).ready(function() {
             }
         });
     });
+    $(document).on('click', '.modal_imaging_study_by_acn', function () {
+
+        //tangkap data 'accession_number' dan buat variabel
+        var accession_number   = $(this).data('id');
+
+        //tampilkan modal
+        $('#ModalImagingStudyByAccessionNumber').modal('show');
+
+        //Form Loading
+        $('#FormImagingStudyByAccessionNumber').html('Loading...');
+
+        //Tampilkan Form Dengan Ajax
+        $.ajax({
+            type 	    : 'POST',
+            url 	    : '_Page/Pemeriksaan/FormImagingStudyByAccessionNumber.php',
+            data        : {accession_number: accession_number},
+            success     : function(data){
+                $('#FormImagingStudyByAccessionNumber').html(data);
+                // Re-init tooltip
+                $('[data-bs-toggle="tooltip"]').tooltip();
+            }
+        });
+    });
+    $(document).on('click', '.modal_dicom_metadata_by_acn', function () {
+
+        //tangkap data 'accession_number' dan buat variabel
+        var accession_number   = $(this).data('id');
+
+        //tampilkan modal
+        $('#ModalDicomMetadataByAcn').modal('show');
+
+        //Form Loading
+        $('#FormDicomMetadataByAcn').html('Loading...');
+
+        //Tampilkan Form Dengan Ajax
+        $.ajax({
+            type 	    : 'POST',
+            url 	    : '_Page/Pemeriksaan/FormDicomMetadataByAcn.php',
+            data        : {accession_number: accession_number},
+            success     : function(data){
+                $('#FormDicomMetadataByAcn').html(data);
+                // Re-init tooltip
+                $('[data-bs-toggle="tooltip"]').tooltip();
+            }
+        });
+    });
+    $(document).on('click', '.modal_expertise_by_acn', function () {
+
+        //tangkap data 'accession_number' dan buat variabel
+        var accession_number   = $(this).data('id');
+
+        //tampilkan modal
+        $('#ModalExpertiseByAcn').modal('show');
+
+        //Form Loading
+        $('#FormExpertiseByAcn').html('Loading...');
+
+        //Tampilkan Form Dengan Ajax
+        $.ajax({
+            type 	    : 'POST',
+            url 	    : '_Page/Pemeriksaan/FormExpertiseByAcn.php',
+            data        : {accession_number: accession_number},
+            success     : function(data){
+                $('#FormExpertiseByAcn').html(data);
+                // Re-init tooltip
+                $('[data-bs-toggle="tooltip"]').tooltip();
+            }
+        });
+    });
+
 
     /*
     ===================================================================================

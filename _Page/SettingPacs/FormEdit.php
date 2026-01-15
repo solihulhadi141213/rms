@@ -53,6 +53,7 @@
         $id_connection_pacs       = $Data['id_connection_pacs'];
         $name_connection_pacs     = $Data['name_connection_pacs'];
         $url_connection_pacs      = $Data['url_connection_pacs'];
+        $url_pacs                 = $Data['url_pacs'];
         $username_connection_pacs = $Data['username_connection_pacs'];
         $password_connection_pacs = $Data['password_connection_pacs'];
         $status_connection_pacs   = $Data['status_connection_pacs'];
@@ -92,9 +93,17 @@
                 <div class="row mb-3">
                     <div class="col-md-12">
                         <label for="url_connection_pacs_edit">
-                            <small>URL SIMRS</small>
+                            <small>URL API</small>
                         </label>
                         <input type="url" class="form-control" name="url_connection_pacs" id="url_connection_pacs_edit" placeholder="https://" value="'.$url_connection_pacs.'" required>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <label for="url_pacs_edit">
+                            <small>URL Aplication</small>
+                        </label>
+                        <input type="url" class="form-control" name="url_pacs" id="url_pacs_edit" placeholder="https://" value="'.$url_pacs.'" required>
                     </div>
                 </div>
                 <div class="row mb-3">
