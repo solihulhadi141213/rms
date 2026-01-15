@@ -107,7 +107,12 @@
         </li>
         <li class="nav-item">
             <a class="nav-link <?php if($PageMenu=="Tagihan"){echo "";}else{echo "collapsed";} ?>" href="index.php?Page=Tagihan">
-                <i class="bi bi-receipt-cutoff"></i> <span>Nota Tagihan</span>
+                <i class="bi bi-receipt-cutoff"></i> <span>Tagihan (Invoice)</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link <?php if($PageMenu=="Laporan"){echo "";}else{echo "collapsed";} ?>" href="index.php?Page=Laporan">
+                <i class="bi bi-bar-chart"></i> <span>Laporan</span>
             </a>
         </li>
         <li class="nav-heading border-1 border-top">

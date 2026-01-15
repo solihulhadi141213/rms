@@ -36,6 +36,12 @@ Aplikasi Radix dikembangkan menggunakan teknologi berikut:
 - **Web Server**: Apache 2.4.62.1  
 
 ---
+## Integrasi
+- Orthanc
+- PACS
+- SIMRS (RME)
+- Satu Sehat
+- DCMTK
 
 ## Dependency / Package
 
@@ -53,3 +59,4 @@ Dependency frontend dikelola menggunakan **npm** dengan daftar package berikut:
     "sweetalert2": "^11.17.2"
   }
 }
+

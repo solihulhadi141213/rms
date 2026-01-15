@@ -2828,6 +2828,204 @@ $(document).ready(function() {
         });
     });
 
+    /*
+    ===================================================================================
+    DETAIL ACCESSION NUMBER
+    ===================================================================================
+    */
+    $(document).on('click', '.modal_detail_acn', function () {
+
+        //tangkap data 'accession_number' dan buat variabel
+        var accession_number   = $(this).data('id');
+
+        //tampilkan modal
+        $('#ModalAccessionNumber').modal('show');
+
+        //Form Loading
+        $('#FormAccessionNumber').html('Loading...');
+
+        //Tampilkan Form Dengan Ajax
+        $.ajax({
+            type 	    : 'POST',
+            url 	    : '_Page/Pemeriksaan/FormAccessionNumber.php',
+            data        : {accession_number: accession_number},
+            success     : function(data){
+                $('#FormAccessionNumber').html(data);
+            }
+        });
+    });
+
+    /*
+    ===================================================================================
+    KONVERSI DICOM
+    ===================================================================================
+    */
+    $(document).on('click', '.modal_konversi_dicom', function () {
+
+        //tangkap data 'id_radiologi_file' dan buat variabel
+        var id_radiologi_file   = $(this).data('id');
+
+        //tampilkan modal
+        $('#ModalKonversiDicom').modal('show');
+
+        //Form Loading
+        $('#FormKonversiDicom').html('Loading...');
+
+        // Kosongkan Notifikasi
+        $('#NotifikasiKonversiDicom').html('');
+
+        //Tampilkan Form Dengan Ajax
+        $.ajax({
+            type 	    : 'POST',
+            url 	    : '_Page/Pemeriksaan/FormKonversiDicom.php',
+            data        : {id_radiologi_file: id_radiologi_file},
+            success     : function(data){
+                $('#FormKonversiDicom').html(data);
+            }
+        });
+    });
+
+    // Proses Konversi
+    $('#ProsesKonversiDicom').submit(function(e){
+        e.preventDefault();
+        var formData = $(this).serialize();
+        $('#NotifikasiKonversiDicom').html('<small class="text-muted">Menyimpan data...</small>');
+
+        $.ajax({
+            type     : 'POST',
+            url      : '_Page/Pemeriksaan/ProsesKonversiDicom.php',
+            dataType : 'json',
+            data     : formData,
+            success  : function(response){
+                var status  = response.status;
+                var message = response.message || 'Proses berhasil';
+
+                if(status === 'success'){
+
+                    // Bersihkan notifikasi
+                    $('#NotifikasiKonversiDicom').html('');
+
+                    // Tutup modal jika ada
+                    $('#ModalKonversiDicom').modal('hide');
+
+                    // Reload detail pemeriksaan
+                    ShowDetailPemeriksaan();
+
+                    // Tampilkan Ulang Tabel
+                    ShowTablePemeriksaan();
+
+                    // Toast Proses Berhasil
+                    $('#put_message').html('<i class="bi bi-check-circle me-2"></i> ' + message);
+
+                    // Tampilkan Toast
+                    var toastEl = document.getElementById('toast_proses');
+                    var toast   = new bootstrap.Toast(toastEl, {delay: 3000});
+                    toast.show();
+
+                } else {
+                    // Tampilkan Pesan Kesalahan
+                    $('#NotifikasiKonversiDicom').html(
+                        '<div class="alert alert-danger"><small>'+message+'</small></div>'
+                    );
+                }
+            },
+            error: function(xhr){
+                console.log(xhr.responseText);
+
+                $('#NotifikasiKonversiDicom').html(
+                    '<div class="alert alert-danger"><small>Terjadi kesalahan sistem</small></div>'
+                );
+            }
+        });
+    });
+    $(document).on('click', '.modal_detail_dicom', function () {
+
+        //tangkap data 'id_radiologi_dicom_conv' dan buat variabel
+        var id_radiologi_dicom_conv   = $(this).data('id');
+
+        //tampilkan modal
+        $('#ModalDetailDicom').modal('show');
+
+        //Form Loading
+        $('#FormDetailDicom').html('Loading...');
+
+        //Tampilkan Form Dengan Ajax
+        $.ajax({
+            type 	    : 'POST',
+            url 	    : '_Page/Pemeriksaan/FormDetailDicom.php',
+            data        : {id_radiologi_dicom_conv: id_radiologi_dicom_conv},
+            success     : function(data){
+                $('#FormDetailDicom').html(data);
+            }
+        });
+    });
+
+    $(document).on('click', '.modal_dicom_viewer', function () {
+    
+        //tangkap data 'id_radiologi_dicom_conv' dan buat variabel
+        var id_radiologi_dicom_conv = $(this).data('id');
+        
+        //tampilkan modal
+        $('#ModalDicomViewer').modal('show');
+        
+        //Form Loading dengan spinner
+        $('#FormDicomViewer').html(`
+            <div class="d-flex justify-content-center align-items-center h-100">
+                <div class="text-center">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mt-2">Memuat DICOM Viewer...</p>
+                </div>
+            </div>
+        `);
+        
+        //Tampilkan Form Dengan Ajax
+        $.ajax({
+            type: 'POST',
+            url: '_Page/Pemeriksaan/FormDicomViewer.php',
+            data: {id_radiologi_dicom_conv: id_radiologi_dicom_conv},
+            success: function(data) {
+                $('#FormDicomViewer').html(data);
+                
+                // Set iframe height setelah konten dimuat
+                setTimeout(function() {
+                    adjustIframeHeight();
+                }, 100);
+            },
+            error: function(xhr, status, error) {
+                $('#FormDicomViewer').html(`
+                    <div class="alert alert-danger">
+                        <i class="bi bi-exclamation-triangle"></i> Gagal memuat DICOM Viewer: ${error}
+                    </div>
+                `);
+            }
+        });
+    });
+
+    // Fungsi untuk menyesuaikan tinggi iframe
+    function adjustIframeHeight() {
+        const iframe = $('#FormDicomViewer iframe');
+        if (iframe.length) {
+            const modalHeader = $('#ModalDicomViewer .modal-header').outerHeight() || 56;
+            const modalFooter = $('#ModalDicomViewer .modal-footer').outerHeight() || 72;
+            const windowHeight = $(window).height();
+            const iframeHeight = windowHeight - modalHeader - modalFooter - 40; // 40px untuk padding/margin
+            
+            iframe.css('height', iframeHeight + 'px');
+        }
+    }
+
+    // Handle resize window
+    $(window).on('resize', function() {
+        adjustIframeHeight();
+    });
+
+    // Handle modal shown event
+    $('#ModalDicomViewer').on('shown.bs.modal', function() {
+        adjustIframeHeight();
+    });
+
 
 
 

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>DWV Test</title>
+  <style>
+    html, body { margin:0; padding:0; background:black; }
+    #viewer { width:100vw; height:100vh; }
+  </style>
+</head>
+<body>
+
+<div id="viewer"></div>
+
+<!-- ⚠️ PENTING: TANPA type="module" -->
+<script src="/rms/assets/dwv/dist/dwv.min.js"></script>
+
+<script>
+  console.log('dwv =', window.dwv);
+
+  if (!window.dwv) {
+    alert('DWV TIDAK TERLOAD — FILE SALAH');
+  }
+
+  const app = new dwv.App();
+  app.init({
+    containerDivId: 'viewer'
+  });
+
+  app.loadURLs([
+    'http://localhost/rms/_Page/Pemeriksaan/dicom_file.php?file=11487-26309-YlNIe4.dcm'
+  ]);
+</script>
+
+</body>
+</html>

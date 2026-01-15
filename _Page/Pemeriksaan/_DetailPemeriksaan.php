@@ -962,7 +962,11 @@
                             </tr>
                             <tr>
                                 <td><i>Accession Number</i></td>
-                                <td class="text text-grayish"><?php echo $accession_number; ?></td>
+                                <td>
+                                    <a href="javascript:void(0);" class="underscore_doted modal_detail_acn" data-id="<?php echo $accession_number; ?>">
+                                        <?php echo $accession_number; ?>
+                                    </a>
+                                </td>
                             </tr>
                             <tr>
                                 <td>Tgl/Waktu Permintaan</td>
@@ -1280,7 +1284,7 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col-10">
-                        <b class="card-title">J. File Manual</b>
+                        <b class="card-title">J. File Manual (JPG, PNG, GIF)</b>
                     </div>
                     <div class="col-2 text-end">
                         <button type="button" class="btn btn-sm btn-floating btn-primary modal_upload_file" data-id="<?php echo $id_radiologi; ?>">
@@ -1327,6 +1331,35 @@
 
                                         // Menampilkan data
                                         $dir_file = ''.$app_base_url.'/_Storage/'.$folder_name.'/'.$file_name.'';
+
+                                        // Apakah Sudah Punya File Dicom
+                                        $id_radiologi_dicom_conv = GetDetailData($Conn, 'radiologi_dicom_conv', 'id_radiologi_file', $id_radiologi_file, 'id_radiologi_dicom_conv');
+                                        $dicom_file_name = GetDetailData($Conn, 'radiologi_dicom_conv', 'id_radiologi_file', $id_radiologi_file, 'filename');
+
+                                        // Jika belum Punya File DICOM
+                                        if(empty($id_radiologi_dicom_conv)){
+                                            $dicom_file_name_display = '';
+                                            $tombol_lanjutan = '
+                                                <li>
+                                                    <a class="dropdown-item modal_konversi_dicom" href="javascript:void(0)" data-id="'.$id_radiologi_file .'">
+                                                        <i class="bi bi-arrow-down"></i> DICOM
+                                                    </a>
+                                                </li>
+                                            ';
+                                        }else{
+                                            // Jika Sudah Punya DICOM
+                                            $dicom_file_name_display = '
+                                                <br>
+                                                <small class="text text-grayish">
+                                                    <a href="javascript:void(0);" class="modal_detail_dicom" data-id="'.$id_radiologi_dicom_conv.'">
+                                                        <small class="text text-grayish">
+                                                            <i class="bi bi-arrow-return-right"></i> '.$dicom_file_name.'
+                                                        </small>
+                                                    </a>
+                                                </small>
+                                            ';
+                                            $tombol_lanjutan = '';
+                                        }
                                         echo '
                                             <tr>
                                                 <td class="text-center"><small>'.$no_file.'</small></td>
@@ -1334,13 +1367,25 @@
                                                     <a href="javascript:void(0);" class="modal_detail_file" data-id="'.$id_radiologi_file.'">
                                                         <small>'.$file_name.'</small>
                                                     </a>
+                                                    '.$dicom_file_name_display.'
                                                 </td>
                                                 <td class="text-left"><small>'.$file_type.'</small></td>
                                                 <td class="text-left"><small>'.$file_size.'</small></td>
                                                 <td class="text-center">
-                                                    <button type="button" class="btn btn-sm btn-floating btn-outline-danger modal_hapus_file" data-id="'.$id_radiologi_file.'">
-                                                        <i class="bi bi-x"></i>
+                                                    <button type="button" class="btn btn-sm btn-floating btn-outline-dark" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        <i class="bi bi-three-dots-vertical"></i>
                                                     </button>
+                                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow" style="">
+                                                        <li class="dropdown-header text-start">
+                                                            <h6>Option</h6>
+                                                        </li>
+                                                        '.$tombol_lanjutan.'
+                                                        <li>
+                                                            <a class="dropdown-item modal_hapus_file" href="javascript:void(0)" data-id="'.$id_radiologi_file .'">
+                                                                <i class="bi bi-x"></i> Hapus
+                                                            </a>
+                                                        </li>
+                                                    </ul>
                                                 </td>
                                             </tr>
                                         ';

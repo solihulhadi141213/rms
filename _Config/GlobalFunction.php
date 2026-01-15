@@ -1300,6 +1300,38 @@
         return $menit . ' m';
     }
 
+    // Format Nama Untuk DICOM
+    function formatPatientNameDICOM($nama_pasien){
+        // Bersihkan spasi berlebih
+        $nama_pasien = trim(preg_replace('/\s+/', ' ', $nama_pasien));
+
+        // Ubah ke huruf besar (best practice DICOM)
+        $nama_pasien = strtoupper($nama_pasien);
+
+        // Pecah nama
+        $parts = explode(' ', $nama_pasien);
+
+        if(count($parts) == 1){
+            // Satu kata → dianggap FamilyName
+            return $parts[0];
+        }
+
+        // Kata terakhir → Family Name
+        $family = array_pop($parts);
+
+        // Sisanya → Given Name (digabung)
+        $given = implode(' ', $parts);
+
+        // Spasi → underscore agar konsisten
+        $given = str_replace(' ', '_', $given);
+
+        return $family . '^' . $given;
+    }
+
+    //Function Generate UID (AMAN & STANDAR)
+    function generateUID() {
+        return '2.25.' . random_int(10**15, 10**16 - 1);
+    }
 
 
 ?>

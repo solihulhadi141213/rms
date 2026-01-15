@@ -25,7 +25,7 @@
         echo '
             <div class="row mb-3">
                 <div class="col-12 text-center">
-                    <div class="alert alert-danger"><small>ID File Tidak Boleh Kosong!</small></div>
+                    <div class="alert alert-danger"><small>ID File Tiidak Boleh Kosong!</small></div>
                 </div>
             </div>
         ';
@@ -52,7 +52,7 @@
     $Qry->close();
 
     // Jika Data Tidak Ditemukan
-    if(empty($Data['id_radiologi'])){
+    if(empty($Data['id_radiologi_file'])){
         echo '
             <div class="row mb-3">
                 <div class="col-12 text-center">
@@ -76,7 +76,7 @@
     $file_size_mb = round($file_size / 1024 / 1024, 2);
     $file_size    = "$file_size_mb Mb";
 
-    // Buka Akses
+    // Buka Akses Dan Ambil Nama Petugas
     if(!empty($Data['id_access'])){
         $id_access        = $Data['id_access'];
         $officer = GetDetailData($Conn, 'access', 'id_access', $id_access, 'access_name');
@@ -85,38 +85,58 @@
     }
     $dir_file = ''.$app_base_url.'/_Storage/'.$folder_name.'/'.$file_name.'';
 ?>
-<div class="table table-responsive">
-    <table class="table table-bordered table-sm">
-        <tbody>
-            <tr>
-                <td><i>File Name</i></td>
-                <td class="text text-grayish"><?php echo "$file_name"; ?></td>
-            </tr>
-            <tr>
-                <td><i>File Type</i></td>
-                <td class="text text-grayish"><?php echo "$file_type"; ?></td>
-            </tr>
-            <tr>
-                <td><i>File Size</i></td>
-                <td class="text text-grayish"><?php echo "$file_size"; ?></td>
-            </tr>
-            <tr>
-                <td><i>Upload At</i></td>
-                <td class="text text-grayish"><?php echo "$file_datetime"; ?></td>
-            </tr>
-            <tr>
-                <td><i>Description</i></td>
-                <td class="text text-grayish"><?php echo "$file_description"; ?></td>
-            </tr>
-            <tr>
-                <td><i>Officer</i></td>
-                <td class="text text-grayish"><?php echo "$officer"; ?></td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <img src="<?php echo $dir_file; ?>" alt="" width="100%">
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+    <input type="hidden" name="id_radiologi_file" value="<?php echo $id_radiologi_file; ?>">
+    <div class="row mb-2">
+        <div class="col-4"><small><i>File Name</i></small></div>
+        <div class="col-1"><small>:</small></div>
+        <div class="col-7">
+            <small class="text text-grayish">
+                <small><?php echo "$file_name"; ?></small>
+            </small>
+        </div>
+    </div>
+    <div class="row mb-2">
+        <div class="col-4"><small><i>File Type</i></small></div>
+        <div class="col-1"><small>:</small></div>
+        <div class="col-7">
+            <small class="text text-grayish">
+                <small><?php echo "$file_type"; ?></small>
+            </small>
+        </div>
+    </div>
+    <div class="row mb-2">
+        <div class="col-4"><small><i>File Size</i></small></div>
+        <div class="col-1"><small>:</small></div>
+        <div class="col-7">
+            <small class="text text-grayish">
+                <small><?php echo "$file_size"; ?></small>
+            </small>
+        </div>
+    </div>
+    <div class="row mb-2">
+        <div class="col-4"><small><i>Upload At</i></small></div>
+        <div class="col-1"><small>:</small></div>
+        <div class="col-7">
+            <small class="text text-grayish">
+                <small><?php echo "$file_datetime"; ?></small>
+            </small>
+        </div>
+    </div>
+    <div class="row mb-2">
+        <div class="col-4"><small><i>Upload At</i></small></div>
+        <div class="col-1"><small>:</small></div>
+        <div class="col-7">
+            <small class="text text-grayish">
+                <small><?php echo "$file_datetime"; ?></small>
+            </small>
+        </div>
+    </div>
+    <div class="row mb-2">
+        <div class="col-4"><small><i>Officer</i></small></div>
+        <div class="col-1"><small>:</small></div>
+        <div class="col-7">
+            <small class="text text-grayish">
+                <small><?php echo "$officer"; ?></small>
+            </small>
+        </div>
+    </div>

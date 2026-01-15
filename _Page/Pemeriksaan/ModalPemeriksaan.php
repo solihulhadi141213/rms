@@ -235,28 +235,7 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="ModalDetail" tabindex="-1">
-    <div class="modal-dialog modal-fullscreen">
-        <div class="modal-content">
-            <div class="modal-header nav_background">
-                <h5 class="modal-title text-light"><i class="bi bi-info-circle"></i> Detail Pemeriksaan</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-12" id="FormDetail">
-                        <!-- Menampilkan Form Detail Disini -->
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer nav_background">
-                <button type="button" class="btn btn-secondary btn-rounded" data-bs-dismiss="modal">
-                    <i class="bi bi-x-circle"></i> Tutup
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 <div class="modal fade" id="ModalServiceRequest" tabindex="-1">
     <div class="modal-dialog modal-xl">
@@ -1166,6 +1145,118 @@ DOKTER PENGIRIM DAN PENERIMA
                     </button>
                 </div>
             </form>
+        </div>
+    </div>
+</div>
+
+<!-- 
+============================== 
+MODAL DETAIL ACCESSION NUMBER
+============================== 
+-->
+<div class="modal fade" id="ModalAccessionNumber" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-dark"><i class="bi bi-info-circle"></i> Detail Accession Number</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12" id="FormAccessionNumber">
+                        <!-- Form Akan Muncul Disini -->
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-rounded" data-bs-dismiss="modal">
+                    <i class="bi bi-x-circle"></i> Tutup
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 
+============================== 
+MODAL KONVERSI DICOM
+============================== 
+-->
+<div class="modal fade" id="ModalKonversiDicom" tabindex="-1">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <form action="javascript:void(0);" id="ProsesKonversiDicom">
+                <div class="modal-header">
+                    <h5 class="modal-title text-dark"><i class="bi bi-arrow-down"></i> Konversi Dicom</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12" id="FormKonversiDicom">
+                            <!-- Form Akan Muncul Disini -->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12" id="NotifikasiKonversiDicom">
+                            <!-- Notifikasi Akan Muncul Disini -->
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary btn-rounded">
+                        <i class="bi bi-check"></i> Konversi
+                    </button>
+                    <button type="button" class="btn btn-secondary btn-rounded" data-bs-dismiss="modal">
+                        <i class="bi bi-x-circle"></i> Tutup
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="ModalDetailDicom" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-dark"><i class="bi bi-info-circle"></i> Detail DICOM Metadata</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12" id="FormDetailDicom">
+                        <!-- Form Akan Muncul Disini -->
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-rounded" data-bs-dismiss="modal">
+                    <i class="bi bi-x-circle"></i> Tutup
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="ModalDicomViewer" tabindex="-1">
+    <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-dark"><i class="bi bi-layers"></i> DICOM Viewer</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-0">
+                <div class="row g-0">
+                    <div class="col-md-12">
+                        <div id="FormDicomViewer" class="h-100">
+                            <!-- Form Akan Muncul Disini -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-rounded" data-bs-dismiss="modal">
+                    <i class="bi bi-x-circle"></i> Tutup
+                </button>
+            </div>
         </div>
     </div>
 </div>

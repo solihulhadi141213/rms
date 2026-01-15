@@ -465,7 +465,7 @@
                             <h6>Option</h6>
                         </li>
                         <li>
-                            <a class="dropdown-item modal_detail" href="javascript:void(0)" data-id="'.$id_radiologi .'">
+                            <a class="dropdown-item modal_preview" href="javascript:void(0)" data-id="'.$id_radiologi .'">
                                 <i class="bi bi-info-circle"></i> Detail
                             </a>
                         </li>
