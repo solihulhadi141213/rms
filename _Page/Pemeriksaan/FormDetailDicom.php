@@ -88,13 +88,18 @@
 
     // Buka DICOM metadata
     $dicom_metadata_arry = json_decode($dicom_metadata, true);
-    $sop_uid             = $dicom_metadata_arry['sop-uid'];
-    $Modality            = $dicom_metadata_arry['Modality'];
-    $PatientID           = $dicom_metadata_arry['PatientID'];
-    $study_uid           = $dicom_metadata_arry['study-uid'];
-    $series_uid          = $dicom_metadata_arry['series-uid'];
-    $PatientName         = $dicom_metadata_arry['PatientName'];
-    $StudyDescription    = $dicom_metadata_arry['StudyDescription'];
+
+    //Buat Variabel
+    $Modality          = $dicom_metadata_arry['Modality'];
+    $ConversionDate    = $dicom_metadata_arry['ConversionDate'];
+    $SOPClassUID       = $dicom_metadata_arry['SOPClassUID'];
+    $Modality          = $dicom_metadata_arry['Modality'];
+    $PatientID         = $dicom_metadata_arry['PatientID'];
+    $SeriesInstanceUID = $dicom_metadata_arry['SeriesInstanceUID'];
+    $StudyInstanceUID  = $dicom_metadata_arry['StudyInstanceUID'];
+    $PatientName       = $dicom_metadata_arry['PatientName'];
+    $StudyDescription  = $dicom_metadata_arry['StudyDescription'];
+    $ConversionDate    = $dicom_metadata_arry['ConversionDate'];
    
 ?>
 <div class="row mb-2">
@@ -132,38 +137,10 @@
     <div class="col-12"><small><b>B. DICOM Metadata</b></small></div>
 </div>
 <div class="row mb-2">
-    <div class="col-4"><small>sop-uid</small></div>
-    <div class="col-1"><small>:</small></div>
-    <div class="col-7">
-        <small class="text text-grayish"><?php echo "$sop_uid"; ?></small>
-    </div>
-</div>
-<div class="row mb-2">
-    <div class="col-4"><small>Modality</small></div>
-    <div class="col-1"><small>:</small></div>
-    <div class="col-7">
-        <small class="text text-grayish"><?php echo "$Modality"; ?></small>
-    </div>
-</div>
-<div class="row mb-2">
     <div class="col-4"><small>Patient ID</small></div>
     <div class="col-1"><small>:</small></div>
     <div class="col-7">
         <small class="text text-grayish"><?php echo "$PatientID"; ?></small>
-    </div>
-</div>
-<div class="row mb-2">
-    <div class="col-4"><small>study-uid</small></div>
-    <div class="col-1"><small>:</small></div>
-    <div class="col-7">
-        <small class="text text-grayish"><?php echo "$study_uid"; ?></small>
-    </div>
-</div>
-<div class="row mb-2">
-    <div class="col-4"><small>series-uid</small></div>
-    <div class="col-1"><small>:</small></div>
-    <div class="col-7">
-        <small class="text text-grayish"><?php echo "$series_uid"; ?></small>
     </div>
 </div>
 <div class="row mb-2">
@@ -174,12 +151,41 @@
     </div>
 </div>
 <div class="row mb-2">
-    <div class="col-4"><small>Study Description</small></div>
+    <div class="col-4"><small>Modality</small></div>
     <div class="col-1"><small>:</small></div>
     <div class="col-7">
-        <small class="text text-grayish"><?php echo "$StudyDescription"; ?></small>
+        <small class="text text-grayish"><?php echo "$Modality"; ?></small>
     </div>
 </div>
+<div class="row mb-2">
+    <div class="col-4"><small>SOP Class UID</small></div>
+    <div class="col-1"><small>:</small></div>
+    <div class="col-7">
+        <small class="text text-grayish"><?php echo "$SOPClassUID"; ?></small>
+    </div>
+</div>
+<div class="row mb-2">
+    <div class="col-4"><small>Study Instance UID</small></div>
+    <div class="col-1"><small>:</small></div>
+    <div class="col-7">
+        <small class="text text-grayish"><?php echo "$StudyInstanceUID"; ?></small>
+    </div>
+</div>
+<div class="row mb-2">
+    <div class="col-4"><small>Series Instance UID</small></div>
+    <div class="col-1"><small>:</small></div>
+    <div class="col-7">
+        <small class="text text-grayish"><?php echo "$SeriesInstanceUID"; ?></small>
+    </div>
+</div>
+<div class="row mb-2">
+    <div class="col-4"><small>Conversion Date</small></div>
+    <div class="col-1"><small>:</small></div>
+    <div class="col-7">
+        <small class="text text-grayish"><?php echo "$ConversionDate"; ?></small>
+    </div>
+</div>
+
 <div class="row mb-2 mt-3">
     <div class="col-12">
         <button type="button" class="btn btn-primary btn-md btn-block modal_dicom_viewer" data-id="<?php echo $id_radiologi_dicom_conv; ?>">

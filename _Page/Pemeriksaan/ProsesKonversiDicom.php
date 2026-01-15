@@ -430,47 +430,41 @@
     // ==================== BUAT METADATA LENGKAP UNTUK DATABASE ====================
     
     $dicom_metadata_payload = [
-        "StudyInstanceUID" => $study_uid,
-        "SeriesInstanceUID" => $series_uid,
-        "SOPInstanceUID" => $sop_uid,
-        "SOPClassUID" => $sop_class_uid,
-        "PatientName" => $patient_name,
-        "PatientID" => $patient_id,
-        "AccessionNumber" => $accession_number,
-        "Modality" => $modality,
-        "StudyDescription" => $study_description,
-        "StudyDate" => $study_date,
-        "StudyTime" => $study_time,
-        "SeriesDate" => $series_date,
-        "SeriesTime" => $series_time,
-        "Rows" => $height,
-        "Columns" => $width,
-        "BitsAllocated" => $bits_allocated,
-        "BitsStored" => $bits_stored,
-        "HighBit" => $high_bit,
-        "PixelRepresentation" => $pixel_representation,
-        "SamplesPerPixel" => $samples_per_pixel,
+        "StudyInstanceUID"          => $study_uid,
+        "SeriesInstanceUID"         => $series_uid,
+        "SOPInstanceUID"            => $sop_uid,
+        "SOPClassUID"               => $sop_class_uid,
+        "PatientName"               => $patient_name,
+        "PatientID"                 => $patient_id,
+        "AccessionNumber"           => $accession_number,
+        "Modality"                  => $modality,
+        "StudyDescription"          => $study_description,
+        "StudyDate"                 => $study_date,
+        "StudyTime"                 => $study_time,
+        "SeriesDate"                => $series_date,
+        "SeriesTime"                => $series_time,
+        "Rows"                      => $height,
+        "Columns"                   => $width,
+        "BitsAllocated"             => $bits_allocated,
+        "BitsStored"                => $bits_stored,
+        "HighBit"                   => $high_bit,
+        "PixelRepresentation"       => $pixel_representation,
+        "SamplesPerPixel"           => $samples_per_pixel,
         "PhotometricInterpretation" => $photometric_interpretation,
-        "WindowCenter" => $window_center,
-        "WindowWidth" => $window_width,
-        "Manufacturer" => $manufacturer,
-        "ManufacturerModelName" => $manufacturer_model_name,
-        "SoftwareVersions" => $software_versions,
-        "InstitutionName" => $institution_name,
-        "ImageType" => "ORIGINAL\\PRIMARY",
-        "BodyPartExamined" => "ABDOMEN",
-        "TransferSyntax" => isset($dicom_info['TransferSyntax']) ? $dicom_info['TransferSyntax'] : "1.2.840.10008.1.2.1",
-        "ConversionSource" => $file_name,
-        "ConversionDate" => date('Y-m-d H:i:s'),
-        "FileSize" => filesize($output_file),
-        "ValidationStatus" => "VALID"
+        "WindowCenter"              => $window_center,
+        "WindowWidth"               => $window_width,
+        "Manufacturer"              => $manufacturer,
+        "ManufacturerModelName"     => $manufacturer_model_name,
+        "SoftwareVersions"          => $software_versions,
+        "InstitutionName"           => $institution_name,
+        "ImageType"                 => "ORIGINAL\\PRIMARY",
+        "ConversionSource"          => $file_name,
+        "ConversionDate"            => date('Y-m-d H:i:s'),
+        "FileSize"                  => filesize($output_file),
+        "ValidationStatus"          => "VALID"
     ];
     
-    // Gabungkan dengan informasi dari dcmdump jika ada
-    if (!empty($dicom_info)) {
-        $dicom_metadata_payload = array_merge($dicom_metadata_payload, $dicom_info);
-    }
-    
+   // Encode JSON
     $dicom_metadata_json = json_encode($dicom_metadata_payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 
     // Nama file DICOM

@@ -1305,24 +1305,46 @@ MODAL KONVERSI DICOM
 <div class="modal fade" id="ModalDicomViewer" tabindex="-1">
     <div class="modal-dialog modal-fullscreen">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title text-dark"><i class="bi bi-layers"></i> DICOM Viewer</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body p-0">
-                <div class="row g-0">
-                    <div class="col-md-12">
-                        <div id="FormDicomViewer" class="h-100">
-                            <!-- Form Akan Muncul Disini -->
+           <form action="DicomViewer.php" method="GET" target="_blank">
+                <div class="modal-header nav_background d-flex justify-content-between align-items-center w-100">
+
+                    <!-- KIRI: Judul + link -->
+                    <div>
+                        <h5 class="modal-title text-light mb-1">
+                            <i class="bi bi-layers"></i> DICOM Viewer
+                        </h5>
+                        <small>
+                            <a href="javascript:void(0)" class="text-warning text-decoration-none" data-bs-dismiss="modal">
+                                <i class="bi bi-chevron-double-left"></i> Tutup Viewer
+                            </a>
+                        </small>
+                    </div>
+
+                    <!-- KANAN: Identitas Pasien -->
+                    <div class="text-end">
+                        <b class="text-light put_nama_pasien">Nama Pasien</b><br>
+                        <small class="text-light put_id_pasien">ID: 123456789</small>
+                    </div>
+
+                </div>
+                <div class="modal-body p-0">
+                    <div class="row g-0">
+                        <div class="col-md-12">
+                            <div id="FormDicomViewer" class="h-100">
+                                <!-- Form Akan Muncul Disini -->
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary btn-rounded" data-bs-dismiss="modal">
-                    <i class="bi bi-x-circle"></i> Tutup
-                </button>
-            </div>
+                <div class="modal-footer nav_background justify-content-start">
+                    <button type="submit" class="btn btn-primary btn-rounded">
+                        <i class="bi bi-layers"></i> Halaman Penuh
+                    </button>
+                    <button type="button" class="btn btn-secondary btn-rounded" data-bs-dismiss="modal">
+                        <i class="bi bi-x-circle"></i> Tutup
+                    </button>
+                </div>
+           </form>
         </div>
     </div>
 </div>

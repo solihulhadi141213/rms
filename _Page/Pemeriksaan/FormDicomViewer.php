@@ -71,7 +71,8 @@
 
     // Parse metadata untuk mendapatkan info pasien
     $metadata_array = json_decode($dicom_metadata, true);
-    $patient_name = isset($metadata_array['PatientName']) ? $metadata_array['PatientName'] : 'Unknown';
+    $patient_name   = isset($metadata_array['PatientName']) ? $metadata_array['PatientName'] : 'Unknown';
+    $PatientID      = isset($metadata_array['PatientID']) ? $metadata_array['PatientID'] : 'Unknown';
     
     // Menentukan URL
     $url = "$app_base_url/DicomViewer.php?id=$id_radiologi_dicom_conv";
@@ -105,29 +106,10 @@
         color: white;
         z-index: 10;
     }
-    
-    .dicom-info {
-        position: absolute;
-        top: 10px;
-        left: 10px;
-        background: rgba(0,0,0,0.7);
-        color: white;
-        padding: 5px 10px;
-        border-radius: 4px;
-        font-size: 12px;
-        z-index: 5;
-        max-width: 300px;
-    }
 </style>
 
+<input type="hidden" name="id" value="<?php echo $id_radiologi_dicom_conv; ?>">
 <div class="dicom-viewer-wrapper">
-    <div class="dicom-info">
-        <small>
-            <i class="bi bi-person-circle"></i> <?php echo htmlspecialchars($patient_name); ?><br>
-            <i class="bi bi-file-earmark-medical"></i> <?php echo htmlspecialchars($filename); ?>
-        </small>
-    </div>
-    
     <div class="dicom-loading" id="loadingOverlay">
         <div class="text-center">
             <div class="spinner-border text-primary mb-2" role="status">
@@ -209,4 +191,10 @@
         // Enable fullscreen pada iframe
         iframe.allow = "fullscreen";
     });
+
+    var nama_pasien = "<?php echo "$patient_name"; ?>";
+    var PatientID   = "<?php echo "$PatientID"; ?>";
+
+    $('.put_nama_pasien').html(nama_pasien);
+    $('.put_id_pasien').html('RM:'+PatientID+'');
 </script>
