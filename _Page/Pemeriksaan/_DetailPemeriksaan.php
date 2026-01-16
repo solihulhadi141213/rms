@@ -92,6 +92,7 @@
     $datetime_hasil         = $Data['datetime_hasil'];
     $datetime_selesai       = $Data['datetime_selesai'];
     $status_pemeriksaan     = $Data['status_pemeriksaan'];
+    $alasan_pembatalan     = $Data['alasan_pembatalan'];
 
     //Nama Radiografer
     if(empty($Data['radiografer'])){
@@ -265,13 +266,8 @@
         <div class="card">
             <div class="card-header">
                 <div class="row">
-                    <div class="col-10">
+                    <div class="col-12">
                         <b class="card-title">A. Informasi Pasien</b>
-                    </div>
-                    <div class="col-2 text-end">
-                        <button type="button" class="btn btn-sm btn-floating btn-secondary">
-                            <i class="bi bi-arrow-left-right"></i>
-                        </button>
                     </div>
                 </div>
             </div>
@@ -464,7 +460,7 @@
                                 <td class="text-grayish"><small><?php echo $datetime_diminta; ?></small></td>
                                 <td class="text-center text-grayish"><small>0 m</small></td>
                                 <td class="text-center">
-                                    <a href="javascript:void(0);" class="btn btn-sm btn-secondary btn-floating modal_ubah_waktu_pelayanan" data-kolom="datetime_diminta" data-id="<?php echo $id_radiologi; ?>">
+                                    <a href="javascript:void(0);" class="btn btn-sm btn-secondary btn-floating modal_ubah_waktu_pelayanan" data-kolom="datetime_diminta" data-id="<?php echo $id_radiologi; ?>" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Ubah Waktu Permintaan">
                                         <i class="bi bi-pencil"></i>
                                     </a>
                                 </td>
@@ -475,7 +471,7 @@
                                 <td class="text-grayish"><small><?php echo $datetime_dikerjakan; ?></small></td>
                                 <td class="text-center text-grayish"><small><?php echo $durasi_1; ?></small></td>
                                 <td class="text-center">
-                                    <a href="javascript:void(0);" class="btn btn-sm btn-secondary btn-floating modal_ubah_waktu_pelayanan" data-kolom="datetime_dikerjakan" data-id="<?php echo $id_radiologi; ?>">
+                                    <a href="javascript:void(0);" class="btn btn-sm btn-secondary btn-floating modal_ubah_waktu_pelayanan" data-kolom="datetime_dikerjakan" data-id="<?php echo $id_radiologi; ?>" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Ubah Waktu Pengerjaan">
                                         <i class="bi bi-pencil"></i>
                                     </a>
                                 </td>
@@ -486,7 +482,7 @@
                                 <td class="text-grayish"><small><?php echo $datetime_hasil; ?></small></td>
                                 <td class="text-center text-grayish"><small><?php echo $durasi_2; ?></small></td>
                                 <td class="text-center">
-                                    <a href="javascript:void(0);" class="btn btn-sm btn-secondary btn-floating modal_ubah_waktu_pelayanan" data-kolom="datetime_hasil" data-id="<?php echo $id_radiologi; ?>">
+                                    <a href="javascript:void(0);" class="btn btn-sm btn-secondary btn-floating modal_ubah_waktu_pelayanan" data-kolom="datetime_hasil" data-id="<?php echo $id_radiologi; ?>" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Ubah Waktu Pengerjaan Hasil">
                                         <i class="bi bi-pencil"></i>
                                     </a>
                                 </td>
@@ -497,7 +493,7 @@
                                 <td class="text-grayish"><small><?php echo $datetime_selesai; ?></small></td>
                                 <td class="text-center text-grayish"><small><?php echo $durasi_3; ?></small></td>
                                 <td class="text-center">
-                                    <a href="javascript:void(0);" class="btn btn-sm btn-secondary btn-floating modal_ubah_waktu_pelayanan" data-kolom="datetime_selesai" data-id="<?php echo $id_radiologi; ?>">
+                                    <a href="javascript:void(0);" class="btn btn-sm btn-secondary btn-floating modal_ubah_waktu_pelayanan" data-kolom="datetime_selesai" data-id="<?php echo $id_radiologi; ?>" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Ubah Waktu Selesai">
                                         <i class="bi bi-pencil"></i>
                                     </a>
                                 </td>
@@ -740,10 +736,10 @@
                 <div class="row">
                     <div class="col-10"><b class="card-title">E. Nota Tagihan</b></div>
                     <div class="col-2 text-end">
-                        <button type="button" class="btn btn-sm btn-floating btn-outline-dark modal_cetak_tagihan" data-id="<?php echo $id_radiologi; ?>">
+                        <button type="button" class="btn btn-sm btn-floating btn-outline-dark modal_cetak_tagihan" data-id="<?php echo $id_radiologi; ?>" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Cetak Nota Tagihan">
                             <i class="bi bi-printer"></i>
                         </button>    
-                        <button type="button" class="btn btn-sm btn-floating btn-primary modal_tambah_tagihan" data-id="<?php echo $id_radiologi; ?>">
+                        <button type="button" class="btn btn-sm btn-floating btn-primary modal_tambah_tagihan" data-id="<?php echo $id_radiologi; ?>" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Tambah uraian tagihan">
                             <i class="bi bi-plus"></i>
                         </button>         
                     </div>
@@ -937,15 +933,15 @@
     ==============================================================
     -->
     <div class="col-md-6">
-        <!-- C. INFORMASI RADIOLOGI -->
+        <!-- G. INFORMASI RADIOLOGI -->
         <div class="card">
             <div class="card-header">
                 <div class="row">
                     <div class="col-10">
-                        <b class="card-title">E. Informasi Radiologi</b>
+                        <b class="card-title">G. Informasi Radiologi</b>
                     </div>
                     <div class="col-2 text-end">
-                        <button type="button" class="btn btn-sm btn-floating btn-secondary">
+                        <button type="button" class="btn btn-sm btn-floating btn-secondary modal_edit_radiologi" data-id="<?php echo $id_radiologi; ?>" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Ubah Informasi Pelayanan Radiologi">
                             <i class="bi bi-pencil"></i>
                         </button>
                     </div>
@@ -1012,6 +1008,17 @@
                                 <td>Status</td>
                                 <td class="text text-grayish"><?php echo $label_status; ?></td>
                             </tr>
+                            <?php
+                                // Apabila Status Pemeriksaan 'Batal'
+                                if($status_pemeriksaan=="Batal"){
+                                    echo '
+                                        <tr>
+                                            <td>Alasan Pembatalan</td>
+                                            <td class="text text-grayish">'.$alasan_pembatalan.'</td>
+                                        </tr>
+                                    ';
+                                }
+                            ?>
                             <tr>
                                 <td>Radiografer</td>
                                 <td class="text text-grayish"><?php echo $radiografer; ?></td>
@@ -1022,12 +1029,12 @@
             </div>
         </div>
 
-        <!-- F. DOKTER (PERFORMER) -->
+        <!-- H. DOKTER (PERFORMER) -->
         <div class="card">
             <div class="card-header">
                 <div class="row">
                     <div class="col-10">
-                        <b class="card-title">F. Dokter <i>(Performer)</i></b>
+                        <b class="card-title">H. Dokter <i>(Performer)</i></b>
                     </div>
                     <div class="col-2 text-end">
                         <button type="button" class="btn btn-sm btn-floating btn-secondary modal_edit_dokter" data-id="<?php echo $id_radiologi; ?>">
@@ -1077,12 +1084,12 @@
             </div>
         </div>
 
-        <!-- G. KLINIS -->
+        <!-- I. KLINIS -->
         <div class="card">
             <div class="card-header">
                 <div class="row">
                     <div class="col-10">
-                        <b class="card-title">G. Klinis</b>
+                        <b class="card-title">I. Klinis Pasien</b>
                     </div>
                     <div class="col-2 text-end">
                         <button type="button" class="btn btn-sm btn-floating btn-secondary">
@@ -1169,7 +1176,7 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col-10">
-                        <b class="card-title">H. Permintaan Pemeriksaan</b>
+                        <b class="card-title">J. Permintaan Pemeriksaan</b>
                     </div>
                     <div class="col-2 text-end">
                         <button type="button" class="btn btn-sm btn-floating btn-secondary">
@@ -1257,7 +1264,7 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col-10">
-                        <b class="card-title">I. Faktor Eksposur</b>
+                        <b class="card-title">K. Faktor Eksposur</b>
                     </div>
                     <div class="col-2 text-end">
                         <button type="button" class="btn btn-sm btn-floating btn-secondary modal_faktor_eksposi" data-id="<?php echo $id_radiologi; ?>">
@@ -1304,7 +1311,7 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col-10">
-                        <b class="card-title">J. File Manual (JPG, PNG, GIF)</b>
+                        <b class="card-title">L. File Manual (JPG, PNG, GIF)</b>
                     </div>
                     <div class="col-2 text-end">
                         <button type="button" class="btn btn-sm btn-floating btn-primary modal_upload_file" data-id="<?php echo $id_radiologi; ?>">
@@ -1424,7 +1431,7 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col-12">
-                        <b class="card-title">J. Expertise (SIMRS)</b>
+                        <b class="card-title">M. Expertise (SIMRS)</b>
                     </div>
                 </div>
             </div>
@@ -1535,7 +1542,7 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col-12">
-                        <b class="card-title">K. Expertise (PACS)</b>
+                        <b class="card-title">N. Expertise (PACS)</b>
                     </div>
                 </div>
             </div>
@@ -1597,15 +1604,35 @@
                                                 <td>
                                                     <small>
                                                         <a href="javascript:void(0);" class="modal_detail_exp_pacs" data-id="'.$id_radiologi_expertise.'" data-modality="'.$alat_pemeriksa.'">
-                                                            <small>'.$alat_pemeriksa.'-'.$study_number.'</small>
+                                                            '.$study_number.' <i class="bi bi-arrow-up-square"></i>
                                                         </a>
                                                     </small>
                                                 </td>
                                                 <td><small>'.$description_expertise.'</small></td>
                                                 <td class="text-center">
-                                                    <button type="button" class="btn btn-sm btn-floating btn-outline-danger modal_hapus_exp_pacs" data-id="'.$id_radiologi_expertise.'" data-modality="'.$alat_pemeriksa.'">
-                                                        <i class="bi bi-x"></i>
+                                                    <button type="button" class="btn btn-sm btn-outline-dark btn-floating"  data-bs-toggle="dropdown" aria-expanded="false">
+                                                        <i class="bi bi-three-dots-vertical"></i>
                                                     </button>
+                                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow" style="">
+                                                        <li class="dropdown-header text-start">
+                                                            <h6>Option</h6>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item modal_detail_exp_pacs" href="javascript:void(0)" data-id="'.$id_radiologi_expertise .'" data-modality="'.$alat_pemeriksa.'">
+                                                                <i class="bi bi-info-circle"></i> Detail
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item modal_edit_exp_pacs" href="javascript:void(0)" data-id="'.$id_radiologi_expertise .'" data-modality="'.$alat_pemeriksa.'">
+                                                                <i class="bi bi-pencil"></i> Edit
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item modal_hapus_exp_pacs" href="javascript:void(0)" data-id="'.$id_radiologi_expertise .'" data-modality="'.$alat_pemeriksa.'">
+                                                                <i class="bi bi-x"></i> Hapus
+                                                            </a>
+                                                        </li>
+                                                    </ul>
                                                 </td>
                                             </tr>
                                         ';

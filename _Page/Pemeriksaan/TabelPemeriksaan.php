@@ -471,7 +471,7 @@
                         </li>
                         '.$tombol_lanjutan.'
                         <li>
-                            <a class="dropdown-item modal_edit" href="javascript:void(0)" data-id="'.$id_radiologi .'">
+                            <a class="dropdown-item modal_edit_radiologi" href="javascript:void(0)" data-id="'.$id_radiologi .'">
                                 <i class="bi bi-pencil"></i> Edit
                             </a>
                         </li>

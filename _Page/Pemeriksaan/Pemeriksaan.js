@@ -765,6 +765,118 @@ $(document).ready(function() {
         });
     });
 
+    /*
+    |=========================================================================
+    | EDIT RADIOLOGI
+    |=========================================================================
+    */
+    $(document).on('click', '.modal_edit_radiologi', function () {
+
+        //tangkap data 'id_radiologi'
+        var id_radiologi = $(this).data('id');
+
+        //tampilkan modal
+        $('#ModalEditRadiologi').modal('show');
+
+        // Kosongkan Notifikasi
+        $('#NotifikasiEditRadiologi').html('');
+
+        //Form Loading
+        $('#FormEditRadiologi').html('Loading...');
+
+        //Tampilkan Form Dengan Ajax
+        $.ajax({
+            type 	    : 'POST',
+            url 	    : '_Page/Pemeriksaan/FormEditRadiologi.php',
+            data        : {id_radiologi: id_radiologi},
+            success     : function(data){
+                $('#FormEditRadiologi').html(data);
+
+                // Tangkap status
+                var status_pemeriksaan = $('#status_pemeriksaan_edit').val();
+
+                // apabila status selesai maka hide alasan pembatalan
+                if(status_pemeriksaan=="Selesai"){
+                    $('#form_alasan_pembatalan').hide();
+                }
+            }
+        });
+    });
+
+    $(document).on('change', '#status_pemeriksaan_edit', function () {
+
+        //tangkap data 'id_radiologi'
+        var status_pemeriksaan = $('#status_pemeriksaan_edit').val();
+
+        // Routing Form Berdasarkan Status Pemeriksaan
+        if(status_pemeriksaan=="Batal"){
+            $('#form_alasan_pembatalan').show();
+        }else{
+            $('#form_alasan_pembatalan').hide();
+        }
+
+        if(status_pemeriksaan=="Selesai"){
+            $("#alat_pemeriksa_edit").prop("disabled", true);
+            $("#radiografer_edit").prop("disabled", true);
+        }else{
+           $("#alat_pemeriksa_edit").prop("disabled", false);
+            $("#radiografer_edit").prop("disabled", false);
+        }
+
+    });
+
+    /* Ketika 'ProsesEditRadiologi' disubmit */
+    $('#ProsesEditRadiologi').submit(function(e){
+        e.preventDefault();
+
+        /* Menangkap data dari form  */
+        var ProsesEditRadiologi=$('#ProsesEditRadiologi').serialize();
+
+        /* Loading Notification */
+        $('#NotifikasiEditRadiologi').html('loading..');
+
+        /* Kirim data dengan AJAX  */
+        $.ajax({
+            type    : 'POST',
+            url     : '_Page/Pemeriksaan/ProsesEditRadiologi.php',
+            dataType: 'json',
+            data    : ProsesEditRadiologi,
+            success: function(response) {
+                var status  = response.status;
+                var message = response.message;
+
+                // Apabila berhasil
+                if(status=='success'){
+                    //Bersihkan notifikasi
+                    $('#NotifikasiEditRadiologi').html('');
+
+                    //reset form
+                    $('#ProsesEditRadiologi')[0].reset();
+
+                    //Tutup modal
+                    $('#ModalEditRadiologi').modal('hide');
+
+                    //Menampilkan Swal
+                    Swal.fire(
+                        'Success!',
+                        'Update Permintaan Pemeriksaan Berhasil!',
+                        'success'
+                    )
+
+                    //reload tabel
+                    ShowTablePemeriksaan();
+
+                    // Reload data Detail
+                    ShowDetailPemeriksaan();
+
+                }else{
+                    $('#NotifikasiEditRadiologi').html('<div class="alert alert-danger"><small>'+message+'</small></div>');
+                }
+                
+            }
+        });
+    });
+
 
     /*
     ===================================================================================
@@ -3096,6 +3208,7 @@ $(document).ready(function() {
         adjustIframeHeight();
     });
 
+    
 
 
 
