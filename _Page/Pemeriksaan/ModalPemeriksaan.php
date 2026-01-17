@@ -1187,6 +1187,124 @@ DOKTER PENGIRIM DAN PENERIMA
 
 <!-- 
 ============================== 
+KLINIS
+============================== 
+-->
+<div class="modal fade" id="ModalTambahKlinis" tabindex="-1">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <form action="javascript:void(0);" id="ProsesTambahKlinis" autocomplete="off">
+                <div class="modal-header">
+                    <h5 class="modal-title text-dark"><i class="bi bi-plus"></i> Tambah Klinis</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-2">
+                        <div class="col-md-12" id="FormTambahKlinis">
+                            <!-- Form Tambah Klinis -->
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-12" id="PreviewTambahKlinis">
+                            <!-- Preview Data Klinis -->
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-12" id="NotifikasiTambahKlinis">
+                            <!-- Notifikasi Tambah Klnis -->
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary btn-rounded">
+                        <i class="bi bi-save"></i> Simpan
+                    </button>
+                    <button type="button" class="btn btn-secondary btn-rounded" data-bs-dismiss="modal">
+                        <i class="bi bi-x-circle"></i> Tutup
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ModalHapusKlinis" tabindex="-1">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <form action="javascript:void(0);" id="ProsesHapusKlinis" autocomplete="off">
+                <div class="modal-header">
+                    <h5 class="modal-title text-dark"><i class="bi bi-trash"></i> Hapus Klinis</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-2">
+                        <div class="col-md-12" id="FormHapusKlinis">
+                            <!-- Form Hapus Klinis -->
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-12" id="NotifikasiHapusKlinis">
+                            <!-- Notifikasi Hapus Klnis -->
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary btn-rounded">
+                        <i class="bi bi-check"></i> Ya, Hapus
+                    </button>
+                    <button type="button" class="btn btn-secondary btn-rounded" data-bs-dismiss="modal">
+                        <i class="bi bi-x-circle"></i> Tutup
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- 
+============================== 
+MODAL PERMINTAAN PEMERIKSAAN
+============================== 
+-->
+<div class="modal fade" id="ModalEditPermintaanPemeriksaan" tabindex="-1">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <form action="javascript:void(0);" id="ProsesEditPermintaanPemeriksaan" autocomplete="off">
+                <div class="modal-header">
+                    <h5 class="modal-title text-dark"><i class="bi bi-pencil"></i> Ubah Permintaan Pemeriksaan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-2">
+                        <div class="col-md-12" id="FormEditPermintaanPemeriksaan">
+                            <!-- Form Ubah Permintaan Pemeriksaan -->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12" id="preview_master_pemeriksaan">
+                            <!-- Preview Pemeriksaan -->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12" id="NotifikasiEditPermintaanPemeriksaan">
+                            <!-- Notifikasi Ubah Pemeriksaan -->
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary btn-rounded">
+                        <i class="bi bi-save"></i> Simpan
+                    </button>
+                    <button type="button" class="btn btn-secondary btn-rounded" data-bs-dismiss="modal">
+                        <i class="bi bi-x-circle"></i> Tutup
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- 
+============================== 
 MODAL DETAIL ACCESSION NUMBER
 ============================== 
 -->

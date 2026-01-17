@@ -1037,7 +1037,7 @@
                         <b class="card-title">H. Dokter <i>(Performer)</i></b>
                     </div>
                     <div class="col-2 text-end">
-                        <button type="button" class="btn btn-sm btn-floating btn-secondary modal_edit_dokter" data-id="<?php echo $id_radiologi; ?>">
+                        <button type="button" class="btn btn-sm btn-floating btn-secondary modal_edit_dokter" data-id="<?php echo $id_radiologi; ?>" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Ubah Informasi Dokter">
                             <i class="bi bi-pencil"></i>
                         </button>
                     </div>
@@ -1092,8 +1092,8 @@
                         <b class="card-title">I. Klinis Pasien</b>
                     </div>
                     <div class="col-2 text-end">
-                        <button type="button" class="btn btn-sm btn-floating btn-secondary">
-                            <i class="bi bi-pencil"></i>
+                        <button type="button" class="btn btn-sm btn-floating btn-primary modal_tambah_klinis" data-id="<?php echo $id_radiologi; ?>" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Tambah Klinis Pasien">
+                            <i class="bi bi-plus"></i>
                         </button>
                     </div>
                 </div>
@@ -1144,21 +1144,9 @@
                                                     </small>
                                                 </td>
                                                 <td class="text-center">
-                                                    <button type="button" class="btn btn-sm btn-outline-dark btn-floating"  data-bs-toggle="dropdown" aria-expanded="false">
-                                                        <i class="bi bi-three-dots-vertical"></i>
+                                                    <button type="button" class="btn btn-sm btn-outline-danger btn-floating modal_hapus_klinis" data-id_klinis="'.$id_klinis .'" data-id_radiologi="'.$id_radiologi .'">
+                                                        <i class="bi bi-x"></i>
                                                     </button>
-                                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow" style="">
-                                                        <li>
-                                                            <a class="dropdown-item modal_edit_klinis" href="javascript:void(0)" data-id="'.$id_klinis .'">
-                                                                <i class="bi bi-pencil"></i> Edit
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a class="dropdown-item modal_hapus_klinis" href="javascript:void(0)" data-id="'.$id_klinis .'">
-                                                                <i class="bi bi-x"></i> Hapus
-                                                            </a>
-                                                        </li>
-                                                    </ul>
                                                 </td>
                                             </tr>
                                         ';
@@ -1179,84 +1167,63 @@
                         <b class="card-title">J. Permintaan Pemeriksaan</b>
                     </div>
                     <div class="col-2 text-end">
-                        <button type="button" class="btn btn-sm btn-floating btn-secondary">
+                        <button type="button" class="btn btn-sm btn-floating btn-secondary modal_edit_permintaan_pemeriksaan" data-id="<?php echo $id_radiologi; ?>">
                             <i class="bi bi-pencil"></i>
                         </button>
                     </div>
                 </div>
-                
             </div>
             <div class="card-body">
-                <div class="table table-responsive">
-                    <table class="table table-bordered table-sm">
-                        <thead>
-                            <tr>
-                                <td class="text-center"><b><small>No</small></b></td>
-                                <td><b><small>Pemeriksaan</small></b></td>
-                                <td><b><small>Modality</small></b></td>
-                                <td><b><small><i>Code-Dispay</i></small></b></td>
-                                <td class="text-center"><b><small>Opt</small></b></td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                                $no_permintaan = 1;
-                                if(empty($Data['permintaan_pemeriksaan'])||$Data['permintaan_pemeriksaan']==null||$Data['permintaan_pemeriksaan']==NULL){
-                                    echo '
-                                        <tr>
-                                            <td colspan="5" class="text-center">
-                                                <small class="text-danger">Tidak Ada Data Yang Ditampilkan</small>
-                                            </td>
-                                        </tr>
-                                    ';
-                                }else{
-                                    /* Normalisasi JSON */
-                                    $permintaan_pemeriksaan_arry = json_decode($Data['permintaan_pemeriksaan'] ?? '', true);
+                <?php
+                    if(empty($Data['permintaan_pemeriksaan'])||$Data['permintaan_pemeriksaan']==null||$Data['permintaan_pemeriksaan']==NULL){
+                        echo '
+                            <div class="alert alert-danger text-center">
+                                <small class="text-danger">Tidak Ada Data Yang Ditampilkan</small>
+                            </div>
+                        ';
+                    }else{
+                        /* Normalisasi JSON */
+                        $permintaan_pemeriksaan_arry = json_decode($Data['permintaan_pemeriksaan'] ?? '', true);
 
-                                    foreach ($permintaan_pemeriksaan_arry as $permintaan_pemeriksaan_list) {
-                                        $id_master_pemeriksaan = safe_text($permintaan_pemeriksaan_list['id_master_pemeriksaan'] ?? null);
-                                        $nama_pemeriksaan = safe_text($permintaan_pemeriksaan_list['nama_pemeriksaan'] ?? null);
-                                        $modalitas = safe_text($permintaan_pemeriksaan_list['modalitas'] ?? null);
-                                        $pemeriksaan_code = safe_text($permintaan_pemeriksaan_list['pemeriksaan_code'] ?? null);
-                                        $pemeriksaan_description = safe_text($permintaan_pemeriksaan_list['pemeriksaan_description'] ?? null);
-                                        $pemeriksaan_sys = safe_text($permintaan_pemeriksaan_list['pemeriksaan_sys'] ?? null);
-                                        
-                                        echo '
+                        foreach ($permintaan_pemeriksaan_arry as $permintaan_pemeriksaan_list) {
+                            $id_master_pemeriksaan = safe_text($permintaan_pemeriksaan_list['id_master_pemeriksaan'] ?? null);
+                            $nama_pemeriksaan = safe_text($permintaan_pemeriksaan_list['nama_pemeriksaan'] ?? null);
+                            $modalitas = safe_text($permintaan_pemeriksaan_list['modalitas'] ?? null);
+                            $pemeriksaan_code = safe_text($permintaan_pemeriksaan_list['pemeriksaan_code'] ?? null);
+                            $pemeriksaan_description = safe_text($permintaan_pemeriksaan_list['pemeriksaan_description'] ?? null);
+                            $pemeriksaan_sys = safe_text($permintaan_pemeriksaan_list['pemeriksaan_sys'] ?? null);
+                            
+                            echo '
+                                <div class="table table-responsive">
+                                    <table class="table table-sm table-bordered">
+                                        <tbody>
                                             <tr>
-                                                <td class="text-center"><small>'.$no_permintaan.'</small></td>
+                                                <td><small class="text text-dark">Nama Pemeriksaan</small></td>
                                                 <td><small>'.$nama_pemeriksaan.'</small></td>
-                                                <td><small>'.$modalitas.'</small></td>
-                                                <td>
-                                                    <small data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="'.$pemeriksaan_sys.'">
-                                                        '.$pemeriksaan_code.' - <i class="text text-grayish">'.$pemeriksaan_description.'</i>
-                                                    </small>
-                                                </td>
-                                                <td class="text-center">
-                                                    <button type="button" class="btn btn-sm btn-outline-dark btn-floating"  data-bs-toggle="dropdown" aria-expanded="false">
-                                                        <i class="bi bi-three-dots-vertical"></i>
-                                                    </button>
-                                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow" style="">
-                                                        <li>
-                                                            <a class="dropdown-item modal_edit_klinis" href="javascript:void(0)" data-id="'.$id_master_pemeriksaan .'">
-                                                                <i class="bi bi-pencil"></i> Edit
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a class="dropdown-item modal_hapus_klinis" href="javascript:void(0)" data-id="'.$id_master_pemeriksaan .'">
-                                                                <i class="bi bi-x"></i> Hapus
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </td>
                                             </tr>
-                                        ';
-                                        $no_permintaan++;
-                                    }
-                                }
-                            ?>
-                        </tbody>
-                    </table>
-                </div>
+                                            <tr>
+                                                <td><small class="text text-dark"><i>Modality</i></small></td>
+                                                <td><small>'.$modalitas.'</small></td>
+                                            </tr>
+                                            <tr>
+                                                <td><small class="text text-dark"><i>Loinc Code</i></small></td>
+                                                <td><small>'.$pemeriksaan_code.'</small></td>
+                                            </tr>
+                                            <tr>
+                                                <td><small class="text text-dark"><i>Loinc Display</i></small></td>
+                                                <td><small>'.$pemeriksaan_description.'</small></td>
+                                            </tr>
+                                            <tr>
+                                                <td><small class="text text-dark"><i>Loinc System</i></small></td>
+                                                <td><small>'.$pemeriksaan_sys.'</small></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            ';
+                        }
+                    }
+                ?>
             </div>
         </div>
 
