@@ -68,16 +68,16 @@ function tampilkanTanggal() {
 }
 
 // Fungsi untuk menampilkan dashboard
-function ShowDashboard() {
+function ShowBasicDashboard() {
     $.ajax({
-        type: 'POST',
-        url: '_Page/Dashboard/CountDashboard.php',
+        type    : 'POST',
+        url     : '_Page/Dashboard/CountDashboard.php',
         dataType: 'json',
         success: function(data) {
-            $('#put_pengguna').hide().html(data.user).fadeIn('slow');
-            $('#put_siswa_aktif').hide().html(data.siswa).fadeIn('slow');
-            $('#put_periode_akademik').hide().html(data.periode).fadeIn('slow');
-            $('#put_pembayaran').hide().html(data.pembayaran).fadeIn('slow');
+            $('#put_diminta').hide().html(data.Diminta).fadeIn('slow');
+            $('#put_dikerjakan').hide().html(data.Dikerjakan).fadeIn('slow');
+            $('#put_hasil').hide().html(data.Hasil).fadeIn('slow');
+            $('#put_selesai').hide().html(data.Selesai).fadeIn('slow');
         },
         error: function(xhr, status, error) {
             console.error("Gagal mengambil data dashboard:", error);
@@ -86,12 +86,14 @@ function ShowDashboard() {
 }
 
 // Fungsi untuk Menampilkan Biaya Pendidikan
-function ShowRiwayatTagihan() {
+function ReloadPermintaan(Periode,Keyword) {
     $.ajax({
         type: 'POST',
-        url: '_Page/Dashboard/TableTagihan.php',
+        url : '_Page/Dashboard/CountPermintaan.php',
+        data: {Periode: Periode, Keyword: Keyword},
         success: function(data) {
-            $('#ShowRiwayatTagihan').hide().html(data).fadeIn('slow');
+            $('#put_diminta').hide().html(data.count).fadeIn('slow');
+            $('#periode_permintaan').hide().html(data.periode_display).fadeIn('slow');
         },
         error: function(xhr, status, error) {
             console.error("Gagal mengambil data dashboard:", error);
@@ -221,11 +223,8 @@ $(document).ready(function () {
 
     //Menampilkan Data Pertama Kali
     ShowGrafik();
-    ShowDashboard();
-    ShowRiwayatTagihan();
-    ShowRiwayatPembayaran();
+    ShowBasicDashboard();
 
-    ShowDashboard();
     // Update setiap 10 detik
     setInterval(ShowDashboard, 10000);
     
@@ -233,4 +232,17 @@ $(document).ready(function () {
     tampilkanTanggal(); // Tampilkan tanggal saat halaman dimuat
     tampilkanJam();     // Tampilkan jam pertama kali
     setInterval(tampilkanJam, 1000); // Perbarui jam setiap detik
+
+
+    
+});
+
+// Ketika Reload Permintaan
+$(document).on('click', '.reload_permintaan_pemeriksaan', function () {
+
+    //tangkap data 'accession_number' dan buat variabel
+    var periode   = $(this).data('periode');
+    var keyword   = $(this).data('keyword');
+
+    ReloadPermintaan(periode,keyword);
 });

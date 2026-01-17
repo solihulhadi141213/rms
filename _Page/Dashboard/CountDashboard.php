@@ -5,53 +5,83 @@
     // Set header JSON
     header('Content-Type: application/json');
 
+    // Zona Waktu
+    date_default_timezone_set("Asia/Jakarta");
+
     // Siapkan variabel default
     $response = [
-        "user" => 0,
-        "siswa" => 0,
-        "periode" => 0,
-        "pembayaran" => 0
+        "Diminta"    => "0",
+        "Dikerjakan" => "0",
+        "Hasil"      => "0",
+        "Selesai"    => "0"
     ];
 
-    // Hitung jumlah user
-    $qUser = $Conn->query("SELECT COUNT(*) AS total FROM access");
-    if ($qUser) {
-        $dUser = $qUser->fetch_assoc();
-        $response['user'] = (int)$dUser['total'];
+    // Default Tahun Sekarang
+    $periode = date('Y');
+    $start_date = $periode . '-01-01';
+    $end_date = $periode . '-12-31 23:59:59';
+
+    // Fungsi untuk format angka
+    function formatNumber($number) {
+        if ($number == 0) return "0";
+        
+        if ($number >= 1000000000) {
+            return round($number / 1000000000, 1) . 'B';
+        } elseif ($number >= 1000000) {
+            return round($number / 1000000, 1) . 'M';
+        } elseif ($number >= 1000) {
+            return round($number / 1000, 1) . 'K';
+        }
+        return (string)$number;
     }
 
-    // Hitung jumlah siswa aktif
-    $qSiswa = $Conn->query("SELECT COUNT(*) AS total FROM student WHERE student_status='Terdaftar'");
-    if ($qSiswa) {
-        $dSiswa = $qSiswa->fetch_assoc();
-        $response['siswa'] = (int)$dSiswa['total'];
+    try {
+        // Query tunggal yang dioptimalkan dengan conditional aggregation
+        $query = "SELECT 
+                    SUM(CASE WHEN status_pemeriksaan = 'Diminta' THEN 1 ELSE 0 END) as Diminta,
+                    SUM(CASE WHEN status_pemeriksaan = 'Dikerjakan' THEN 1 ELSE 0 END) as Dikerjakan,
+                    SUM(CASE WHEN status_pemeriksaan = 'Hasil' THEN 1 ELSE 0 END) as Hasil,
+                    SUM(CASE WHEN status_pemeriksaan = 'Selesai' THEN 1 ELSE 0 END) as Selesai
+                  FROM radiologi 
+                  WHERE datetime_diminta BETWEEN ? AND ?";
+        
+        // Persiapkan statement
+        $stmt = $Conn->prepare($query);
+        
+        if (!$stmt) {
+            throw new Exception("Error preparing query: " . $Conn->error);
+        }
+        
+        // Bind parameter
+        $stmt->bind_param("ss", $start_date, $end_date);
+        
+        // Eksekusi
+        if (!$stmt->execute()) {
+            throw new Exception("Error executing query: " . $stmt->error);
+        }
+        
+        // Bind result
+        $result = $stmt->get_result();
+        
+        if ($result && $result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            
+            // Format angka
+            $response = [
+                "Diminta"    => formatNumber($row['Diminta'] ?? 0),
+                "Dikerjakan" => formatNumber($row['Dikerjakan'] ?? 0),
+                "Hasil"      => formatNumber($row['Hasil'] ?? 0),
+                "Selesai"    => formatNumber($row['Selesai'] ?? 0)
+            ];
+        }
+        
+        $stmt->close();
+        
+    } catch (Exception $e) {
+        // Log error jika diperlukan
+        error_log("Error in radiologi stats: " . $e->getMessage());
     }
-
-    // Hitung jumlah periode akademik aktif
-    $qPeriode = $Conn->query("SELECT COUNT(*) AS total FROM academic_period");
-    if ($qPeriode) {
-        $dPeriode = $qPeriode->fetch_assoc();
-        $response['periode'] = (int)$dPeriode['total'];
-    }
-
-    // Hitung total nominal pembayaran tahun berjalan
-    $tahun = date("Y");
-    $qPembayaran = $Conn->prepare("
-        SELECT COALESCE(SUM(payment_nominal),0) AS total 
-        FROM payment 
-        WHERE YEAR(payment_datetime)=?
-    ");
-    $qPembayaran->bind_param("i", $tahun);
-    $qPembayaran->execute();
-    $resPembayaran = $qPembayaran->get_result();
-    if ($resPembayaran) {
-        $dPembayaran = $resPembayaran->fetch_assoc();
-        // Format rupiah
-        $response['pembayaran'] = "Rp " . number_format((float)$dPembayaran['total'], 0, ',', '.');
-    }
-    $qPembayaran->close();
 
     // Output JSON
     echo json_encode($response);
-
 ?>

@@ -37,18 +37,18 @@
         </div>
     </div>
     <div class="row">
+
+        <!-- JUMLAH PERMINTAAN PEMERIKSAAN -->
         <div class="col-md-3 col-12">
             <div class="card info-card sales-card">
                 <div class="filter">
-                    <a class="icon" href="javascript:void(0);">
+                    <a class="icon reload_permintaan_pemeriksaan" data-periode="Tahun" data-keyword="<?php echo date('Y'); ?>" href="javascript:void(0);">
                         <i class="bi bi-repeat"></i>
                     </a>
                     <a class="icon" href="javascript:void(0);" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                        <li class="dropdown-header text-start"><h6>Periode</h6></li>
-                        <li><a href="javascript:void(0);" class="dropdown-item">Hari Ini</a></li>
-                        <li><a href="javascript:void(0);" class="dropdown-item">Bulan Ini</a></li>
-                        <li><a href="javascript:void(0);" class="dropdown-item">Tahun Ini</a></li>
+                        <li><a href="javascript:void(0);" class="dropdown-item reload_permintaan_pemeriksaan" data-periode="Hari" data-keyword="<?php echo date('Y-m-d'); ?>">Hari Ini</a></li>
+                        <li><a href="javascript:void(0);" class="dropdown-item reload_permintaan_pemeriksaan" data-periode="Bulan" data-keyword="<?php echo date('Y-m'); ?>">Bulan Ini</a></li>
                     </ul>
                 </div>
                 <div class="card-body">
@@ -57,16 +57,18 @@
                             <i class="bi bi-bell"></i>
                         </div>
                         <div class="ps-3">
-                            <b id="permintaan_pemeriksaan">00.000</b><br>
+                            <b id="put_diminta">--</b><br>
                             <small>Permintaan Pemeriksaan</small><br>
                             <small>
-                                <small class="text text-grayish"><?php echo date('F Y'); ?></small>
+                                <small class="text text-grayish" id="periode_permintaan">Tahun <?php echo date('Y'); ?></small>
                             </small>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- JUMLAH PEMERIKSAAN DIKERJAKAN-->
         <div class="col-md-3 col-12">
             <div class="card info-card customers-card">
                 <div class="filter">
@@ -87,16 +89,18 @@
                             <i class="bi bi-lightning-charge"></i>
                         </div>
                         <div class="ps-3">
-                            <b id="sedang_dikerjakan">00.000</b><br>
+                            <b id="put_dikerjakan">--</b><br>
                             <small>Sedang Dikerjakan</small><br>
                             <small>
-                                <small class="text text-grayish"><?php echo date('F Y'); ?></small>
+                                <small class="text text-grayish">Periode <?php echo date('Y'); ?></small>
                             </small>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- JUMLAH PEMERIKSAAN MENUNGGU HASIL-->
         <div class="col-md-3 col-12">
             <div class="card info-card yellow-card">
                 <div class="filter">
@@ -117,16 +121,18 @@
                             <i class="bi bi-clock"></i>
                         </div>
                         <div class="ps-3">
-                            <b id="menunggu_hasil">00.000</b><br>
+                            <b id="put_hasil">--</b><br>
                             <small>Menunggu Hasil</small><br>
                             <small>
-                                <small class="text text-grayish"><?php echo date('F Y'); ?></small>
+                                <small class="text text-grayish">Periode <?php echo date('Y'); ?></small>
                             </small>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- JUMLAH PEMERIKSAAN SELESAI-->
         <div class="col-md-3 col-12">
             <div class="card info-card revenue-card">
                 <div class="filter">
@@ -147,10 +153,10 @@
                             <i class="bi bi-check"></i>
                         </div>
                         <div class="ps-3">
-                            <b id="selesai">00.00</b><br>
+                            <b id="put_selesai">--</b><br>
                             <small>Selesai</small><br>
                             <small>
-                                <small class="text text-grayish"><?php echo date('F Y'); ?></small>
+                                <small class="text text-grayish">Periode <?php echo date('Y'); ?></small>
                             </small>
                         </div>
                     </div>
