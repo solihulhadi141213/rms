@@ -14,7 +14,7 @@
     if(empty($SessionIdAccess)){
         echo '
             <tr>
-                <td colspan="12" class="text-center">
+                <td colspan="13" class="text-center">
                     <small class="text-danger">Sesi Akses Sudah Berakhir! Silahkan Login Ulang!</small>
                 </td>
             </tr>
@@ -82,7 +82,7 @@
     if(empty($jml_data)){
         echo '
             <tr>
-                <td colspan="12" class="text-center">
+                <td colspan="13" class="text-center">
                     <small class="text-danger">Tidak Ada Data Yang Ditemukan!</small>
                 </td>
             </tr>
@@ -156,8 +156,20 @@
             'CR' => 'Computed Radiography'
         ];
 
+        $warna_modalitas = [
+            'XR' => 'primary',
+            'CT' => 'secondary',
+            'US' => 'warning',
+            'MR' => 'info',
+            'NM' => 'danger',
+            'PT' => 'dark',
+            'DX' => 'success',
+            'CR' => 'dark'
+        ];
+
         // Ambil nama modalitas
         $modalitas_nama = $nama_modalitas[$alat_pemeriksa] ?? '-';
+        $modalitas_warna = $warna_modalitas[$alat_pemeriksa] ?? '-';
 
         //Routing Status
         $tombol_lanjutan = '';
@@ -411,6 +423,11 @@
                 <td><small>'.$tanggal.'</small></td>
                 <td><small>'.$jam.'</small></td>
                 <td class="text-center">
+                    <span class="badge badge-'.$modalitas_warna.'" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="'.$modalitas_nama.'">
+                        '.$alat_pemeriksa.'
+                    </span>
+                </td>
+                <td class="text-center">
                     <small class="text '.$labal_pembyaran.'" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="'.$pembayaran.'">
                         '.$pembayaran_code.'
                     </small>
@@ -418,11 +435,6 @@
                 <td class="text-center">
                     <small class="'.$labal_tujuan.'" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="'.$asal_kiriman.'">
                         '.$tujuan.'
-                    </small>
-                </td>
-                <td class="text-center">
-                    <small data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="'.$modalitas_nama.'">
-                        '.$alat_pemeriksa.'
                     </small>
                 </td>
                 <td>

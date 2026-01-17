@@ -56,7 +56,7 @@ if (!$Data) {
 }
 
 // =======================
-// OPTIONAL (AMAN): CEGAH HAPUS JIKA AKTIF
+// OPTIONAL (AMAN): CEGAH HAPUS JIKA SELESAI
 // =======================
 if ($Data['status_pemeriksaan'] == 'Selesai') {
     $response['message'] = 'Data Pemeriksaan Sudah Selesai! Anda tidak bisa menghapus data ini. Silahkan hubungi unit SIRS untuk memaksa sistem menghapus data tersebut.';

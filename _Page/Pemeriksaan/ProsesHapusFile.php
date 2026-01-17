@@ -81,6 +81,24 @@
     }
 
     // =====================================================================
+    // HAPUS FILE FISIK DICOM jika ada
+    // =====================================================================
+    $filename_dicom_conv = GetDetailData($Conn, 'radiologi_dicom_conv ', 'id_radiologi_file', $id_radiologi_file, 'filename');
+    if(!empty($filename_dicom_conv)){
+        
+    // Jika ada Maka Baca Path Nya
+        $file_path_dicom = "../../_DCM/$filename_dicom_conv";
+        // Jika file ada → hapus
+        if (file_exists($file_path_dicom)) {
+            if (!unlink($file_path_dicom)) {
+                $response['message'] = 'Gagal menghapus file DICOM dari storage';
+                echo json_encode($response);
+                exit;
+            }
+        }
+    }
+    
+    // =====================================================================
     // HAPUS DATA DATABASE
     // =====================================================================
     $Del = $Conn->prepare("DELETE FROM radiologi_file WHERE id_radiologi_file = ?");

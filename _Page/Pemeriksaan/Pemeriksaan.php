@@ -58,6 +58,11 @@
                                         <td valign="middle" class="text-left"><b><small>TGL</small></b></td>
                                         <td valign="middle" class="text-left"><b><small>JAM</small></b></td>
                                         <td valign="middle" class="text-center">
+                                            <b data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Modalitas (Alat/Pesawat)">
+                                                <small class="text-primary">MOD</small>
+                                            </b>
+                                        </td>
+                                        <td valign="middle" class="text-center">
                                             <b data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Metode Pembayaran">
                                                 <small class="text-primary">PAY</small>
                                             </b>
@@ -65,11 +70,6 @@
                                             <td valign="middle" class="text-center">
                                             <b data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Asal Kiriman">
                                                 <small class="text-primary">FROM</small>
-                                            </b>
-                                        </td>
-                                        <td valign="middle" class="text-center">
-                                            <b data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Modalitas (Alat/Pesawat)">
-                                                <small class="text-primary">MOD</small>
                                             </b>
                                         </td>
                                         <td valign="middle" class="text-center">
@@ -101,7 +101,7 @@
                                 </thead>
                                 <tbody id="TabelPemeriksaan">
                                     <tr>
-                                        <td class="text-center" colspan="12">
+                                        <td class="text-center" colspan="13">
                                             <small>Tidak ada data yang ditampilkan</small>
                                         </td>
                                     </tr>
