@@ -28,6 +28,7 @@
             "Tarif"            => "_Page/Tarif/Tarif.js",
             "Question"         => "_Page/Question/Question.js",
             "Pemeriksaan"      => "_Page/Pemeriksaan/Pemeriksaan.js",
+            "Tagihan"          => "_Page/Tagihan/Tagihan.js",
             "DicomRouter"      => "_Page/DicomRouter/DicomRouter.js",
             "Aktivitas"        => "_Page/Aktivitas/Aktivitas.js",
             "Help"             => "_Page/Help/Help.js"

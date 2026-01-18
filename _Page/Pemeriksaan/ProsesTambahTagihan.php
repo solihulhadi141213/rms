@@ -12,7 +12,7 @@
 
     // Validasi Sesi
     if(empty($SessionIdAccess)){
-        echo json_encode(['status' => 'error','message' => 'Sesi Akses Sudah Berakhir. Silahkan Login Ulang!']);
+        echo json_encode(['status' => 'error', 'id_radiologi' => '', 'message' => 'Sesi Akses Sudah Berakhir. Silahkan Login Ulang!']);
         exit;
     }
 
@@ -24,49 +24,49 @@
 
     // Validasi input 'service_name'
     if(empty($_POST['service_name'])){
-        echo json_encode(['status' => 'error','message' => 'Nama Tarif tidak boleh kosong!']);
+        echo json_encode(['status' => 'error', 'id_radiologi' => '', 'message' => 'Nama Tarif tidak boleh kosong!']);
         exit;
     }
 
     // Validasi input 'service_category'
     if(empty($_POST['service_category'])){
-        echo json_encode(['status' => 'error','message' => 'Kategori Tarif tidak boleh kosong!']);
+        echo json_encode(['status' => 'error', 'id_radiologi' => '', 'message' => 'Kategori Tarif tidak boleh kosong!']);
         exit;
     }
 
     // Validasi input 'modality'
     if(empty($_POST['modality'])){
-        echo json_encode(['status' => 'error','message' => 'Informasi kelompok modalitas tidak boleh kosong tidak boleh kosong!']);
+        echo json_encode(['status' => 'error', 'id_radiologi' => '', 'message' => 'Informasi kelompok modalitas tidak boleh kosong tidak boleh kosong!']);
         exit;
     }
 
     // Validasi input 'insurance_type'
     if(empty($_POST['insurance_type'])){
-        echo json_encode(['status' => 'error','message' => 'Kelompok tipe asuransi tidak boleh kosong!']);
+        echo json_encode(['status' => 'error', 'id_radiologi' => '', 'message' => 'Kelompok tipe asuransi tidak boleh kosong!']);
         exit;
     }
 
     // Validasi input 'base_price'
     if(empty($_POST['base_price'])){
-        echo json_encode(['status' => 'error','message' => 'Tarif dasar tidak boleh kosong!']);
+        echo json_encode(['status' => 'error', 'id_radiologi' => '', 'message' => 'Tarif dasar tidak boleh kosong!']);
         exit;
     }
 
     // Validasi input 'total_price'
     if(empty($_POST['total_price'])){
-        echo json_encode(['status' => 'error','message' => 'Total Tarif tidak boleh kosong!']);
+        echo json_encode(['status' => 'error', 'id_radiologi' => '', 'message' => 'Total Tarif tidak boleh kosong!']);
         exit;
     }
 
     // Validasi input 'quantity'
     if(empty($_POST['quantity'])){
-        echo json_encode(['status' => 'error','message' => 'Quantity tidak boleh kosong!']);
+        echo json_encode(['status' => 'error', 'id_radiologi' => '','message' => 'Quantity tidak boleh kosong!']);
         exit;
     }
 
     // Validasi input 'amount'
     if(empty($_POST['amount'])){
-        echo json_encode(['status' => 'error','message' => 'Amount tidak boleh kosong!']);
+        echo json_encode(['status' => 'error', 'id_radiologi' => '', 'message' => 'Amount tidak boleh kosong!']);
         exit;
     }
 
@@ -157,6 +157,7 @@
 
             echo json_encode([
                 'status' => 'error',
+                'id_radiologi' => '',
                 'message' => 'Gagal menyimpan data: ' . $stmt->error
             ]);
             exit;
@@ -188,13 +189,15 @@
     if ($stmt2->execute()) {
         echo json_encode([
             'status' => 'success',
-            'message' => 'Invoice Berhasil Ditambahkan'
+            'message' => 'Invoice Berhasil Ditambahkan',
+            'id_radiologi' => $id_radiologi
         ]);
         exit;
     } else {
 
         echo json_encode([
             'status' => 'error',
+            'id_radiologi' => '',
             'message' => 'Gagal menyimpan data: ' . $stmt2->error
         ]);
         exit;

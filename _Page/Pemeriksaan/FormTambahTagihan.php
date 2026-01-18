@@ -67,13 +67,12 @@
 ?>
 <input type="hidden" name="id_radiologi" value="<?php echo $id_radiologi; ?>">
 <div class="row mb-3 border-1 border-bottom">
-    <div class="col-4 mb-3">
+    <div class="col-md-4 mb-3">
         <label for="id_master_service_prices">
             <small>Pilih Tarif</small>
         </label>
     </div>
-    <div class="col-1 mb-3"><small>:</small></div>
-    <div class="col-7 mb-3">
+    <div class="col-md-8 mb-3">
         <select name="kode_tarif" id="kode_tarif" class="form-control">
             <option value="">Pilih</option>
             <?php
@@ -93,64 +92,70 @@
                 }
             ?>
         </select>
-        <small class="text text-grayish">
-            Jika tarif belum terdaftar, silahkan isi tarif secara manual.
+        <small>
+            <small class="text text-grayish">
+                Jika anda tidak menemukan tafir pemeriksaan yang dimaksud, silahkan isi tarif secara manual.
+            </small>
         </small>
     </div>
 </div>
 <div class="row mb-3">
-    <div class="col-4">
+    <div class="col-md-4">
         <label for="service_name">
             <small>Nama Tarif</small>
         </label>
     </div>
-    <div class="col-1"><small>:</small></div>
-    <div class="col-7">
+    <div class="col-md-8">
         <input type="text" name="service_name" id="service_name" class="form-control" required>
     </div>
 </div>
 <div class="row mb-3">
-    <div class="col-4">
+    <div class="col-md-4">
         <label for="service_category">
             <small>Kategori Tarif</small>
         </label>
     </div>
-    <div class="col-1"><small>:</small></div>
-    <div class="col-7">
+    <div class="col-md-8">
         <input type="text" name="service_category" id="service_category" class="form-control" required>
     </div>
 </div>
 <div class="row mb-3">
-    <div class="col-4">
+    <div class="col-md-4">
         <label for="modality">
             <small>Modalitas</small>
         </label>
     </div>
-    <div class="col-1"><small>:</small></div>
-    <div class="col-7">
+    <div class="col-md-8">
         <input type="text" name="modality" id="modality" class="form-control" required>
+        <small>
+            <small class="text text-grayish">
+                Diisi apabila tarif berkaitan dengan penggunaan modalitas tertentu.
+            </small>
+        </small>
     </div>
 </div>
 <div class="row mb-3">
-    <div class="col-4">
+    <div class="col-md-4">
         <label for="patient_class">
             <small>Kelas Inap</small>
         </label>
     </div>
-    <div class="col-1"><small>:</small></div>
-    <div class="col-7">
+    <div class="col-md-8">
         <input type="text" name="patient_class" id="patient_class" class="form-control">
-        <small class="text text-grayish">Diisi apabila tarif berkaitan dengan kelas inap</small>
+        <small>
+            <small class="text text-grayish">
+                Diisi apabila tarif berkaitan dengan kelas rawat inap tertentu
+            </small>
+        </small>
     </div>
 </div>
 <div class="row mb-3">
-    <div class="col-4">
+    <div class="col-md-4">
         <label for="insurance_type">
             <small>Asuransi/BPJS</small>
         </label>
     </div>
-    <div class="col-1"><small>:</small></div>
-    <div class="col-7">
+    <div class="col-md-8">
         <input type="text" name="insurance_type" id="insurance_type" list="list_insurance_type" class="form-control" required>
         <datalist id="list_insurance_type">
             <?php
@@ -165,90 +170,83 @@
     </div>
 </div>
 <div class="row mb-3">
-    <div class="col-4">
+    <div class="col-md-4">
         <label for="base_price">
             <small>Tarif Dasar</small>
         </label>
     </div>
-    <div class="col-1"><small>:</small></div>
-    <div class="col-7">
+    <div class="col-md-8">
         <input type="text" name="base_price" id="base_price" class="form-control form-money" required>
     </div>
 </div>
 <div class="row mb-3">
-    <div class="col-4">
+    <div class="col-md-4">
         <label for="doctor_fee">
             <small>Jasa Dokter</small>
         </label>
     </div>
-    <div class="col-1"><small>:</small></div>
-    <div class="col-7">
+    <div class="col-md-8">
         <input type="text" name="doctor_fee" id="doctor_fee" class="form-control form-money">
     </div>
 </div>
 <div class="row mb-3">
-    <div class="col-4">
+    <div class="col-md-4">
         <label for="radiographers_fee">
             <small>Jasa Radiografer</small>
         </label>
     </div>
-    <div class="col-1"><small>:</small></div>
-    <div class="col-7">
+    <div class="col-md-8">
         <input type="text" name="radiographers_fee" id="radiographers_fee" class="form-control form-money">
     </div>
 </div>
 <div class="row mb-3">
-    <div class="col-4">
+    <div class="col-md-4">
         <label for="facility_fee">
             <small>Jasa RS</small>
         </label>
     </div>
-    <div class="col-1"><small>:</small></div>
-    <div class="col-7">
+    <div class="col-md-8">
         <input type="text" name="facility_fee" id="facility_fee" class="form-control form-money">
     </div>
 </div>
 <div class="row mb-3 ">
-    <div class="col-4">
+    <div class="col-md-4">
         <label for="equipment_fee">
             <small>Beban Alat & BHP</small>
         </label>
     </div>
-    <div class="col-1"><small>:</small></div>
-    <div class="col-7">
+    <div class="col-md-8">
         <input type="text" name="equipment_fee" id="equipment_fee" class="form-control form-money">
     </div>
 </div>
 <div class="row mb-3 border-1 border-bottom">
-    <div class="col-4 mb-3">
+    <div class="col-md-4 mb-3">
         <label for="total_price">
             <small>Total Harga</small>
         </label>
     </div>
-    <div class="col-1 mb-3"><small>:</small></div>
-    <div class="col-7 mb-3">
+    <div class="col-md-8 mb-3">
         <input type="text" name="total_price" id="total_price" class="form-control form-money" required>
     </div>
 </div>
 <div class="row mb-3">
-    <div class="col-4">
+    <div class="col-md-4">
         <label for="quantity">
             <small>Quantity</small>
         </label>
     </div>
-    <div class="col-1"><small>:</small></div>
-    <div class="col-7">
+    <div class="col-md-8">
         <input type="text" name="quantity" id="quantity" class="form-control form-money" value="1" required>
     </div>
 </div>
 <div class="row mb-3">
-    <div class="col-4">
+    <div class="col-md-4">
         <label for="amount">
             <small>Total Tagihan</small>
         </label>
     </div>
-    <div class="col-1"><small>:</small></div>
-    <div class="col-7">
+    
+    <div class="col-md-8">
         <input type="text" name="amount" id="amount" class="form-control form-money" required>
     </div>
 </div>

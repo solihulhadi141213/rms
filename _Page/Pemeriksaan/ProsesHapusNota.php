@@ -9,8 +9,9 @@ date_default_timezone_set("Asia/Jakarta");
 
 // Response default
 $response = [
-    'status'  => 'error',
-    'message' => 'Terjadi kesalahan sistem'
+    'status'       => 'error',
+    'id_radiologi' => '',
+    'message'      => 'Terjadi kesalahan sistem'
 ];
 
 // =======================
@@ -36,7 +37,7 @@ if (empty($id_radiologi_invoice)) {
 // =======================
 // CEK DATA ADA ATAU TIDAK
 // =======================
-$QryCheck = $Conn->prepare("SELECT id_radiologi_invoice FROM radiologi_invoice WHERE id_radiologi_invoice = ?");
+$QryCheck = $Conn->prepare("SELECT id_radiologi FROM radiologi_invoice WHERE id_radiologi_invoice = ?");
 if (!$QryCheck) {
     $response['message'] = $Conn->error;
     echo json_encode($response);
@@ -54,6 +55,7 @@ if (!$Data) {
     echo json_encode($response);
     exit;
 }
+$id_radiologi = $Data['id_radiologi'];
 
 
 // =======================
@@ -78,6 +80,7 @@ try {
     $Conn->commit();
 
     $response['status']  = 'success';
+    $response['id_radiologi']  = $id_radiologi;
     $response['message'] = 'Hapus Invoice berhasil.';
 
 } catch (Exception $e) {
