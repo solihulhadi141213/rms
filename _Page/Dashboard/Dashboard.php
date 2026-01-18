@@ -304,12 +304,12 @@
             LIST DOKTER PENERIMA/RADIOLOG 
             ===================================================================================
             -->
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="card">
+            <div class="row align-items-stretch">
+                <div class="col-md-6 d-flex">
+                    <div class="card w-100 d-flex flex-column">
                         <div class="card-header">
                             <b class="card-title">
-                                <i class="bi bi-send"></i> Dokter Pemeriksa</small>
+                                <i class="bi bi-list-check"></i> Dokter Pemeriksa</small>
                             </b>
                             <div class="filter">
                                 <a class="icon" href="javascript:void(0);" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
@@ -350,66 +350,28 @@
 
                 <!-- 
                 ===================================================================================
-                LIST ASAL KIRIMAN
+                PIE MODALITY
                 ===================================================================================
                 -->
-                <div class="col-md-4">
-                    <div class="card">
+                <div class="col-md-6 d-flex">
+                    <div class="card w-100 d-flex flex-column">
                         <div class="card-header">
                             <b class="card-title">
-                                <i class="bi bi-send"></i> Asal Kiriman</small>
+                                <i class="bi bi-pie-chart-fill"></i> <i>Modality</i></small>
                             </b>
-                        </div>
-                        <div class="card-body">
-                            <div class="activity">
-                                <div class="table table-responsive">
-                                    <table class="table table-hover table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th><b>Poli/Ruangan</b></th>
-                                                <th class="text-end"><b>Pemeriksaan</b></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="tabel_asal">
-                                            <tr>
-                                                <td colspan="2" class="text-center">
-                                                    <small class="text-danger">Belum Ada Data Yang Ditampilkan</small>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+                            <div class="filter">
+                                <a class="icon" href="javascript:void(0);" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                    <li class="dropdown-header text-start"><h6>Periode</h6></li>
+                                    <li><a href="javascript:void(0);" class="dropdown-item reload_modality" data-periode="Hari" data-keyword="<?php echo date('Y-m-d'); ?>">Hari Ini</a></li>
+                                    <li><a href="javascript:void(0);" class="dropdown-item reload_modality" data-periode="Bulan" data-keyword="<?php echo date('Y-m'); ?>">Bulan Ini</a></li>
+                                    <li><a href="javascript:void(0);" class="dropdown-item reload_modality" data-periode="Tahun" data-keyword="<?php echo date('Y'); ?>">Tahun Ini</a></li>
+                                </ul>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-header">
-                            <b class="card-title">
-                                <i class="bi bi-send"></i> Jenis Pemeriksaan</small>
-                            </b>
-                        </div>
                         <div class="card-body">
-                            <div class="activity">
-                                <div class="table table-responsive">
-                                    <table class="table table-hover table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th><b>Loinc</b></th>
-                                                <th class="text-end"><b>Pemeriksaan</b></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="tabel_dokter_pengirim">
-                                            <tr>
-                                                <td colspan="2" class="text-center">
-                                                    <small class="text-danger">Belum Ada Data Yang Ditampilkan</small>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+                            <div id="pieModality"></div>
+                            <!-- Menampilkan Pie Modality -->
                         </div>
                     </div>
                 </div>

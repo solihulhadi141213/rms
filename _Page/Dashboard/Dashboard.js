@@ -47,6 +47,68 @@ function ShowGrafik() {
     });
 }
 
+// Fungsi untuk menampilkan pie modality
+let chartModality = null;
+
+// ===============================
+// Load Pie Modality
+// ===============================
+function LoadModality(periode = 'Hari', keyword = '') {
+
+    $('#pieModality').html('<div class="text-center text-muted">Loading...</div>');
+
+    $.ajax({
+        type: 'POST',
+        url: '_Page/Dashboard/pie_modality.php',
+        dataType: 'json',
+        data: {
+            periode: periode,
+            keyword: keyword
+        },
+        success: function (res) {
+
+            if (!res || !res.series || res.series.length === 0) {
+                $('#pieModality').html('<div class="text-center text-muted">Tidak ada data</div>');
+                return;
+            }
+
+            const options = {
+                series: res.series,
+                chart: {
+                    type: 'pie',
+                    height: 450
+                },
+                labels: res.labels,
+                legend: {
+                    position: 'bottom'
+                },
+                tooltip: {
+                    y: {
+                        formatter: function (val) {
+                            return val + ' Pemeriksaan';
+                        }
+                    }
+                }
+            };
+
+            if (chartModality) {
+                chartModality.destroy();
+            }
+
+            chartModality = new ApexCharts(
+                document.querySelector("#pieModality"),
+                options
+            );
+
+            chartModality.render();
+        },
+        error: function (xhr, status, error) {
+            console.error('Gagal memuat pie modality:', error);
+            $('#pieModality').html('<div class="text-danger text-center">Gagal memuat data</div>');
+        }
+    });
+}
+
 
 // Fungsi untuk menampilkan jam digital
 function tampilkanJam() {
@@ -322,6 +384,7 @@ $(document).ready(function () {
     ShowBasicDashboard();
     ShowDokter();
     ShowSatuSehat();
+    LoadModality('Hari', new Date().toISOString().slice(0, 10));
 
     //Jam Menarik
     tampilkanTanggal(); // Tampilkan tanggal saat halaman dimuat
@@ -379,4 +442,12 @@ $(document).on('click', '.reload_dokter', function () {
     var keyword   = $(this).data('keyword');
 
     ShowDokter(keyword);
+});
+
+// Ketika di click reload_modality
+$(document).on('click', '.reload_modality', function () {
+    const periode = $(this).data('periode');
+    const keyword = $(this).data('keyword');
+
+    LoadModality(periode, keyword);
 });
