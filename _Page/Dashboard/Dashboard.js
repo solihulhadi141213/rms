@@ -85,7 +85,7 @@ function ShowBasicDashboard() {
     });
 }
 
-// Fungsi untuk Menampilkan Biaya Pendidikan
+// Fungsi untuk Reload Julah Permintaan Pemeriksaan
 function ReloadPermintaan(Periode,Keyword) {
     $.ajax({
         type: 'POST',
@@ -101,13 +101,109 @@ function ReloadPermintaan(Periode,Keyword) {
     });
 }
 
-// Fungsi untuk Menampilkan Pembayaran
-function ShowRiwayatPembayaran() {
+// Fungsi untuk Menampilkan Jumlah Pemeriksaan Dikerjakan
+function ReloadDikerjakan(Periode,Keyword) {
     $.ajax({
         type: 'POST',
-        url: '_Page/Dashboard/TabelPembayaran.php',
+        url : '_Page/Dashboard/CountDikerjakan.php',
+        data: {Periode: Periode, Keyword: Keyword},
         success: function(data) {
-            $('#ShowRiwayatPembayaran').hide().html(data).fadeIn('slow');
+            $('#put_dikerjakan').hide().html(data.count).fadeIn('slow');
+            $('#periode_dikerjakan').hide().html(data.periode_display).fadeIn('slow');
+        },
+        error: function(xhr, status, error) {
+            console.error("Gagal mengambil data dashboard:", error);
+        }
+    });
+}
+
+// Fungsi untuk Menampilkan Jumlah Pemeriksaan Menunggu Hasil
+function ReloadMenunggu(Periode,Keyword) {
+    $.ajax({
+        type: 'POST',
+        url : '_Page/Dashboard/CountMenunggu.php',
+        data: {Periode: Periode, Keyword: Keyword},
+        success: function(data) {
+            $('#put_hasil').hide().html(data.count).fadeIn('slow');
+            $('#periode_menunggu').hide().html(data.periode_display).fadeIn('slow');
+        },
+        error: function(xhr, status, error) {
+            console.error("Gagal mengambil data dashboard:", error);
+        }
+    });
+}
+
+// Fungsi untuk Menampilkan Jumlah Pemeriksaan Selesai
+function ReloadSelesai(Periode,Keyword) {
+    $.ajax({
+        type: 'POST',
+        url : '_Page/Dashboard/CountSelesai.php',
+        data: {Periode: Periode, Keyword: Keyword},
+        success: function(data) {
+            $('#put_selesai').hide().html(data.count).fadeIn('slow');
+            $('#periode_selesai').hide().html(data.periode_display).fadeIn('slow');
+        },
+        error: function(xhr, status, error) {
+            console.error("Gagal mengambil data dashboard:", error);
+        }
+    });
+}
+
+// ===============================
+// Fungsi Menampilkan Resource Satu Sehat
+// ===============================
+function ShowSatuSehat() {
+    $.ajax({
+        type: 'POST',
+        url: '_Page/Dashboard/CountSatuSehat.php',
+        dataType: 'json',
+        beforeSend: function () {
+            // Optional: loading placeholder
+            $('.satu-sehat-value').html('<small class="text-muted">...</small>');
+        },
+        success: function (res) {
+
+            if (!res || typeof res !== 'object') {
+                console.error('Response tidak valid', res);
+                return;
+            }
+
+            const mapping = {
+                service_request: '#service_request',
+                procedure: '#procedure',
+                imaging_study: '#imaging_study',
+                observation: '#observation',
+                diagnostic_report: '#diagnostic_report',
+                expertise: '#expertise',
+                expertise_usg: '#expertise_usg',
+                dicom_file: '#dicom_file'
+            };
+
+            $.each(mapping, function (key, selector) {
+                if (res[key] !== undefined) {
+                    $(selector)
+                        .stop(true, true)
+                        .fadeOut(100, function () {
+                            $(this).html(res[key]).fadeIn(300);
+                        });
+                }
+            });
+        },
+        error: function (xhr, status, error) {
+            console.error('Gagal mengambil data dashboard:', error);
+        }
+    });
+}
+
+
+// Fungsi untuk Menampilkan dOKTER
+function ShowDokter(Keyword) {
+    $.ajax({
+        type: 'POST',
+        url : '_Page/Dashboard/tabel_dokter.php',
+        data: {Keyword: Keyword},
+        success: function(data) {
+            $('#tabel_dokter').hide().html(data).fadeIn('slow');
         },
         error: function(xhr, status, error) {
             console.error("Gagal mengambil data dashboard:", error);
@@ -224,10 +320,9 @@ $(document).ready(function () {
     //Menampilkan Data Pertama Kali
     ShowGrafik();
     ShowBasicDashboard();
+    ShowDokter();
+    ShowSatuSehat();
 
-    // Update setiap 10 detik
-    setInterval(ShowDashboard, 10000);
-    
     //Jam Menarik
     tampilkanTanggal(); // Tampilkan tanggal saat halaman dimuat
     tampilkanJam();     // Tampilkan jam pertama kali
@@ -245,4 +340,43 @@ $(document).on('click', '.reload_permintaan_pemeriksaan', function () {
     var keyword   = $(this).data('keyword');
 
     ReloadPermintaan(periode,keyword);
+});
+
+// Ketika Reload Dikerjakan
+$(document).on('click', '.reload_dikerjakan', function () {
+
+    //tangkap data 'accession_number' dan buat variabel
+    var periode   = $(this).data('periode');
+    var keyword   = $(this).data('keyword');
+
+    ReloadDikerjakan(periode,keyword);
+});
+
+// Ketika Reload Menunggu
+$(document).on('click', '.reload_menunggu', function () {
+
+    //tangkap data 'accession_number' dan buat variabel
+    var periode   = $(this).data('periode');
+    var keyword   = $(this).data('keyword');
+
+    ReloadMenunggu(periode,keyword);
+});
+
+// Ketika Reload Selesai
+$(document).on('click', '.reload_selesai', function () {
+
+    //tangkap data 'accession_number' dan buat variabel
+    var periode   = $(this).data('periode');
+    var keyword   = $(this).data('keyword');
+
+    ReloadSelesai(periode,keyword);
+});
+
+// Ketika Reload Dokter
+$(document).on('click', '.reload_dokter', function () {
+
+    //tangkap data 'keyword' dan buat variabel
+    var keyword   = $(this).data('keyword');
+
+    ShowDokter(keyword);
 });

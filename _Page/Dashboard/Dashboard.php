@@ -72,15 +72,14 @@
         <div class="col-md-3 col-12">
             <div class="card info-card customers-card">
                 <div class="filter">
-                    <a class="icon" href="javascript:void(0);">
+                    <a class="icon reload_dikerjakan" data-periode="Tahun" data-keyword="<?php echo date('Y'); ?>" href="javascript:void(0);">
                         <i class="bi bi-repeat"></i>
                     </a>
                     <a class="icon" href="javascript:void(0);" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                         <li class="dropdown-header text-start"><h6>Periode</h6></li>
-                        <li><a href="javascript:void(0);" class="dropdown-item">Hari Ini</a></li>
-                        <li><a href="javascript:void(0);" class="dropdown-item">Bulan Ini</a></li>
-                        <li><a href="javascript:void(0);" class="dropdown-item">Tahun Ini</a></li>
+                        <li><a href="javascript:void(0);" class="dropdown-item reload_dikerjakan" data-periode="Hari" data-keyword="<?php echo date('Y-m-d'); ?>">Hari Ini</a></li>
+                        <li><a href="javascript:void(0);" class="dropdown-item reload_dikerjakan" data-periode="Bulan" data-keyword="<?php echo date('Y-m'); ?>">Bulan Ini</a></li>
                     </ul>
                 </div>
                 <div class="card-body">
@@ -92,7 +91,7 @@
                             <b id="put_dikerjakan">--</b><br>
                             <small>Sedang Dikerjakan</small><br>
                             <small>
-                                <small class="text text-grayish">Periode <?php echo date('Y'); ?></small>
+                                <small class="text text-grayish" id="periode_dikerjakan">Tahun <?php echo date('Y'); ?></small>
                             </small>
                         </div>
                     </div>
@@ -104,15 +103,14 @@
         <div class="col-md-3 col-12">
             <div class="card info-card yellow-card">
                 <div class="filter">
-                    <a class="icon" href="javascript:void(0);">
+                    <a class="icon reload_menunggu" data-periode="Tahun" data-keyword="<?php echo date('Y'); ?>" href="javascript:void(0);">
                         <i class="bi bi-repeat"></i>
                     </a>
                     <a class="icon" href="javascript:void(0);" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                         <li class="dropdown-header text-start"><h6>Periode</h6></li>
-                        <li><a href="javascript:void(0);" class="dropdown-item">Hari Ini</a></li>
-                        <li><a href="javascript:void(0);" class="dropdown-item">Bulan Ini</a></li>
-                        <li><a href="javascript:void(0);" class="dropdown-item">Tahun Ini</a></li>
+                        <li><a href="javascript:void(0);" class="dropdown-item reload_menunggu" data-periode="Hari" data-keyword="<?php echo date('Y-m-d'); ?>">Hari Ini</a></li>
+                        <li><a href="javascript:void(0);" class="dropdown-item reload_menunggu" data-periode="Bulan" data-keyword="<?php echo date('Y-m'); ?>">Bulan Ini</a></li>
                     </ul>
                 </div>
                 <div class="card-body">
@@ -124,7 +122,7 @@
                             <b id="put_hasil">--</b><br>
                             <small>Menunggu Hasil</small><br>
                             <small>
-                                <small class="text text-grayish">Periode <?php echo date('Y'); ?></small>
+                                <small class="text text-grayish" id="periode_menunggu">Tahun <?php echo date('Y'); ?></small>
                             </small>
                         </div>
                     </div>
@@ -136,15 +134,14 @@
         <div class="col-md-3 col-12">
             <div class="card info-card revenue-card">
                 <div class="filter">
-                    <a class="icon" href="javascript:void(0);">
+                    <a class="icon reload_selesai" data-periode="Tahun" data-keyword="<?php echo date('Y'); ?>" href="javascript:void(0);">
                         <i class="bi bi-repeat"></i>
                     </a>
                     <a class="icon" href="javascript:void(0);" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                         <li class="dropdown-header text-start"><h6>Periode</h6></li>
-                        <li><a href="javascript:void(0);" class="dropdown-item">Hari Ini</a></li>
-                        <li><a href="javascript:void(0);" class="dropdown-item">Bulan Ini</a></li>
-                        <li><a href="javascript:void(0);" class="dropdown-item">Tahun Ini</a></li>
+                        <li><a href="javascript:void(0);" class="dropdown-item reload_selesai" data-periode="Hari" data-keyword="<?php echo date('Y-m-d'); ?>">Hari Ini</a></li>
+                        <li><a href="javascript:void(0);" class="dropdown-item reload_selesai" data-periode="Bulan" data-keyword="<?php echo date('Y-m'); ?>">Bulan Ini</a></li>
                     </ul>
                 </div>
                 <div class="card-body">
@@ -156,7 +153,7 @@
                             <b id="put_selesai">--</b><br>
                             <small>Selesai</small><br>
                             <small>
-                                <small class="text text-grayish">Periode <?php echo date('Y'); ?></small>
+                                <small class="text text-grayish" id="periode_selesai">Tahun <?php echo date('Y'); ?></small>
                             </small>
                         </div>
                     </div>
@@ -165,6 +162,7 @@
         </div>
     </div>
 
+    <!-- JUMLAH RESOURCE SATU SEHAT-->
     <div class="row">
         <div class="col-md-3 col-12">
             <div class="card info-card purple-card">
@@ -176,9 +174,6 @@
                         <div class="ps-3">
                             <b id="service_request">00.000</b><br>
                             <small>Service Request</small><br>
-                            <small>
-                                <small class="text text-grayish"><?php echo date('F Y'); ?></small>
-                            </small>
                         </div>
                     </div>
                 </div>
@@ -194,9 +189,6 @@
                         <div class="ps-3">
                             <b id="procedure">00.000</b><br>
                             <small>Procedure</small><br>
-                            <small>
-                                <small class="text text-grayish"><?php echo date('F Y'); ?></small>
-                            </small>
                         </div>
                     </div>
                 </div>
@@ -212,9 +204,6 @@
                         <div class="ps-3">
                             <b id="imaging_study">00.000</b><br>
                             <small>Imaging Study</small><br>
-                            <small>
-                                <small class="text text-grayish"><?php echo date('F Y'); ?></small>
-                            </small>
                         </div>
                     </div>
                 </div>
@@ -230,9 +219,6 @@
                         <div class="ps-3">
                             <b id="observation">00.000</b><br>
                             <small>Observation</small><br>
-                            <small>
-                                <small class="text text-grayish"><?php echo date('F Y'); ?></small>
-                            </small>
                         </div>
                     </div>
                 </div>
@@ -248,9 +234,6 @@
                         <div class="ps-3">
                             <b id="diagnostic_report">00.000</b><br>
                             <small>Diagnostic Report</small><br>
-                            <small>
-                                <small class="text text-grayish"><?php echo date('F Y'); ?></small>
-                            </small>
                         </div>
                     </div>
                 </div>
@@ -266,9 +249,6 @@
                         <div class="ps-3">
                             <b id="expertise">00.000</b><br>
                             <small>Expertise X-Ray</small><br>
-                            <small>
-                                <small class="text text-grayish"><?php echo date('F Y'); ?></small>
-                            </small>
                         </div>
                     </div>
                 </div>
@@ -284,9 +264,6 @@
                         <div class="ps-3">
                             <b id="expertise_usg">00.000</b><br>
                             <small>Expertise USG</small><br>
-                            <small>
-                                <small class="text text-grayish"><?php echo date('F Y'); ?></small>
-                            </small>
                         </div>
                     </div>
                 </div>
@@ -302,16 +279,12 @@
                         <div class="ps-3">
                             <b id="dicom_file">00.000</b><br>
                             <small>DICOM File</small><br>
-                            <small>
-                                <small class="text text-grayish"><?php echo date('F Y'); ?></small>
-                            </small>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 
     <div class="row">
         <div class="col-lg-12">
@@ -320,20 +293,33 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body" id="chart">
-                           <!-- Menampilkan Grafik Disini -->
+                           <!-- MENAMPILKAN GRAFIK -->
                         </div>
                     </div>
                 </div>
             </div>
 
-
+            <!-- 
+            ===================================================================================
+            LIST DOKTER PENERIMA/RADIOLOG 
+            ===================================================================================
+            -->
             <div class="row">
                 <div class="col-md-4">
                     <div class="card">
                         <div class="card-header">
                             <b class="card-title">
-                                <i class="bi bi-send"></i> Dokter Pengirim</small>
+                                <i class="bi bi-send"></i> Dokter Pemeriksa</small>
                             </b>
+                            <div class="filter">
+                                <a class="icon" href="javascript:void(0);" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                    <li class="dropdown-header text-start"><h6>Periode</h6></li>
+                                    <li><a href="javascript:void(0);" class="dropdown-item reload_dokter" data-periode="Hari" data-keyword="<?php echo date('Y-m-d'); ?>">Hari Ini</a></li>
+                                    <li><a href="javascript:void(0);" class="dropdown-item reload_dokter" data-periode="Bulan" data-keyword="<?php echo date('Y-m'); ?>">Bulan Ini</a></li>
+                                    <li><a href="javascript:void(0);" class="dropdown-item reload_dokter" data-periode="Tahun" data-keyword="<?php echo date('Y'); ?>">Tahun Ini</a></li>
+                                </ul>
+                            </div>
                         </div>
                         <div class="card-body">
                             <div class="activity">
@@ -345,10 +331,10 @@
                                                 <th class="text-end"><b>Pemeriksaan</b></th>
                                             </tr>
                                         </thead>
-                                        <tbody id="tabel_dokter_pengirim">
+                                        <tbody id="tabel_dokter">
                                             <tr>
                                                 <td colspan="2" class="text-center">
-                                                    <small class="text-danger">Belum Ada Data Yang Ditampilkan</small>
+                                                    <small class="text-dark">Loading...</small>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -356,8 +342,17 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="card-footer">
+                            <small class="text text-grayish" id="periode_dokter">Periode <?php echo date('Y'); ?></small>
+                        </div>
                     </div>
                 </div>
+
+                <!-- 
+                ===================================================================================
+                LIST ASAL KIRIMAN
+                ===================================================================================
+                -->
                 <div class="col-md-4">
                     <div class="card">
                         <div class="card-header">
@@ -375,7 +370,7 @@
                                                 <th class="text-end"><b>Pemeriksaan</b></th>
                                             </tr>
                                         </thead>
-                                        <tbody id="tabel_dokter_pengirim">
+                                        <tbody id="tabel_asal">
                                             <tr>
                                                 <td colspan="2" class="text-center">
                                                     <small class="text-danger">Belum Ada Data Yang Ditampilkan</small>
