@@ -441,7 +441,7 @@ $(document).ready(function() {
                 $('#klinis').select2({
                     theme             : 'bootstrap-5',
                     placeholder       : 'Ketik & pilih klinis',
-                    tags              : true,
+                    tags              : false,
                     width             : '100%',
                     minimumInputLength: 2,
                     dropdownParent    : $('#FormTambahPermintaan'),

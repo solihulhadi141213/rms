@@ -141,13 +141,13 @@
     if(!empty($_POST['klinis'])){
         $klinis_input = is_array($_POST['klinis']) ? $_POST['klinis'] : explode(',', $_POST['klinis']);
         
-        foreach($klinis_input as $nama_klinis){
-            $nama_klinis = validateAndSanitizeInput($nama_klinis);
+        foreach($klinis_input as $id_master_klinis){
+            $id_master_klinis = validateAndSanitizeInput($id_master_klinis);
             
             // Cek apakah klinis sudah ada di master
-            $query_klinis = "SELECT * FROM master_klinis WHERE nama_klinis = ? AND aktif = 'Ya'";
+            $query_klinis = "SELECT * FROM master_klinis WHERE id_master_klinis = ? AND aktif = 'Ya'";
             $stmt_klinis = $Conn->prepare($query_klinis);
-            $stmt_klinis->bind_param("s", $nama_klinis);
+            $stmt_klinis->bind_param("i", $id_master_klinis);
             $stmt_klinis->execute();
             $result_klinis = $stmt_klinis->get_result();
             

@@ -108,71 +108,82 @@
 <div class="modal fade" id="ModalKunjungan" tabindex="-1">
     <div class="modal-dialog modal-fullscreen">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title text-dark"><i class="bi bi-search"></i> Pilih Kunjungan</h5>
+            <div class="modal-header nav_background">
+                <h5 class="modal-title text-light"><i class="bi bi-search"></i> Pilih Kunjungan</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <form action="javascript:void(0);" id="ProsesFilterKunjungan" class="mb-2">
-                    <input type="hidden" name="page" id="page_kunjungan" value="1">
-                    <div class="row mb-2">
-                        <div class="col-md-8"></div>
-                        <div class="col-md-4">
-                            <div class="input-group">
-                                <input type="text" class="form-control" name="keyword" id="keyword_kunjungan" placeholder="No RM / Nama pasien">
-                                <button type="submit" class="btn btn-md btn-primary">
-                                    <i class="bi bi-search"></i>
-                                </button>
+            <div class="modal-body p-0">
+
+                <!-- FILTER (STICKY) -->
+                <div class="p-3 border-bottom bg-white sticky-top" style="z-index: 10;">
+                    <form action="javascript:void(0);" id="ProsesFilterKunjungan">
+                        <input type="hidden" name="page" id="page_kunjungan" value="1">
+                        <div class="row">
+                            <div class="col-md-8"></div>
+                            <div class="col-md-4">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="keyword" id="keyword_kunjungan" placeholder="No RM / Nama pasien">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="bi bi-search"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </form>
-                <div class="row mb-2 mt-3">
-                    <div class="col-12">
-                        <div class="table table-responsive border-top border-1">
-                            <table class="table table-hover table-striped">
-                                <thead>
-                                    <tr>
-                                        <td><small><b>No</b></small></td>
-                                        <td><small><b>No.RM</b></small></td>
-                                        <td><small><b>Nama Pasien</b></small></td>
-                                        <td><small><b>Tgl/Jam</b></small></td>
-                                        <td><small><b>Tujuan</b></small></td>
-                                        <td><small><b>Ruangan/Poli</b></small></td>
-                                        <td><small><b>Encounter</b></small></td>
-                                        <td><small><b>Status</b></small></td>
-                                        <td><small><b>Opsi</b></small></td>
-                                    </tr>
-                                </thead>
-                                <tbody id="TabelKunjungan">
-                                    <tr>
-                                        <td colspan="9" class="text-center">
-                                            <small>Tidak Ada Data Yang Ditampilkan</small>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                    </form>
+                </div>
+
+                <!-- TABEL (SCROLLABLE) -->
+                <div class="p-3" style="height: calc(100vh - 260px); overflow-y: auto;">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    <th class="fw-bold">No</th>
+                                    <th class="fw-bold">No.RM</th>
+                                    <th class="fw-bold">Nama Pasien</th>
+                                    <th class="fw-bold">Tgl/Jam</th>
+                                    <th class="fw-bold">Tujuan</th>
+                                    <th class="fw-bold">Ruangan/Poli</th>
+                                    <th class="fw-bold">Encounter</th>
+                                    <th class="fw-bold">Status</th>
+                                    <th class="fw-bold">Opsi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="TabelKunjungan">
+                                <tr>
+                                    <td colspan="9" class="text-center">
+                                        <small>Tidak Ada Data Yang Ditampilkan</small>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-6">
-                        <small id="page_info_kunjungan">0 / 0</small>
-                    </div>
-                    <div class="col-6 text-end">
-                        <button type="button" class="btn btn-sm btn-outline-info btn-floating" id="prev_button_kunjungan">
-                            <i class="bi bi-chevron-left"></i>
-                        </button>
-                        <button type="button" class="btn btn-sm btn-outline-info btn-floating" id="next_button_kunjungan">
-                            <i class="bi bi-chevron-right"></i>
-                        </button>
-                    </div>
-                </div>
+
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary btn-rounded" data-bs-dismiss="modal">
+
+            <div class="modal-footer nav_background d-flex justify-content-between align-items-center">
+
+                <!-- PAGINATION -->
+                <div class="d-flex align-items-center gap-2">
+                    <button type="button" class="btn btn-sm btn-info" id="prev_button_kunjungan">
+                        <i class="bi bi-chevron-left"></i>
+                    </button>
+
+                    <span class="btn btn-sm btn-outline-info disabled" id="page_info_kunjungan">
+                        0 / 0
+                    </span>
+
+                    <button type="button" class="btn btn-sm btn-info" id="next_button_kunjungan">
+                        <i class="bi bi-chevron-right"></i>
+                    </button>
+                </div>
+
+                <!-- CLOSE -->
+                <button type="button" class="btn btn-sm btn-secondary btn-rounded" data-bs-dismiss="modal">
                     <i class="bi bi-x-circle"></i> Tutup
                 </button>
+
             </div>
         </div>
     </div>

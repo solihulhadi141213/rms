@@ -98,35 +98,34 @@
 
     //Tampilkan Form
     echo '
-        <div class="row mb-2">
+        <div class="row mb-3">
             <div class="col-12">
                 <b><small>A. Informasi Pasien</small></b>
             </div>
         </div>
-        <div class="row mb-2">
-            <div class="col-4">
+        <div class="row mb-3">
+            <div class="col-md-4">
                 <label for="id_pasien"><small>No.RM</small></label>
             </div>
-            <div class="col-1"><small>:</small></div>
-            <div class="col-7">
+            <div class="col-md-8">
                 <input type="text" readonly name="id_pasien" id="id_pasien" class="form-control" value="'.$metadata['pasien']['id_pasien'].'">
             </div>
         </div>
-        <div class="row mb-2">
-            <div class="col-4">
+        <div class="row mb-3">
+            <div class="col-md-4">
                 <label for="id_kunjungan"><small>ID.Reg</small></label>
             </div>
-            <div class="col-1"><small>:</small></div>
-            <div class="col-7">
+            
+            <div class="col-md-8">
                 <input type="text" readonly name="id_kunjungan" id="id_kunjungan" class="form-control" value="'.$id_kunjungan.'">
             </div>
         </div>
-        <div class="row mb-2">
-            <div class="col-4">
+        <div class="row mb-3">
+            <div class="col-md-4">
                 <label for="nama_pasien"><small>Nama Pasien</small></label>
             </div>
-            <div class="col-1"><small>:</small></div>
-            <div class="col-7">
+            
+            <div class="col-md-8">
                 <input type="text" name="nama_pasien" id="nama_pasien" class="form-control" value="'.$metadata['pasien']['nama'].'">
             </div>
         </div>
@@ -135,21 +134,21 @@
                 <b><small>B. Informasi Kunjungan</small></b>
             </div>
         </div>
-        <div class="row mb-2">
-            <div class="col-4">
+        <div class="row mb-3">
+            <div class="col-md-4">
                 <label for="tujuan"><small>Tujuan Kunjungan</small></label>
             </div>
-            <div class="col-1"><small>:</small></div>
-            <div class="col-7">
+            
+            <div class="col-md-8">
                 <input type="text" name="tujuan" id="tujuan" class="form-control" value="'.$metadata['tujuan'].'">
             </div>
         </div>
-        <div class="row mb-2">
-            <div class="col-4">
+        <div class="row mb-3">
+            <div class="col-md-4">
                 <label for="pembayaran"><small>Pembayaran</small></label>
             </div>
-            <div class="col-1"><small>:</small></div>
-            <div class="col-7">
+            
+            <div class="col-md-8">
                 <input type="text" name="pembayaran" id="pembayaran" class="form-control" value="'.$metadata['pembayaran'].'">
             </div>
         </div>
@@ -208,14 +207,14 @@
     }
 
     //Menampilkan Form
-    echo '<div class="row mb-2">';
+    echo '<div class="row mb-3">';
     echo '
-            <div class="col-4">
+            <div class="col-md-4">
                 <label for="dokter_pengirim"><small>Dokter Pengirim</small></label>
             </div>
     ';
-    echo '  <div class="col-1"><small>:</small></div>';
-    echo '  <div class="col-7">';
+    echo '  ';
+    echo '  <div class="col-md-8">';
     echo '      <select name="dokter_pengirim" id="dokter_pengirim" class="form-control">';
     echo '          <option value="">Pilih</option>';
     foreach ($list_dokter as $row) {
@@ -236,33 +235,33 @@
     echo '</div>';
     
     echo '
-        <div class="row mb-2">
-            <div class="col-4">
+        <div class="row mb-3">
+            <div class="col-md-4">
                 <label for="asal_kiriman"><small>Asal Kiriman</small></label>
             </div>
-            <div class="col-1"><small>:</small></div>
-            <div class="col-7">
+            
+            <div class="col-md-8">
                 <input type="text" name="asal_kiriman" id="asal_kiriman" class="form-control" value="'.$asal_kiriman.'">
             </div>
         </div>
-        <div class="row mb-2">
-            <div class="col-4">
+        <div class="row mb-3">
+            <div class="col-md-4">
                 <label for="tanggal_diminta"><small>Tanggal/Jam</small></label>
             </div>
-            <div class="col-1"><small>:</small></div>
-            <div class="col-4">
+            
+            <div class="col-md-4">
                 <input type="date" name="tanggal_diminta" id="tanggal_diminta" class="form-control" value="'.date('Y-m-d').'">
             </div>
             <div class="col-3">
                 <input type="time" name="jam_diminta" id="jam_diminta" class="form-control" value="'.date('H:i').'">
             </div>
         </div>
-        <div class="row mb-2">
-            <div class="col-4">
+        <div class="row mb-3">
+            <div class="col-md-4">
                 <label for="priority"><small>Prioritisasi</small></label>
             </div>
-            <div class="col-1"><small>:</small></div>
-            <div class="col-7">
+            
+            <div class="col-md-8">
                 <select name="priority" id="priority" class="form-control">
                     <option value="routine">Biasa</option>
                     <option value="urgent">Segera</option>
@@ -280,12 +279,12 @@
     ';
 
     echo '
-        <div class="row mb-2">
-            <div class="col-4">
+        <div class="row mb-3">
+            <div class="col-md-4">
                 <label for="klinis"><small>Klinis Pasien</small></label>
             </div>
-            <div class="col-1"><small>:</small></div>
-            <div class="col-7">
+            
+            <div class="col-md-8">
                 <select name="klinis[]" id="klinis" class="form-control" multiple></select>
                 <small>
                     <small class="text text-grayish">
@@ -298,12 +297,12 @@
         </div>
     ';
     echo '
-        <div class="row mb-2">
-            <div class="col-4">
+        <div class="row mb-3">
+            <div class="col-md-4">
                 <label for="alat_pemeriksa"><small>Modality/Alat</small></label>
             </div>
-            <div class="col-1"><small>:</small></div>
-            <div class="col-7">
+            
+            <div class="col-md-8">
                 <select name="alat_pemeriksa" id="alat_pemeriksa" class="form-control">
                     <option value="">Pilih</option>
                     <option value="XR">X-Ray</option>
@@ -319,23 +318,23 @@
         </div>
     ';
     echo '
-        <div class="row mb-2">
-            <div class="col-4">
+        <div class="row mb-3">
+            <div class="col-md-4">
                 <label for="permintaan_pemeriksaan"><small>Permintaan Pemerriksaan</small></label>
             </div>
-            <div class="col-1"><small>:</small></div>
-            <div class="col-7">
+            
+            <div class="col-md-8">
                 <select name="permintaan_pemeriksaan" id="permintaan_pemeriksaan" class="form-control"></select>
             </div>
         </div>
     ';
     echo '
-        <div class="row mb-2">
-            <div class="col-4">
+        <div class="row mb-3">
+            <div class="col-md-4">
                 <label for="pesan"><small>Pesan / Keterangan</small></label>
             </div>
-            <div class="col-1"><small>:</small></div>
-            <div class="col-7">
+            
+            <div class="col-md-8">
                 <textarea class="form-control" name="pesan" id="pesan"></textarea>
                 <small class="text text-grayish">
                     <small>Pesan atau keterangan yang perlu disertakan. Misalnya : Tolong menggunakan kontras</small>
