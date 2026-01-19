@@ -2,21 +2,31 @@
 include "../../_Config/Connection.php";
 header('Content-Type: application/json');
 
-$periode = $_POST['periode'] ?? 'Hari';
+$periode = $_POST['periode'] ?? 'Tahun';
 $keyword = $_POST['keyword'] ?? '';
+
+// Fallback keyword otomatis
+if (empty($keyword)) {
+    if ($periode === 'Tahun') {
+        $keyword = date('Y');
+    } elseif ($periode === 'Bulan') {
+        $keyword = date('Y-m');
+    } elseif ($periode === 'Hari') {
+        $keyword = date('Y-m-d');
+    }
+}
 
 $where = "";
 
-if ($periode == 'Hari') {
+// Filter berdasarkan periode
+if ($periode === 'Hari') {
     $where = "DATE(datetime_diminta) = '$keyword'";
-} elseif ($periode == 'Bulan') {
+} elseif ($periode === 'Bulan') {
     $where = "DATE_FORMAT(datetime_diminta,'%Y-%m') = '$keyword'";
-} elseif ($periode == 'Tahun') {
-    $where = "YEAR(datetime_diminta) = '$keyword'";
+} elseif ($periode === 'Tahun') {
+    $where = "YEAR(datetime_diminta) = $keyword";
 }
 
-// ⚠️ Sesuaikan kolom tanggal di bawah ini
-// GANTI `datetime_diminta` dengan kolom tanggal radiologi Anda
 $query = "
     SELECT 
         alat_pemeriksa AS modality,
@@ -33,9 +43,26 @@ $result = mysqli_query($Conn, $query);
 $labels = [];
 $series = [];
 
-while ($row = mysqli_fetch_assoc($result)) {
-    $labels[] = $row['modality'];
-    $series[] = (int)$row['total'];
+// Mapping nama modalitas
+$nama_modalitas = [
+    'XR' => 'X-Ray',
+    'CT' => 'CT-Scan',
+    'US' => 'USG',
+    'MR' => 'MRI',
+    'NM' => 'Nuclear Medicine (Kedokteran Nuklir)',
+    'PT' => 'PET Scan',
+    'DX' => 'Digital Radiography',
+    'CR' => 'Computed Radiography'
+];
+
+if ($result) {
+    while ($row = mysqli_fetch_assoc($result)) {
+
+        $kode = $row['modality']; // 🔑 WAJIB ADA
+
+        $labels[] = $nama_modalitas[$kode] ?? $kode; // fallback aman
+        $series[] = (int)$row['total'];
+    }
 }
 
 echo json_encode([

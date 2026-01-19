@@ -50,10 +50,19 @@ function ShowGrafik() {
 // Fungsi untuk menampilkan pie modality
 let chartModality = null;
 
-// ===============================
-// Load Pie Modality
-// ===============================
-function LoadModality(periode = 'Hari', keyword = '') {
+function LoadModality(periode = 'Tahun', keyword = null) {
+
+    // Auto keyword berdasarkan periode
+    if (!keyword) {
+        const now = new Date();
+        if (periode === 'Tahun') {
+            keyword = now.getFullYear();            // 2026
+        } else if (periode === 'Bulan') {
+            keyword = now.toISOString().slice(0, 7); // 2026-01
+        } else if (periode === 'Hari') {
+            keyword = now.toISOString().slice(0, 10); // 2026-01-19
+        }
+    }
 
     $('#pieModality').html('<div class="text-center text-muted">Loading...</div>');
 
@@ -74,11 +83,11 @@ function LoadModality(periode = 'Hari', keyword = '') {
 
             const options = {
                 series: res.series,
+                labels: res.labels,
                 chart: {
-                    type: 'pie',
+                    type: 'donut',
                     height: 450
                 },
-                labels: res.labels,
                 legend: {
                     position: 'bottom'
                 },
@@ -94,9 +103,9 @@ function LoadModality(periode = 'Hari', keyword = '') {
             if (chartModality) {
                 chartModality.destroy();
             }
-
+            $('#pieModality').empty();
             chartModality = new ApexCharts(
-                document.querySelector("#pieModality"),
+                document.querySelector('#pieModality'),
                 options
             );
 
@@ -108,6 +117,9 @@ function LoadModality(periode = 'Hari', keyword = '') {
         }
     });
 }
+
+
+
 
 
 // Fungsi untuk menampilkan jam digital
@@ -384,7 +396,7 @@ $(document).ready(function () {
     ShowBasicDashboard();
     ShowDokter();
     ShowSatuSehat();
-    LoadModality('Hari', new Date().toISOString().slice(0, 10));
+    LoadModality();
 
     //Jam Menarik
     tampilkanTanggal(); // Tampilkan tanggal saat halaman dimuat
