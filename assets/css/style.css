@@ -1682,3 +1682,7 @@ tr.modal_detail {
 tr.modal_detail:hover {
     background-color: #f8f9fa;
 }
+
+tr.modal_rincian_durasi_pelayanan {
+    cursor: pointer;
+}

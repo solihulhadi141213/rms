@@ -21,6 +21,7 @@
             "Question"         => "_Page/Question/Question.php",
             "Pemeriksaan"      => "_Page/Pemeriksaan/Pemeriksaan.php",
             "Tagihan"          => "_Page/Tagihan/Tagihan.php",
+            "Laporan"          => "_Page/Laporan/Laporan.php",
             "DicomRouter"      => "_Page/DicomRouter/DicomRouter.php",
             "Aktivitas"        => "_Page/Aktivitas/Aktivitas.php",
             "Help"             => "_Page/Help/Help.php",

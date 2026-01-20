@@ -20,6 +20,7 @@
             "Question"         => "_Page/Question/ModalQuestion.php",
             "Pemeriksaan"      => "_Page/Pemeriksaan/ModalPemeriksaan.php",
             "Tagihan"          => "_Page/Tagihan/ModalTagihan.php",
+            "Laporan"          => "_Page/Laporan/ModalLaporan.php",
             "DicomRouter"      => "_Page/DicomRouter/ModalDicomRouter.php",
             "Aktivitas"        => "_Page/Aktivitas/ModalAktivitas.php",
             "Help"             => "_Page/Help/ModalHelp.php"
