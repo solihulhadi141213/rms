@@ -138,7 +138,7 @@
         $display_encounter = empty($encounter) ? '-' : substr($encounter, 0, 8) . '..';
 
         echo '
-            <tr>
+            <tr class="tambah_permintaan" data-id="'.$row['id_kunjungan'].'">
                 <td class="text-center"><small>'.$row['no_urut'].'</small></td>
                 <td><small>'.$row['id_pasien'].'</small></td>
                 <td><small>'.$row['nama'].'</small></td>
@@ -147,11 +147,6 @@
                 <td><small>'.$row['poliklinik'].' / '.$row['ruangan'].'</small></td>
                 <td><small>'.$display_encounter.'</small></td>
                 <td><small>'.$row['status'].'</small></td>
-                <td>
-                    <button type="button" class="btn btn-sm btn-secondary btn-floating tambah_permintaan" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Buat Permintaan Radiologi" data-id="'.$row['id_kunjungan'].'">
-                        <i class="bi bi-chevron-right"></i>
-                    </button>
-                </td>
             </tr>
         ';
     }

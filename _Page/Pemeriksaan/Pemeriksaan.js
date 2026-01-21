@@ -580,6 +580,7 @@ $(document).ready(function() {
 
                     //reset form
                     $('#ProsesTambah')[0].reset();
+                    $('#ProsesFilter')[0].reset();
 
                     // Kembalikan posisi layar ke atas
                     $('html, body').scrollTop(0);
@@ -1737,6 +1738,202 @@ $(document).ready(function() {
                 console.log(xhr.responseText);
 
                 $('#NotifikasiEksposur').html(
+                    '<div class="alert alert-danger"><small>Terjadi kesalahan sistem</small></div>'
+                );
+            }
+        });
+
+    });
+
+    /*
+    ===================================================================================
+    EDIT RESOURCE SATU SEHAT
+    ===================================================================================
+    */
+    $(document).on('click', '.modal_edit_resource_satu_sehat', function () {
+    
+        //tangkap data 'id_radiologi' dan buat variabel
+        var id_radiologi = $(this).data('id');
+        
+        //tampilkan modal
+        $('#ModalEditResourceSatuSehat').modal('show');
+
+        // Kosongkan Notifikasi
+        $('#NotifikasiEditResourceSatuSehat').html('');
+        
+        //Form Loading dengan spinner
+        $('#FormEditResourceSatuSehat').html(`
+            <div class="d-flex justify-content-center align-items-center h-100">
+                <div class="text-center">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        `);
+        
+        //Tampilkan Form Dengan Ajax
+        $.ajax({
+            type: 'POST',
+            url: '_Page/Pemeriksaan/FormEditResourceSatuSehat.php',
+            data: {id_radiologi: id_radiologi},
+            success: function(data) {
+                $('#FormEditResourceSatuSehat').html(data);
+            }
+        });
+    });
+
+    $('#ProsesEditResourceSatuSehat').submit(function(e){
+        e.preventDefault();
+        var ProsesEditResourceSatuSehat = $(this).serialize();
+
+        // Loading Notifikasi
+        $('#NotifikasiEditResourceSatuSehat').html('<small class="text-muted">Menyimpan data...</small>');
+
+       // Simpan Data Dengan AJAX
+        $.ajax({
+            type     : 'POST',
+            url      : '_Page/Pemeriksaan/ProsesEditResourceSatuSehat.php',
+            dataType : 'json',
+            data     : ProsesEditResourceSatuSehat,
+
+            success: function(response){
+
+                var status  = response.status;
+                var message = response.message || 'Proses berhasil';
+
+                if(status === 'success'){
+
+                    // Bersihkan notifikasi
+                    $('#NotifikasiEditResourceSatuSehat').html('');
+
+                    // Tutup modal jika ada
+                    $('#ModalEditResourceSatuSehat').modal('hide');
+
+                    // Reload detail pemeriksaan
+                    ShowDetailPemeriksaan();
+                    ShowTablePemeriksaan();
+
+                    // Tampilkan Toast
+                    $('#put_message').html(
+                        '<i class="bi bi-check-circle me-2"></i> ' + message
+                    );
+                    var toastEl = document.getElementById('toast_proses');
+                    var toast   = new bootstrap.Toast(toastEl, {
+                        delay: 3000
+                    });
+                    toast.show();
+
+                } else {
+                    $('#NotifikasiEditResourceSatuSehat').html(
+                        '<div class="alert alert-danger"><small>'+message+'</small></div>'
+                    );
+                }
+            },
+
+            error: function(xhr){
+                console.log(xhr.responseText);
+
+                $('#NotifikasiEksposur').html(
+                    '<div class="alert alert-danger"><small>Terjadi kesalahan sistem</small></div>'
+                );
+            }
+        });
+
+    });
+
+     /*
+    ===================================================================================
+    HAPUS RESOURCE SATU SEHAT
+    ===================================================================================
+    */
+    $(document).on('click', '.modal_hapus_satu_sehat', function () {
+    
+        //tangkap data 'id_radiologi' dan buat variabel
+        var resource     = $(this).data('resource');
+        var id           = $(this).data('id');
+        var id_radiologi = $(this).data('id_rad');
+        
+        //tampilkan modal
+        $('#ModalHapusResourceSatuSehat').modal('show');
+
+        // Kosongkan Notifikasi
+        $('#NotifikasiHapusResourceSatuSehat').html('');
+        
+        //Form Loading dengan spinner
+        $('#FormHapusResourceSatuSehat').html(`
+            <div class="d-flex justify-content-center align-items-center h-100">
+                <div class="text-center">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        `);
+        
+        //Tampilkan Form Dengan Ajax
+        $.ajax({
+            type: 'POST',
+            url: '_Page/Pemeriksaan/FormHapusResourceSatuSehat.php',
+            data: {resource: resource, id: id, id_radiologi: id_radiologi},
+            success: function(data) {
+                $('#FormHapusResourceSatuSehat').html(data);
+            }
+        });
+    });
+
+    $('#ProsesHapusResourceSatuSehat').submit(function(e){
+        e.preventDefault();
+        var ProsesHapusResourceSatuSehat = $(this).serialize();
+
+        // Loading Notifikasi
+        $('#NotifikasiHapusResourceSatuSehat').html('<small class="text-muted">Menyimpan data...</small>');
+
+       // Simpan Data Dengan AJAX
+        $.ajax({
+            type     : 'POST',
+            url      : '_Page/Pemeriksaan/ProsesHapusResourceSatuSehat.php',
+            dataType : 'json',
+            data     : ProsesHapusResourceSatuSehat,
+
+            success: function(response){
+
+                var status  = response.status;
+                var message = response.message || 'Proses berhasil';
+
+                if(status === 'success'){
+
+                    // Bersihkan notifikasi
+                    $('#NotifikasiHapusResourceSatuSehat').html('');
+
+                    // Tutup modal jika ada
+                    $('#ModalHapusResourceSatuSehat').modal('hide');
+
+                    // Reload detail pemeriksaan
+                    ShowDetailPemeriksaan();
+                    ShowTablePemeriksaan();
+
+                    // Tampilkan Toast
+                    $('#put_message').html(
+                        '<i class="bi bi-check-circle me-2"></i> ' + message
+                    );
+                    var toastEl = document.getElementById('toast_proses');
+                    var toast   = new bootstrap.Toast(toastEl, {
+                        delay: 3000
+                    });
+                    toast.show();
+
+                } else {
+                    $('#NotifikasiHapusResourceSatuSehat').html(
+                        '<div class="alert alert-danger"><small>'+message+'</small></div>'
+                    );
+                }
+            },
+
+            error: function(xhr){
+                console.log(xhr.responseText);
+
+                $('#NotifikasiHapusResourceSatuSehat').html(
                     '<div class="alert alert-danger"><small>Terjadi kesalahan sistem</small></div>'
                 );
             }
@@ -3555,73 +3752,4 @@ $(document).ready(function() {
     $('#ModalDicomViewer').on('shown.bs.modal', function() {
         adjustIframeHeight();
     });
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 });

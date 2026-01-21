@@ -134,47 +134,60 @@
     $study_instance_uid      = $d['study_instance_uid'];
     $study_instance_uid_prev = substr($study_instance_uid, 0, 10) . '..' . '..';
     echo '
-        <div class="table-responsive">
-            <table class="table table-bordered table-sm table-hover">
-                <tbody>
-                    <tr><td><small>ID</small></td><td><small>'.valGray($d['id']).'</small></td></tr>
-                    <tr><td><small>SOP Instance UID</small></td><td><small>'.valGray($d['sop_instance_uid']).'</small></td></tr>
-                    <tr>
-                        <td><small>Study Instance UID</small></td>
-                        <td>
-                            <small data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="'.$study_instance_uid.'">
-                                <a href="'.$url_pacs.'/viewer?studyInstanceUID='.$study_instance_uid.'&modality='.$d['modality'].'" target="_blank">
-                                    '.$study_instance_uid_prev.' <i class="bi bi-arrow-up-right-square"></i>
-                                </a>
-                            </small>
-                        </td>
-                    </tr>
-                    <tr><td><small>Orthanc Study ID</small></td><td><small>'.valGray($d['orthanc_study_id']).'</small></td></tr>
-                    <tr><td><small>Accession Number</small></td><td><small>'.valGray($d['accession_number']).'</small></td></tr>
-                    <tr><td><small>Patient Name</small></td><td><small>'.valGray($d['patient_name']).'</small></td></tr>
-                    <tr><td><small>Patient ID</small></td><td><small>'.valGray($d['patient_id']).'</small></td></tr>
-                    <tr><td><small>Patient Birth Date</small></td><td><small>'.dateGray($d['patient_birth_date']).'</small></td></tr>
-                    <tr><td><small>Patient Sex</small></td><td><small>'.valGray($d['patient_sex']).'</small></td></tr>
-                    <tr><td><small>Study ID</small></td><td><small>'.valGray($d['study_id']).'</small></td></tr>
-                    <tr><td><small>Study Date</small></td><td><small>'.dateGray($d['study_date']).'</small></td></tr>
-                    <tr><td><small>Study Time</small></td><td><small>'.valGray($d['study_time']).'</small></td></tr>
-                    <tr><td><small>Modality</small></td><td><small>'.valGray($d['modality']).'</small></td></tr>
-                    <tr><td><small>Body Part Examined</small></td><td><small>'.valGray($d['body_part_examined']).'</small></td></tr>
-                    <tr><td><small>Institution Name</small></td><td><small>'.valGray($d['institution_name']).'</small></td></tr>
-                    <tr><td><small>Institution Address</small></td><td><small>'.valGray($d['institution_address']).'</small></td></tr>
-                    <tr><td><small>Institution ID</small></td><td><small>'.valGray($d['institution_id']).'</small></td></tr>
-                    <tr><td><small>Doctor ID</small></td><td><small>'.valGray($d['doctor_id']).'</small></td></tr>
-                    <tr><td><small>Inserted At</small></td><td><small>'.dateGray($d['inserted_at']).'</small></td></tr>
-                    <tr><td><small>Reviewed?</small></td><td><small>'.boolStatus($d['is_reviewed'], 'positive').'</small></td></tr>
-                    <tr><td><small>Suspected?</small></td><td><small>'.boolStatus($d['is_suspected'], 'negative').'</small></td></tr>
-                    <tr><td><small>Approved?</small></td><td><small>'.boolStatus($d['is_approved'], 'positive').'</small></td></tr>
-                    <tr><td><small>Done?</small></td><td><small>'.boolStatus($d['is_done'], 'positive').'</small></td></tr>
-                    <tr><td><small>Rejected?</small></td><td><small>'.boolStatus($d['is_rejected'], 'negative').'</small></td></tr>
-                    <tr><td><small>Rejection Reason</small></td><td><small>'.valGray($d['rejection_reason']).'</small></td></tr>
-                    <tr><td><small>Status Updated At</small></td><td><small>'.dateGray($d['status_updated_at']).'</small></td></tr>
-                    <tr><td><small>Completed At</small></td><td><small>'.dateGray($d['completed_at']).'</small></td></tr>
-                </tbody>
-            </table>
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-sm table-hover">
+                        <tbody>
+                            <tr><td><small>ID</small></td><td><small>'.valGray($d['id']).'</small></td></tr>
+                            <tr><td><small>SOP Instance UID</small></td><td><small>'.valGray($d['sop_instance_uid']).'</small></td></tr>
+                            <tr>
+                                <td><small>Study Instance UID</small></td>
+                                <td>
+                                    <small data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="'.$study_instance_uid.'">
+                                        <a href="https://rselsyifa-pacs.senalogy.com/viewer?studyInstanceUID='.$study_instance_uid.'&modality='.$d['modality'].'" target="_blank">
+                                            '.$study_instance_uid_prev.' <i class="bi bi-arrow-up-right-square"></i>
+                                        </a>
+                                    </small>
+                                </td>
+                            </tr>
+                            <tr><td><small>Orthanc Study ID</small></td><td><small>'.valGray($d['orthanc_study_id']).'</small></td></tr>
+                            <tr><td><small>Accession Number</small></td><td><small>'.valGray($d['accession_number']).'</small></td></tr>
+                            <tr><td><small>Patient Name</small></td><td><small>'.valGray($d['patient_name']).'</small></td></tr>
+                            <tr><td><small>Patient ID</small></td><td><small>'.valGray($d['patient_id']).'</small></td></tr>
+                            <tr><td><small>Patient Birth Date</small></td><td><small>'.dateGray($d['patient_birth_date']).'</small></td></tr>
+                            <tr><td><small>Patient Sex</small></td><td><small>'.valGray($d['patient_sex']).'</small></td></tr>
+                            <tr><td><small>Study ID</small></td><td><small>'.valGray($d['study_id']).'</small></td></tr>
+                            <tr><td><small>Study Date</small></td><td><small>'.dateGray($d['study_date']).'</small></td></tr>
+                            <tr><td><small>Study Time</small></td><td><small>'.valGray($d['study_time']).'</small></td></tr>
+                            <tr><td><small>Modality</small></td><td><small>'.valGray($d['modality']).'</small></td></tr>
+                            <tr><td><small>Body Part Examined</small></td><td><small>'.valGray($d['body_part_examined']).'</small></td></tr>
+                            <tr><td><small>Institution Name</small></td><td><small>'.valGray($d['institution_name']).'</small></td></tr>
+                            <tr><td><small>Institution Address</small></td><td><small>'.valGray($d['institution_address']).'</small></td></tr>
+                            <tr><td><small>Institution ID</small></td><td><small>'.valGray($d['institution_id']).'</small></td></tr>
+                            <tr><td><small>Doctor ID</small></td><td><small>'.valGray($d['doctor_id']).'</small></td></tr>
+                            <tr><td><small>Inserted At</small></td><td><small>'.dateGray($d['inserted_at']).'</small></td></tr>
+                            <tr><td><small>Reviewed?</small></td><td><small>'.boolStatus($d['is_reviewed'], 'positive').'</small></td></tr>
+                            <tr><td><small>Suspected?</small></td><td><small>'.boolStatus($d['is_suspected'], 'negative').'</small></td></tr>
+                            <tr><td><small>Approved?</small></td><td><small>'.boolStatus($d['is_approved'], 'positive').'</small></td></tr>
+                            <tr><td><small>Done?</small></td><td><small>'.boolStatus($d['is_done'], 'positive').'</small></td></tr>
+                            <tr><td><small>Rejected?</small></td><td><small>'.boolStatus($d['is_rejected'], 'negative').'</small></td></tr>
+                            <tr><td><small>Rejection Reason</small></td><td><small>'.valGray($d['rejection_reason']).'</small></td></tr>
+                            <tr><td><small>Status Updated At</small></td><td><small>'.dateGray($d['status_updated_at']).'</small></td></tr>
+                            <tr><td><small>Completed At</small></td><td><small>'.dateGray($d['completed_at']).'</small></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-8 mb-3">
+                <iframe
+                    src="https://rselsyifa-pacs.senalogy.com/viewer?studyInstanceUID='.$study_instance_uid.'&modality='.$d['modality'].'"
+                    width="100%"
+                    height="700"
+                    frameborder="0"
+                    allowfullscreen>
+                </iframe>
+            </div>
         </div>
     ';
 ?>

@@ -1686,3 +1686,14 @@ tr.modal_detail:hover {
 tr.modal_rincian_durasi_pelayanan {
     cursor: pointer;
 }
+
+tr.tambah_permintaan {
+    cursor: pointer;
+}
+
+/* Form Yang Readonly akan menjadi abu-abu */
+input[readonly] {
+    background-color: #f1f1f1; /* abu-abu pucat */
+    color: #6c757d;            /* teks abu-abu */
+    cursor: not-allowed;
+}

@@ -38,54 +38,67 @@
 
     echo '<input type="hidden" name="id_radiologi" value="'.$Data['id_radiologi'].'">';
 
-    // Decode JSON
-    $permintaan_pemeriksaan_array = json_decode($Data['permintaan_pemeriksaan'], true);
 
-    // Validasi JSON
-    if (!is_array($permintaan_pemeriksaan_array)) {
-        echo '<div class="alert alert-danger">Format data permintaan pemeriksaan tidak valid.</div>';
-        exit;
+    // Inisialisasi Variabel
+    $id_master_pemeriksaan   = "";
+    $nama_pemeriksaan        = "";
+    $modalitas               = "";
+    $pemeriksaan_code        = "";
+    $pemeriksaan_description = "";
+    $pemeriksaan_sys         = "";
+
+    // Apabila Data Sudah Ada Sebelumnya
+    if(!empty($Data['permintaan_pemeriksaan'])){
+        // Decode JSON
+        $permintaan_pemeriksaan_array = json_decode($Data['permintaan_pemeriksaan'], true);
+
+        // Validasi JSON
+        if (!is_array($permintaan_pemeriksaan_array)) {
+            echo '<div class="alert alert-danger">Format data permintaan pemeriksaan tidak valid.</div>';
+            exit;
+        }
+
+        foreach ($permintaan_pemeriksaan_array as $list) {
+
+            $id_master_pemeriksaan   = $list['id_master_pemeriksaan'] ?? '';
+            $nama_pemeriksaan        = $list['nama_pemeriksaan'] ?? '-';
+            $modalitas               = $list['modalitas'] ?? '-';
+            $pemeriksaan_code        = $list['pemeriksaan_code'] ?? '-';
+            $pemeriksaan_description = $list['pemeriksaan_description'] ?? '-';
+            $pemeriksaan_sys         = $list['pemeriksaan_sys'] ?? '-';
+
+            // ⬇️ PENTING: gunakan .= agar tidak tertimpa
+            $konten_preview .= '
+                <div class="table-responsive mb-3">
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td><small class="text-dark">Nama Pemeriksaan</small></td>
+                                <td><small class="text-secondary">'.$nama_pemeriksaan.'</small></td>
+                            </tr>
+                            <tr>
+                                <td><small class="text-dark"><i>Modality</i></small></td>
+                                <td><small class="text-secondary">'.$modalitas.'</small></td>
+                            </tr>
+                            <tr>
+                                <td><small class="text-dark"><i>LOINC Code</i></small></td>
+                                <td><small class="text-secondary">'.$pemeriksaan_code.'</small></td>
+                            </tr>
+                            <tr>
+                                <td><small class="text-dark"><i>LOINC Display</i></small></td>
+                                <td><small class="text-secondary">'.$pemeriksaan_description.'</small></td>
+                            </tr>
+                            <tr>
+                                <td><small class="text-dark"><i>LOINC System</i></small></td>
+                                <td><small class="text-secondary">'.$pemeriksaan_sys.'</small></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            ';
+        }
     }
-
-    foreach ($permintaan_pemeriksaan_array as $list) {
-
-        $id_master_pemeriksaan   = $list['id_master_pemeriksaan'] ?? '';
-        $nama_pemeriksaan        = $list['nama_pemeriksaan'] ?? '-';
-        $modalitas               = $list['modalitas'] ?? '-';
-        $pemeriksaan_code        = $list['pemeriksaan_code'] ?? '-';
-        $pemeriksaan_description = $list['pemeriksaan_description'] ?? '-';
-        $pemeriksaan_sys         = $list['pemeriksaan_sys'] ?? '-';
-
-        // ⬇️ PENTING: gunakan .= agar tidak tertimpa
-        $konten_preview .= '
-            <div class="table-responsive mb-3">
-                <table class="table table-sm table-bordered">
-                    <tbody>
-                        <tr>
-                            <td><small class="text-dark">Nama Pemeriksaan</small></td>
-                            <td><small class="text-secondary">'.$nama_pemeriksaan.'</small></td>
-                        </tr>
-                        <tr>
-                            <td><small class="text-dark"><i>Modality</i></small></td>
-                            <td><small class="text-secondary">'.$modalitas.'</small></td>
-                        </tr>
-                        <tr>
-                            <td><small class="text-dark"><i>LOINC Code</i></small></td>
-                            <td><small class="text-secondary">'.$pemeriksaan_code.'</small></td>
-                        </tr>
-                        <tr>
-                            <td><small class="text-dark"><i>LOINC Display</i></small></td>
-                            <td><small class="text-secondary">'.$pemeriksaan_description.'</small></td>
-                        </tr>
-                        <tr>
-                            <td><small class="text-dark"><i>LOINC System</i></small></td>
-                            <td><small class="text-secondary">'.$pemeriksaan_sys.'</small></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        ';
-    }
+    
     echo '
         <div class="row mb-3">
             <div class="col-12">

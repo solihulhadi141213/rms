@@ -175,3 +175,8 @@ elseif ($status === 'STOPPED') $badge = 'danger';
         </div>
     </div>
 </div>
+<div class="row">
+    <div class="col-12">
+        <textarea name="" id="" class="form-control"><?php echo $response; ?></textarea>
+    </div>
+</div>

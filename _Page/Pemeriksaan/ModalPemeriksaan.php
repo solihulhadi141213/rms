@@ -146,12 +146,11 @@
                                     <th class="fw-bold">Ruangan/Poli</th>
                                     <th class="fw-bold">Encounter</th>
                                     <th class="fw-bold">Status</th>
-                                    <th class="fw-bold">Opsi</th>
                                 </tr>
                             </thead>
                             <tbody id="TabelKunjungan">
                                 <tr>
-                                    <td colspan="9" class="text-center">
+                                    <td colspan="8" class="text-center">
                                         <small>Tidak Ada Data Yang Ditampilkan</small>
                                     </td>
                                 </tr>
@@ -647,6 +646,82 @@ WAKTU PELAYANAN
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary btn-rounded">
                         <i class="bi bi-save"></i> Simpan
+                    </button>
+                    <button type="button" class="btn btn-secondary btn-rounded" data-bs-dismiss="modal">
+                        <i class="bi bi-x-circle"></i> Tutup
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- 
+============================================================
+MODAL EDIT RESOURCE SATU SEHAT
+============================================================ 
+-->
+<div class="modal fade" id="ModalEditResourceSatuSehat" tabindex="-1">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <form action="javascript:void(0);" id="ProsesEditResourceSatuSehat" autocomplete="off">
+                <div class="modal-header">
+                    <h5 class="modal-title text-dark"><i class="bi bi-pencil"></i> Ubah Resource Satu Sehat</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-2">
+                        <div class="col-md-12" id="FormEditResourceSatuSehat">
+                            <!-- FORM Edit Resource Satu Sehat -->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12" id="NotifikasiEditResourceSatuSehat">
+                            <!-- Notifikasi Edit Resource Satu Sehat -->
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary btn-rounded">
+                        <i class="bi bi-save"></i> Simpan
+                    </button>
+                    <button type="button" class="btn btn-secondary btn-rounded" data-bs-dismiss="modal">
+                        <i class="bi bi-x-circle"></i> Tutup
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- 
+============================================================
+MODAL HAPUS RESOURCE SATU SEHAT
+============================================================ 
+-->
+<div class="modal fade" id="ModalHapusResourceSatuSehat" tabindex="-1">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <form action="javascript:void(0);" id="ProsesHapusResourceSatuSehat" autocomplete="off">
+                <div class="modal-header">
+                    <h5 class="modal-title text-dark"><i class="bi bi-trash"></i> Hapus Resource Satu Sehat</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-2">
+                        <div class="col-md-12" id="FormHapusResourceSatuSehat">
+                            <!-- FORM Edit Resource Satu Sehat -->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12" id="NotifikasiHapusResourceSatuSehat">
+                            <!-- Notifikasi Edit Resource Satu Sehat -->
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary btn-rounded">
+                        <i class="bi bi-check"></i> Ya, Hapus
                     </button>
                     <button type="button" class="btn btn-secondary btn-rounded" data-bs-dismiss="modal">
                         <i class="bi bi-x-circle"></i> Tutup
@@ -1364,7 +1439,7 @@ MODAL DETAIL ACCESSION NUMBER
     </div>
 </div>
 <div class="modal fade" id="ModalDicomMetadataByAcn" tabindex="-1">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-fullscreen">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title text-dark"><i class="bi bi-info-circle"></i> Dicom Metadata By ACN</h5>

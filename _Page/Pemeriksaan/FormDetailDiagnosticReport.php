@@ -210,3 +210,8 @@ $last_update       = $data['meta']['lastUpdated'] ?? '-';
         </tr>
     </table>
 </div>
+<div class="row">
+    <div class="col-12">
+        <textarea name="" id="" class="form-control"><?php echo $response; ?></textarea>
+    </div>
+</div>

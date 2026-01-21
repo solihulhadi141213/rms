@@ -516,8 +516,13 @@
         <div class="card">
             <div class="card-header">
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-10">
                         <b class="card-title">D. Satu Sehat</b>
+                    </div>
+                    <div class="col-2 text-end">
+                        <button type="button" class="btn btn-sm btn-secondary btn-floating modal_edit_resource_satu_sehat" data-id="<?php echo $id_radiologi; ?>" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Edit Resource Satu Sehat">
+                            <i class="bi bi-pencil"></i>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -563,9 +568,29 @@
                                             ';
                                         }else{
                                             echo '
-                                                <button type="button" class="btn btn-sm btn-floating btn-secondary modal_edit_service_request" data-id="'.$id_service_request.'">
-                                                    <i class="bi bi-pencil"></i>
+                                                <button type="button" class="btn btn-sm btn-floating btn-outline-dark"  data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class="bi bi-three-dots-vertical"></i>
                                                 </button>
+                                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow" style="">
+                                                    <li class="dropdown-header text-start">
+                                                        <h6>Option</h6>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item modal_detail_service_request" href="javascript:void(0)" data-id="'.$id_service_request .'">
+                                                            <i class="bi bi-info-circle"></i> Detail
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item modal_edit_satu_sehat" href="javascript:void(0)" data-resource="service_request" data-id="'.$id_service_request .'" data-id_rad="'.$id_radiologi .'">
+                                                            <i class="bi bi-pencil"></i> Edit
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item modal_hapus_satu_sehat" href="javascript:void(0)" data-resource="service_request" data-id="'.$id_service_request .'" data-id_rad="'.$id_radiologi .'">
+                                                            <i class="bi bi-x"></i> Hapus
+                                                        </a>
+                                                    </li>
+                                                </ul>
                                             ';
                                         }
                                     ?>
@@ -601,9 +626,29 @@
                                             ';
                                         }else{
                                             echo '
-                                                <button type="button" class="btn btn-sm btn-floating btn-secondary modal_edit_procedure" data-id="'.$id_procedure.'">
-                                                    <i class="bi bi-pencil"></i>
+                                                <button type="button" class="btn btn-sm btn-floating btn-outline-dark"  data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class="bi bi-three-dots-vertical"></i>
                                                 </button>
+                                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow" style="">
+                                                    <li class="dropdown-header text-start">
+                                                        <h6>Option</h6>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item modal_detail_procedure" href="javascript:void(0)" data-id="'.$id_procedure .'">
+                                                            <i class="bi bi-info-circle"></i> Detail
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item modal_edit_satu_sehat" href="javascript:void(0)" data-resource="procedure" data-id="'.$id_procedure .'" data-id_rad="'.$id_radiologi .'">
+                                                            <i class="bi bi-pencil"></i> Edit
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item modal_hapus_satu_sehat" href="javascript:void(0)" data-resource="procedure" data-id="'.$id_procedure .'" data-id_rad="'.$id_radiologi .'">
+                                                            <i class="bi bi-x"></i> Hapus
+                                                        </a>
+                                                    </li>
+                                                </ul>
                                             ';
                                         }
                                     ?>
@@ -639,9 +684,29 @@
                                             ';
                                         }else{
                                             echo '
-                                                <button type="button" class="btn btn-sm btn-floating btn-secondary modal_edit_imaging_study" data-id="'.$id_imaging_study.'">
-                                                    <i class="bi bi-pencil"></i>
+                                                <button type="button" class="btn btn-sm btn-floating btn-outline-dark"  data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class="bi bi-three-dots-vertical"></i>
                                                 </button>
+                                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow" style="">
+                                                    <li class="dropdown-header text-start">
+                                                        <h6>Option</h6>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item modal_detail_imaging_study" href="javascript:void(0)" data-id="'.$id_imaging_study .'">
+                                                            <i class="bi bi-info-circle"></i> Detail
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item modal_edit_satu_sehat" href="javascript:void(0)" data-resource="imaging_study" data-id="'.$id_imaging_study .'" data-id_rad="'.$id_radiologi .'">
+                                                            <i class="bi bi-pencil"></i> Edit
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item modal_hapus_satu_sehat" href="javascript:void(0)" data-resource="imaging_study" data-id="'.$id_imaging_study .'" data-id_rad="'.$id_radiologi .'">
+                                                            <i class="bi bi-x"></i> Hapus
+                                                        </a>
+                                                    </li>
+                                                </ul>
                                             ';
                                         }
                                     ?>
@@ -677,9 +742,29 @@
                                                 ';
                                             }else{
                                                 echo '
-                                                    <button type="button" class="btn btn-sm btn-floating btn-secondary modal_edit_observation" data-id="'.$id_observation.'">
-                                                        <i class="bi bi-pencil"></i>
+                                                    <button type="button" class="btn btn-sm btn-floating btn-outline-dark"  data-bs-toggle="dropdown" aria-expanded="false">
+                                                        <i class="bi bi-three-dots-vertical"></i>
                                                     </button>
+                                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow" style="">
+                                                        <li class="dropdown-header text-start">
+                                                            <h6>Option</h6>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item modal_detail_observation" href="javascript:void(0)" data-id="'.$id_observation .'">
+                                                                <i class="bi bi-info-circle"></i> Detail
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item modal_edit_satu_sehat" href="javascript:void(0)" data-resource="observation" data-id="'.$id_observation .'" data-id_rad="'.$id_radiologi .'">
+                                                                <i class="bi bi-pencil"></i> Edit
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item modal_hapus_satu_sehat" href="javascript:void(0)" data-resource="observation" data-id="'.$id_observation .'" data-id_rad="'.$id_radiologi .'">
+                                                                <i class="bi bi-x"></i> Hapus
+                                                            </a>
+                                                        </li>
+                                                    </ul>
                                                 ';
                                             }
                                     ?>
@@ -688,7 +773,7 @@
 
                             <!-- Diagnostic Report -->
                             <tr>
-                                <td class="text-center">4</td>
+                                <td class="text-center">5</td>
                                 <td><i>Diagnostic Report</i></td>
                                 <td class="text text-grayish">
                                     <small>
@@ -715,9 +800,29 @@
                                             ';
                                         }else{
                                             echo '
-                                               <button type="button" class="btn btn-sm btn-floating btn-secondary modal_edit_diagnostic_report" data-id="'.$id_diagnostic_report.'">
-                                                    <i class="bi bi-pencil"></i>
+                                                <button type="button" class="btn btn-sm btn-floating btn-outline-dark"  data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class="bi bi-three-dots-vertical"></i>
                                                 </button>
+                                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow" style="">
+                                                    <li class="dropdown-header text-start">
+                                                        <h6>Option</h6>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item modal_detail_diagnostic_report" href="javascript:void(0)" data-id="'.$id_diagnostic_report .'">
+                                                            <i class="bi bi-info-circle"></i> Detail
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item modal_edit_satu_sehat" href="javascript:void(0)" data-resource="diagnostic_report" data-id="'.$id_diagnostic_report .'" data-id_rad="'.$id_radiologi .'">
+                                                            <i class="bi bi-pencil"></i> Edit
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item modal_hapus_satu_sehat" href="javascript:void(0)" data-resource="diagnostic_report" data-id="'.$id_diagnostic_report .'" data-id_rad="'.$id_radiologi .'">
+                                                            <i class="bi bi-x"></i> Hapus
+                                                        </a>
+                                                    </li>
+                                                </ul>
                                             ';
                                         }
                                     ?>
@@ -1186,36 +1291,69 @@
                         $permintaan_pemeriksaan_arry = json_decode($Data['permintaan_pemeriksaan'] ?? '', true);
 
                         foreach ($permintaan_pemeriksaan_arry as $permintaan_pemeriksaan_list) {
-                            $id_master_pemeriksaan = safe_text($permintaan_pemeriksaan_list['id_master_pemeriksaan'] ?? null);
-                            $nama_pemeriksaan = safe_text($permintaan_pemeriksaan_list['nama_pemeriksaan'] ?? null);
-                            $modalitas = safe_text($permintaan_pemeriksaan_list['modalitas'] ?? null);
-                            $pemeriksaan_code = safe_text($permintaan_pemeriksaan_list['pemeriksaan_code'] ?? null);
+                            $id_master_pemeriksaan   = safe_text($permintaan_pemeriksaan_list['id_master_pemeriksaan'] ?? null);
+                            $nama_pemeriksaan        = safe_text($permintaan_pemeriksaan_list['nama_pemeriksaan'] ?? null);
+                            $modalitas               = safe_text($permintaan_pemeriksaan_list['modalitas'] ?? null);
+                            $pemeriksaan_code        = safe_text($permintaan_pemeriksaan_list['pemeriksaan_code'] ?? null);
                             $pemeriksaan_description = safe_text($permintaan_pemeriksaan_list['pemeriksaan_description'] ?? null);
-                            $pemeriksaan_sys = safe_text($permintaan_pemeriksaan_list['pemeriksaan_sys'] ?? null);
+                            $pemeriksaan_sys         = safe_text($permintaan_pemeriksaan_list['pemeriksaan_sys'] ?? null);
+                            $bodysite_sys            = safe_text($permintaan_pemeriksaan_list['bodysite_sys'] ?? null);
+                            $bodysite_code           = safe_text($permintaan_pemeriksaan_list['bodysite_code'] ?? null);
+                            $bodysite_description    = safe_text($permintaan_pemeriksaan_list['bodysite_description'] ?? null);
                             
                             echo '
                                 <div class="table table-responsive">
                                     <table class="table table-sm table-bordered">
                                         <tbody>
                                             <tr>
+                                                <td colspan="3">
+                                                    <b>1. Informasi Pemeriksaan</b>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
                                                 <td><small class="text text-dark">Nama Pemeriksaan</small></td>
                                                 <td><small>'.$nama_pemeriksaan.'</small></td>
                                             </tr>
                                             <tr>
+                                                <td></td>
                                                 <td><small class="text text-dark"><i>Modality</i></small></td>
                                                 <td><small>'.$modalitas.'</small></td>
                                             </tr>
                                             <tr>
+                                                <td></td>
                                                 <td><small class="text text-dark"><i>Loinc Code</i></small></td>
                                                 <td><small>'.$pemeriksaan_code.'</small></td>
                                             </tr>
                                             <tr>
+                                                <td></td>
                                                 <td><small class="text text-dark"><i>Loinc Display</i></small></td>
                                                 <td><small>'.$pemeriksaan_description.'</small></td>
                                             </tr>
                                             <tr>
+                                                <td></td>
                                                 <td><small class="text text-dark"><i>Loinc System</i></small></td>
                                                 <td><small>'.$pemeriksaan_sys.'</small></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3">
+                                                    <b>2. Body Site</b>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td><small class="text text-dark"><i>Body Site Code</i></small></td>
+                                                <td><small>'.$bodysite_code.'</small></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td><small class="text text-dark"><i>Body Site Display</i></small></td>
+                                                <td><small>'.$bodysite_description.'</small></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td><small class="text text-dark"><i>Body Site Display</i></small></td>
+                                                <td><small>'.$bodysite_sys.'</small></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -1404,6 +1542,15 @@
             </div>
 
             <div class="card-body">
+                <div class="row">
+                    <div class="col-12">
+                        <a href="javascript:void(0);" class="text-success modal_dicom_metadata_by_acn" data-id="<?php echo $accession_number; ?>">
+                            <small>
+                                Lihat Dicom Metadata <i class="bi bi-chevron-double-right"></i>
+                            </small>
+                        </a>
+                    </div>
+                </div>
                 <div class="table table-responsive">
                     <table class="table table-bordered table-sm">
                         <thead>
@@ -1457,7 +1604,7 @@
                                 echo '
                                     <tr>
                                         <td class="text-center"><small>1</small></td>
-                                        <td class="text-left">Temua Klinis</td>
+                                        <td class="text-left">Temuan Klinis</td>
                                         <td class="text-left"><small>'.$temuan.'</small></td>
                                         <td class="text-center">
                                             <button type="button" class="btn btn-sm btn-floating btn-secondary modal_expertise" data-id_radiologi="'.$id_radiologi.'" data-title="temuan">

@@ -126,7 +126,7 @@
             </div>
             
             <div class="col-md-8">
-                <input type="text" name="nama_pasien" id="nama_pasien" class="form-control" value="'.$metadata['pasien']['nama'].'">
+                <input type="text" readonly name="nama_pasien" id="nama_pasien" class="form-control" value="'.$metadata['pasien']['nama'].'">
             </div>
         </div>
         <div class="row mb-2 mt-3">
@@ -155,6 +155,17 @@
         <div class="row mb-2 mt-3">
             <div class="col-12">
                 <b><small>C. Informasi Permintaan</small></b>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-4 mb-2">
+                <label for="tanggal_diminta"><small>Tanggal/Jam Permintaan</small></label>
+            </div>
+            <div class="col-md-4 mb-2">
+                <input type="date" name="tanggal_diminta" id="tanggal_diminta" class="form-control" value="'.date('Y-m-d').'">
+            </div>
+            <div class="col-md-4 mb-2">
+                <input type="time" name="jam_diminta" id="jam_diminta" class="form-control" value="'.date('H:i').'">
             </div>
         </div>
     ';
@@ -246,18 +257,6 @@
         </div>
         <div class="row mb-3">
             <div class="col-md-4">
-                <label for="tanggal_diminta"><small>Tanggal/Jam</small></label>
-            </div>
-            
-            <div class="col-md-4">
-                <input type="date" name="tanggal_diminta" id="tanggal_diminta" class="form-control" value="'.date('Y-m-d').'">
-            </div>
-            <div class="col-3">
-                <input type="time" name="jam_diminta" id="jam_diminta" class="form-control" value="'.date('H:i').'">
-            </div>
-        </div>
-        <div class="row mb-3">
-            <div class="col-md-4">
                 <label for="priority"><small>Prioritisasi</small></label>
             </div>
             
@@ -301,7 +300,6 @@
             <div class="col-md-4">
                 <label for="alat_pemeriksa"><small>Modality/Alat</small></label>
             </div>
-            
             <div class="col-md-8">
                 <select name="alat_pemeriksa" id="alat_pemeriksa" class="form-control">
                     <option value="">Pilih</option>
@@ -314,6 +312,11 @@
                     <option value="DX">Digital Radiography</option>
                     <option value="CR">Computed Radiography</option>
                 </select>
+                <small>
+                    <small class="text text-grayish">
+                        Jenis atau metode alat/teknik medis yang digunakan untuk menghasilkan data klinis, terutama hasil pemeriksaan penunjang seperti radiologi dan diagnostik.
+                    </small>
+                </small>
             </div>
         </div>
     ';
