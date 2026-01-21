@@ -22,6 +22,7 @@
             "SettingSimrs"     => "_Page/SettingSimrs/SettingSimrs.js",
             "SettingSatuSehat" => "_Page/SettingSatuSehat/SettingSatuSehat.js",
             "SettingPacs"      => "_Page/SettingPacs/SettingPacs.js",
+            "SettingOrthanc"   => "_Page/SettingOrthanc/SettingOrthanc.js",
             "ApiKey"           => "_Page/ApiKey/ApiKey.js",
             "KodeKlinis"       => "_Page/KodeKlinis/KodeKlinis.js",
             "KodePemeriksaan"  => "_Page/KodePemeriksaan/KodePemeriksaan.js",

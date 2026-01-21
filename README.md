@@ -38,8 +38,8 @@ Aplikasi Radix dikembangkan menggunakan teknologi berikut:
 ---
 ## Integrasi
 - Orthanc
-- PACS
-- SIMRS (RME)
+- PACS (Senalogy)
+- SIMRS El-Syifa V3 (Berbasis RME)
 - Satu Sehat
 - DCMTK
 

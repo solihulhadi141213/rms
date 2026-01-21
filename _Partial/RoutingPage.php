@@ -14,6 +14,7 @@
             "SettingSimrs"     => "_Page/SettingSimrs/SettingSimrs.php",
             "SettingSatuSehat" => "_Page/SettingSatuSehat/SettingSatuSehat.php",
             "SettingPacs"      => "_Page/SettingPacs/SettingPacs.php",
+            "SettingOrthanc"   => "_Page/SettingOrthanc/SettingOrthanc.php",
             "ApiKey"           => "_Page/ApiKey/ApiKey.php",
             "KodeKlinis"       => "_Page/KodeKlinis/KodeKlinis.php",
             "KodePemeriksaan"  => "_Page/KodePemeriksaan/KodePemeriksaan.php",
