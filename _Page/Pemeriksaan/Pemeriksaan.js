@@ -1453,7 +1453,7 @@ $(document).ready(function() {
 
     /*
     ===================================================================================
-    ORDER PACS
+    ORDER PACS Dan Orthanc
     ===================================================================================
     */
     $(document).on('click', '.modal_order_pacs', function () {
@@ -1510,6 +1510,7 @@ $(document).ready(function() {
 
                     //reload data detail
                     ShowDetail(id_radiologi);
+                    ShowDetailPemeriksaan();
 
                     // Reload Tabel Pemeriksaan
                     ShowTablePemeriksaan();
@@ -1528,7 +1529,7 @@ $(document).ready(function() {
         });
     });
 
-    $(document).on('click', '.modal_detail_pacd', function () {
+    $(document).on('click', '.modal_detail_pacs', function () {
 
         //tangkap data 'accession_number' dan buat variabel
         var accession_number   = $(this).data('id');
@@ -1546,6 +1547,101 @@ $(document).ready(function() {
             data        : {accession_number: accession_number},
             success     : function(data){
                 $('#FormDetailPacs').html(data);
+            }
+        });
+    });
+
+    $(document).on('click', '.modal_order_orthanc', function () {
+
+        //tangkap data 'id_radiologi' dan buat variabel
+        var id_radiologi   = $(this).data('id');
+
+        //tampilkan modal
+        $('#ModalOrderOrthanc').modal('show');
+
+        // Kosongkan Notifikasi
+        $('#NotifikasiOrderOrthanc').html('');
+
+        //Form Loading
+        $('#FormOrderOrthanc').html('Loading...');
+
+        //Tampilkan Form Dengan Ajax
+        $.ajax({
+            type 	    : 'POST',
+            url 	    : '_Page/Pemeriksaan/FormOrderOrthanc.php',
+            data        : {id_radiologi: id_radiologi},
+            success     : function(data){
+                $('#FormOrderOrthanc').html(data);
+            }
+        });
+    });
+
+    $('#ProsesOrderOrthanc').submit(function(e){
+       e.preventDefault();
+        /* Menangkap data dari form  */
+        var ProsesOrderOrthanc=$('#ProsesOrderOrthanc').serialize();
+
+        /* Loading Notification */
+        $('#NotifikasiOrderOrthanc').html('loading..');
+
+        /* Kirim data dengan AJAX  */
+        $.ajax({
+            type    : 'POST',
+            url     : '_Page/Pemeriksaan/ProsesOrderOrthanc.php',
+            dataType: 'json',
+            data    : ProsesOrderOrthanc,
+            success: function(response) {
+                var status       = response.status;
+                var message      = response.message;
+                var id_radiologi = response.id_radiologi;
+
+                // Apabila berhasil
+                if(status=='success'){
+                    //Bersihkan notifikasi
+                    $('#NotifikasiOrderOrthanc').html('');
+
+                    //Tutup modal
+                    $('#ModalOrderOrthanc').modal('hide');
+
+                    //reload data detail
+                    ShowDetail(id_radiologi);
+                    ShowDetailPemeriksaan();
+
+                    // Reload Tabel Pemeriksaan
+                    ShowTablePemeriksaan();
+
+                    // Menampilkan Swal
+                    Swal.fire(
+                        'Success!',
+                        'Pengiriman Order Ke Orthanc Berhasil!',
+                        'success'
+                    )
+                }else{
+                    $('#NotifikasiOrderOrthanc').html('<div class="alert alert-danger"><small>'+message+'</small></div>');
+                }
+                
+            }
+        });
+    });
+
+    $(document).on('click', '.modal_detail_orthanc', function () {
+
+        //tangkap data 'accession_number' dan buat variabel
+        var accession_number   = $(this).data('id');
+
+        //tampilkan modal
+        $('#ModalDetailOrthanc').modal('show');
+
+        //Form Loading
+        $('#FormDetailOrthanc').html('Loading...');
+
+        //Tampilkan Form Dengan Ajax
+        $.ajax({
+            type 	    : 'POST',
+            url 	    : '_Page/Pemeriksaan/FormDetailOrthanc.php',
+            data        : {accession_number: accession_number},
+            success     : function(data){
+                $('#FormDetailOrthanc').html(data);
             }
         });
     });

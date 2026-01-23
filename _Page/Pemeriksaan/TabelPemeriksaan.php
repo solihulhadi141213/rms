@@ -98,15 +98,15 @@
     //KONDISI PENGATURAN MASING FILTER
     if(empty($keyword_by)){
         if(empty($keyword)){
-            $query = mysqli_query($Conn, "SELECT id_radiologi, id_pasien, id_kunjungan, id_service_request, id_procedure, id_imaging_study, id_observation, id_diagnostic_report, pacs, accession_number, nama_pasien, priority, asal_kiriman, alat_pemeriksa, radiografer, tujuan, pembayaran, datetime_diminta, status_pemeriksaan  FROM radiologi ORDER BY $OrderBy $ShortBy LIMIT $posisi, $batas");
+            $query = mysqli_query($Conn, "SELECT id_radiologi, id_pasien, id_kunjungan, id_service_request, id_procedure, id_imaging_study, id_observation, id_diagnostic_report, pacs, orthanc, accession_number, nama_pasien, priority, asal_kiriman, alat_pemeriksa, radiografer, tujuan, pembayaran, datetime_diminta, status_pemeriksaan  FROM radiologi ORDER BY $OrderBy $ShortBy LIMIT $posisi, $batas");
         }else{
-            $query = mysqli_query($Conn, "SELECT id_radiologi, id_pasien, id_kunjungan, id_service_request, id_procedure, id_imaging_study, id_observation, id_diagnostic_report, pacs, accession_number, nama_pasien, priority, asal_kiriman, alat_pemeriksa, radiografer, tujuan, pembayaran, datetime_diminta, status_pemeriksaan FROM radiologi WHERE id_pasien like '%$keyword%' OR id_kunjungan like '%$keyword%' OR nama_pasien like '%$keyword%' OR asal_kiriman like '%$keyword%' OR accession_number like '%$keyword%' ORDER BY $OrderBy $ShortBy LIMIT $posisi, $batas");
+            $query = mysqli_query($Conn, "SELECT id_radiologi, id_pasien, id_kunjungan, id_service_request, id_procedure, id_imaging_study, id_observation, id_diagnostic_report, pacs, orthanc, accession_number, nama_pasien, priority, asal_kiriman, alat_pemeriksa, radiografer, tujuan, pembayaran, datetime_diminta, status_pemeriksaan FROM radiologi WHERE id_pasien like '%$keyword%' OR id_kunjungan like '%$keyword%' OR nama_pasien like '%$keyword%' OR asal_kiriman like '%$keyword%' OR accession_number like '%$keyword%' ORDER BY $OrderBy $ShortBy LIMIT $posisi, $batas");
         }
     }else{
         if(empty($keyword)){
-            $query = mysqli_query($Conn, "SELECT id_radiologi, id_pasien, id_kunjungan, id_service_request, id_procedure, id_imaging_study, id_observation, id_diagnostic_report, pacs, accession_number, nama_pasien, priority, asal_kiriman, alat_pemeriksa, radiografer, tujuan, pembayaran, datetime_diminta, status_pemeriksaan FROM radiologi ORDER BY $OrderBy $ShortBy LIMIT $posisi, $batas");
+            $query = mysqli_query($Conn, "SELECT id_radiologi, id_pasien, id_kunjungan, id_service_request, id_procedure, id_imaging_study, id_observation, id_diagnostic_report, pacs, orthanc, accession_number, nama_pasien, priority, asal_kiriman, alat_pemeriksa, radiografer, tujuan, pembayaran, datetime_diminta, status_pemeriksaan FROM radiologi ORDER BY $OrderBy $ShortBy LIMIT $posisi, $batas");
         }else{ 
-            $query = mysqli_query($Conn, "SELECT id_radiologi, id_pasien, id_kunjungan, id_service_request, id_procedure, id_imaging_study, id_observation, id_diagnostic_report, pacs, accession_number, nama_pasien, priority, asal_kiriman, alat_pemeriksa, radiografer, tujuan, pembayaran, datetime_diminta, status_pemeriksaan FROM radiologi WHERE $keyword_by like '%$keyword%' ORDER BY $OrderBy $ShortBy LIMIT $posisi, $batas");
+            $query = mysqli_query($Conn, "SELECT id_radiologi, id_pasien, id_kunjungan, id_service_request, id_procedure, id_imaging_study, id_observation, id_diagnostic_report, pacs, orthanc, accession_number, nama_pasien, priority, asal_kiriman, alat_pemeriksa, radiografer, tujuan, pembayaran, datetime_diminta, status_pemeriksaan FROM radiologi WHERE $keyword_by like '%$keyword%' ORDER BY $OrderBy $ShortBy LIMIT $posisi, $batas");
         }
     }
     while ($data = mysqli_fetch_array($query)) {
@@ -129,6 +129,7 @@
         $datetime_diminta     = $data['datetime_diminta'];
         $status_pemeriksaan   = $data['status_pemeriksaan'];
         $pacs                 = $data['pacs'] ?? null;
+        $orthanc              = $data['orthanc'] ?? null;
         $tanggal              = date('d/m/y', strtotime($datetime_diminta));
         $jam                  = date('H:i', strtotime($datetime_diminta));
 
@@ -364,23 +365,58 @@
 
 
         // Routing label pacs
+        if(empty($pacs)){$pacs_score = 0;}else{$pacs_score = 1;}
+        if(empty($orthanc)){$orthanc_score = 0;}else{$orthanc_score = 1;}
+        $worklist_score = $pacs_score + $orthanc_score;
+        if($worklist_score ==0){$warnna_worklist = "danger";}
+        if($worklist_score ==1){$warnna_worklist = "warning";}
+        if($worklist_score ==2){$warnna_worklist = "success";}
+
         if(empty($pacs)){
             $pacs_label = '
-                <a href="javascript:void(0);" class="modal_order_pacs" data-id="'.$id_radiologi.'">
-                    <span class="badge border border-danger text-danger" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Kirim Order Ke PACS">
-                        <i class="bi bi-send"></i>
-                    </span>
-                </a>
+                <li class="text-danger">
+                    <a href="javascript:void(0);" class="dropdown-item text-danger modal_order_pacs" data-id="'.$id_radiologi.'">
+                        <i class="bi bi-send"></i> Kirim Worklist (Senalogy)
+                    </a>
+                </li>
             ';
         }else{
             $pacs_label = '
-                <a href="javascript:void(0);" class="modal_detail_pacd" data-id="'.$accession_number.'">
-                    <span class="badge border border-success text-success" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Lihat Detail Order">
-                        <i class="bi bi-check"></i>
-                    </span>
-                </a>
+                <li class="text-success">
+                    <a href="javascript:void(0);" class="dropdown-item text-success modal_detail_pacs" data-id="'.$accession_number.'">
+                        <i class="bi bi-check"></i> Lihat Worklist (Senalogy)
+                    </a>
+                </li>
             ';
         }
+        if(empty($orthanc)){
+            $orthanc_label = '
+                <li class="text-danger">
+                    <a href="javascript:void(0);" class="dropdown-item text-danger modal_order_orthanc" data-id="'.$id_radiologi.'">
+                        <i class="bi bi-send"></i> Kirim Worklist (Orthanc)
+                    </a>
+                </li>
+            ';
+        }else{
+            $orthanc_label = '
+                <li class="text-success">
+                    <a href="javascript:void(0);" class="dropdown-item text-success modal_detail_orthanc" data-id="'.$accession_number.'">
+                        <i class="bi bi-check"></i> Lihat Worklist (Orthanc)
+                    </a>
+                </li>
+            ';
+        }
+
+        $button_worlist = '
+            <a href="javascript:void(0);" class="badge bg-'.$warnna_worklist.'" data-bs-toggle="dropdown" aria-expanded="false">
+                S/O
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow" style="">
+                '.$pacs_label.'
+                '.$orthanc_label.'
+            </ul>
+        ';
+
 
         //Routing Periority
         if($priority=="routine"){
@@ -454,7 +490,7 @@
                         '.$dr.'
                     </ul>
                 </td>
-                <td class="text-center">'.$pacs_label.'</td>
+                <td class="text-center">'.$button_worlist.'</td>
                 <td class="text-center">
                     <a href="javascript:void(0);" data-bs-toggle="dropdown" aria-expanded="false">
                         <span class="badge bg-'.$badge_class.'" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="'.$status_pemeriksaan.'">

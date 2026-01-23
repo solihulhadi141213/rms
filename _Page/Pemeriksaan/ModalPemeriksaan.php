@@ -528,8 +528,9 @@
         </div>
     </div>
 </div>
-
-
+<!-- ======================================================================================================== -->
+<!-- MODAL ORDER PACS DAN ORTHANC -->
+<!-- ======================================================================================================== -->
 <div class="modal fade" id="ModalOrderPacs" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content border border-2 border-primary-subtle rounded-4 shadow-lg">
@@ -586,6 +587,63 @@
     </div>
 </div>
 
+<div class="modal fade" id="ModalOrderOrthanc" tabindex="-1">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <form action="javascript:void(0);" id="ProsesOrderOrthanc" autocomplete="off">
+                <div class="modal-header">
+                    <h5 class="modal-title text-dark"><i class="bi bi-send"></i> Order Orthanc</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12" id="FormOrderOrthanc">
+                            <!-- Form Akan Muncul Disini -->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12" id="NotifikasiOrderOrthanc">
+                            <!-- Notifikasi Proses Akan Muncul Disini -->
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary btn-rounded">
+                        <i class="bi bi-send"></i> Kirim
+                    </button>
+                    <button type="button" class="btn btn-secondary btn-rounded" data-bs-dismiss="modal">
+                        <i class="bi bi-x-circle"></i> Tutup
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="ModalDetailOrthanc" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-dark"><i class="bi bi-info-circle"></i> Detail Order Orthanc</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12" id="FormDetailOrthanc">
+                        <!-- Form Akan Muncul Disini -->
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-rounded" data-bs-dismiss="modal">
+                    <i class="bi bi-x-circle"></i> Tutup
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ======================================================================================================== -->
+<!-- MODAL EXPOSURE -->
+ <!-- ======================================================================================================== -->
 <div class="modal fade" id="ModalEksposur" tabindex="-1">
     <div class="modal-dialog modal-md">
         <div class="modal-content">

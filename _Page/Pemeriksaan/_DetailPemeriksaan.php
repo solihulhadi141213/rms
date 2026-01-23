@@ -1128,6 +1128,46 @@
                                 <td>Radiografer</td>
                                 <td class="text text-grayish"><?php echo $radiografer; ?></td>
                             </tr>
+                            <tr>
+                                <td><i>Worklist (Senalogy)</i></td>
+                                <td class="text text-grayish">
+                                    <?php 
+                                        if(empty($Data['pacs'])){
+                                            echo '
+                                                <a href="javascript:void(0);" class="text-danger modal_order_pacs" data-id="'.$id_radiologi.'">
+                                                    <small>Kirim Worklist <i class="bi bi-chevron-double-right"></i></small>
+                                                </a>
+                                            ';
+                                        }else{
+                                            echo '
+                                                <a href="javascript:void(0);" class="text-success modal_detail_pacs" data-id="'.$accession_number.'">
+                                                    <small>Lihat Worklist <i class="bi bi-arrow-up-right-square"></i></small>
+                                                </a>
+                                            ';
+                                        }
+                                    ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Worklist (Orthanc)</td>
+                                <td class="text text-grayish">
+                                    <?php 
+                                        if(empty($Data['orthanc'])){
+                                            echo '
+                                                <a href="javascript:void(0);" class="text-danger modal_order_orthanc" data-id="'.$id_radiologi.'">
+                                                    <small>Kirim Worklist <i class="bi bi-chevron-double-right"></i></small>
+                                                </a>
+                                            ';
+                                        }else{
+                                            echo '
+                                                <a href="javascript:void(0);" class="text-success modal_detail_orthanc" data-id="'.$accession_number.'">
+                                                    <small>Lihat Worklist <i class="bi bi-arrow-up-right-square"></i></small>
+                                                </a>
+                                            ';
+                                        }
+                                    ?>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>

@@ -133,35 +133,143 @@
     $datetime_hasil       = formatDateTimeStrict($Data['datetime_hasil']);
     $datetime_selesai     = formatDateTimeStrict($Data['datetime_selesai']);
 
+    // Buka URL SIMRS
+    $status_connection_simrs = 1;
+    $url_connection_simrs    = GetDetailData($Conn,'connection_simrs','status_connection_simrs',$status_connection_simrs,'url_connection_simrs');
+
+    //Dapatkan Token SIMRS
+    $token = GetSimrsToken($Conn);
+
+    // CURL DATA KUNJUNGAN
+    $curl = curl_init();
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => ''.$url_connection_simrs.'/API/SIMRS/get_detail_kunjungan.php?id='.$id_kunjungan.'',
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+        CURLOPT_HTTPHEADER => array(
+            'token: '.$token.'',
+            'X-API-Key: ••••••'
+        ),
+    ));
+    $response = curl_exec($curl);
+    curl_close($curl);
+    $data = json_decode($response, true);
+
+    // Jika Response Tidak Valid
+    if (empty($data['response']['code']) ||$data['response']['code'] != 200) {
+        echo '
+            <div class="row mb-3">
+                <div class="col-12">
+                    <div class="alert alert-danger">
+                        <small>Gagal memuat data kunjungan<br> Pesan : '.$data['response']['message'].'</small>
+                    </div>
+                </div>
+            </div>
+        ';
+        exit;
+    }
+    // Buka Metadata Kunjungan
+    $metadata      = $data['metadata'] ?? [];
+    $pasien        = $metadata['pasien'] ?? [];
+    $id_encounter  = $metadata['id_encounter'];
+    $id_ihs        = $pasien['id_ihs'];
+    $tanggal_lahir = $pasien['tanggal_lahir'];
+    $gender        = $pasien['gender'];
+
+    // Usia dan tanggal lahir
+    $usia                    = hitungUsia($tanggal_lahir);
+    $tanggal_lahir_formatted = formatTanggalLahir($tanggal_lahir);
+    $PatientBirthDate        = date('Ymd',strtotime($tanggal_lahir));
+
+    // Routing Gender
+    $gender_code = "";
+    if($gender=="Perempuan"){$gender_code = "F";}
+    if($gender=="Laki-laki"){$gender_code = "M";}
+
     echo '
         <div class="row mb-2">
-            <div class="col-5"><small>ID Radiologi</small></div>
+            <div class="col-5"><small>ID Kunjungan</small></div>
             <div class="col-1"><small>:</small></div>
-            <div class="col-6"><small class="text text-grayish">'.$id_radiologi.'</small>
+            <div class="col-6">
+                <small class="text text-grayish">'.$id_kunjungan.'</small>
+                <input type="hidden" name="id_kunjungan" value="'.$id_kunjungan.'">
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-5"><small>ID Encounter</small></div>
+            <div class="col-1"><small>:</small></div>
+            <div class="col-6">
+                <small class="text text-grayish">'.$id_encounter.'</small>
+                <input type="hidden" name="id_encounter" value="'.$id_encounter.'">
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-5"><small><i>Accession Number</i></small></div>
+            <div class="col-1"><small>:</small></div>
+            <div class="col-6">
+                <small class="text text-grayish">'.$accession_number.'</small>
+                <input type="hidden" name="accession_number" value="'.$accession_number.'">
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-5"><small><i>IHS Patient</i></small></div>
+            <div class="col-1"><small>:</small></div>
+            <div class="col-6">
+                <small class="text text-grayish">'.$id_ihs.'</small>
+                <input type="hidden" name="id_ihs" value="'.$id_ihs.'">
             </div>
         </div>
         <div class="row mb-2">
             <div class="col-5"><small>No.RM</small></div>
             <div class="col-1"><small>:</small></div>
-            <div class="col-6"><small class="text text-grayish">'.$id_pasien.'</small>
+            <div class="col-6">
+                <small class="text text-grayish">'.$id_pasien.'</small>
+                <input type="hidden" name="id_pasien" value="'.$id_pasien.'">
             </div>
         </div>
         <div class="row mb-2">
             <div class="col-5"><small>Nama Pasien</small></div>
             <div class="col-1"><small>:</small></div>
-            <div class="col-6"><small class="text text-grayish">'.$nama_pasien.'</small>
+            <div class="col-6">
+                <small class="text text-grayish">'.$nama_pasien.'</small>
+                <input type="hidden" name="nama_pasien" value="'.$nama_pasien.'">
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-5"><small>Tanggal Lahir</small></div>
+            <div class="col-1"><small>:</small></div>
+            <div class="col-6">
+                <small class="text text-grayish">'.$tanggal_lahir.' ('.$PatientBirthDate.')</small>
+                <input type="hidden" name="tanggal_lahir" value="'.$PatientBirthDate.'">
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-5"><small>Gender Pasien</small></div>
+            <div class="col-1"><small>:</small></div>
+            <div class="col-6">
+                <small class="text text-grayish">'.$gender.' ('.$gender_code.')</small>
+                <input type="hidden" name="gender" value="'.$gender.'">
+                <input type="hidden" name="gender_code" value="'.$gender_code.'">
             </div>
         </div>
         <div class="row mb-2">
             <div class="col-5"><small>Asal Kiriman</small></div>
             <div class="col-1"><small>:</small></div>
-            <div class="col-6"><small class="text text-grayish">'.$asal_kiriman.'</small>
+            <div class="col-6">
+                <small class="text text-grayish">'.$asal_kiriman.'</small>
             </div>
         </div>
         <div class="row mb-2">
             <div class="col-5"><small>Modalitas/Alat</small></div>
             <div class="col-1"><small>:</small></div>
-            <div class="col-6"><small class="text text-grayish">'.$nama_modalitas.'</small>
+            <div class="col-6">
+                <small class="text text-grayish">'.$nama_modalitas.' ('.$alat_pemeriksa.')</small>
+                <input type="hidden" name="modalitas" value="'.$alat_pemeriksa.'">
             </div>
         </div>
         <div class="row mb-2">
@@ -205,14 +313,10 @@
         // Form Penerimaan Permintaan
         // ============================
         
-        // Buka URL SIMRS
-        $status_connection_simrs = 1;
-        $url_connection_simrs = GetDetailData($Conn,'connection_simrs','status_connection_simrs',$status_connection_simrs,'url_connection_simrs');
+        
 
-        //Dapatkan Token SIMRS
-        $token = GetSimrsToken($Conn);
-
-         $curl2 = curl_init();
+        // CURL data Dokter
+        $curl2 = curl_init();
         curl_setopt_array($curl2, array(
             CURLOPT_URL => ''.$url_connection_simrs.'/API/SIMRS/get_dokter.php',
             CURLOPT_RETURNTRANSFER => true,
@@ -246,10 +350,8 @@
             ';
             exit;
         }
-
         $metadata_dokter = $data_doketer['metadata'];
         $list_dokter     = $metadata_dokter['list_dokter']?? [];
-
         // Jika Data Dokter Tidak Ada
         if (empty($list_dokter)) {
             echo '
@@ -276,7 +378,7 @@
             </div>
             <div class="row mb-3">
                 <div class="col-12">
-                    <label for="tanggal_dikerjakan">Tanggal & Jam</label>
+                    <label for="tanggal_dikerjakan">Tanggal & Jam Pelayanan</label>
                     <div class="input-group">
                         <input type="date" name="tanggal_dikerjakan" id="tanggal_dikerjakan" class="form-control" value="'.date('Y-m-d').'">
                         <input type="time" name="jam_dikerjakan" id="jam_dikerjakan" class="form-control" value="'.date('H:i').'">
@@ -307,5 +409,60 @@
         echo '      </select>';
         echo '  </div>';
         echo '</div>';
+
+        // Form Konfirmasi Kirim Satu Sehat Jika Ada Encounter
+        $disabled_form = "";
+        if(empty($id_encounter)){
+            $disabled_form = "disabled";
+        }
+
+        // Cek apakah ada pengaturan Senalogy dan Orthanc Yang Aktif
+        $form_senalogy             = "";
+        $form_orthanc              = "";
+        $status_connection_pacs    = 1;
+        $status_connection_orthanc = 1;
+        $id_connection_pacs        = GetDetailData($Conn,'connection_pacs','status_connection_pacs',$status_connection_pacs,'id_connection_pacs');
+        $id_connection_orthanc     = GetDetailData($Conn,'connection_orthanc','status_connection_orthanc',$status_connection_orthanc,'id_connection_orthanc');
+        if(!empty($id_connection_pacs)){
+            $form_senalogy ="checked";
+        }
+        if(!empty($id_connection_orthanc)){
+            $form_orthanc ="checked";
+        }
+        echo '
+            <div class="row mb-3 mt-3">
+                <div class="col-6">
+                    <label for="resource_satu_sehat"><b>Kirim <i>Resource</i> Satau Sehat</b></label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="kirim_service_request" name="kirim_service_request" value="'.$id_encounter.'" checked="">
+                        <label class="form-check-label" for="kirim_service_request"><small>Kirim <i>Service Request</i></small></label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="kirim_procedure" name="kirim_procedure" value="'.$id_encounter.'" checked="">
+                        <label class="form-check-label" for="kirim_procedure"><small>Kirim <i>Procedure</i></small></label>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <label for="worklist_modality"><b>Kirim <i>Resource</i> Worklist</b></label>
+                    <div class="form-check">
+                        <input class="form-check-input" '.$form_senalogy.' type="checkbox" id="kirim_ke_senalogi" name="kirim_ke_senalogi" value="'.$accession_number.'" checked="">
+                        <label class="form-check-label" for="kirim_ke_senalogi">
+                            <small>Kirim <i>Worklist</i> (Senalogy Cloud)</small>
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" '.$form_orthanc.' type="checkbox" id="kirim_orthanc" name="kirim_orthanc" value="'.$accession_number.'" checked="">
+                        <label class="form-check-label" for="kirim_orthanc">
+                            <small>Kirim <i>Worklist</i> (Orthanc Server)</small>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        ';
+
+       
+
+        // Pastikan array pasien ada
+        
     }
 ?>
