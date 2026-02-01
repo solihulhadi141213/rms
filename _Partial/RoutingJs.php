@@ -28,6 +28,7 @@
             "KodePemeriksaan"  => "_Page/KodePemeriksaan/KodePemeriksaan.js",
             "Tarif"            => "_Page/Tarif/Tarif.js",
             "Question"         => "_Page/Question/Question.js",
+            "TandaTangan"      => "_Page/TandaTangan/TandaTangan.js",
             "Pemeriksaan"      => "_Page/Pemeriksaan/Pemeriksaan.js",
             "Tagihan"          => "_Page/Tagihan/Tagihan.js",
             "Laporan"          => "_Page/Laporan/Laporan.js",

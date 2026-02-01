@@ -108,6 +108,11 @@
                 <i class="bi bi-question-octagon"></i> <span>Daftar Pertanyaan</span>
             </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link <?php if($PageMenu=="TandaTangan"){echo "";}else{echo "collapsed";} ?>" href="index.php?Page=TandaTangan">
+                <i class="ri ri-pen-nib-fill"></i> <span>Tanda Tangan</span>
+            </a>
+        </li>
         <li class="nav-heading border-1 border-top">
             <div class="mt-3">Master</div>
         </li>

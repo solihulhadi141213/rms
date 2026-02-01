@@ -19,6 +19,7 @@
             "KodePemeriksaan"  => "_Page/KodePemeriksaan/ModalKodePemeriksaan.php",
             "Tarif"            => "_Page/Tarif/ModalTarif.php",
             "Question"         => "_Page/Question/ModalQuestion.php",
+            "TandaTangan"      => "_Page/TandaTangan/ModalTandaTangan.php",
             "Pemeriksaan"      => "_Page/Pemeriksaan/ModalPemeriksaan.php",
             "Tagihan"          => "_Page/Tagihan/ModalTagihan.php",
             "Laporan"          => "_Page/Laporan/ModalLaporan.php",

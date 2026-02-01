@@ -20,6 +20,7 @@
             "KodePemeriksaan"  => "_Page/KodePemeriksaan/KodePemeriksaan.php",
             "Tarif"            => "_Page/Tarif/Tarif.php",
             "Question"         => "_Page/Question/Question.php",
+            "TandaTangan"      => "_Page/TandaTangan/TandaTangan.php",
             "Pemeriksaan"      => "_Page/Pemeriksaan/Pemeriksaan.php",
             "Tagihan"          => "_Page/Tagihan/Tagihan.php",
             "Laporan"          => "_Page/Laporan/Laporan.php",
