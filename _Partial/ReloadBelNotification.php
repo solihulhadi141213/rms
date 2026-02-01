@@ -3,8 +3,12 @@
     include "../_Config/Connection.php";
     include "../_Config/GlobalFunction.php";
     date_default_timezone_set("Asia/Jakarta");
-    //Menghitung Jumlah Pinjaman Yang Menunggak
+    
+    //Menghitung Jumlah Notifikasi
     $JumlahNotifikasi=0;
+
+    // Cek Apakah base URL sudah diatur
+    
     
     //Apabila ada notifgikasi
     if(!empty($JumlahNotifikasi)){

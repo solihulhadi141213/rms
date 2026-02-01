@@ -283,6 +283,14 @@
                             </td>
                         </tr>
                         <tr>
+                            <td><span>Dokter Pengirim</span></td>
+                            <td class="text-grayish"><?php echo "$nama_dokter_pengirim"; ?></td>
+                        </tr>
+                        <tr>
+                            <td><span>Dokter Penerima</span></td>
+                            <td class="text-grayish"><?php echo "$nama_dokter_penerima"; ?></td>
+                        </tr>
+                        <tr>
                             <td><span>Radiografer</span></td>
                             <td class="text-grayish"><?php echo "$radiografer"; ?></td>
                         </tr>

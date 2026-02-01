@@ -581,11 +581,6 @@
                                                         </a>
                                                     </li>
                                                     <li>
-                                                        <a class="dropdown-item modal_edit_satu_sehat" href="javascript:void(0)" data-resource="service_request" data-id="'.$id_service_request .'" data-id_rad="'.$id_radiologi .'">
-                                                            <i class="bi bi-pencil"></i> Edit
-                                                        </a>
-                                                    </li>
-                                                    <li>
                                                         <a class="dropdown-item modal_hapus_satu_sehat" href="javascript:void(0)" data-resource="service_request" data-id="'.$id_service_request .'" data-id_rad="'.$id_radiologi .'">
                                                             <i class="bi bi-x"></i> Hapus
                                                         </a>
@@ -636,11 +631,6 @@
                                                     <li>
                                                         <a class="dropdown-item modal_detail_procedure" href="javascript:void(0)" data-id="'.$id_procedure .'">
                                                             <i class="bi bi-info-circle"></i> Detail
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item modal_edit_satu_sehat" href="javascript:void(0)" data-resource="procedure" data-id="'.$id_procedure .'" data-id_rad="'.$id_radiologi .'">
-                                                            <i class="bi bi-pencil"></i> Edit
                                                         </a>
                                                     </li>
                                                     <li>
@@ -697,11 +687,6 @@
                                                         </a>
                                                     </li>
                                                     <li>
-                                                        <a class="dropdown-item modal_edit_satu_sehat" href="javascript:void(0)" data-resource="imaging_study" data-id="'.$id_imaging_study .'" data-id_rad="'.$id_radiologi .'">
-                                                            <i class="bi bi-pencil"></i> Edit
-                                                        </a>
-                                                    </li>
-                                                    <li>
                                                         <a class="dropdown-item modal_hapus_satu_sehat" href="javascript:void(0)" data-resource="imaging_study" data-id="'.$id_imaging_study .'" data-id_rad="'.$id_radiologi .'">
                                                             <i class="bi bi-x"></i> Hapus
                                                         </a>
@@ -755,11 +740,6 @@
                                                             </a>
                                                         </li>
                                                         <li>
-                                                            <a class="dropdown-item modal_edit_satu_sehat" href="javascript:void(0)" data-resource="observation" data-id="'.$id_observation .'" data-id_rad="'.$id_radiologi .'">
-                                                                <i class="bi bi-pencil"></i> Edit
-                                                            </a>
-                                                        </li>
-                                                        <li>
                                                             <a class="dropdown-item modal_hapus_satu_sehat" href="javascript:void(0)" data-resource="observation" data-id="'.$id_observation .'" data-id_rad="'.$id_radiologi .'">
                                                                 <i class="bi bi-x"></i> Hapus
                                                             </a>
@@ -810,11 +790,6 @@
                                                     <li>
                                                         <a class="dropdown-item modal_detail_diagnostic_report" href="javascript:void(0)" data-id="'.$id_diagnostic_report .'">
                                                             <i class="bi bi-info-circle"></i> Detail
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item modal_edit_satu_sehat" href="javascript:void(0)" data-resource="diagnostic_report" data-id="'.$id_diagnostic_report .'" data-id_rad="'.$id_radiologi .'">
-                                                            <i class="bi bi-pencil"></i> Edit
                                                         </a>
                                                     </li>
                                                     <li>
