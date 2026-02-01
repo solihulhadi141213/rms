@@ -43,6 +43,9 @@
     $status_connection_pacs = isset($_POST['status_connection_pacs']) 
         ? (int) $_POST['status_connection_pacs'] 
         : 0;
+    $url_viewer = isset($_POST['url_viewer']) 
+        ? trim(htmlspecialchars($_POST['url_viewer'])) 
+        : '';
 
     // ==========================
     // VALIDASI INPUT
@@ -78,6 +81,14 @@
         echo json_encode([
             'status' => 'error',
             'message' => 'URL PACS tidak boleh kosong!'
+        ]);
+        exit;
+    }
+
+    if ($url_viewer == '') {
+        echo json_encode([
+            'status' => 'error',
+            'message' => 'URL Viewer tidak boleh kosong!'
         ]);
         exit;
     }
@@ -130,11 +141,12 @@
                 name_connection_pacs ,
                 url_connection_pacs ,
                 url_pacs ,
+                url_viewer ,
                 username_connection_pacs,
                 password_connection_pacs,
                 status_connection_pacs 
             ) 
-            VALUES (?, ?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
         ";
         
         $stmt_insert = $Conn->prepare($sql_insert);
@@ -144,10 +156,11 @@
         }
         
         $stmt_insert->bind_param(
-            "sssssi",
+            "ssssssi",
             $name_connection_pacs ,
             $url_connection_pacs ,
             $url_pacs ,
+            $url_viewer ,
             $username_connection_pacs,
             $password_connection_pacs,
             $status_connection_pacs 

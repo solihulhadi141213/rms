@@ -54,6 +54,7 @@
         $name_connection_pacs     = $Data['name_connection_pacs'];
         $url_connection_pacs      = $Data['url_connection_pacs'];
         $url_pacs                 = $Data['url_pacs'];
+        $url_viewer               = $Data['url_viewer'];
         $username_connection_pacs = $Data['username_connection_pacs'];
         $password_connection_pacs = $Data['password_connection_pacs'];
         $status_connection_pacs   = $Data['status_connection_pacs'];
@@ -104,6 +105,14 @@
                             <small>URL Aplication</small>
                         </label>
                         <input type="url" class="form-control" name="url_pacs" id="url_pacs_edit" placeholder="https://" value="'.$url_pacs.'" required>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <label for="url_viewer_edit">
+                            <small>URL Viewer</small>
+                        </label>
+                        <input type="url" class="form-control" name="url_viewer" id="url_viewer_edit" placeholder="https://" value="'.$url_viewer.'" required>
                     </div>
                 </div>
                 <div class="row mb-3">

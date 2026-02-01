@@ -21,6 +21,7 @@ $id_connection_pacs       = validateAndSanitizeInput($_POST['id_connection_pacs'
 $name_connection_pacs     = validateAndSanitizeInput($_POST['name_connection_pacs'] ?? '');
 $url_connection_pacs      = validateAndSanitizeInput($_POST['url_connection_pacs'] ?? '');
 $url_pacs                 = validateAndSanitizeInput($_POST['url_pacs'] ?? '');
+$url_viewer               = validateAndSanitizeInput($_POST['url_viewer'] ?? '');
 $username_connection_pacs = validateAndSanitizeInput($_POST['username_connection_pacs'] ?? '');
 $password_connection_pacs = validateAndSanitizeInput($_POST['password_connection_pacs'] ?? '');
 $status_connection_pacs   = validateAndSanitizeInput($_POST['status_connection_pacs'] ?? '');
@@ -79,6 +80,7 @@ try {
             name_connection_pacs     = ?,
             url_connection_pacs      = ?,
             url_pacs                 = ?,
+            url_viewer                 = ?,
             username_connection_pacs = ?,
             password_connection_pacs = ?,
             status_connection_pacs   = ?
@@ -90,10 +92,11 @@ try {
     }
 
     $QryUpdate->bind_param(
-        "sssssii",
+        "ssssssii",
         $name_connection_pacs,
         $url_connection_pacs,
         $url_pacs,
+        $url_viewer,
         $username_connection_pacs,
         $password_connection_pacs,
         $status_connection_pacs,

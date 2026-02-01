@@ -34,6 +34,20 @@
                                 <small>URL PACS</small>
                             </label>
                             <input type="url" class="form-control" name="url_pacs" id="url_pacs" placeholder="https://" required>
+                            <small>
+                                <small class="text text-muted">Base URL Aplikasi PACS</small>
+                            </small>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <label for="url_viewer">
+                                <small>URL Viewer</small>
+                            </label>
+                            <input type="url" class="form-control" name="url_viewer" id="url_viewer" placeholder="https://" required>
+                            <small>
+                                <small class="text text-muted">Base URL Viewer DICOM PACS</small>
+                            </small>
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -83,7 +97,7 @@
 </div>
 
 <div class="modal fade" id="ModalDetail" tabindex="-1">
-    <div class="modal-dialog modal-md">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title text-dark"><i class="bi bi-info-circle"></i> Detail Koneksi</h5>
@@ -107,7 +121,7 @@
 </div>
 
 <div class="modal fade" id="ModalUjiKoneksi" tabindex="-1">
-    <div class="modal-dialog modal-md">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title text-dark"><i class="bi bi-arrow-left-right"></i> Uji Koneksi</h5>
@@ -164,7 +178,7 @@
 </div>
 
 <div class="modal fade" id="ModalDelete" tabindex="-1">
-    <div class="modal-dialog modal-md">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <form action="javascript:void(0);" id="ProsesDelete" autocomplete="off">
                 <div class="modal-header">

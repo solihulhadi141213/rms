@@ -1065,7 +1065,7 @@
                                 <td><i>Accession Number</i></td>
                                 <td>
                                     <a href="javascript:void(0);" class="underscore_doted" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <?php echo $accession_number; ?>
+                                        <?php echo $accession_number; ?> <i class="bi bi-caret-down-square"></i>
                                     </a>
                                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                                          <li class="dropdown-header text-start">
@@ -1575,22 +1575,38 @@
         <div class="card">
             <div class="card-header">
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-10">
                         <b class="card-title">M. Expertise (SIMRS)</b>
+                    </div>
+                    <div class="col-2 text-end">
+                        <a href="javascript:void(0);" class="btn btn-sm btn-floating btn-secondary" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-caret-down-square"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                            <li class="dropdown-header text-start">
+                                <h6>Option</h6>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" class="dropdown-item modal_imaging_study_by_acn" data-id="<?php echo $accession_number; ?>">
+                                    1. Imaging Study By ACN
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" class="dropdown-item modal_dicom_metadata_by_acn" data-id="<?php echo $accession_number; ?>">
+                                    2. DICOM Metadata By ACN
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" class="dropdown-item modal_expertise_by_acn" data-id="<?php echo $accession_number; ?>">
+                                    3. Expertise By ACN
+                                </a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
 
             <div class="card-body">
-                <div class="row">
-                    <div class="col-12">
-                        <a href="javascript:void(0);" class="text-success modal_dicom_metadata_by_acn" data-id="<?php echo $accession_number; ?>">
-                            <small>
-                                Lihat Dicom Metadata <i class="bi bi-chevron-double-right"></i>
-                            </small>
-                        </a>
-                    </div>
-                </div>
                 <div class="table table-responsive">
                     <table class="table table-bordered table-sm">
                         <thead>

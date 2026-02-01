@@ -165,7 +165,6 @@
     $study_number              = validateAndSanitizeInput($data['study_number'] ?? '');
     $imaging_study_uuid        = validateAndSanitizeInput($data['imaging_study_uuid'] ?? '');
     $attachments               = validateAndSanitizeInput($data['attachments'] ?? '');
-    $viewer_link               = validateAndSanitizeInput($data['viewer_link'] ?? '');
     $study_instance_uid        = validateAndSanitizeInput($data['study_instance_uid'] ?? '');
     $recommendation            = validateAndSanitizeInput($data['recommendation'] ?? '');
     $doctor_name               = validateAndSanitizeInput($data['doctor_name'] ?? '');

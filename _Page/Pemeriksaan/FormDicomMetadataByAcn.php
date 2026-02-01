@@ -41,7 +41,7 @@
     $tokenPacs = $tokenResult['token'];
 
     // Konfigurasi PACS
-    $stmt = $Conn->prepare(" SELECT url_connection_pacs, url_pacs FROM connection_pacs WHERE status_connection_pacs = 1 LIMIT 1");
+    $stmt = $Conn->prepare(" SELECT url_connection_pacs, url_pacs, url_viewer FROM connection_pacs WHERE status_connection_pacs = 1 LIMIT 1");
     $stmt->execute();
     $config = $stmt->get_result()->fetch_assoc();
     $stmt->close();
@@ -53,6 +53,7 @@
         exit;
     }
     $url_pacs = $config['url_pacs'];
+    $url_viewer = $config['url_viewer'];
     $url = rtrim($config['url_connection_pacs'], '/')
         . '/api/dicom/show-metadata?accession_number='
         . urlencode($accession_number);
@@ -135,7 +136,7 @@
     $study_instance_uid_prev = substr($study_instance_uid, 0, 10) . '..' . '..';
     echo '
         <div class="row">
-            <div class="col-md-4 mb-3">
+            <div class="col-md-12 mb-3">
                 <div class="table-responsive">
                     <table class="table table-bordered table-sm table-hover">
                         <tbody>
@@ -144,11 +145,9 @@
                             <tr>
                                 <td><small>Study Instance UID</small></td>
                                 <td>
-                                    <small data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="'.$study_instance_uid.'">
-                                        <a href="https://rselsyifa-pacs.senalogy.com/viewer?studyInstanceUID='.$study_instance_uid.'&modality='.$d['modality'].'" target="_blank">
-                                            '.$study_instance_uid_prev.' <i class="bi bi-arrow-up-right-square"></i>
-                                        </a>
-                                    </small>
+                                    <a href="'.$url_viewer.'/viewer?StudyInstanceUIDs='.$study_instance_uid.'" target="_blank">
+                                        <small>'.$study_instance_uid.'</small>
+                                    </a>
                                 </td>
                             </tr>
                             <tr><td><small>Orthanc Study ID</small></td><td><small>'.valGray($d['orthanc_study_id']).'</small></td></tr>
@@ -178,15 +177,6 @@
                         </tbody>
                     </table>
                 </div>
-            </div>
-            <div class="col-md-8 mb-3">
-                <iframe
-                    src="https://rselsyifa-pacs.senalogy.com/viewer?studyInstanceUID='.$study_instance_uid.'&modality='.$d['modality'].'"
-                    width="100%"
-                    height="700"
-                    frameborder="0"
-                    allowfullscreen>
-                </iframe>
             </div>
         </div>
     ';

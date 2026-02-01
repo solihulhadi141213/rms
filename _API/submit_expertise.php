@@ -158,7 +158,6 @@
     $finding                           = validateAndSanitizeInput($finding);
     $study_number                      = validateAndSanitizeInput($study_number);
     $attachments                       = validateAndSanitizeInput($attachments);
-    $viewer_link                       = validateAndSanitizeInput($viewer_link);
     $study_instance_uid                = validateAndSanitizeInput($study_instance_uid);
     $cardiac_silhouette                = validateAndSanitizeInput($cardiac_silhouette);
     $aorta                             = validateAndSanitizeInput($aorta);

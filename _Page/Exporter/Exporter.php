@@ -17,7 +17,8 @@
 
     $data_arry=[
         "Nota"   => "ExportNota.php",
-        "Report" => "ExportReport.php"
+        "Report" => "ExportReport.php",
+        "Expertise" => "Expertise.php"
     ];
 
     if (array_key_exists($kategori_data, $data_arry)) { 

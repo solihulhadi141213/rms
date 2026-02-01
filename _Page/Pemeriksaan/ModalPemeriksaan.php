@@ -36,6 +36,7 @@
                             <select name="OrderBy" id="OrderBy" class="form-control">
                                 <option value="">Pilih</option>
                                 <option value="id_pasien">No Rm</option>
+                                <option value="accession_number">Accession Number</option>
                                 <option value="id_kunjungan">ID Reg</option>
                                 <option value="nama_pasien">Nama Pasien</option>
                                 <option value="datetime_diminta">Tanggal</option>
@@ -70,6 +71,7 @@
                             <select name="keyword_by" id="KeywordBy" class="form-control">
                                 <option value="">Pilih</option>
                                 <option value="id_pasien">No Rm</option>
+                                <option value="accession_number">Accession Number</option>
                                 <option value="id_kunjungan">ID Reg</option>
                                 <option value="nama_pasien">Nama Pasien</option>
                                 <option value="datetime_diminta">Tanggal</option>
@@ -1204,26 +1206,63 @@ EXPERTISE PACS
 <div class="modal fade" id="ModalExpertisePacs" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title text-dark"><i class="bi bi-info-circle"></i> Detail Expertise PACS</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-12" id="FormDetailExpertisePacs">
-                        <!-- Form Akan Muncul Disini -->
+            <form action="_Page/Exporter/Exporter.php" method="GET" target="_blank">
+                <div class="modal-header">
+                    <h5 class="modal-title text-dark"><i class="bi bi-info-circle"></i> Detail Expertise (Form PACS On Local Database)</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12" id="FormDetailExpertisePacs">
+                            <!-- Form Akan Muncul Disini -->
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary btn-rounded" data-bs-dismiss="modal">
-                    <i class="bi bi-x-circle"></i> Tutup
-                </button>
-            </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary btn-rounded">
+                        <i class="bi bi-printer"></i> Cetak
+                    </button>
+                     <button type="button" class="btn btn-secondary btn-rounded" data-bs-dismiss="modal">
+                        <i class="bi bi-x-circle"></i> Tutup
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
-
+<!-- EDIT EXPERTISE PACS -->
+<div class="modal fade" id="ModalEditExpertisePacs" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form action="javascript:void(0);" id="ProsesEditExpertisePacs" autocomplete="off">
+                <div class="modal-header">
+                    <h5 class="modal-title text-dark"><i class="bi bi-pencil"></i> Edit Expertise PACS</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12" id="FormEditExpertisePacs">
+                            <!-- Form Edit Akan Muncul Disini -->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12" id="NotifikasiEditExpertisePacs">
+                            <!-- Notifikasi Proses Delete Akan Muncul Disini -->
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary btn-rounded">
+                        <i class="bi bi-save"></i> Simpan
+                    </button>
+                    <button type="button" class="btn btn-secondary btn-rounded" data-bs-dismiss="modal">
+                        <i class="bi bi-x-circle"></i> Tutup
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 <!-- HAPUS EXPERTISE PACS -->
 <div class="modal fade" id="ModalHapusExpertisePacs" tabindex="-1">
     <div class="modal-dialog modal-md">
@@ -1478,7 +1517,7 @@ MODAL DETAIL ACCESSION NUMBER
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title text-dark"><i class="bi bi-info-circle"></i> Imaging Study By ACN</h5>
+                <h5 class="modal-title text-dark"><i class="bi bi-info-circle"></i> Imaging Study By ACN (From Satu Sehat)</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -1497,10 +1536,10 @@ MODAL DETAIL ACCESSION NUMBER
     </div>
 </div>
 <div class="modal fade" id="ModalDicomMetadataByAcn" tabindex="-1">
-    <div class="modal-dialog modal-fullscreen">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title text-dark"><i class="bi bi-info-circle"></i> Dicom Metadata By ACN</h5>
+                <h5 class="modal-title text-dark"><i class="bi bi-info-circle"></i> Dicom Metadata By ACN (Form PACS)</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -1518,6 +1557,7 @@ MODAL DETAIL ACCESSION NUMBER
         </div>
     </div>
 </div>
+
 <div class="modal fade" id="ModalExpertiseByAcn" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">

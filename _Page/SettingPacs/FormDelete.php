@@ -53,6 +53,8 @@
         $id_connection_pacs       = $Data['id_connection_pacs'];
         $name_connection_pacs     = $Data['name_connection_pacs'];
         $url_connection_pacs      = $Data['url_connection_pacs'];
+        $url_pacs                 = $Data['url_pacs'];
+        $url_viewer               = $Data['url_viewer'];
         $username_connection_pacs = $Data['username_connection_pacs'];
         $password_connection_pacs = $Data['password_connection_pacs'];
         $status_connection_pacs   = $Data['status_connection_pacs'];
@@ -74,26 +76,48 @@
         }else{
             echo '
                 <input type="hidden" name="id_connection_pacs" value="'.$id_connection_pacs.'">
-                <div class="row mb-2">
-                    <div class="col-4"><small>URL PACS</small></div>
-                    <div class="col-1"><small>:</small></div>
-                    <div class="col-7">
-                        <div class="copy-wrapper">
-                            <small class="text text-grayish text-long" id="url_simrs">
-                                '.$url_connection_pacs.'
-                            </small>
-                            <i class="bi bi-clipboard copy-btn"
-                            onclick="copyText(\'url_simrs\')"
-                            title="Copy"></i>
-                        </div>
-                    </div>
-                </div>
 
                 <div class="row mb-2">
                     <div class="col-4"><small>Nama Koneksi</small></div>
                     <div class="col-1"><small>:</small></div>
                     <div class="col-7">
                         <small class="text text-grayish">'.$name_connection_pacs.'</small>
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    <div class="col-4"><small>URL API PACS</small></div>
+                    <div class="col-1"><small>:</small></div>
+                    <div class="col-7">
+                        <div class="copy-wrapper">
+                            <small class="text text-grayish text-long" id="url_simrs">
+                                '.$url_connection_pacs.'
+                            </small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    <div class="col-4"><small>URL Aplikasi PACS</small></div>
+                    <div class="col-1"><small>:</small></div>
+                    <div class="col-7">
+                        <div class="copy-wrapper">
+                            <small class="text text-grayish text-long" id="url_simrs">
+                                '.$url_pacs.'
+                            </small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    <div class="col-4"><small>URL Viewer</small></div>
+                    <div class="col-1"><small>:</small></div>
+                    <div class="col-7">
+                        <div class="copy-wrapper">
+                            <small class="text text-grayish text-long" id="url_simrs">
+                                '.$url_viewer.'
+                            </small>
+                        </div>
                     </div>
                 </div>
 
@@ -105,9 +129,6 @@
                             <small class="text text-grayish text-long" id="username_connection_pacs">
                                 '.$username_connection_pacs.'
                             </small>
-                            <i class="bi bi-clipboard copy-btn"
-                            onclick="copyText(\'username_connection_pacs\')"
-                            title="Copy"></i>
                         </div>
                     </div>
                 </div>
@@ -120,9 +141,6 @@
                             <small class="text text-grayish text-long" id="password_connection_pacs">
                                 '.$password_connection_pacs.'
                             </small>
-                            <i class="bi bi-clipboard copy-btn"
-                            onclick="copyText(\'password_connection_pacs\')"
-                            title="Copy"></i>
                         </div>
                     </div>
                 </div>

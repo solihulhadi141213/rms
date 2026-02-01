@@ -54,6 +54,7 @@
         $name_connection_pacs     = $Data['name_connection_pacs'];
         $url_connection_pacs      = $Data['url_connection_pacs'];
         $url_pacs                 = $Data['url_pacs'];
+        $url_viewer               = $Data['url_viewer'];
         $username_connection_pacs = $Data['username_connection_pacs'];
         $password_connection_pacs = $Data['password_connection_pacs'];
         $status_connection_pacs   = $Data['status_connection_pacs'];
@@ -82,9 +83,6 @@
                             <small class="text text-grayish text-long" id="url_simrs">
                                 '.$url_connection_pacs.'
                             </small>
-                            <i class="bi bi-clipboard copy-btn"
-                            onclick="copyText(\'url_simrs\')"
-                            title="Copy"></i>
                         </div>
                     </div>
                 </div>
@@ -97,9 +95,18 @@
                             <small class="text text-grayish text-long" id="url_simrs">
                                 '.$url_pacs.'
                             </small>
-                            <i class="bi bi-clipboard copy-btn"
-                            onclick="copyText(\'url_simrs\')"
-                            title="Copy"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    <div class="col-4"><small>URL Viewer</small></div>
+                    <div class="col-1"><small>:</small></div>
+                    <div class="col-7">
+                        <div class="copy-wrapper">
+                            <small class="text text-grayish text-long" id="url_simrs">
+                                '.$url_viewer.'
+                            </small>
                         </div>
                     </div>
                 </div>
@@ -120,9 +127,6 @@
                             <small class="text text-grayish text-long" id="username_connection_pacs">
                                 '.$username_connection_pacs.'
                             </small>
-                            <i class="bi bi-clipboard copy-btn"
-                            onclick="copyText(\'username_connection_pacs\')"
-                            title="Copy"></i>
                         </div>
                     </div>
                 </div>
@@ -135,9 +139,6 @@
                             <small class="text text-grayish text-long" id="password_connection_pacs">
                                 '.$password_connection_pacs.'
                             </small>
-                            <i class="bi bi-clipboard copy-btn"
-                            onclick="copyText(\'password_connection_pacs\')"
-                            title="Copy"></i>
                         </div>
                     </div>
                 </div>

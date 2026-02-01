@@ -115,23 +115,24 @@
     $type         = $data['type'] ?? "-";
 
     echo '
-        <div class="row mb-2">
-            <div class="col-12"><small><b><i>A. Title Information</i></b></small></div>
-        </div>
-        <div class="row">
-            <div class="col-4"><small>Resource Type</small></div>
-            <div class="col-1"><small>:</small></div>
-            <div class="col-7"><small class="text text-grayish">'.$resourceType.'</small></div>
-        </div>
-        <div class="row">
-            <div class="col-4"><small>Total Data</small></div>
-            <div class="col-1"><small>:</small></div>
-            <div class="col-7"><small class="text text-grayish">'.$total.' Row</small></div>
-        </div>
-        <div class="row">
-            <div class="col-4"><small>Type</small></div>
-            <div class="col-1"><small>:</small></div>
-            <div class="col-7"><small class="text text-grayish">'.$type.'</small></div>
+        <div class="row mb-3 border-1 border-bottom">
+            <div class="col-12">
+                <div class="row mb-2">
+                    <div class="col-4"><small>Resource Type</small></div>
+                    <div class="col-1"><small>:</small></div>
+                    <div class="col-7"><small class="text text-grayish text-long">'.$resourceType.'</small></div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-4"><small>Total Data</small></div>
+                    <div class="col-1"><small>:</small></div>
+                    <div class="col-7"><small class="text text-grayish text-long">'.$total.' Row</small></div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-4"><small>Type</small></div>
+                    <div class="col-1"><small>:</small></div>
+                    <div class="col-7"><small class="text text-grayish text-long">'.$type.'</small></div>
+                </div>
+            </div>
         </div>
     ';
 
@@ -183,51 +184,51 @@
             $modality_code = htmlspecialchars($modality['code'] ?? '-');
         }
         echo '
-            <div class="row mb-2 mt-3">
-                <div class="col-12"><small><b><i>'.$nomor.'. '.$description.'</i></b></small></div>
-            </div>
-        ';
-        echo '
-            <div class="row mb-2">
-                <div class="col-4"><small><i>ID Imaging Study</i></small></div>
-                <div class="col-1"><small>:</small></div>
-                <div class="col-7"><small class="text text-grayish">'.$id.'</small></div>
-            </div>
-             <div class="row mb-2">
-                <div class="col-4"><small><i>Accession Number</i></small></div>
-                <div class="col-1"><small>:</small></div>
-                <div class="col-7"><small class="text text-grayish">'.$acsn.'</small></div>
-            </div>
-            <div class="row mb-2">
-                <div class="col-4"><small><i>Dicom UID</i></small></div>
-                <div class="col-1"><small>:</small></div>
-                <div class="col-7">
-                    <small class="text text-grayish" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="'.$dicomUidFull.'">
-                        <a href="'.$url_pacs.'/viewer?studyInstanceUID='.$dicomUid.'&modality='.$modality_code.'" target="_blank">
-                            '.$dicomUidPrev.' <i class="bi bi-arrow-up-right-square"></i>
-                        </a>
-                    </small>
+            <div class="row mb-3 border-1 border-bottom">
+                <div class="col-12">
+                    <div class="row mb-2">
+                        <div class="col-4"><small><i>Description</i></small></div>
+                        <div class="col-1"><small>:</small></div>
+                        <div class="col-7"><small class="text text-grayish text-long">'.$description.'</small></div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-4"><small><i>ID Imaging Study</i></small></div>
+                        <div class="col-1"><small>:</small></div>
+                        <div class="col-7"><small class="text text-grayish text-long">'.$id.'</small></div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-4"><small><i>Accession Number</i></small></div>
+                        <div class="col-1"><small>:</small></div>
+                        <div class="col-7"><small class="text text-grayish text-long">'.$acsn.'</small></div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-4"><small><i>Dicom UID</i></small></div>
+                        <div class="col-1"><small>:</small></div>
+                        <div class="col-7">
+                            <small class="text text-grayish text-long">'.$dicomUid.'</small>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-4"><small>Status</small></div>
+                        <div class="col-1"><small>:</small></div>
+                        <div class="col-7"><small class="text text-grayish text-long">'.$status.'</small></div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-4"><small>Waktu Pemeriksaan</small></div>
+                        <div class="col-1"><small>:</small></div>
+                        <div class="col-7"><small class="text text-grayish text-long">'.$started.'</small></div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-4"><small>ID Pasien</small></div>
+                        <div class="col-1"><small>:</small></div>
+                        <div class="col-7"><small class="text text-grayish text-long">'.$patientRef.'</small></div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-4"><small>Modalitas</small></div>
+                        <div class="col-1"><small>:</small></div>
+                        <div class="col-7"><small class="text text-grayish text-long">'.$modality_code.'</small></div>
+                    </div>
                 </div>
-            </div>
-            <div class="row mb-2">
-                <div class="col-4"><small>Status</small></div>
-                <div class="col-1"><small>:</small></div>
-                <div class="col-7"><small class="text text-grayish">'.$status.'</small></div>
-            </div>
-            <div class="row mb-2">
-                <div class="col-4"><small>Waktu Pemeriksaan</small></div>
-                <div class="col-1"><small>:</small></div>
-                <div class="col-7"><small class="text text-grayish">'.$started.'</small></div>
-            </div>
-            <div class="row mb-2">
-                <div class="col-4"><small>ID Pasien</small></div>
-                <div class="col-1"><small>:</small></div>
-                <div class="col-7"><small class="text text-grayish">'.$patientRef.'</small></div>
-            </div>
-            <div class="row mb-2">
-                <div class="col-4"><small>Modalitas</small></div>
-                <div class="col-1"><small>:</small></div>
-                <div class="col-7"><small class="text text-grayish">'.$modality_code.'</small></div>
             </div>
         ';
         $nomor++;
