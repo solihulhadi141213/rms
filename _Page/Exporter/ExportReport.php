@@ -1,4 +1,7 @@
 <?php
+     function safeEcho($value, $default = '<p>-</p>') {
+        return (!empty($value) && trim($value) !== '') ? $value : $default;
+    }
     //Validasi Data 'an' tidak boleh kosong
     if(empty($_GET['an'])){
        echo 'Accession Number Tidak Boleh Kosong';
@@ -267,6 +270,19 @@
                 padding: 8px;
                 vertical-align: middle;
             }
+
+            table.expertise_small{
+                border-collapse: collapse;
+                color: #212529;
+                border-top: 1px solid #000;
+                border-bottom: 1px solid #000;
+            }
+
+            table.expertise_small tr td{
+                /* border: 1px solid #000; */
+                padding: 2px;
+                vertical-align: middle;
+            }
            
 
         </style>
@@ -434,24 +450,50 @@
         
         <table width="100%" class="expertise">
             <tr>
-                <td align="center" rowspan="4" width="20%">
-                    <?php echo '<img src="../../qr.php?text='.$text_url.'" alt="QR Code">'; ?>
+                <td width="50%"><b>Temuan</b></td>
+                <td width="50%"><b>Kesan</b></td>
+            </tr>
+            <tr>
+                <td><small><?php echo safeEcho($temuan); ?></small></td>
+                <td><small><?php echo safeEcho($kesan); ?></small></td>
+            </tr>
+            <tr>
+                <td width="50%"><b>Saran</b></td>
+                <td width="50%"><b>Catatan</b></td>
+            </tr>
+            <tr>
+                <td><small><?php echo safeEcho($saran); ?></small></td>
+                <td><small><?php echo safeEcho($catatan); ?></small></td>
+            </tr>
+        </table>
+        <br>
+        <table width="100%">
+            <tr>
+                <td align="center" width="25%">
+                    <?php echo '<img src="../../qr.php?text='.$text_url.'" alt="QR Code">'; ?><br>
+                    <small>Scan Me</small>
                 </td>
-            </tr>
-            <tr>
-                <td colspan="5"><b>Expertise</b></td>
-            </tr>
-            <tr>
-                <td width="20%"><b>Temuan</b></td>
-                <td width="20%"><b>Kesan</b></td>
-                <td width="20%"><b>Saran</b></td>
-                <td width="20%"><b>Catatan</b></td>
-            </tr>
-            <tr>
-                <td><small><?php echo "$temuan"; ?></small></td>
-                <td><small><?php echo "$kesan"; ?></small></td>
-                <td><small><?php echo "$saran"; ?></small></td>
-                <td><small><?php echo "$catatan"; ?></small></td>
+                <td width="50%" align="center"></td>
+                <td width="25%" align="center">
+                    <?php
+                        $base_64_signature  = GetDetailData($Conn, 'master_signature', 'kode', $kode_dokter_penerima, 'base_64_ttd');
+                        $kategori_signature = GetDetailData($Conn, 'master_signature', 'kode', $kode_dokter_penerima, 'kategori');
+
+                        if(!empty($base_64_signature)){
+                            echo '
+                                <b>'.safeEcho($kategori_signature, "Dokter Pemeriksa").'</b><br>
+                                <img src="'.$base_64_signature.'" width="150px"><br>
+                                ('.safeEcho($nama_dokter_penerima).')<br>
+                            ';
+                        } else {
+                            echo '
+                                <b>Dokter Pemeriksa / Penerima</b><br>
+                                <br><br><br><br>
+                                ('.safeEcho($nama_dokter_penerima).')<br>
+                            ';
+                        }
+                    ?>
+                </td>
             </tr>
         </table>
     </body>
