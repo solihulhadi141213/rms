@@ -9,3 +9,6 @@ RewriteRule ^submit_expertise_usg/([^/]+)/?$ submit_expertise_usg.php?accession_
 RewriteRule ^patient/([^/]+)/?$ patient.php?patient_id=$1 [L,QSA]
 RewriteRule ^new-dicom-notifications/?$ notify_new_dicom.php [L,QSA]
 RewriteRule ^dokter/?$ dokter.php [L,QSA]
+RewriteRule ^klinis/?$ klinis.php [L,QSA]
+RewriteRule ^pemeriksaan/?$ pemeriksaan.php [L,QSA]
+RewriteRule ^SendOrder/?$ SendOrder.php [L,QSA]
