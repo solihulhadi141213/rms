@@ -1,4 +1,8 @@
 <?php
+    function safeEcho($value, $default = '-') {
+        return (!empty($value) && trim($value) !== '') ? htmlspecialchars($value) : $default;
+    }
+    
     //Validasi Data Wajib Ada
     if(empty($_GET['modality'])){
         echo 'Modality Tidak Boleh Kosong';
@@ -293,6 +297,19 @@
                 padding: 8px;
                 vertical-align: middle;
             }
+
+            table.expertise_small{
+                border-collapse: collapse;
+                color: #212529;
+                border-top: 1px solid #000;
+                border-bottom: 1px solid #000;
+            }
+
+            table.expertise_small tr td{
+                /* border: 1px solid #000; */
+                padding: 2px;
+                vertical-align: middle;
+            }
            
 
         </style>
@@ -327,7 +344,10 @@
                 </td>
             </tr>
         </table>
-        <table width="100%" class="">
+        <table width="100%" class="expertise_small">
+            <tr>
+                <td colspan="7"><b>A. INFORMASI PENDAFTARAN</b></td>
+            </tr>
             <tr>
                 <td>No.RM</td>
                 <td>:</td>
@@ -392,12 +412,19 @@
                     <?php
                         if(!empty($permintaan_pemeriksaan)){
                             $permintaan_pemeriksaan_arry = json_decode($permintaan_pemeriksaan, true);
-                            if(!empty(count($permintaan_pemeriksaan_arry))){
+                            if(!empty($permintaan_pemeriksaan_arry) && is_array($permintaan_pemeriksaan_arry)){
+                                $list_pemeriksaan = [];
                                 foreach($permintaan_pemeriksaan_arry as $pemeriksaan_list){
-                                    $nama_pemeriksaan = $pemeriksaan_list['nama_pemeriksaan'];
-                                    echo "$nama_pemeriksaan,";
+                                    if(!empty($pemeriksaan_list['nama_pemeriksaan'])){
+                                        $list_pemeriksaan[] = $pemeriksaan_list['nama_pemeriksaan'];
+                                    }
                                 }
+                                echo !empty($list_pemeriksaan) ? implode(', ', $list_pemeriksaan) : '-';
+                            } else {
+                                echo '-';
                             }
+                        } else {
+                            echo '-';
                         }
                     ?>
                 </td>
@@ -416,66 +443,190 @@
                     }
                 ?>
             </tr>
+            <tr>
+                <td colspan="7"><br><br></td>
+            </tr>
+            <tr>
+                <td colspan="7"><b>B. EXPERTISE (HASIL PEMERIKSAAN)</b></td>
+            </tr>
+            <?php
+                if($modality!=="US"){
+                    if(!empty($Data2['accession_number'])){
+                        echo '
+                            <tr>
+                                <td><i>Accession Number</i></td>
+                                <td>:</td>
+                                <td>'.safeEcho($Data2['accession_number']).'</td>
+                                <td></td>
+                                <td><i>Description</i></td>
+                                <td>:</td>
+                                <td>'.safeEcho($Data2['description']).'</td>
+                            </tr>
+                            <tr>
+                                <td><i>Finding</i></td>
+                                <td>:</td>
+                                <td>'.safeEcho($Data2['finding']).'</td>
+                                <td></td>
+                                <td><i>Impression</i></td>
+                                <td>:</td>
+                                <td>'.safeEcho($Data2['impression']).'</td>
+                            </tr>
+                            <tr>
+                                <td><i>Recommendation</i></td>
+                                <td>:</td>
+                                <td>'.safeEcho($Data2['recommendation']).'</td>
+                                <td></td>
+                                <td><i>Cardiac Silhouette</i></td>
+                                <td>:</td>
+                                <td>'.safeEcho($Data2['cardiac_silhouette']).'</td>
+                            </tr>
+                            <tr>
+                                <td><i>Aorta</i></td>
+                                <td>:</td>
+                                <td>'.safeEcho($Data2['aorta']).'</td>
+                                <td></td>
+                                <td><i>Mediastinum</i></td>
+                                <td>:</td>
+                                <td>'.safeEcho($Data2['mediastinum']).'</td>
+                            </tr>
+                            <tr>
+                                <td><i>Lungs</i></td>
+                                <td>:</td>
+                                <td>'.safeEcho($Data2['lungs']).'</td>
+                                <td></td>
+                                <td><i>Trachea</i></td>
+                                <td>:</td>
+                                <td>'.safeEcho($Data2['trachea']).'</td>
+                            </tr>
+                            <tr>
+                                <td><i>Diaphragm & Costophrenic Angles</i></td>
+                                <td>:</td>
+                                <td>'.safeEcho($Data2['diaphragm_and_costophrenic_angles']).'</td>
+                                <td></td>
+                                <td><i>Visualized Structures</i></td>
+                                <td>:</td>
+                                <td>'.safeEcho($Data2['visualized_structures']).'</td>
+                            </tr>
+                        ';
+                    }
+                }else{
+                    echo '
+                        <tr>
+                            <td><i>Accession Number</i></td>
+                            <td>:</td>
+                            <td>'.safeEcho($Data2['accession_number']).'</td>
+                            <td></td>
+                            <td><i>Description</i></td>
+                            <td>:</td>
+                            <td>'.safeEcho($Data2['description']).'</td>
+                        </tr>
+                        <tr>
+                            <td><i>Finding</i></td>
+                            <td>:</td>
+                            <td>'.safeEcho($Data2['finding']).'</td>
+                            <td></td>
+                            <td><i>Recommendation</i></td>
+                            <td>:</td>
+                            <td>'.safeEcho($Data2['recommendation']).'</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><i>Gestational Sac Size</i></td>
+                            <td>:</td>
+                            <td>'.safeEcho($Data2['gestational_sac_size']).'</td>
+                            <td></td>
+                            <td><i>Crown Rump Length</i></td>
+                            <td>:</td>
+                            <td>'.safeEcho($Data2['crown_rump_length']).'</td>
+                        </tr>
+                        <tr>
+                            <td><i>Fetal Heart Rate</i></td>
+                            <td>:</td>
+                            <td>'.safeEcho($Data2['fetal_heart_rate']).'</td>
+                            <td></td>
+                            <td><i>Biparietal Diameter</i></td>
+                            <td>:</td>
+                            <td>'.safeEcho($Data2['biparietal_diameter']).'</td>
+                        </tr>
+                        <tr>
+                            <td><i>Head Circumference</i></td>
+                            <td>:</td>
+                            <td>'.safeEcho($Data2['head_circumference']).'</td>
+                            <td></td>
+                            <td><i>Abdominal Circumference</i></td>
+                            <td>:</td>
+                            <td>'.safeEcho($Data2['abdominal_circumference']).'</td>
+                        </tr>
+                        <tr>
+                            <td><i>Femur Length</i></td>
+                            <td>:</td>
+                            <td>'.safeEcho($Data2['femur_length']).'</td>
+                            <td></td>
+                            <td><i>Single Deepest Pocket</i></td>
+                            <td>:</td>
+                            <td>'.safeEcho($Data2['single_deepest_pocket']).'</td>
+                        </tr>
+                        <tr>
+                            <td><i>Estimated Fetal Weight</i></td>
+                            <td>:</td>
+                            <td>'.safeEcho($Data2['estimated_fetal_weight']).'</td>
+                            <td></td>
+                            <td><i>Fetal Position</i></td>
+                            <td>:</td>
+                            <td>'.safeEcho($Data2['fetal_position']).'</td>
+                        </tr>
+                        <tr>
+                            <td><i>Estimated Gestational Age</i></td>
+                            <td>:</td>
+                            <td>'.safeEcho($Data2['estimated_gestational_age']).'</td>
+                            <td></td>
+                            <td><i>Estimated Date Birth</i></td>
+                            <td>:</td>
+                            <td>'.safeEcho($Data2['estimated_date_birth']).'</td>
+                        </tr>
+                        <tr>
+                            <td><i>Fetal Presentation</i></td>
+                            <td>:</td>
+                            <td>'.safeEcho($Data2['fetal_presentation']).'</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    ';
+                }
+            ?>
+            <tr>
+                <td colspan="7"><br><br></td>
+            </tr>
         </table>
         <br>
-        
-        <?php
-            // Normalisasi datetime ke ISO 8601
-            $datetime_diminta = date('c', strtotime($datetime_diminta));
-            $datetime_hasil   = date('c', strtotime($datetime_hasil));
-
-            // Dokter Pengirim
-            $raw_dokter_pengirim = [
-                "role" => "dokter_pengirim",
-                "datetime" => $datetime_diminta,
-                "kode" => $kode_dokter_pengirim,
-                "id_practitioner" => $ihs_dokter_pengirim,
-                "nama" => $nama_dokter_pengirim
-            ];
-
-            // Dokter Penerima
-            $raw_dokter_penerima = [
-                "role" => "dokter_penerima",
-                "datetime" => $datetime_hasil,
-                "kode" => $kode_dokter_penerima,
-                "id_practitioner" => $ihs_dokter_penerima,
-                "nama" => $nama_dokter_penerima
-            ];
-
-            // Petugas Radiografer
-            $raw_petugas = [
-                "role" => "radiografer",
-                "datetime" => $datetime_diminta,
-                "accession_number" => $accession_number,
-                "nama" => $radiografer
-            ];
-
-            // Encode JSON Aman
-            $json_dokter_pengirim = json_encode($raw_dokter_pengirim, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
-            $json_dokter_penerima = json_encode($raw_dokter_penerima, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
-            $json_petugas         = json_encode($raw_petugas, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
-        ?>
-        <table width="100%" class="expertise">
+        <table width="100%">
             <tr>
-                <td align="center" rowspan="4" width="20%">
+                <td align="center" width="25%">
                     <?php echo '<img src="../../qr.php?text='.$text_url.'" alt="QR Code">'; ?><br>
                     <small>Scan Me</small>
                 </td>
-            </tr>
-            <tr>
-                <td width="40%" align="center"><b>Dokter Pemeriksa</b></td>
-                <td width="40%" align="center"><b>Petugas / Radiografer</b></td>
-            </tr>
-            <tr>
-                <td align="center"></td>
-                <td align="center"></td>
-            </tr>
-            <tr>
-                <td align="center">
-                    <small>(<?php echo "$nama_dokter_penerima"; ?>)</small>
-                </td>
-                <td align="center">
-                    <small>(<?php echo "$radiografer"; ?>)</small>
+                <td width="50%" align="center"></td>
+                <td width="25%" align="center">
+                    <?php
+                        $base_64_signature  = GetDetailData($Conn, 'master_signature', 'kode', $kode_dokter_penerima, 'base_64_ttd');
+                        $kategori_signature = GetDetailData($Conn, 'master_signature', 'kode', $kode_dokter_penerima, 'kategori');
+
+                        if(!empty($base_64_signature)){
+                            echo '
+                                <b>'.safeEcho($kategori_signature, "Dokter Pemeriksa").'</b><br>
+                                <img src="'.$base_64_signature.'" width="150px"><br>
+                                ('.safeEcho($nama_dokter_penerima).')<br>
+                            ';
+                        } else {
+                            echo '
+                                <b>Dokter Pemeriksa / Penerima</b><br>
+                                <br><br><br><br>
+                                ('.safeEcho($nama_dokter_penerima).')<br>
+                            ';
+                        }
+                    ?>
                 </td>
             </tr>
         </table>
