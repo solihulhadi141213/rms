@@ -1,5 +1,5 @@
 <?php
-    //Ini adalah halaman untuk melakukan konfigurasi database
+    //Ini adalah halaman untuk melakukan konfigurasi (database)
     $servername = "localhost";
     $username = "root";
     $password = "arunaparasilvanursari";
