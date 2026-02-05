@@ -87,7 +87,7 @@
     $required = [
         "id_pasien", "id_kunjungan", "nama_pasien", "priority",
         "asal_kiriman", "alat_pemeriksa", "nama_dokter_pengirim",
-        "klinis", "permintaan_pemeriksaan", "tujuan", "pembayaran"
+        "klinis", "permintaan_pemeriksaan", "tujuan", "pembayaran", "system_creator"
     ];
 
     foreach ($required as $field) {
@@ -196,6 +196,7 @@
     $pesan                = $data['pesan'] ?? null;
     $tujuan               = $tujuan;
     $pembayaran           = trim($data['pembayaran']);
+    $system_creator       = trim($data['system_creator']);
     $datetime_diminta     = date("Y-m-d H:i:s");
 
     $klinis_json     = json_encode($data['klinis'], JSON_UNESCAPED_UNICODE);
@@ -210,8 +211,8 @@
         nama_pasien, priority, asal_kiriman, alat_pemeriksa,
         kode_dokter_pengirim, ihs_dokter_pengirim, nama_dokter_pengirim,
         pesan, klinis, permintaan_pemeriksaan,
-        tujuan, pembayaran, datetime_diminta, status_pemeriksaan, orthanc
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        tujuan, pembayaran, datetime_diminta, status_pemeriksaan, orthanc, system_creator
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ";
 
     $stmt = $Conn->prepare($sql);
@@ -220,7 +221,7 @@
     $orthanc = 0;
 
     $stmt->bind_param(
-        "iisssssssssssssssi",
+        "iisssssssssssssssis",
         $id_pasien,
         $id_kunjungan,
         $accession_number,
@@ -238,7 +239,8 @@
         $pembayaran,
         $datetime_diminta,
         $status_pemeriksaan,
-        $orthanc
+        $orthanc,
+        $system_creator
     );
 
     if (!$stmt->execute()) {

@@ -1333,5 +1333,123 @@
         return '2.25.' . random_int(10**15, 10**16 - 1);
     }
 
+    function GenerateTokenSimrsV2($Conn){
+        date_default_timezone_set('Asia/Jakarta');
+
+        // Ambil Koneksi SIMRS V2 Yang Aktif
+        $status = 1;
+        $stmt = $Conn->prepare("SELECT * FROM connection_simrs_old WHERE status_connection = ? LIMIT 1 ");
+        $stmt->bind_param("i", $status);
+        $stmt->execute();
+        $config = $stmt->get_result()->fetch_assoc();
+        $stmt->close();
+
+        if (!$config) {
+            return ['status'  => 'error','message' => 'Koneksi SIMRS V2 aktif tidak ditemukan'];
+        }
+
+        // Jika Token Ditemukan Dan Masih Valid (Belum Expired)
+        if (!empty($config['token']) && !empty($config['expired_at'])) {
+            $now = new DateTime();
+            $expired = new DateTime($config['expired_at']);
+
+            if ($expired > $now) {
+                return [
+                    'status'     => 'success',
+                    'message'    => 'Menggunakan token yang masih valid',
+                    'token'      => $config['token'],
+                    'base_url'   => $config['base_url'],
+                    'username'   => $config['username'],
+                    'creat_at'   => $config['creat_at'],
+                    'expired_at' => $config['expired_at'],
+                ];
+            }
+        }
+
+        // Apabila Pengaturan Koneksi Tidak Lengkap
+        if (empty($config['base_url']) || empty($config['username']) || empty($config['password'])) {
+            return ['status'  => 'error','message' => 'Konfigurasi Koneksi SIMRS V2 tidak lengkap'];
+        }
+
+        // Bentuk URL
+        $login_url = rtrim($config['base_url'], '/') . '/Auth/generate_token.php';
+
+        // bentuk Basic Auth
+        $basicAuth = base64_encode($config['username'] . ':' . $config['password']);
+
+        // Mulai CURL Untuk Get Token
+        $curl = curl_init();
+        curl_setopt_array($curl, [
+            CURLOPT_URL => $login_url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_TIMEOUT => 15,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_HTTPHEADER => [
+                'Content-Type: application/json',
+                'Accept: application/json',
+                'Authorization: Basic ' . $basicAuth
+            ]
+        ]);
+
+        $response   = curl_exec($curl);
+        $curl_error = curl_error($curl);
+        $http_code  = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        curl_close($curl);
+
+        // Error CURL
+        if ($curl_error) {
+            return ['status'  => 'error','message' => 'CURL Error: ' . $curl_error];
+        }
+
+        // Status Error (tidak 200)
+        if ($http_code !== 200) {
+            return [
+                'status'    => 'error',
+                'message'   => 'Login SIMRS V2 gagal',
+                'http_code' => $http_code,
+                'response'  => $response
+            ];
+        }
+
+        // Parse Response
+        $result = json_decode($response, true);
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            return ['status'  => 'error', 'message' => 'Response SIMRS V2 bukan JSON valid'];
+        }
+
+        if (empty($result['token'])) {
+            return ['status'  => 'error','message' => 'Token tidak ditemukan pada response SIMRS V2'];
+        }
+
+        // Simpan Token Dan Expired Ke Database
+        $token      = $result['token'];
+        $creat_at   = $result['creat_at'];
+        $expired_at = $result['expired_at'];
+
+        $update = $Conn->prepare("UPDATE connection_simrs_old SET token = ?, creat_at = ?, expired_at = ? WHERE id_connection_simrs_old = ? ");
+        $update->bind_param(
+            "sssi",
+            $token,
+            $creat_at,
+            $expired_at,
+            $config['id_connection_simrs_old']
+        );
+        $update->execute();
+        $update->close();
+
+       // Kirim Return Success
+        return [
+            'status'     => 'success',
+            'message'    => 'Token SIMRS V2 berhasil diperbarui',
+            'token'      => $token,
+            'base_url'   => $config['base_url'],
+            'username'   => $config['username'],
+            'creat_at'   => $creat_at,
+            'expired_at' => $expired_at
+        ];
+    }
+
 
 ?>
