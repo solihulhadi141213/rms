@@ -12,6 +12,7 @@
             "SettingGeneral"   => "_Page/SettingGeneral/SettingGeneral.php",
             "SettingEmail"     => "_Page/SettingEmail/SettingEmail.php",
             "SettingSimrs"     => "_Page/SettingSimrs/SettingSimrs.php",
+            "SettingSimrs2"    => "_Page/SettingSimrs2/SettingSimrs2.php",
             "SettingSatuSehat" => "_Page/SettingSatuSehat/SettingSatuSehat.php",
             "SettingPacs"      => "_Page/SettingPacs/SettingPacs.php",
             "SettingOrthanc"   => "_Page/SettingOrthanc/SettingOrthanc.php",
@@ -25,6 +26,7 @@
             "Tagihan"          => "_Page/Tagihan/Tagihan.php",
             "Laporan"          => "_Page/Laporan/Laporan.php",
             "DicomRouter"      => "_Page/DicomRouter/DicomRouter.php",
+            "Migrasi"          => "_Page/Migrasi/Migrasi.php",
             "Aktivitas"        => "_Page/Aktivitas/Aktivitas.php",
             "Help"             => "_Page/Help/Help.php",
         ];

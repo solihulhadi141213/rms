@@ -11,6 +11,7 @@
             "Akses"            => "_Page/Akses/ModalAkses.php",
             "SettingEmail"     => "_Page/SettingEmail/ModalSettingEmail.php",
             "SettingSimrs"     => "_Page/SettingSimrs/ModalSettingSimrs.php",
+            "SettingSimrs2"    => "_Page/SettingSimrs2/ModalSettingSimrs2.php",
             "SettingSatuSehat" => "_Page/SettingSatuSehat/ModalSettingSatuSehat.php",
             "SettingPacs"      => "_Page/SettingPacs/ModalSettingPacs.php",
             "SettingOrthanc"   => "_Page/SettingOrthanc/ModalSettingOrthanc.php",
@@ -24,6 +25,7 @@
             "Tagihan"          => "_Page/Tagihan/ModalTagihan.php",
             "Laporan"          => "_Page/Laporan/ModalLaporan.php",
             "DicomRouter"      => "_Page/DicomRouter/ModalDicomRouter.php",
+            "Migrasi"          => "_Page/Migrasi/ModalMigrasi.php",
             "Aktivitas"        => "_Page/Aktivitas/ModalAktivitas.php",
             "Help"             => "_Page/Help/ModalHelp.php"
         ];

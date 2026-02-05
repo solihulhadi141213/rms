@@ -20,6 +20,7 @@
             "SettingGeneral"   => "_Page/SettingGeneral/SettingGeneral.js",
             "SettingEmail"     => "_Page/SettingEmail/SettingEmail.js",
             "SettingSimrs"     => "_Page/SettingSimrs/SettingSimrs.js",
+            "SettingSimrs2"    => "_Page/SettingSimrs2/SettingSimrs2.js",
             "SettingSatuSehat" => "_Page/SettingSatuSehat/SettingSatuSehat.js",
             "SettingPacs"      => "_Page/SettingPacs/SettingPacs.js",
             "SettingOrthanc"   => "_Page/SettingOrthanc/SettingOrthanc.js",
@@ -33,6 +34,7 @@
             "Tagihan"          => "_Page/Tagihan/Tagihan.js",
             "Laporan"          => "_Page/Laporan/Laporan.js",
             "DicomRouter"      => "_Page/DicomRouter/DicomRouter.js",
+            "Migrasi"          => "_Page/Migrasi/Migrasi.js",
             "Aktivitas"        => "_Page/Aktivitas/Aktivitas.js",
             "Help"             => "_Page/Help/Help.js"
         ];

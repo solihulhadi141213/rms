@@ -57,14 +57,19 @@
             </ul>
         </li>
         <li class="nav-item">
-            <a class="nav-link <?php if($PageMenu=="SettingSimrs"||$PageMenu=="SettingSatuSehat"||$PageMenu=="SettingPacs"||$PageMenu=="SettingOrthanc"){echo "";}else{echo "collapsed";} ?>" data-bs-target="#components3-nav" data-bs-toggle="collapse" href="javascript:void(0);">
+            <a class="nav-link <?php if($PageMenu=="SettingSimrs2"||$PageMenu=="SettingSimrs"||$PageMenu=="SettingSatuSehat"||$PageMenu=="SettingPacs"||$PageMenu=="SettingOrthanc"){echo "";}else{echo "collapsed";} ?>" data-bs-target="#components3-nav" data-bs-toggle="collapse" href="javascript:void(0);">
                 <i class="bx bx-plug"></i>
                     <span>Koneksi</span> <i class="bi bi-chevron-down ms-auto"></i>
             </a>
-            <ul id="components3-nav" class="nav-content collapse <?php if($PageMenu=="SettingSimrs"||$PageMenu=="SettingSatuSehat"||$PageMenu=="SettingPacs"||$PageMenu=="SettingOrthanc"){echo "show";} ?>" data-bs-parent="#sidebar-nav">
+            <ul id="components3-nav" class="nav-content collapse <?php if($PageMenu=="SettingSimrs2"||$PageMenu=="SettingSimrs"||$PageMenu=="SettingSatuSehat"||$PageMenu=="SettingPacs"||$PageMenu=="SettingOrthanc"){echo "show";} ?>" data-bs-parent="#sidebar-nav">
+                <li>
+                    <a href="index.php?Page=SettingSimrs2" class="<?php if($PageMenu=="SettingSimrs2"){echo "active";} ?>">
+                        <i class="bi bi-circle"></i><span>Konkesi SIMRS V.2</span>
+                    </a>
+                </li> 
                 <li>
                     <a href="index.php?Page=SettingSimrs" class="<?php if($PageMenu=="SettingSimrs"){echo "active";} ?>">
-                        <i class="bi bi-circle"></i><span>Konkesi SIMRS</span>
+                        <i class="bi bi-circle"></i><span>Konkesi SIMRS V.3</span>
                     </a>
                 </li> 
                 <li>
@@ -84,37 +89,41 @@
                 </li> 
             </ul>
         </li>
-        
-        <li class="nav-heading border-1 border-top">
-            <div class="mt-3">Referensi</div>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link <?php if($PageMenu=="KodeKlinis"){echo "";}else{echo "collapsed";} ?>" href="index.php?Page=KodeKlinis">
-                <i class="bi bi-clipboard-plus"></i> <span>Kode Klinis</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link <?php if($PageMenu=="KodePemeriksaan"){echo "";}else{echo "collapsed";} ?>" href="index.php?Page=KodePemeriksaan">
-                <i class="bi bi-code-square"></i> <span>Kode Pemeriksaan</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link <?php if($PageMenu=="Tarif"){echo "";}else{echo "collapsed";} ?>" href="index.php?Page=Tarif">
-                <i class="bi bi-tags"></i> <span>Tarif Layanan</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link <?php if($PageMenu=="Question"){echo "";}else{echo "collapsed";} ?>" href="index.php?Page=Question">
-                <i class="bi bi-question-octagon"></i> <span>Daftar Pertanyaan</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link <?php if($PageMenu=="TandaTangan"){echo "";}else{echo "collapsed";} ?>" href="index.php?Page=TandaTangan">
-                <i class="ri ri-pen-nib-fill"></i> <span>Tanda Tangan</span>
-            </a>
-        </li>
         <li class="nav-heading border-1 border-top">
             <div class="mt-3">Master</div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link <?php if($PageMenu=="KodeKlinis"||$PageMenu=="KodePemeriksaan"||$PageMenu=="Tarif"||$PageMenu=="Question"||$PageMenu=="TandaTangan"){echo "";}else{echo "collapsed";} ?>" data-bs-target="#components5-nav" data-bs-toggle="collapse" href="javascript:void(0);">
+                <i class="bi bi-table"></i>
+                    <span>Referensi</span> <i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="components5-nav" class="nav-content collapse <?php if($PageMenu=="KodeKlinis"||$PageMenu=="KodePemeriksaan"||$PageMenu=="Tarif"||$PageMenu=="Question"||$PageMenu=="TandaTangan"){echo "show";} ?>" data-bs-parent="#sidebar-nav">
+                <li>
+                    <a href="index.php?Page=KodeKlinis" class="<?php if($PageMenu=="KodeKlinis"){echo "active";} ?>">
+                        <i class="bi bi-circle"></i><span>Kode Klinis</span>
+                    </a>
+                </li> 
+                <li>
+                    <a href="index.php?Page=KodePemeriksaan" class="<?php if($PageMenu=="KodePemeriksaan"){echo "active";} ?>">
+                        <i class="bi bi-circle"></i><span>Kode Pemeriksaan</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="index.php?Page=Tarif" class="<?php if($PageMenu=="Tarif"){echo "active";} ?>">
+                        <i class="bi bi-circle"></i><span>Tarif Layanan</span>
+                    </a>
+                </li> 
+                <li>
+                    <a href="index.php?Page=Question" class="<?php if($PageMenu=="Question"){echo "active";} ?>">
+                        <i class="bi bi-circle"></i><span>Daftar Pertanyaan</span>
+                    </a>
+                </li> 
+                <li>
+                    <a href="index.php?Page=TandaTangan" class="<?php if($PageMenu=="TandaTangan"){echo "active";} ?>">
+                        <i class="bi bi-circle"></i><span>Tanda Tangan</span>
+                    </a>
+                </li> 
+            </ul>
         </li>
         <li class="nav-item">
             <a class="nav-link <?php if($PageMenu=="Pemeriksaan"){echo "";}else{echo "collapsed";} ?>" href="index.php?Page=Pemeriksaan">
@@ -133,6 +142,12 @@
         </li>
         <li class="nav-heading border-1 border-top">
             <div class="mt-3">Fitur Lainnya</div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link <?php if($PageMenu!=="Migrasi"){echo "collapsed";} ?>" href="index.php?Page=Migrasi">
+                <i class="bi bi-arrow-left-right"></i>
+                <span>Migrasi</span>
+            </a>
         </li>
         <li class="nav-item">
             <a class="nav-link <?php if($PageMenu!=="Aktivitas"){echo "collapsed";} ?>" href="index.php?Page=Aktivitas">
