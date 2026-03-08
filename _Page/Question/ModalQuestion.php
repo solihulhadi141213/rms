@@ -129,7 +129,7 @@
 </div>
 
 <div class="modal fade" id="ModalDetail" tabindex="-1">
-    <div class="modal-dialog modal-md">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title text-dark"><i class="bi bi-info-circle"></i> Detail Pertanyaan</h5>
@@ -156,7 +156,7 @@
         <div class="modal-content">
             <form action="javascript:void(0);" id="ProsesEdit" autocomplete="off">
                 <div class="modal-header">
-                    <h5 class="modal-title text-dark"><i class="bi bi-pencil"></i> Edit Kode Klinis</h5>
+                    <h5 class="modal-title text-dark"><i class="bi bi-pencil"></i> Edit Daftar Pertanyaan</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -185,11 +185,11 @@
 </div>
 
 <div class="modal fade" id="ModalDelete" tabindex="-1">
-    <div class="modal-dialog modal-md">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <form action="javascript:void(0);" id="ProsesDelete" autocomplete="off">
                 <div class="modal-header">
-                    <h5 class="modal-title text-dark"><i class="bi bi-trash"></i> Hapus Kode Klinis</h5>
+                    <h5 class="modal-title text-dark"><i class="bi bi-trash"></i> Hapus Daftar Pertanyaan</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">

@@ -102,7 +102,7 @@ $(document).ready(function() {
 
     /*  
     ---------------------------------------------------
-    TAMBAH Kode Pemeriksaan
+    TAMBAH Pertanyaan
     --------------------------------------------------- 
     */
     $(document).on('click', '.modal_tambah', function(){
@@ -192,13 +192,13 @@ $(document).ready(function() {
 
     /*  
     ---------------------------------------------------
-    EDIT Kode Pemeriksaan
+    EDIT Pertanyaan
     --------------------------------------------------- 
     */
     $(document).on('click', '.modal_edit', function () {
 
-        //tangkap data 'id_master_pemeriksaan' dan buat variabel
-        var id_master_pemeriksaan   = $(this).data('id');
+        //tangkap data 'id_question' dan buat variabel
+        var id_question   = $(this).data('id');
 
         // Load 'ShowListKategori'
         ShowListKategori();
@@ -216,9 +216,17 @@ $(document).ready(function() {
         $.ajax({
             type 	    : 'POST',
             url 	    : '_Page/Question/FormEdit.php',
-            data        : {id_master_pemeriksaan: id_master_pemeriksaan},
+            data        : {id_question: id_question},
             success     : function(data){
                 $('#FormEdit').html(data);
+
+                $.ajax({
+                    type 	    : 'POST',
+                    url 	    : '_Page/Question/list_question_group.php',
+                    success     : function(data){
+                        $('#list_question_group_edit').html(data);
+                    }
+                });
             }
         });
     });
@@ -256,7 +264,7 @@ $(document).ready(function() {
                     // Menampilkan Swal
                     Swal.fire(
                         'Success!',
-                        'Edit Kode Pemeriksaan Berhasil!',
+                        'Edit Pertanyaan Berhasil!',
                         'success'
                     )
                 }else{
@@ -269,13 +277,13 @@ $(document).ready(function() {
 
     /*  
     ---------------------------------------------------
-    HAPUS Kode Pemeriksaan
+    HAPUS Pertanyaan
     --------------------------------------------------- 
     */
     $(document).on('click', '.modal_delete', function () {
 
-        //tangkap data 'id_master_pemeriksaan' dan buat variabel
-        var id_master_pemeriksaan   = $(this).data('id');
+        //tangkap data 'id_question' dan buat variabel
+        var id_question   = $(this).data('id');
 
         //tampilkan modal
         $('#ModalDelete').modal('show');
@@ -290,7 +298,7 @@ $(document).ready(function() {
         $.ajax({
             type 	    : 'POST',
             url 	    : '_Page/Question/FormDelete.php',
-            data        : {id_master_pemeriksaan: id_master_pemeriksaan},
+            data        : {id_question: id_question},
             success     : function(data){
                 $('#FormDelete').html(data);
             }
@@ -330,7 +338,7 @@ $(document).ready(function() {
                     // Menampilkan Swal
                     Swal.fire(
                         'Success!',
-                        'Hapus Kode Pemeriksaan Berhasil!',
+                        'Hapus Pertanyaan Berhasil!',
                         'success'
                     )
                 }else{

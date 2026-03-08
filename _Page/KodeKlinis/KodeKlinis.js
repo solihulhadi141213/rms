@@ -247,7 +247,7 @@ $(document).ready(function() {
                     // Menampilkan Swal
                     Swal.fire(
                         'Success!',
-                        'Edit Kode Klnis Berhasil!',
+                        'Edit Kode Klinis Berhasil!',
                         'success'
                     )
                 }else{
