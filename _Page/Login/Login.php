@@ -77,10 +77,15 @@
                 </div>
                 <div class="row mt-3">
                     <div class="col-12" id="NotifikasiLogin"></div>
-                    <div class="col-12">
+                    <div class="col-12 mb-3">
                         <button class="btn btn-lg btn-primary w-100" type="submit" id="TombolLogin">
                             Login <i class="bi bi-arrow-right-circle"></i> 
                         </button>
+                    </div>
+                    <div class="col-12">
+                        <a href="_Page/Login/LoginDenganGoogle.php" class="btn btn-lg btn-info w-100">
+                            <i class="bi bi-google"></i> Login Dengan Google
+                        </a>
                     </div>
                     <div class="col-12">
                         <p class="small mb-0">Anda Lupa Password? <a href="Login.php?Page=LupaPassword">Reset password</a></p>

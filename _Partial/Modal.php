@@ -16,6 +16,7 @@
             "SettingPacs"      => "_Page/SettingPacs/ModalSettingPacs.php",
             "SettingOrthanc"   => "_Page/SettingOrthanc/ModalSettingOrthanc.php",
             "ApiKey"           => "_Page/ApiKey/ModalApiKey.php",
+            "GoogleCredential" => "_Page/GoogleCredential/ModalGoogleCredential.php",
             "KodeKlinis"       => "_Page/KodeKlinis/ModalKodeKlinis.php",
             "KodePemeriksaan"  => "_Page/KodePemeriksaan/ModalKodePemeriksaan.php",
             "Tarif"            => "_Page/Tarif/ModalTarif.php",

@@ -25,6 +25,7 @@
             "SettingPacs"      => "_Page/SettingPacs/SettingPacs.js",
             "SettingOrthanc"   => "_Page/SettingOrthanc/SettingOrthanc.js",
             "ApiKey"           => "_Page/ApiKey/ApiKey.js",
+            "GoogleCredential" => "_Page/GoogleCredential/GoogleCredential.js",
             "KodeKlinis"       => "_Page/KodeKlinis/KodeKlinis.js",
             "KodePemeriksaan"  => "_Page/KodePemeriksaan/KodePemeriksaan.js",
             "Tarif"            => "_Page/Tarif/Tarif.js",

@@ -116,6 +116,11 @@
                                                 <small>PACS Integration (Senalogy)</small>
                                             </a>
                                         </li>
+                                        <li class="mb-2">
+                                            <a target="_blank" href="https://rselsyifa-vista.senalogy.com/">
+                                                <small>Vista Camera</small>
+                                            </a>
+                                        </li>
                                     </ul>
                                 </li>
                             </ol>
