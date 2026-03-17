@@ -1406,7 +1406,7 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>Tegangan Lisstrik</td>
+                                <td>Tegangan Listrik</td>
                                 <td><?php echo $kv; ?></td>
                                 <td>kV</td>
                             </tr>

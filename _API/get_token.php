@@ -120,9 +120,10 @@
     // ======================================================
     // CREATED_AT (ISO 8601 + MILLISECOND)
     // ======================================================
-    $microtime    = microtime(true);
-    $milliseconds = sprintf('%03d', ($microtime - floor($microtime)) * 1000);
-    $created_at   = gmdate('Y-m-d\TH:i:s', $microtime) . '.' . $milliseconds . 'Z';
+    $microtime       = microtime(true);
+    $microtime_int   = (int) $microtime; // avoid implicit float->int conversion deprecation
+    $milliseconds    = sprintf('%03d', ($microtime - $microtime_int) * 1000);
+    $created_at      = gmdate('Y-m-d\TH:i:s', $microtime_int) . '.' . $milliseconds . 'Z';
 
     // ======================================================
     // FORMAT UNTUK DATABASE (DATETIME)
