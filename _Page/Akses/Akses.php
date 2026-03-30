@@ -14,7 +14,7 @@
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
-                <li class="breadcrumb-item active">Akses Pengurus</li>
+                <li class="breadcrumb-item active">Akses Pengguna</li>
             </ol>
         </nav>
     </div>

@@ -195,7 +195,7 @@
             <div class="row mb-3">
                 <div class="col-12">
                     <div class="alert alert-danger">
-                        <span>Gagal memuat data kunjungan<br> Pesan : '.$data['response']['message'].'</span>
+                        <span>Gagal memuat data kunjungan<br> Pesan : '.$response.'</span>
                     </div>
                 </div>
             </div>
