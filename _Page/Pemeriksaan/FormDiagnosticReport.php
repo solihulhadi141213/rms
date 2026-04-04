@@ -201,11 +201,10 @@
     $tanggal_lahir_formatted = formatTanggalLahir($tanggal_lahir);
 
     // ======================================================
-    // AMBIL KONFIGURASI SATUSEHAT AKTIF
+    // AMBIL KONFIGURASI SATUSEHAT AKTIF MENGGUNAKAN PREPARED STATMENT
     // ======================================================
     $status_active = 1;
-    $stmt = $Conn->prepare("SELECT url_connection_satu_sehat, organization_id FROM connection_satu_sehat WHERE status_connection_satu_sehat = ?
-    ");
+    $stmt = $Conn->prepare("SELECT url_connection_satu_sehat, organization_id FROM connection_satu_sehat WHERE status_connection_satu_sehat = ?");
     $stmt->bind_param("i", $status_active);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -256,9 +255,26 @@
         $bodysite_code           = $pemeriksaan_list['bodysite_code'] ?? "";
         $bodysite_description    = $pemeriksaan_list['bodysite_description'] ?? "";
         $bodysite_sys            = $pemeriksaan_list['bodysite_sys'] ?? "";
-        $report_code             = $pemeriksaan_list['report_code'] ?? "";
-        $report_description      = $pemeriksaan_list['report_description'] ?? "";
-        $report_sys              = $pemeriksaan_list['report_sys'] ?? "";
+    }
+
+    // Membuka Report Code berdasarkan 'id_master_pemeriksaan'
+    if(!empty($id_master_pemeriksaan)){
+        $stmt_report = $Conn->prepare("SELECT * FROM master_pemeriksaan WHERE id_master_pemeriksaan = ?");
+        $stmt_report->bind_param("i", $id_master_pemeriksaan);
+        $stmt_report->execute();
+        $result_report = $stmt_report->get_result();
+        $data_report = $result_report->fetch_assoc();
+        $stmt_report->close();
+
+        if (!$data_report) {
+            $report_code        = "";
+            $report_description = "";
+            $report_sys         = "";
+        }else{
+            $report_code        = $data_report['report_code'];
+            $report_description = $data_report['report_description'];
+            $report_sys         = $data_report['report_sys'];
+        }
     }
 
     // ==============================================================
@@ -275,7 +291,7 @@
         </div>
         <div class="row mb-2">
             <div class="col-4">
-                <label for="id_diagnostic_report"><small>ID Imaging Study</small></label>
+                <label for="id_diagnostic_report"><small>ID Diagnostic Report</small></label>
             </div>
             <div class="col-1"><small>:</small></div>
             <div class="col-7">
@@ -376,7 +392,7 @@
             </div>
             <div class="col-1"><small>:</small></div>
             <div class="col-7">
-                <input type="text" name="code_coding_code" id="code_coding_code" class="form-control" value="'.$report_sys.'">
+                <input type="text" name="code_coding_code" id="code_coding_code" class="form-control" value="'.$report_code.'">
             </div>
         </div>
         <div class="row mb-2">
