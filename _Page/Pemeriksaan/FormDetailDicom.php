@@ -67,14 +67,14 @@
     $id_radiologi     = $Data['id_radiologi'];
     if(empty($Data['id_imaging_study'])){
         $id_imaging_study = '
-            <a href="javascript:void(0);" class="text-danger">
+            <a href="javascript:void(0);" class="text-danger modal_send_imaging_study_by_dicom" data-id="'.$id_radiologi_dicom_conv.'">
                 <i class="bi bi-plus-circle"></i> Kirim Imaging Study
             </a>
         ';
     }else{
         $id_imaging_study = $Data['id_imaging_study'];
         $id_imaging_study = '
-            <a href="javascript:void(0);" class="text-danger">
+            <a href="javascript:void(0);" class="text-success modal_detail_imaging_study_by_is" data-id="'.$id_imaging_study.'">
                 <i class="bi bi-arrow-up-right-square"></i> '.$id_imaging_study.'
             </a>
         ';

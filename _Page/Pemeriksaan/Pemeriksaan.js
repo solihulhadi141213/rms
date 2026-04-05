@@ -940,6 +940,7 @@ $(document).ready(function() {
 
                     //reload data detail
                     ShowDetail(id_radiologi);
+                    ShowDetailPemeriksaan();
 
                     // Reload Data Permintaan Pemeriksaan
                     ShowTablePemeriksaan();
@@ -1038,6 +1039,7 @@ $(document).ready(function() {
 
                     //reload data detail
                     ShowDetail(id_radiologi);
+                    ShowDetailPemeriksaan();
 
                     // Reload Tabel Pemeriksaan
                     ShowTablePemeriksaan();
@@ -1137,6 +1139,7 @@ $(document).ready(function() {
 
                     //reload data detail
                     ShowDetail(id_radiologi);
+                    ShowDetailPemeriksaan();
 
                     // Reload Tabel Pemeriksaan
                     ShowTablePemeriksaan();
@@ -1251,7 +1254,7 @@ $(document).ready(function() {
                 if(status === 'success'){
                     $('#NotifikasiObservation').html('');
                     $('#ModalObservation').modal('hide');
-
+                    ShowDetailPemeriksaan();
                     ShowDetail(id_radiologi);
                     ShowTablePemeriksaan();
 
@@ -1398,6 +1401,7 @@ $(document).ready(function() {
                     $('#ModalDiagnosticReport').modal('hide');
 
                     ShowDetail(id_radiologi);
+                    ShowDetailPemeriksaan();
                     ShowTablePemeriksaan();
 
                     Swal.fire(
@@ -3847,6 +3851,8 @@ $(document).ready(function() {
             }
         });
     });
+
+    // Detail File Dicom File Hasil Conversi
     $(document).on('click', '.modal_detail_dicom', function () {
 
         //tangkap data 'id_radiologi_dicom_conv' dan buat variabel
@@ -3865,6 +3871,112 @@ $(document).ready(function() {
             data        : {id_radiologi_dicom_conv: id_radiologi_dicom_conv},
             success     : function(data){
                 $('#FormDetailDicom').html(data);
+            }
+        });
+    });
+
+    // Form Kirim Imaging Study Dari File Dicom hasil Conversi
+    $(document).on('click', '.modal_send_imaging_study_by_dicom', function () {
+
+        //tangkap data 'id_radiologi_dicom_conv' dan buat variabel
+        var id_radiologi_dicom_conv   = $(this).data('id');
+
+        //tampilkan modal
+        $('#ModalSendImagingStudyByDicomFile').modal('show');
+
+        // Kosongkan Notifikasi
+        $('#NotifikasiSendImagingStudyByDicomFile').html('');
+
+        //Form Loading
+        $('#FormSendImagingStudyByDicomFile').html('Loading...');
+
+        //Tampilkan Form Dengan Ajax
+        $.ajax({
+            type 	    : 'POST',
+            url 	    : '_Page/Pemeriksaan/FormSendImagingStudyByDicomFile.php',
+            data        : {id_radiologi_dicom_conv: id_radiologi_dicom_conv},
+            success     : function(data){
+                $('#FormSendImagingStudyByDicomFile').html(data);
+            }
+        });
+    });
+
+    $('#ProsesSendImagingStudyByDicomFile').submit(function(e){
+       e.preventDefault();
+        /* Menangkap data dari form  */
+        var ProsesSendImagingStudyByDicomFile=$('#ProsesSendImagingStudyByDicomFile').serialize();
+
+        /* Loading Notification */
+        $('#NotifikasiSendImagingStudyByDicomFile').html('loading..');
+
+        /* Kirim data dengan AJAX  */
+        $.ajax({
+            type    : 'POST',
+            url     : '_Page/Pemeriksaan/ProsesSendImagingStudyByDicomFile.php',
+            dataType: 'json',
+            data    : ProsesSendImagingStudyByDicomFile,
+            success: function(response) {
+                var status                  = response.status;
+                var message                 = response.message;
+                var id_radiologi_dicom_conv = response.id_radiologi_dicom_conv;
+
+                // Apabila berhasil
+                if(status=='success'){
+                    //Bersihkan notifikasi
+                    $('#NotifikasiSendImagingStudyByDicomFile').html('');
+
+                    //Tutup modal
+                    $('#ModalSendImagingStudyByDicomFile').modal('hide');
+
+                    //Tampilkan Ulang 'FormDetailDicom'
+                    $('#FormDetailDicom').html('Loading...');
+
+                    //Tampilkan Form Dengan Ajax
+                    $.ajax({
+                        type 	    : 'POST',
+                        url 	    : '_Page/Pemeriksaan/FormDetailDicom.php',
+                        data        : {id_radiologi_dicom_conv: id_radiologi_dicom_conv},
+                        success     : function(data){
+                            $('#FormDetailDicom').html(data);
+                        }
+                    });
+                    
+                    // Toast Proses Berhasil
+                    $('#put_message').html('<i class="bi bi-check-circle me-2"></i> ' + message);
+
+                    // Tampilkan Toast
+                    var toastEl = document.getElementById('toast_proses');
+                    var toast   = new bootstrap.Toast(toastEl, {delay: 3000});
+                    toast.show();
+
+                   
+                }else{
+                    $('#NotifikasiSendImagingStudyByDicomFile').html('<div class="alert alert-danger"><small>'+message+'</small></div>');
+                }
+                
+            }
+        });
+    });
+
+    // Detail Imaging Study By ID
+    $(document).on('click', '.modal_detail_imaging_study_by_is', function () {
+
+        //tangkap data 'id_imaging_study' dan buat variabel
+        var id_imaging_study   = $(this).data('id');
+
+        //tampilkan modal
+        $('#ModalImagingStudyByIs').modal('show');
+
+        //Form Loading
+        $('#FormImagingStudyByIs').html('Loading...');
+
+        //Tampilkan Form Dengan Ajax
+        $.ajax({
+            type 	    : 'POST',
+            url 	    : '_Page/Pemeriksaan/FormDetailImagingStudy.php',
+            data        : {id_imaging_study: id_imaging_study},
+            success     : function(data){
+                $('#FormImagingStudyByIs').html(data);
             }
         });
     });

@@ -1640,6 +1640,60 @@ MODAL KONVERSI DICOM
         </div>
     </div>
 </div>
+<div class="modal fade" id="ModalSendImagingStudyByDicomFile" tabindex="-1">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content bg-dark">
+            <form action="javascript:void(0);" id="ProsesSendImagingStudyByDicomFile">
+                <div class="modal-header">
+                    <h5 class="modal-title text-white"><i class="bi bi-send"></i> Kirim Imaging Study By DCM File</h5>
+                    <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12" id="FormSendImagingStudyByDicomFile">
+                            <!-- Form Akan Muncul Disini -->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12" id="NotifikasiSendImagingStudyByDicomFile">
+                            <!-- Notifikasi Akan Muncul Disini -->
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary btn-rounded">
+                        <i class="bi bi-send"></i> Kirim
+                    </button>
+                    <button type="button" class="btn btn-secondary btn-rounded" data-bs-dismiss="modal">
+                        <i class="bi bi-x-circle"></i> Tutup
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="ModalImagingStudyByIs" tabindex="-1">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-dark"><i class="bi bi-info-circle"></i> Imaging Study By ID</h5>
+                <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12" id="FormImagingStudyByIs">
+                        <!-- Form Akan Muncul Disini -->
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-rounded" data-bs-dismiss="modal">
+                    <i class="bi bi-x-circle"></i> Tutup
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="modal fade" id="ModalDicomViewer" tabindex="-1">
     <div class="modal-dialog modal-fullscreen">
         <div class="modal-content">
