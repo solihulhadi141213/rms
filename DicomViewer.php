@@ -46,6 +46,7 @@
     // Menentukan Path File
     $base_path = '_DCM/';
     $path = realpath($base_path . $file_dcm);
+    $path_download = "$app_base_url/_DCM/$file_dcm";
     
     // Validasi file exists
     if (!$path || !file_exists($path)) {
@@ -120,9 +121,9 @@
                         </small>
                     </div>
                     <div>
-                        <button class="btn btn-light btn-sm" onclick="downloadOriginalFile()">
+                        <a href="<?php echo "$path_download"; ?>" target="_blank" class="btn btn-light btn-sm">
                             <i class="bi bi-download me-1"></i> Download DICOM
-                        </button>
+                        </a>
                     </div>
                 </div>
             </div>

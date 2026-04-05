@@ -82,6 +82,8 @@
     $accession_number = $Data['accession_number'];
     $filename         = $Data['filename'];
     $dicom_metadata   = $Data['dicom_metadata'];
+    $orthanc_id       = $Data['orthanc_id'];
+    $ParentStudy      = $Data['ParentStudy'];
 
     // Buka Informasi Pemeriksaan Radiologi
     $nama_pasien = GetDetailData($Conn, 'radiologi', 'id_radiologi', $id_radiologi, 'nama_pasien');
@@ -191,5 +193,71 @@
         <button type="button" class="btn btn-primary btn-md btn-block modal_dicom_viewer" data-id="<?php echo $id_radiologi_dicom_conv; ?>">
             <i class="bi bi-arrow-right"></i> Buka File
         </button>
+    </div>
+</div>
+<div class="row mb-2 mt-3">
+    <div class="col-12">
+        <?php
+            // Jika Belum Ada pada Ortanct
+            if(empty($orthanc_id)){
+                echo '
+                    <button type="button" class="btn btn-warning btn-md btn-block modal_upload_orthanc" data-id="'.$id_radiologi_dicom_conv.'">
+                        <i class="bi bi-save"></i> Save To Orthanc
+                    </button>
+                ';
+            }else{
+                // Jika Sudah Ada
+                // Buka pengaturan Orthanc
+                $status_connection_orthanc = 1;
+                $QryOrt = $Conn->prepare("SELECT * FROM connection_orthanc WHERE status_connection_orthanc = ?");
+                $QryOrt->bind_param("i", $status_connection_orthanc);
+                if (!$QryOrt->execute()) {
+                    $error=$Conn->error;
+                    echo '
+                        <div class="alert alert-danger">
+                            <small>Terjadi kesalahan pada saat membuka pengaturan Orthanc data dari database!<br>Keterangan : '.$Conn->error.'</small>
+                        </div>
+                    ';
+                }else{
+                    $ResultOrt = $QryOrt->get_result();
+                    $DataOrt = $ResultOrt->fetch_assoc();
+                    $QryOrt->close();
+
+                    // Jika Data Tidak Ditemukan
+                    if(empty($DataOrt['id_connection_orthanc'])){
+                        echo '
+                            <div class="alert alert-danger">
+                                <small>Pengaturan Orthanc Tidak Ditemukan</small>
+                            </div>
+                        ';
+                    }else{
+                        //Buat Variabel 'url_connection_orthanc'
+                        $username_connection_orthanc = $DataOrt['username_connection_orthanc'];
+                        $password_connection_orthanc = $DataOrt['password_connection_orthanc'];
+                        $url_connection_orthanc = $DataOrt['url_connection_orthanc'];
+
+                        // Dapatkan 'StudyInstanceUID'
+                        $ch = curl_init();
+                        curl_setopt($ch, CURLOPT_URL, $url_connection_orthanc . "/studies/" . $ParentStudy);
+                        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                        curl_setopt($ch, CURLOPT_USERPWD, $username_connection_orthanc . ":" . $password_connection_orthanc);
+                        $response = curl_exec($ch);
+                        curl_close($ch);
+                        $result = json_decode($response, true);
+                        $StudyInstanceUID = $result['MainDicomTags']['StudyInstanceUID'];
+
+                        // Buat Link
+                        $viewer_url = "$url_connection_orthanc/ohif/viewer?StudyInstanceUIDs=$StudyInstanceUID";
+
+                        // Tampilkan Tombol
+                        echo '
+                            <a href="'.$viewer_url.'" target="_blank" class="btn btn-secondary btn-md btn-block">
+                                <i class="bi bi-save"></i> Open Orthanc Viewer
+                            </a>
+                        ';
+                    }
+                }
+            }
+        ?>
     </div>
 </div>

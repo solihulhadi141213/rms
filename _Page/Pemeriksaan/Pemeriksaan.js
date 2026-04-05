@@ -4046,4 +4046,88 @@ $(document).ready(function() {
     $('#ModalDicomViewer').on('shown.bs.modal', function() {
         adjustIframeHeight();
     });
+
+    // UPLOAD/SAVE TO ORTHANC
+    $(document).on('click', '.modal_upload_orthanc', function () {
+
+        //tangkap data 'id_radiologi_dicom_conv' dan buat variabel
+        var id_radiologi_dicom_conv   = $(this).data('id');
+
+        //tampilkan modal
+        $('#ModalUploadOrthanc').modal('show');
+
+        // Kosongkan Notifikasi
+        $('#NotifikasiUploadOrthanc').html('');
+
+        //Form Loading
+        $('#FormUploadOrthanc').html('Loading...');
+
+        //Tampilkan Form Dengan Ajax
+        $.ajax({
+            type 	    : 'POST',
+            url 	    : '_Page/Pemeriksaan/FormUploadOrthanc.php',
+            data        : {id_radiologi_dicom_conv: id_radiologi_dicom_conv},
+            success     : function(data){
+                $('#FormUploadOrthanc').html(data);
+            }
+        });
+    });
+
+    $('#ProsesUploadOrthanc').submit(function(e){
+       e.preventDefault();
+        /* Menangkap data dari form  */
+        var ProsesUploadOrthanc=$('#ProsesUploadOrthanc').serialize();
+
+        /* Loading Notification */
+        $('#NotifikasiUploadOrthanc').html('loading..');
+
+        /* Kirim data dengan AJAX  */
+        $.ajax({
+            type    : 'POST',
+            url     : '_Page/Pemeriksaan/ProsesUploadOrthanc.php',
+            dataType: 'json',
+            data    : ProsesUploadOrthanc,
+            success: function(response) {
+                var status                  = response.status;
+                var message                 = response.message;
+                var id_radiologi_dicom_conv = response.id_radiologi_dicom_conv;
+
+                // Apabila berhasil
+                if(status=='success'){
+                    //Bersihkan notifikasi
+                    $('#NotifikasiUploadOrthanc').html('');
+
+                    //Tutup modal
+                    $('#ModalUploadOrthanc').modal('hide');
+
+                    //Tampilkan Ulang 'FormDetailDicom'
+                    $('#FormDetailDicom').html('Loading...');
+
+                    //Tampilkan Form Dengan Ajax
+                    $.ajax({
+                        type 	    : 'POST',
+                        url 	    : '_Page/Pemeriksaan/FormDetailDicom.php',
+                        data        : {id_radiologi_dicom_conv: id_radiologi_dicom_conv},
+                        success     : function(data){
+                            $('#FormDetailDicom').html(data);
+                        }
+                    });
+                    
+                    // Toast Proses Berhasil
+                    $('#put_message').html('<i class="bi bi-check-circle me-2"></i> ' + message);
+
+                    // Tampilkan Toast
+                    var toastEl = document.getElementById('toast_proses');
+                    var toast   = new bootstrap.Toast(toastEl, {delay: 3000});
+                    toast.show();
+
+                   
+                }else{
+                    $('#NotifikasiUploadOrthanc').html('<div class="alert alert-danger"><small>'+message+'</small></div>');
+                }
+                
+            }
+        });
+    });
+
 });
