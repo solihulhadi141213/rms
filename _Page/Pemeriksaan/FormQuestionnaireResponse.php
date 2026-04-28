@@ -344,7 +344,7 @@
     <div class="col-7">
         <select name="item_answer" id="item_answer" class="form-control">
             <option <?php if($answer=="true"){echo "selected";} ?> value="1">Ya</option>
-            <option <?php if($answer=="false"){echo "selected";} ?> value="0">Tidak</option>
+            <option selected <?php if($answer=="false"){echo "selected";} ?> value="0">Tidak</option>
         </select>
     </div>
 </div>
