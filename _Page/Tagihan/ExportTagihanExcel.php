@@ -31,8 +31,8 @@
 
     // ================= QUERY DATA =================
     $query = mysqli_query($Conn, "
-        SELECT id_radiologi, id_pasien, nama_pasien, alat_pemeriksa, tujuan,
-            pembayaran, datetime_diminta, status_pemeriksaan
+        SELECT id_radiologi, id_pasien, nama_pasien, alat_pemeriksa,
+            tujuan, pembayaran, datetime_diminta, status_pemeriksaan
         FROM radiologi
         WHERE datetime_diminta BETWEEN '$periode_1' AND '$periode_2'
         ORDER BY id_radiologi DESC
@@ -50,21 +50,19 @@
     // ================= HEADER =================
     $header = [
         'No','Nama','RM','Tanggal','Jam',
-        'Tujuan','Modality','Metode','Status','Tagihan'
+        'Tujuan','Modality','Metode','Nama Pemeriksaan','Status','Tagihan'
     ];
 
     $col = 'A';
     foreach ($header as $title) {
         $sheet->setCellValue($col.'1', $title);
         $sheet->getStyle($col.'1')->getFont()->setBold(true);
-        $sheet->getStyle($col.'1')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle($col.'1')->getAlignment()
+            ->setHorizontal(Alignment::HORIZONTAL_CENTER);
         $col++;
     }
 
-    // ================= ISI DATA =================
-    $row = 2;
-    $no  = 1;
-
+    // ================= MODALITAS =================
     $nama_modalitas = [
         'XR' => 'X-Ray',
         'CT' => 'CT-Scan',
@@ -76,15 +74,32 @@
         'CR' => 'Computed Radiography'
     ];
 
+    // ================= ISI DATA =================
+    $row = 2;
+    $no  = 1;
+
     while ($data = mysqli_fetch_assoc($query)) {
 
-        // Hitung total tagihan
+        // ================= AMBIL INVOICE =================
+        $q_invoice = mysqli_query($Conn, "
+            SELECT service_name, amount 
+            FROM radiologi_invoice 
+            WHERE id_radiologi='{$data['id_radiologi']}'
+        ");
+
         $total = 0;
-        $q = mysqli_query($Conn, "SELECT amount FROM radiologi_invoice WHERE id_radiologi='{$data['id_radiologi']}'");
-        while ($n = mysqli_fetch_assoc($q)) {
-            $total += $n['amount'];
+        $list_pemeriksaan = [];
+
+        while ($inv = mysqli_fetch_assoc($q_invoice)) {
+            $total += $inv['amount'];
+            $list_pemeriksaan[] = $inv['service_name'];
         }
 
+        $nama_pemeriksaan = !empty($list_pemeriksaan)
+            ? implode(', ', $list_pemeriksaan)
+            : '-';
+
+        // ================= WRITE EXCEL =================
         $sheet->setCellValue("A$row", $no);
         $sheet->setCellValue("B$row", $data['nama_pasien']);
         $sheet->setCellValue("C$row", $data['id_pasien']);
@@ -93,11 +108,12 @@
         $sheet->setCellValue("F$row", $data['tujuan']);
         $sheet->setCellValue("G$row", $nama_modalitas[$data['alat_pemeriksa']] ?? '-');
         $sheet->setCellValue("H$row", $data['pembayaran']);
-        $sheet->setCellValue("I$row", $data['status_pemeriksaan']);
-        $sheet->setCellValue("J$row", $total);
+        $sheet->setCellValue("I$row", $nama_pemeriksaan);
+        $sheet->setCellValue("J$row", $data['status_pemeriksaan']);
+        $sheet->setCellValue("K$row", $total);
 
         // Format rupiah
-        $sheet->getStyle("J$row")
+        $sheet->getStyle("K$row")
             ->getNumberFormat()
             ->setFormatCode(NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
 
@@ -106,11 +122,11 @@
     }
 
     // ================= AUTO WIDTH =================
-    foreach (range('A','J') as $col) {
+    foreach (range('A','K') as $col) {
         $sheet->getColumnDimension($col)->setAutoSize(true);
     }
 
-    // ================= OUTPUT =================
+    // ================= OUTPUT FILE =================
     $filename = "Tagihan_Radiologi_{$periode_1}_sd_{$periode_2}.xlsx";
 
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
