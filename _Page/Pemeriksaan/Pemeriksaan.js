@@ -2070,6 +2070,14 @@ $(document).ready(function() {
             success     : function(data){
                 $('#FormTambahTagihan').html(data);
                 initializeMoneyInputs();
+
+                // inisialisasi select2 setelah form muncul
+                $('#kode_tarif').select2({
+                    theme         : 'bootstrap-5',
+                    dropdownParent: $('#ModalTambahTagihan'),
+                    width         : '100%',
+                    placeholder   : 'Pilih Tarif'
+                });
             }
         });
     });

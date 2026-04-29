@@ -194,6 +194,13 @@ $(document).ready(function() {
             success     : function(data){
                 $('#FormTambahTagihan').html(data);
                 initializeMoneyInputs();
+
+                $('#kode_tarif').select2({
+                    theme         : 'bootstrap-5',
+                    dropdownParent: $('#ModalTambahTagihan'),
+                    width         : '100%',
+                    placeholder   : 'Pilih Tarif'
+                });
             }
         });
     });
