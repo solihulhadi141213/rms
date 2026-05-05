@@ -749,110 +749,401 @@
         }
 
         // =========================================================================
-        // KIRIM Orthanc (orthanc Server)
+        // KIRIM WORKLIST KE ORTHANC (STABIL & ANTI DUPLIKAT)
         // =========================================================================
+
         $orthanc = 0;
-        if(!empty($kirim_orthanc)){
-            // Buka Konfigurasi Koneksi Dengan Orthanc
+
+        if (!empty($kirim_orthanc)) {
+
+            // =========================================================================
+            // KONFIGURASI ORTHANC
+            // =========================================================================
             $status_connection_orthanc = 1;
-            $url_connection_orthanc    = GetDetailData($Conn,'connection_orthanc','status_connection_orthanc',$status_connection_orthanc,'url_connection_orthanc');
-            $url_connection_orthanc    = rtrim($url_connection_orthanc, '/');
-            $url_connection_orthanc    = "$url_connection_orthanc/worklists/$accession_number";
-            if(empty($url_connection_orthanc)){
+
+            $base_url_orthanc = GetDetailData(
+                $Conn,
+                'connection_orthanc',
+                'status_connection_orthanc',
+                $status_connection_orthanc,
+                'url_connection_orthanc'
+            );
+
+            $base_url_orthanc = rtrim($base_url_orthanc, '/');
+
+            if (empty($base_url_orthanc)) {
+
                 echo json_encode([
                     'status'  => 'error',
-                    'message' => 'Koneksi Dengan Orthanc Server Belum Di Atur!'
+                    'message' => 'Koneksi Orthanc belum diatur'
                 ]);
+
                 exit;
             }
-            $username_connection_orthanc = GetDetailData($Conn,'connection_orthanc','status_connection_orthanc',$status_connection_orthanc,'username_connection_orthanc');
-            $password_connection_orthanc = GetDetailData($Conn,'connection_orthanc','status_connection_orthanc',$status_connection_orthanc,'password_connection_orthanc');
-            $nama_pasien                 = formatPatientNameDICOM($nama_pasien);
-            $ScheduledProcedureStepStartDate = date('Ymd');
-            $ScheduledProcedureStepStartTime = date('His');
-            $ScheduledPerformingPhysicianName = formatPatientNameDICOM($nama_dokter);
-            
-            // Buat Payload Orthanc
+
+            $username_connection_orthanc = GetDetailData(
+                $Conn,
+                'connection_orthanc',
+                'status_connection_orthanc',
+                $status_connection_orthanc,
+                'username_connection_orthanc'
+            );
+
+            $password_connection_orthanc = GetDetailData(
+                $Conn,
+                'connection_orthanc',
+                'status_connection_orthanc',
+                $status_connection_orthanc,
+                'password_connection_orthanc'
+            );
+
+            // =========================================================================
+            // VALIDASI ACCESSION NUMBER
+            // =========================================================================
+
+            if (empty($accession_number)) {
+
+                echo json_encode([
+                    'status'  => 'error',
+                    'message' => 'Accession Number tidak boleh kosong'
+                ]);
+
+                exit;
+            }
+
+            // =========================================================================
+            // FORMAT DICOM
+            // =========================================================================
+
+            $nama_pasien_dicom = formatPatientNameDICOM($nama_pasien);
+
+            $dokter_pengirim_dicom = formatPatientNameDICOM(
+                $nama_dokter_pengirim
+            );
+
+            $dokter_penerima_dicom = formatPatientNameDICOM(
+                $nama_dokter
+            );
+
+            // =========================================================================
+            // DATETIME STABIL (PENTING UNTUK ANTI DUPLIKAT)
+            // =========================================================================
+            /*
+            |--------------------------------------------------------------------------
+            | JANGAN gunakan:
+            | date('His')
+            |
+            | karena akan membuat modality membaca worklist baru
+            |--------------------------------------------------------------------------
+            */
+
+            $dt_worklist = new DateTime($datetime_dikerjakan);
+
+            $ScheduledProcedureStepStartDate = $dt_worklist->format('Ymd');
+
+            $ScheduledProcedureStepStartTime = $dt_worklist->format('His');
+
+            // =========================================================================
+            // STUDY INSTANCE UID STABIL
+            // =========================================================================
+            /*
+            |--------------------------------------------------------------------------
+            | Gunakan UID stabil berdasarkan accession
+            |--------------------------------------------------------------------------
+            */
+
+            function generateStableStudyUID($accession)
+            {
+                $hash = preg_replace('/[^0-9]/', '', crc32($accession));
+
+                return '1.2.826.0.1.3680043.2.1125.' . $hash;
+            }
+
+            $StudyInstanceUID = generateStableStudyUID(
+                $accession_number
+            );
+
+            // =========================================================================
+            // URL WORKLIST
+            // =========================================================================
+
+            $url_worklist = $base_url_orthanc .
+                            '/worklists/' .
+                            rawurlencode($accession_number);
+
+            // =========================================================================
+            // CEK WORKLIST EXISTING
+            // =========================================================================
+
+            $curl_check = curl_init();
+
+            curl_setopt_array($curl_check, [
+                CURLOPT_URL => $url_worklist,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_CUSTOMREQUEST => 'GET',
+                CURLOPT_HTTPAUTH => CURLAUTH_BASIC,
+                CURLOPT_USERPWD => $username_connection_orthanc . ':' . $password_connection_orthanc,
+                CURLOPT_TIMEOUT => 15,
+                CURLOPT_SSL_VERIFYPEER => false,
+                CURLOPT_SSL_VERIFYHOST => false
+            ]);
+
+            $response_check = curl_exec($curl_check);
+
+            $http_check = curl_getinfo(
+                $curl_check,
+                CURLINFO_HTTP_CODE
+            );
+
+            curl_close($curl_check);
+
+            // =========================================================================
+            // HAPUS WORKLIST LAMA
+            // =========================================================================
+            /*
+            |--------------------------------------------------------------------------
+            | Penting agar modality tidak membaca duplicate item
+            |--------------------------------------------------------------------------
+            */
+
+            if ($http_check == 200) {
+
+                $curl_delete = curl_init();
+
+                curl_setopt_array($curl_delete, [
+                    CURLOPT_URL => $url_worklist,
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_CUSTOMREQUEST => 'DELETE',
+                    CURLOPT_HTTPAUTH => CURLAUTH_BASIC,
+                    CURLOPT_USERPWD => $username_connection_orthanc . ':' . $password_connection_orthanc,
+                    CURLOPT_TIMEOUT => 15,
+                    CURLOPT_SSL_VERIFYPEER => false,
+                    CURLOPT_SSL_VERIFYHOST => false
+                ]);
+
+                $response_delete = curl_exec($curl_delete);
+
+                $http_delete = curl_getinfo(
+                    $curl_delete,
+                    CURLINFO_HTTP_CODE
+                );
+
+                $curl_delete_error = curl_error($curl_delete);
+
+                curl_close($curl_delete);
+
+                if ($curl_delete_error) {
+
+                    echo json_encode([
+                        'status'  => 'error',
+                        'message' => 'Gagal menghapus worklist lama: ' .
+                                    $curl_delete_error
+                    ]);
+
+                    exit;
+                }
+
+                /*
+                |--------------------------------------------------------------------------
+                | Orthanc:
+                | 200 = deleted
+                | 404 = not found
+                |--------------------------------------------------------------------------
+                */
+
+                if ($http_delete != 200 && $http_delete != 404) {
+
+                    echo json_encode([
+                        'status'  => 'error',
+                        'message' => 'Gagal menghapus worklist lama',
+                        'http_code' => $http_delete
+                    ]);
+
+                    exit;
+                }
+            }
+
+            // =========================================================================
+            // PAYLOAD WORKLIST ORTHANC
+            // =========================================================================
+
             $payload_orthanc = [
                 "Tags" => [
-                    "IssuerOfPatientID"              => $company_name,
-                    "AccessionNumber"                => $accession_number,
-                    "PatientName"                    => $nama_pasien,
-                    "PatientID"                      => $id_pasien,
-                    "PatientSex"                     => $gender_code,
-                    "PatientBirthDate"               => $tanggal_lahir,
-                    "RequestedProcedureID"           => $accession_number,
-                    "StudyDescription"               => $pemeriksaan_description,
-                    "ReferringPhysicianName"         => formatPatientNameDICOM($nama_dokter_pengirim),
+
+                    // ================================================================
+                    // PATIENT
+                    // ================================================================
+
+                    "PatientName"       => $nama_pasien_dicom,
+                    "PatientID"         => $id_pasien,
+                    "PatientBirthDate"  => $tanggal_lahir,
+                    "PatientSex"        => $gender_code,
+
+                    "IssuerOfPatientID" => $company_name,
+
+                    // ================================================================
+                    // STUDY
+                    // ================================================================
+
+                    "AccessionNumber"     => $accession_number,
+                    "StudyInstanceUID"    => $StudyInstanceUID,
+                    "RequestedProcedureID"=> $accession_number,
+
+                    "StudyDescription"    => $pemeriksaan_description,
+
+                    "ReferringPhysicianName" =>
+                        $dokter_pengirim_dicom,
+
+                    // ================================================================
+                    // REQUESTED PROCEDURE
+                    // ================================================================
+
+                    "RequestedProcedureDescription" =>
+                        $pemeriksaan_description,
+
+                    // ================================================================
+                    // SPS
+                    // ================================================================
+
                     "ScheduledProcedureStepSequence" => [[
-                        "Modality"                          => $modalitas,
-                        "ScheduledStationAETitle"           => "USG01",
-                        "ScheduledProcedureStepStartDate"   => $ScheduledProcedureStepStartDate,
-                        "ScheduledProcedureStepStartTime"   => $ScheduledProcedureStepStartTime,
-                        "ScheduledPerformingPhysicianName"  => $ScheduledPerformingPhysicianName,
-                        "ScheduledProcedureStepDescription" => $pemeriksaan_description,
+
+                        "ScheduledStationAETitle" =>
+                            "USG01",
+
+                        "Modality" =>
+                            $modalitas,
+
+                        "ScheduledProcedureStepStartDate" =>
+                            $ScheduledProcedureStepStartDate,
+
+                        "ScheduledProcedureStepStartTime" =>
+                            $ScheduledProcedureStepStartTime,
+
+                        "ScheduledPerformingPhysicianName" =>
+                            $dokter_penerima_dicom,
+
+                        "ScheduledProcedureStepDescription" =>
+                            $pemeriksaan_description
                     ]]
                 ]
             ];
 
-            // Encode Payload Ortanc
-            $payload_json_orthanc = json_encode($payload_orthanc, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+            // =========================================================================
+            // ENCODE JSON
+            // =========================================================================
 
-            // Mulai CULR Ortanc
+            $payload_json_orthanc = json_encode(
+                $payload_orthanc,
+                JSON_UNESCAPED_SLASHES |
+                JSON_UNESCAPED_UNICODE
+            );
+
+            if (!$payload_json_orthanc) {
+
+                echo json_encode([
+                    'status'  => 'error',
+                    'message' => 'Gagal encode JSON worklist'
+                ]);
+
+                exit;
+            }
+
+            // =========================================================================
+            // CURL PUT WORKLIST
+            // =========================================================================
+
             $curl_orthanc = curl_init();
+
             curl_setopt_array($curl_orthanc, [
-                CURLOPT_URL => $url_connection_orthanc,
+
+                CURLOPT_URL => $url_worklist,
+
                 CURLOPT_RETURNTRANSFER => true,
+
                 CURLOPT_CUSTOMREQUEST => 'PUT',
+
                 CURLOPT_POSTFIELDS => $payload_json_orthanc,
+
                 CURLOPT_HTTPAUTH => CURLAUTH_BASIC,
-                CURLOPT_USERPWD => ''.$username_connection_orthanc.':'.$password_connection_orthanc.'',
+
+                CURLOPT_USERPWD =>
+                    $username_connection_orthanc .
+                    ':' .
+                    $password_connection_orthanc,
+
                 CURLOPT_HTTPHEADER => [
                     'Content-Type: application/json',
                     'Accept: application/json'
                 ],
+
                 CURLOPT_TIMEOUT => 30,
+
                 CURLOPT_SSL_VERIFYPEER => false,
                 CURLOPT_SSL_VERIFYHOST => false
             ]);
 
             $response_orthanc = curl_exec($curl_orthanc);
-            $http_code_orthanc = curl_getinfo($curl_orthanc, CURLINFO_HTTP_CODE);
-            $curl_orthanc_error = curl_error($curl_orthanc);
+
+            $http_code_orthanc = curl_getinfo(
+                $curl_orthanc,
+                CURLINFO_HTTP_CODE
+            );
+
+            $curl_orthanc_error = curl_error(
+                $curl_orthanc
+            );
+
             curl_close($curl_orthanc);
 
-            // Handdle Error Curl Ortanc
+            // =========================================================================
+            // HANDLE CURL ERROR
+            // =========================================================================
+
             if ($curl_orthanc_error) {
-                echo json_encode([
-                    'status'  => 'error',
-                    'message' => 'CURL Ortanc Error: ' . $curl_orthanc_error
-                ]);
-                exit;
-            }
-
-            // Decode Response Ortanc
-            // Orthanc MWL biasanya tidak mengembalikan JSON
-            if ($http_code_orthanc !== 200) {
-                echo json_encode([
-                    'status' => 'error',
-                    'message' => 'Gagal mengirim Worklist ke Orthanc <br> Code: '.$http_code_orthanc.'',
-                    'http_code' => $http_code_orthanc,
-                    'response_raw' => substr($response_orthanc, 0, 300)
-                ]);
-                exit;
-            }
-
-            // Validasi Response Ortanc
-            if ($http_code_orthanc !== 200) {
-                $msg_orthanc = 'Gagal mengirim Order Ke Ortanc <br>Response : <code>'.$response_orthanc.'</code> <br>Payload : <code>'.$payload_json_orthanc.'</code>';
 
                 echo json_encode([
                     'status'  => 'error',
-                    'message' => $msg_orthanc,
-                    'http_code' => $http_code_orthanc
+                    'message' => 'CURL Orthanc Error: ' .
+                                $curl_orthanc_error
                 ]);
+
                 exit;
             }
+
+            // =========================================================================
+            // VALIDASI RESPONSE
+            // =========================================================================
+
+            /*
+            |--------------------------------------------------------------------------
+            | Orthanc MWL:
+            | 200 = updated
+            |--------------------------------------------------------------------------
+            */
+
+            if ($http_code_orthanc != 200) {
+
+                echo json_encode([
+                    'status'  => 'error',
+                    'message' =>
+                        'Gagal mengirim worklist ke Orthanc',
+
+                    'http_code' =>
+                        $http_code_orthanc,
+
+                    'response_raw' =>
+                        substr($response_orthanc, 0, 500),
+
+                    'payload' =>
+                        $payload_orthanc
+                ]);
+
+                exit;
+            }
+
+            // =========================================================================
+            // SUCCESS
+            // =========================================================================
 
             $orthanc = 1;
         }

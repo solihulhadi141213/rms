@@ -1151,7 +1151,12 @@ $(document).ready(function() {
                         'success'
                     )
                 }else{
+                    var response2      = response.response;
+                    var payload_json      = response.payload_json;
                     $('#NotifikasiImagingStudy').html('<div class="alert alert-danger"><small>'+message+'</small></div>');
+
+                    // Versi DEBUG
+                    // $('#NotifikasiImagingStudy').html('<div class="alert alert-danger"><small>'+message+'</small></div><pre>'+response2+'</pre><pre>'+payload_json+'</pre>');
                 }
                 
             }

@@ -1098,11 +1098,11 @@ EXPERTISE LOCAL
 ============================== 
 -->
 <div class="modal fade" id="ModalExpertiseMultiple" tabindex="-1">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-fullscreen">
         <div class="modal-content">
             <form action="javascript:void(0);" id="ProsesExpertiseMultiple">
-                <div class="modal-header">
-                    <h5 class="modal-title text-dark"><i class="bi bi-pencil"></i> Pengisian Expertise</h5>
+                <div class="modal-header nav_background">
+                    <h5 class="modal-title text-light"><i class="bi bi-pencil"></i> Pengisian Expertise (Ageung)</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -1117,7 +1117,7 @@ EXPERTISE LOCAL
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer nav_background">
                     <button type="submit" class="btn btn-primary btn-rounded">
                         <i class="bi bi-save"></i> Simpan 
                     </button>
@@ -1130,11 +1130,11 @@ EXPERTISE LOCAL
     </div>
 </div>
 <div class="modal fade" id="ModalExpertise" tabindex="-1">
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog modal-fullscreen">
         <div class="modal-content">
             <form action="javascript:void(0);" id="ProsesExpertise">
-                <div class="modal-header">
-                    <h5 class="modal-title text-dark"><i class="bi bi-pencil"></i> Pengisian Expertise</h5>
+                <div class="modal-header nav_background">
+                    <h5 class="modal-title text-light"><i class="bi bi-pencil"></i> Pengisian Expertise (Ageung)</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -1149,7 +1149,7 @@ EXPERTISE LOCAL
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer nav_background">
                     <button type="submit" class="btn btn-primary btn-rounded">
                         <i class="bi bi-save"></i> Simpan
                     </button>

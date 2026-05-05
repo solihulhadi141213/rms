@@ -304,9 +304,11 @@
         }
 
         echo json_encode([
-            'status'  => 'error',
-            'message' => $msg,
-            'http_code' => $http_code
+            'status'       => 'error',
+            'message'      => $msg,
+            'http_code'    => $http_code,
+            'response'     => $response,
+            'payload_json' => $payload_json
         ]);
         exit;
     }

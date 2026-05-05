@@ -655,5 +655,71 @@
             </div>
         </div>
     </div>
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="flush-heading7">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse7" aria-expanded="false" aria-controls="flush-collapse7">
+                <b>F. Expertise (SIMRS)</b>
+            </button>
+        </h2>
+        <div id="flush-collapse7" class="accordion-collapse collapse" aria-labelledby="flush-heading7" data-bs-parent="#accordionFlushExample">
+            <div class="accordion-body">
+                <?php
+                    // Membuka Lcal Expertise Dengan Prepared Statment
+                    $QryLocalExpertise = $Conn->prepare("SELECT * FROM radiologi_local_exp WHERE id_radiologi = ?");
+                    $QryLocalExpertise->bind_param("i", $id_radiologi);
+                    if (!$QryLocalExpertise->execute()) {
+                        $error=$Conn->error;
+                        echo '
+                            <div class="alert alert-danger">
+                                <span>Terjadi kesalahan pada saat membuka data dari database!<br>Keterangan : '.$Conn->error.'</span>
+                            </div>
+                        ';
+                    }else{
+                        $ResultLocalExpertise = $QryLocalExpertise->get_result();
+                        $DataLocalExpertise = $ResultLocalExpertise->fetch_assoc();
+                        $QryLocalExpertise->close();
 
+                        // Buat Variabel
+                        if(empty($DataLocalExpertise['id_radiologi_local_exp'])){
+                             echo '
+                                <div class="alert alert-danger text-center">
+                                    <span>Expertise Belum Tersedia</span>
+                                </div>
+                            ';
+                        }else{
+                            $temuan  = $DataLocalExpertise['temuan'];
+                            $kesan   = $DataLocalExpertise['kesan'];
+                            $saran   = $DataLocalExpertise['saran'];
+                            $catatan = $DataLocalExpertise['catatan'];
+
+                            echo '
+                                <div class="table table-responsive mt-3">
+                                    <table class="table table-bordered table-sm">
+                                        <tbody>
+                                            <tr>
+                                                <td><b>Temuan</b></td>
+                                                <td><small>'.$temuan.'</small></td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Kesan</b></td>
+                                                <td><small>'.$kesan.'</small></td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Saran</b></td>
+                                                <td><small>'.$saran.'</small></td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Catatan</b></td>
+                                                <td><small>'.$catatan.'</small></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            ';
+                        }
+                    }
+                ?>
+            </div>
+        </div>
+    </div>
 </div>
