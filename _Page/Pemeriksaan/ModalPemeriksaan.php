@@ -1773,3 +1773,38 @@ MODAL KONVERSI DICOM
         </div>
     </div>
 </div>
+
+
+<div class="modal fade" id="ModalSynTtl" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-md">
+        <div class="modal-content bg-secondary">
+            <form action="javascript:void(0);" id="ProsesSynTtl">
+                <div class="modal-header">
+                    <h5 class="modal-title text-dark"><i class="bi bi-save"></i> Syn Tanggal Lahir</h5>
+                    <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12" id="FormSynTtl">
+                            <!-- Form Syn TTL -->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12" id="NotifikasiSynTtl">
+                            <!-- Notifikasi Syn TTL -->
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary btn-rounded">
+                        <i class="bi bi-send"></i> Update
+                    </button>
+                    <button type="button" class="btn btn-secondary btn-rounded" data-bs-dismiss="modal">
+                        <i class="bi bi-x-circle"></i> Tutup
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

@@ -76,14 +76,16 @@
         exit;
     }
 
-    $metadata   = $data_kunjungan['metadata'];
-    $id_pasien  = $metadata['pasien']['id_pasien'] ?? '';
-    $tujuan     = $metadata['tujuan'] ?? '';
-    $pembayaran = $metadata['pembayaran'] ?? '';
+    $metadata      = $data_kunjungan['metadata'];
+    $id_pasien     = $metadata['pasien']['id_pasien'] ?? '';
+    $tujuan        = $metadata['tujuan'] ?? '';
+    $pembayaran    = $metadata['pembayaran'] ?? '';
+    $tanggal_lahir = $metadata['pasien']['tanggal_lahir'] ?? '';
 
     // Tangkap Informasi Modalitas
     // Ambil data alat pemeriksa
     $alat_pemeriksa = validateAndSanitizeInput($_POST['alat_pemeriksa'] ?? '');
+    
     // 2. Generate Accession Number
     $micro = microtime(true);
     $number = substr(str_replace('.', '', $micro), -6);
@@ -241,17 +243,17 @@
 
     // 9. Data yang dikosongkan
     $kode_dokter_penerima = '';
-    $ihs_dokter_penerima = '';
+    $ihs_dokter_penerima  = '';
     $nama_dokter_penerima = '';
-    $radiografer = '';
-    $kesan = '';
-    $kv = '';
-    $ma = '';
-    $sec = '';
-    $datetime_dikerjakan = NULL;
-    $datetime_hasil = NULL;
-    $datetime_selesai = NULL;
-    $status_pemeriksaan = 'Diminta';
+    $radiografer          = '';
+    $kesan                = '';
+    $kv                   = '';
+    $ma                   = '';
+    $sec                  = '';
+    $datetime_dikerjakan  = NULL;
+    $datetime_hasil       = NULL;
+    $datetime_selesai     = NULL;
+    $status_pemeriksaan   = 'Diminta';
 
     // 10. Insert ke Database
     try {
@@ -261,6 +263,7 @@
             id_kunjungan,
             accession_number,
             nama_pasien,
+            tanggal_lahir,
             priority,
             asal_kiriman,
             alat_pemeriksa,
@@ -286,19 +289,20 @@
             datetime_selesai,
             status_pemeriksaan
         ) VALUES (
-            ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
+            ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
         )";
         
         $stmt = $Conn->prepare($query);
         
         // Bind parameters
         $stmt->bind_param(
-            "iiissssssssssssssssssssssssss",
+            "iiisssssssssssssssssssssssssss",
             $id_access,
             $id_pasien,
             $id_kunjungan,
             $accession_number,
             $metadata['pasien']['nama'],
+            $tanggal_lahir,
             $priority,
             $asal_kiriman,
             $alat_pemeriksa,

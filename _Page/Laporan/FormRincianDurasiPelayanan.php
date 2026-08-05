@@ -89,6 +89,13 @@
     );
 
     $jml_data = mysqli_num_rows($query);
+
+    // if($periode=="Tahun"){
+    //     $periode = "Bulan";
+    // }
+    // if($periode=="Bulan"){
+    //     $periode = "Hari";
+    // }
 ?>
 <input type="hidden" name="periode" value="<?= $periode; ?>"> 
 <input type="hidden" name="tahun" value="<?= $tahun; ?>"> 
@@ -119,6 +126,8 @@
                         <td class="text-center"><b>No</b></td>
                         <td class="text-left"><b>Nama Pasien</b></td>
                         <td class="text-left"><b>RM</b></td>
+                        <td class="text-left"><b>Usia</b></td>
+                        <td class="text-left"><b>DPJP</b></td>
                         <td class="text-left"><b>Modality</b></td>
                         <td class="text-left"><b>Kunjungan</b></td>
                         <td class="text-left"><b>Pembayaran</b></td>
@@ -127,6 +136,7 @@
                         <td class="text-left"><b>Hasil</b></td>
                         <td class="text-left"><b>Selesai</b></td>
                         <td class="text-center"><b>Durasi</b></td>
+                        <td class="text-center"><b>Radiografer</b></td>
                     </tr>
                 </thead>
                 <tbody>
@@ -134,7 +144,7 @@
                 if (empty($jml_data)) {
                     echo '
                         <tr>
-                            <td colspan="11" class="text-center">
+                            <td colspan="14" class="text-center">
                                 <small>Tidak Ada Data Yang Ditemukan</small>
                             </td>
                         </tr>
@@ -142,6 +152,38 @@
                 } else {
                     $no = 1;
                     while ($data = mysqli_fetch_array($query)) {
+
+                        $id_access            = $data['id_access'];
+                        $nama_dokter_pengirim = $data['nama_dokter_pengirim'];
+                        $datetime_diminta     = $data['datetime_diminta'];
+                        $tanggal_lahir        = $data['tanggal_lahir'];
+                        $usia                 = "-";
+
+                        // Menghitung Usia
+                        if (!empty($tanggal_lahir)) {
+
+                            $tglLahir = new DateTime($tanggal_lahir);
+                            $tglHitung = new DateTime($datetime_diminta);
+
+                            // Pastikan tanggal lahir tidak lebih besar dari tanggal perhitungan
+                            if ($tglLahir <= $tglHitung) {
+
+                                $diff = $tglLahir->diff($tglHitung);
+
+                                if ($diff->y >= 1) {
+                                    // >= 1 Tahun
+                                    $usia = $diff->y . " Tahun";
+
+                                } elseif ($diff->m >= 1) {
+                                    // < 1 Tahun tetapi >= 1 Bulan
+                                    $usia = $diff->m . " Bulan";
+
+                                } else {
+                                    // < 1 Bulan
+                                    $usia = $diff->d . " Hari";
+                                }
+                            }
+                        }
 
                         /* ===== FORMAT TANGGAL ===== */
                         $diminta    = empty($data['datetime_diminta']) ? '-' : date('d/m/Y H:i', strtotime($data['datetime_diminta']));
@@ -166,11 +208,15 @@
                             $durasi = '-';
                         }
 
+                        $nama_petugas = GetDetailData($Conn, 'access', 'id_access', $id_access, 'access_name');
+
                         echo '
                             <tr>
                                 <td class="text-center"><small>'.$no.'</small></td>
                                 <td class="text-left"><small>'.$data['nama_pasien'].'</small></td>
                                 <td class="text-left"><small>'.$data['id_pasien'].'</small></td>
+                                <td class="text-left"><small>'.$usia.'</small></td>
+                                <td class="text-left"><small>'.$nama_dokter_pengirim.'</small></td>
                                 <td class="text-left"><small>'.$data['alat_pemeriksa'].'</small></td>
                                 <td class="text-left"><small>'.$data['tujuan'].'</small></td>
                                 <td class="text-left"><small>'.$data['pembayaran'].'</small></td>
@@ -179,6 +225,7 @@
                                 <td class="text-left"><small>'.$hasil.'</small></td>
                                 <td class="text-left"><small>'.$selesai.'</small></td>
                                 <td class="text-center"><small>'.$durasi.'</small></td>
+                                <td class="text-center"><small>'.$nama_petugas.'</small></td>
                             </tr>
                         ';
                         $no++;

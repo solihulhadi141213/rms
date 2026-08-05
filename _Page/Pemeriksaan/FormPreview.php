@@ -67,6 +67,7 @@
     $id_observation         = $Data['id_observation'] ?? '<i class="text-danger">Informasi Tidak Tersedia</i>';
     $id_diagnostic_report   = $Data['id_diagnostic_report'] ?? '<i class="text-danger">Informasi Tidak Tersedia</i>';
     $nama_pasien            = $Data['nama_pasien'];
+    $tanggal_lahir_asli     = $Data['tanggal_lahir'] ?? "-";
     $priority               = $Data['priority'];
     $asal_kiriman           = $Data['asal_kiriman'];
     $alat_pemeriksa         = $Data['alat_pemeriksa'];
@@ -76,7 +77,7 @@
     $kode_dokter_penerima   = !empty($Data['kode_dokter_penerima']) ? $Data['kode_dokter_penerima'] : "-";
     $ihs_dokter_penerima    = !empty($Data['ihs_dokter_penerima']) ? $Data['ihs_dokter_penerima'] : "-";
     $nama_dokter_penerima   = !empty($Data['nama_dokter_penerima']) ? $Data['nama_dokter_penerima'] : "-";
-    $radiografer   = !empty($Data['radiografer']) ? $Data['radiografer'] : "-";
+    $radiografer            = !empty($Data['radiografer']) ? $Data['radiografer'] : "-";
     $pesan                  = !empty($Data['pesan']) ? $Data['pesan'] : "-";
     $kesan                  = $Data['kesan'];
     $klinis                 = $Data['klinis'];
@@ -257,6 +258,10 @@
                         <tr>
                             <td><span>Nama Pasien</span></td>
                             <td class="text-grayish"><?php echo $nama_pasien; ?></td>
+                        </tr>
+                        <tr>
+                            <td><span>Tanggal Lahir</span></td>
+                            <td class="text-grayish"><?php echo $tanggal_lahir_asli; ?></td>
                         </tr>
                         <tr>
                             <td><span>Accession Number</span></td>

@@ -173,6 +173,7 @@ function ShowDetail(id_radiologi) {
         }
     });
 }
+
 function ShowDetailPemeriksaan() {
     var ProsesDetail = $('#ProsesDetail').serialize();
     var targetElement = $('#RowDetailPermintaan');
@@ -4141,6 +4142,83 @@ $(document).ready(function() {
                 
             }
         });
+    });
+
+    // SINKRONISASI TANGGAL LAHIR
+    $(document).on('click', '.syn_ttl', function(){
+        $('#ModalSynTtl').modal('show');
+
+        // Menangkap id_radiologi
+        var id_radiologi   = $(this).data('id');
+
+        // Buka Form
+        $.ajax({
+            type 	    : 'POST',
+            url 	    : '_Page/Pemeriksaan/FormSynTtl.php',
+            data        : {id_radiologi: id_radiologi},
+            success     : function(data){
+                $('#FormSynTtl').html(data);
+            }
+        });
+    });
+
+    $('#ProsesSynTtl').submit(function(e){
+        e.preventDefault();
+        var ProsesSynTtl = $(this).serialize();
+
+        // Loading Notifikasi
+        $('#NotifikasiSynTtl').html('<small class="text-muted">Menyimpan data...</small>');
+
+       // Simpan Data Dengan AJAX
+        $.ajax({
+            type     : 'POST',
+            url      : '_Page/Pemeriksaan/ProsesSynTtl.php',
+            dataType : 'json',
+            data     : ProsesSynTtl,
+
+            success: function(response){
+
+                var status  = response.status;
+                var message = response.message || 'Proses berhasil';
+
+                if(status === 'success'){
+
+                    // Bersihkan notifikasi
+                    $('#NotifikasiSynTtl').html('');
+
+                    // Tutup modal jika ada
+                    $('#ModalSynTtl').modal('hide');
+
+                    // Reload detail pemeriksaan
+                    ShowDetailPemeriksaan();
+                    ShowTablePemeriksaan();
+
+                    // Tampilkan Toast
+                    $('#put_message').html(
+                        '<i class="bi bi-check-circle me-2"></i> ' + message
+                    );
+                    var toastEl = document.getElementById('toast_proses');
+                    var toast   = new bootstrap.Toast(toastEl, {
+                        delay: 3000
+                    });
+                    toast.show();
+
+                } else {
+                    $('#NotifikasiSynTtl').html(
+                        '<div class="alert alert-danger"><small>'+message+'</small></div>'
+                    );
+                }
+            },
+
+            error: function(xhr){
+                console.log(xhr.responseText);
+
+                $('#NotifikasiSynTtl').html(
+                    '<div class="alert alert-danger"><small>Terjadi kesalahan sistem</small></div>'
+                );
+            }
+        });
+
     });
 
 });

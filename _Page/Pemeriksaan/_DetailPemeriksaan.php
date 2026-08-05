@@ -68,6 +68,7 @@
     $id_observation         = $Data['id_observation'] ?? "-";
     $id_diagnostic_report   = $Data['id_diagnostic_report'] ?? "-";
     $nama_pasien            = $Data['nama_pasien'];
+    $tanggal_lahir          = $Data['tanggal_lahir'];
     $priority               = $Data['priority'];
     $asal_kiriman           = $Data['asal_kiriman'];
     $alat_pemeriksa         = $Data['alat_pemeriksa'];
@@ -92,7 +93,7 @@
     $datetime_hasil         = $Data['datetime_hasil'];
     $datetime_selesai       = $Data['datetime_selesai'];
     $status_pemeriksaan     = $Data['status_pemeriksaan'];
-    $alasan_pembatalan     = $Data['alasan_pembatalan'];
+    $alasan_pembatalan      = $Data['alasan_pembatalan'];
 
     //Nama Radiografer
     if(empty($Data['radiografer'])){
@@ -223,7 +224,7 @@
     $nama            = getDisplayValue($pasien['nama'] ?? null);
     $gender          = getDisplayValue($pasien['gender'] ?? null);
     $tempat_lahir    = getDisplayValue($pasien['tempat_lahir'] ?? null);
-    $tanggal_lahir   = getDisplayValue($pasien['tanggal_lahir'] ?? null);
+    $tanggal_lahir_kunjungan   = getDisplayValue($pasien['tanggal_lahir'] ?? null);
     $kontak          = getDisplayValue($pasien['kontak'] ?? null);
     $kontak_darurat  = getDisplayValue($pasien['kontak_darurat'] ?? null);
     $nik             = getDisplayValue($pasien['nik'] ?? null);
@@ -238,8 +239,14 @@
     $penanggungjawab = getDisplayValue($metadata['penanggungjawab'] ?? null);
 
     //Menghitung Usia Dan Format Tanggal Lahir
-    $usia                    = hitungUsia($tanggal_lahir);
-    $tanggal_lahir_formatted = formatTanggalLahir($tanggal_lahir);
+    if(!empty($tanggal_lahir)){
+        $usia                    = hitungUsia($tanggal_lahir_kunjungan);
+        $tanggal_lahir_formatted = formatTanggalLahir($tanggal_lahir_kunjungan);
+    }else{
+        $usia                    = '<a href="javascript:void(0);" class="syn_ttl" data-id="'.$id_radiologi.'">Unknown</a>';
+        $tanggal_lahir_formatted = '<a href="javascript:void(0);" class="syn_ttl" data-id="'.$id_radiologi.'">Unknown</a>';
+    }
+    
 ?>
 <div class="row mb-3">
     <div class="col-md-12 text-end">
@@ -306,11 +313,15 @@
                             </tr>
                             <tr>
                                 <td>Tempat Lahir</td>
-                                <td class="text text-grayish"><?php echo $tempat_lahir; ?></td>
+                                <td class="text text-grayish">
+                                    <?php echo $tempat_lahir; ?>
+                                </td>
                             </tr>
                             <tr>
                                 <td>Tanggal Lahir</td>
-                                <td class="text text-grayish"><?php echo $tanggal_lahir_formatted; ?></td>
+                                <td class="text text-grayish">
+                                    <?php echo $tanggal_lahir_formatted; ?>
+                                </td>
                             </tr>
                             <tr>
                                 <td>Usia</td>
